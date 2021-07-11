@@ -8,8 +8,8 @@ website/node_modules
 # testing
 /coverage
 
-# production
-/build
+# VScode
+.vscode
 
 # misc
 .DS_Store
