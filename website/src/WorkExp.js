@@ -17,7 +17,7 @@ let graphql = {
 
 let whatsapp = {
   title: "Software Engineering Intern",
-  buttonText: "SWE Inter - WhatsApp Core Infra",
+  buttonText: "SWE Intern - WhatsApp Core Infra",
   company: "Facebook, Whatsapp Core Infrastructure",
   startDate: "May 2020",
   endDate: "August 2020",
