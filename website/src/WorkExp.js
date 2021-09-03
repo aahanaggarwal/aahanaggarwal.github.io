@@ -42,7 +42,7 @@ let catme = {
 
 let haptik = {
   title: "Software Engineering Intern",
-  buttonText: "SWE Intern - CATME",
+  buttonText: "SWE Intern - Haptik",
   company: "Haptik",
   startDate: "May 2018",
   endDate: "June 2018",
