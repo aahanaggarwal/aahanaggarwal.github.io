@@ -18,7 +18,7 @@ ReactDOM.render(
     </p>
     <p>
       Past:<br/>
-      Interned at <a href="https://www.facebook.com">Facebook</a> - GraphQL Build Infra and WhatsApp Core Infrastructure teams.<br/>
+      Interned at <a href="https://about.facebook.com/meta">Meta</a> - GraphQL Build Infra and WhatsApp Core Infrastructure teams.<br/>
       Completed my Bachelor's in CS at Purdue University.
     </p>
 
