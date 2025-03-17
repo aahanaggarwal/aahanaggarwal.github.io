@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && move /y build\\* ..\\ && move /y build\\static\\css\\* ..\\static\\css && move /y build\\static\\js\\* ..\\static\\js && rmdir /s /q build",
+    "build": "react-scripts build && mv build/* .. && mv build/static/css/* ../static/css && mv build/static/js/* ../static/js && rm -rf build/static/css && rm -rf build/static/js && rm -rf build/static && rm -rf build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
