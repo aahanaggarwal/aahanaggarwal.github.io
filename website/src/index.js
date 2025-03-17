@@ -18,7 +18,7 @@ ReactDOM.render(
       Present:
       <br />
       Working as a software engineer on the Mobile GraphQL Runtime team at{" "}
-      <a href="https://meta.com/about">Meta</a>.
+      <a href="https://about.meta.com/">Meta</a>.
     </p>
     <p>
       Past:
