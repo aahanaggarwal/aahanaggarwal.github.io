@@ -11,6 +11,7 @@
       *::before,
       *::after {
         box-sizing: border-box;
+        transition: color 0.5s, text-shadow 0.5s, border-color 0.5s;
       }
 
       :root {
@@ -211,7 +212,11 @@
         }
 
         h1 {
-          font-size: 2.5em;
+          font-size: 2em;
+        }
+
+        .typed-text {
+          letter-spacing: 0.1em;
         }
 
         h2 {
@@ -229,10 +234,30 @@
         margin-top: 0.5rem;
         font-size: 1.2em;
       }
+
+      #cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 15px;
+        height: 15px;
+        border: 2px solid var(--primary-color);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px var(--glow-color);
+        transition: transform 0.1s ease-out, border-color 0.5s, box-shadow 0.5s;
+        z-index: 9999;
+      }
+
+      #cursor.expand {
+        transform: translate(-50%, -50%) scale(2);
+      }
     </style>
   </head>
   <body>
     <canvas id="matrix"></canvas>
+    <div id="cursor"></div>
       <header>
         <h1 class="typed-text"><span class="glitch">Aahan Aggarwal</span></h1>
         <p class="contact-info">
@@ -301,7 +326,18 @@
         canvas.style.transform = `translateY(${window.scrollY * 0.1}px)`;
       });
 
-      const primary = getComputedStyle(
+      const cursor = document.getElementById("cursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+
+      document.addEventListener("click", () => {
+        cursor.classList.add("expand");
+        setTimeout(() => cursor.classList.remove("expand"), 200);
+      });
+
+      let primary = getComputedStyle(
         document.documentElement,
       ).getPropertyValue("--primary-color");
 
@@ -334,6 +370,20 @@
         title.classList.add("active");
         setTimeout(() => title.classList.remove("active"), 1000);
       }, 4000);
+
+      function updateColor() {
+        const hue = Math.floor(Math.random() * 360);
+        primary = `hsl(${hue}, 100%, 50%)`;
+        document.documentElement.style.setProperty(
+          "--primary-color",
+          primary,
+        );
+        document.documentElement.style.setProperty(
+          "--glow-color",
+          `hsla(${hue}, 100%, 50%, 0.75)`,
+        );
+      }
+      setInterval(updateColor, 5000);
     </script>
   </body>
 </html>
