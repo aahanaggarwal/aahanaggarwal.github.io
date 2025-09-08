@@ -1,8 +1,0 @@
-modules = ["nodejs-20", "web"]
-run = "echo aahan"
-
-[nix]
-channel = "stable-24_05"
-
-[deployment]
-run = ["sh", "-c", "echo aahan"]
