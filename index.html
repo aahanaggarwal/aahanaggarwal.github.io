@@ -32,6 +32,7 @@
         margin: 0;
         padding: 2rem 4rem;
         animation: fadeIn 1s ease-in-out;
+        cursor: none;
       }
 
       #matrix {
@@ -40,9 +41,73 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -2;
+        z-index: -1;
         background: var(--background-color);
         opacity: 0.3;
+      }
+
+      #globe {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        pointer-events: none;
+      }
+
+      #stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -3;
+        background: var(--background-color);
+      }
+
+      #terminal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        color: var(--primary-color);
+        font-family: "Fira Code", monospace;
+        padding: 1rem;
+        display: none;
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      #terminal.show {
+        display: block;
+      }
+
+      #terminal::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(0, 255, 65, 0.1),
+          rgba(0, 255, 65, 0.1) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+      }
+
+      #terminal p {
+        margin: 0;
+      }
+
+      #terminal .input-line::before {
+        content: "> ";
       }
 
       h1 {
@@ -133,6 +198,7 @@
         text-decoration: none;
         text-shadow: 0 0 5px var(--glow-color);
         position: relative;
+        cursor: none;
       }
 
       a::after {
@@ -254,10 +320,14 @@
         transform: translate(-50%, -50%) scale(2);
       }
     </style>
+    <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
   </head>
   <body>
+    <canvas id="stars"></canvas>
+    <canvas id="globe"></canvas>
     <canvas id="matrix"></canvas>
     <div id="cursor"></div>
+    <div id="terminal"></div>
       <header>
         <h1 class="typed-text"><span class="glitch">Aahan Aggarwal</span></h1>
         <p class="contact-info">
@@ -305,25 +375,109 @@
       </nav>
     </main>
     <script>
-      const canvas = document.getElementById("matrix");
-      const ctx = canvas.getContext("2d");
+      const matrixCanvas = document.getElementById("matrix");
+      const matrixCtx = matrixCanvas.getContext("2d");
+      const starCanvas = document.getElementById("stars");
+      const starCtx = starCanvas.getContext("2d");
+      const globeCanvas = document.getElementById("globe");
+      let primary = getComputedStyle(
+        document.documentElement,
+      ).getPropertyValue("--primary-color");
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: globeCanvas,
+        alpha: true,
+      });
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.z = 3;
+      const globeMaterial = new THREE.MeshBasicMaterial({
+        color: primary,
+        wireframe: true,
+      });
+      const globeMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(1, 32, 32),
+        globeMaterial,
+      );
+      scene.add(globeMesh);
+      const linesGroup = new THREE.Group();
+      scene.add(linesGroup);
+      function addLine() {
+        const material = new THREE.LineBasicMaterial({
+          color: primary,
+          transparent: true,
+          opacity: 0.5,
+        });
+        const start = new THREE.Vector3().setFromSphericalCoords(
+          1,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI * 2,
+        );
+        const end = new THREE.Vector3().setFromSphericalCoords(
+          1,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI * 2,
+        );
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+          start,
+          end,
+        ]);
+        linesGroup.add(new THREE.Line(geometry, material));
+      }
+      for (let i = 0; i < 20; i++) addLine();
 
       const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       const fontSize = 16;
-      const columns = () => Math.floor(canvas.width / fontSize);
+      const columns = () => Math.floor(matrixCanvas.width / fontSize);
       let drops;
+      let stars = [];
+      const starCount = 800;
+      let fireworks = [];
+
+      function initStars() {
+        stars = Array.from({ length: starCount }, () => ({
+          x: (Math.random() - 0.5) * starCanvas.width,
+          y: (Math.random() - 0.5) * starCanvas.height,
+          z: Math.random() * starCanvas.width,
+        }));
+      }
 
       function resize() {
-        canvas.width = document.documentElement.clientWidth;
-        canvas.height = document.documentElement.clientHeight;
+        const w = document.documentElement.clientWidth;
+        const h = document.documentElement.clientHeight;
+        matrixCanvas.width = w;
+        matrixCanvas.height = h;
+        starCanvas.width = w;
+        starCanvas.height = h;
+        renderer.setSize(w, h);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        starCtx.fillStyle = "black";
+        starCtx.fillRect(0, 0, starCanvas.width, starCanvas.height);
         drops = Array.from({ length: columns() }, () => 1);
+        initStars();
       }
 
       resize();
       window.addEventListener("resize", resize);
 
       window.addEventListener("scroll", () => {
-        canvas.style.transform = `translateY(${window.scrollY * 0.1}px)`;
+        matrixCanvas.style.transform = `translateY(${window.scrollY * 0.1}px)`;
+        globeCanvas.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+        starCanvas.style.transform = `translateY(${window.scrollY * 0.05}px)`;
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 0.2;
+        const y = (e.clientY / window.innerHeight - 0.5) * 0.2;
+        camera.position.x = x;
+        camera.position.y = -y;
+        camera.lookAt(0, 0, 0);
       });
 
       const cursor = document.getElementById("cursor");
@@ -332,29 +486,148 @@
         cursor.style.top = `${e.clientY}px`;
       });
 
-      document.addEventListener("click", () => {
+      document.addEventListener("click", (e) => {
         cursor.classList.add("expand");
         setTimeout(() => cursor.classList.remove("expand"), 200);
+        createFirework(e.clientX, e.clientY);
       });
 
-      let primary = getComputedStyle(
-        document.documentElement,
-      ).getPropertyValue("--primary-color");
+      function animateGlobe() {
+        requestAnimationFrame(animateGlobe);
+        globeMesh.rotation.y += 0.002;
+        linesGroup.rotation.y += 0.002;
+        renderer.render(scene, camera);
+      }
+      animateGlobe();
+
+      const terminal = document.getElementById("terminal");
+      const termOutput = document.createElement("div");
+      terminal.appendChild(termOutput);
+      let termOpen = false;
+      let currentSpan;
+
+      function toggleTerminal() {
+        termOpen = !termOpen;
+        terminal.classList.toggle("show", termOpen);
+        if (termOpen) {
+          termOutput.innerHTML = "";
+          newTermLine();
+        }
+      }
+
+      function newTermLine() {
+        const p = document.createElement("p");
+        p.className = "input-line";
+        const span = document.createElement("span");
+        p.appendChild(span);
+        termOutput.appendChild(p);
+        currentSpan = span;
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "`" && e.ctrlKey) {
+          toggleTerminal();
+          e.preventDefault();
+          return;
+        }
+        if (!termOpen) return;
+        if (e.key === "Backspace") {
+          currentSpan.textContent = currentSpan.textContent.slice(0, -1);
+          e.preventDefault();
+        } else if (e.key === "Enter") {
+          const cmd = currentSpan.textContent.trim();
+          handleCommand(cmd);
+          newTermLine();
+          e.preventDefault();
+        } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+          currentSpan.textContent += e.key;
+          e.preventDefault();
+        }
+      });
+
+      function handleCommand(cmd) {
+        const p = document.createElement("p");
+        switch (cmd) {
+          case "help":
+            p.textContent = "Commands: help, scan, clear";
+            break;
+          case "scan":
+            p.textContent = "Scanning network...";
+            termOutput.appendChild(p);
+            setTimeout(() => {
+              const done = document.createElement("p");
+              done.textContent = "Scan complete. 0 vulnerabilities found.";
+              termOutput.appendChild(done);
+            }, 1000);
+            return;
+          case "clear":
+            termOutput.innerHTML = "";
+            return;
+          default:
+            p.textContent = `Unknown command: ${cmd}`;
+        }
+        termOutput.appendChild(p);
+      }
+
+      function createFirework(x, y) {
+        const hue = Math.random() * 360;
+        for (let i = 0; i < 60; i++) {
+          fireworks.push({
+            x,
+            y,
+            vx: (Math.random() - 0.5) * 8,
+            vy: (Math.random() - 0.5) * 8,
+            life: 60,
+            hue,
+          });
+        }
+      }
 
       function draw() {
-        ctx.fillStyle = "rgba(10, 10, 10, 0.1)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        starCtx.fillStyle = "rgba(10, 10, 10, 0.2)";
+        starCtx.fillRect(0, 0, starCanvas.width, starCanvas.height);
 
-        ctx.fillStyle = primary;
-        ctx.font = fontSize + "px Fira Code";
+        for (const star of stars) {
+          star.z -= 2;
+          if (star.z <= 0) {
+            star.x = (Math.random() - 0.5) * starCanvas.width;
+            star.y = (Math.random() - 0.5) * starCanvas.height;
+            star.z = starCanvas.width;
+          }
+          const k = 128 / star.z;
+          const x = star.x * k + starCanvas.width / 2;
+          const y = star.y * k + starCanvas.height / 2;
+          const size = (1 - star.z / starCanvas.width) * 3;
+          starCtx.fillStyle = primary;
+          starCtx.fillRect(x, y, size, size);
+        }
+
+        fireworks.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.1;
+          p.life--;
+          starCtx.fillStyle = `hsla(${p.hue}, 100%, 50%, ${p.life / 60})`;
+          starCtx.fillRect(p.x, p.y, 2, 2);
+        });
+        fireworks = fireworks.filter((p) => p.life > 0);
+
+        matrixCtx.fillStyle = "rgba(10, 10, 10, 0.1)";
+        matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+        matrixCtx.fillStyle = primary;
+        matrixCtx.font = fontSize + "px Fira Code";
 
         for (let i = 0; i < drops.length; i++) {
           const text = letters.charAt(
             Math.floor(Math.random() * letters.length),
           );
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          if (
+            drops[i] * fontSize > matrixCanvas.height &&
+            Math.random() > 0.975
+          ) {
             drops[i] = 0;
           }
           drops[i]++;
@@ -382,6 +655,8 @@
           "--glow-color",
           `hsla(${hue}, 100%, 50%, 0.75)`,
         );
+        globeMaterial.color.set(primary);
+        linesGroup.children.forEach((l) => l.material.color.set(primary));
       }
       setInterval(updateColor, 5000);
     </script>
