@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trips - Aahan Aggarwal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="circuit"></canvas>
+    <div id="cursor"></div>
+    <header>
+      <h1 class="typed-text"><span class="glitch">Recent Trips</span></h1>
+      <p class="contact-info"><a href="index.html">Home</a></p>
+    </header>
+    <main>
+      <div id="gallery"></div>
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+      async function loadTrips() {
+        const gallery = document.getElementById("gallery");
+        try {
+          const res = await fetch(
+            "https://api.github.com/repos/aahanaggarwal/aahanaggarwal.github.io/contents/trips"
+          );
+          const data = await res.json();
+          const folders = data.filter((item) => item.type === "dir");
+          for (const folder of folders) {
+            const details = document.createElement("details");
+            const summary = document.createElement("summary");
+            summary.textContent = folder.name;
+            details.appendChild(summary);
+            const imagesDiv = document.createElement("div");
+            imagesDiv.className = "album-images";
+            details.appendChild(imagesDiv);
+            gallery.appendChild(details);
+
+            const resImgs = await fetch(folder.url);
+            const imgs = await resImgs.json();
+            imgs
+              .filter((f) => f.type === "file")
+              .forEach((file) => {
+                const img = document.createElement("img");
+                img.src = file.download_url;
+                img.alt = file.name;
+                imagesDiv.appendChild(img);
+              });
+          }
+        } catch (err) {
+          const p = document.createElement("p");
+          p.textContent = "Failed to load trips.";
+          gallery.appendChild(p);
+        }
+      }
+      loadTrips();
+    </script>
+  </body>
+</html>
