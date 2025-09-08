@@ -326,17 +326,17 @@ summary {
   border: 2px solid var(--primary-color);
   box-shadow: 0 0 5px var(--glow-color);
   cursor: pointer;
+  transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
+}
+
+.album-images img.animate-out {
+  transform: scale(1.5) rotate(15deg);
+  opacity: 0;
+  filter: blur(4px);
 }
 
 .album-images img:hover {
   box-shadow: 0 0 10px var(--glow-color);
 }
 
-.pixel {
-  position: absolute;
-  pointer-events: none;
-  transition: transform 1s ease-out, opacity 1s ease-out;
-  width: 4px;
-  height: 4px;
-}
 
