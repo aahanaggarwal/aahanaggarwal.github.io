@@ -1,1 +1,154 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Aahan Aggarwal's personal website."/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>Aahan Aggarwal</title><link href="/static/css/2.53d333a8.chunk.css" rel="stylesheet"><link href="/static/css/main.899c8c77.chunk.css" rel="stylesheet"></head><body><noscript>Sorry I was lazy and made this with React... You need Javascript :(</noscript><div id="root"></div><script>!function(e){function t(t){for(var n,i,l=t[0],f=t[1],a=t[2],c=0,s=[];c<l.length;c++)i=l[c],Object.prototype.hasOwnProperty.call(o,i)&&o[i]&&s.push(o[i][0]),o[i]=0;for(n in f)Object.prototype.hasOwnProperty.call(f,n)&&(e[n]=f[n]);for(p&&p(t);s.length;)s.shift()();return u.push.apply(u,a||[]),r()}function r(){for(var e,t=0;t<u.length;t++){for(var r=u[t],n=!0,l=1;l<r.length;l++){var f=r[l];0!==o[f]&&(n=!1)}n&&(u.splice(t--,1),e=i(i.s=r[0]))}return e}var n={},o={1:0},u=[];function i(t){if(n[t])return n[t].exports;var r=n[t]={i:t,l:!1,exports:{}};return e[t].call(r.exports,r,r.exports,i),r.l=!0,r.exports}i.m=e,i.c=n,i.d=function(e,t,r){i.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},i.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.t=function(e,t){if(1&t&&(e=i(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(i.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)i.d(r,n,function(t){return e[t]}.bind(null,n));return r},i.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(t,"a",t),t},i.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},i.p="/";var l=this.webpackJsonpwebsite=this.webpackJsonpwebsite||[],f=l.push.bind(l);l.push=t,l=l.slice();for(var a=0;a<l.length;a++)t(l[a]);var p=f;r()}([])</script><script src="/static/js/2.002292ea.chunk.js"></script><script src="/static/js/main.1d1f4b35.chunk.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aahan Aggarwal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        :root {
+            --primary-color: #00ff41;
+            --background-color: #0a0a0a;
+            --glow-color: rgba(0, 255, 65, 0.75);
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 2rem 4rem;
+        }
+
+        /* Scanline effect */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: -1;
+            background-size: 100% 3px, 4px 100%;
+            pointer-events: none;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 3em;
+            text-shadow: 0 0 10px var(--glow-color);
+            margin-bottom: 0;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+        .typed-text {
+            overflow: hidden;
+            border-right: .15em solid var(--primary-color);
+            white-space: nowrap;
+            letter-spacing: .15em;
+            animation:
+                typing 2.5s steps(20, end),
+                blink-caret .75s step-end infinite;
+            display: inline-block;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+            font-size: 2em;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        p, ul {
+            line-height: 1.8;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        a:hover {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        ul {
+            list-style-type: '>> ';
+            padding-left: 20px;
+        }
+
+        .links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .links li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            margin-top: 0.5rem;
+            font-size: 1.2em;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="typed-text">Aahan Aggarwal</h1>
+        <p class="contact-info">
+            Contact: <a href="mailto:me@aahan.dev">me@aahan.dev</a>
+        </p>
+    </header>
+
+    <main>
+        <section>
+            <h2>// Present</h2>
+            <p>
+                Software Engineer on the Code Search and Indexing teams at <a href="https://about.meta.com/">Meta</a>.
+            </p>
+        </section>
+
+        <section>
+            <h2>// Past</h2>
+            <ul>
+                <li>Software Engineer on the Mobile GraphQL Runtime team at Meta.</li>
+                <li>Software Engineer on Release Infrastructure for AR/VR devices at Meta.</li>
+                <li>Master's in CS @ <a href="https://www.purdue.edu">Purdue University</a>.</li>
+                <li>Intern @ Meta - GraphQL Build Infra and WhatsApp Core Infrastructure teams.</li>
+                <li>Bachelor's in CS @ Purdue University.</li>
+            </ul>
+        </section>
+
+        <nav class="links">
+            <h2>// Links</h2>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/aahanaggarwal99/">LinkedIn</a></li>
+                <li><a href="https://twitter.com/aahanaggarwal">Twitter</a></li>
+                <li><a href="https://github.com/aahanaggarwal/">GitHub</a></li>
+                <li><a href="https://www.instagram.com/aahan.aggarwal99/">Instagram</a></li>
+            </ul>
+        </nav>
+    </main>
+</body>
+</html>
