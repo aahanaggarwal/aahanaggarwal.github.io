@@ -20,49 +20,12 @@
     <script src="main.js"></script>
     <script>
       function disintegrate(img) {
-        const rect = img.getBoundingClientRect();
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        ctx.drawImage(img, 0, 0);
-        const scaleX = rect.width / canvas.width;
-        const scaleY = rect.height / canvas.height;
-        const container = document.createElement("div");
-        container.style.position = "absolute";
-        container.style.left = rect.left + window.scrollX + "px";
-        container.style.top = rect.top + window.scrollY + "px";
-        container.style.width = rect.width + "px";
-        container.style.height = rect.height + "px";
-        container.style.pointerEvents = "none";
-        document.body.appendChild(container);
-        const pixelSize = 4;
-        for (let y = 0; y < canvas.height; y += pixelSize) {
-          for (let x = 0; x < canvas.width; x += pixelSize) {
-            const data = ctx.getImageData(x, y, 1, 1).data;
-            const pixel = document.createElement("span");
-            pixel.className = "pixel";
-            pixel.style.background = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-            pixel.style.left = x * scaleX + "px";
-            pixel.style.top = y * scaleY + "px";
-            pixel.style.width = pixelSize * scaleX + "px";
-            pixel.style.height = pixelSize * scaleY + "px";
-            container.appendChild(pixel);
-            requestAnimationFrame(() => {
-              const angle = (Math.random() - 0.5) * 2 * Math.PI;
-              const distance = Math.random() * 200;
-              const tx = Math.cos(angle) * distance;
-              const ty = Math.sin(angle) * distance;
-              pixel.style.transform = `translate(${tx}px, ${ty}px)`;
-              pixel.style.opacity = "0";
-            });
-          }
-        }
-        img.style.visibility = "hidden";
-        setTimeout(() => {
-          container.remove();
-          img.style.visibility = "visible";
-        }, 1000);
+        img.classList.add("animate-out");
+        img.addEventListener(
+          "transitionend",
+          () => img.classList.remove("animate-out"),
+          { once: true }
+        );
       }
 
       function extractYear(name) {
@@ -73,21 +36,16 @@
       async function loadTrips() {
         const gallery = document.getElementById("gallery");
         try {
-          const res = await fetch(
-            "https://api.github.com/repos/aahanaggarwal/aahanaggarwal.github.io/contents/trips"
-          );
-          if (!res.ok) throw new Error("list");
-          const data = await res.json();
-          const folders = data
-            .filter((item) => item.type === "dir")
-            .sort((a, b) => {
-              const yearA = extractYear(a.name);
-              const yearB = extractYear(b.name);
-              if (isNaN(yearA) && isNaN(yearB)) return 0;
-              if (isNaN(yearA)) return 1;
-              if (isNaN(yearB)) return -1;
-              return yearB - yearA;
-            });
+          const res = await fetch("trips/index.json");
+          if (!res.ok) throw new Error("index");
+          const folders = (await res.json()).sort((a, b) => {
+            const yearA = extractYear(a.name);
+            const yearB = extractYear(b.name);
+            if (isNaN(yearA) && isNaN(yearB)) return 0;
+            if (isNaN(yearA)) return 1;
+            if (isNaN(yearB)) return -1;
+            return yearB - yearA;
+          });
           for (const folder of folders) {
             const details = document.createElement("details");
             const summary = document.createElement("summary");
@@ -98,25 +56,14 @@
             details.appendChild(imagesDiv);
             gallery.appendChild(details);
 
-            try {
-              const resImgs = await fetch(folder.url);
-              if (!resImgs.ok) throw new Error("images");
-              const imgs = await resImgs.json();
-              imgs
-                .filter((f) => f.type === "file")
-                .forEach((file) => {
-                  const img = document.createElement("img");
-                  img.crossOrigin = "anonymous";
-                  img.src = file.download_url;
-                  img.alt = file.name;
-                  img.addEventListener("click", () => disintegrate(img));
-                  imagesDiv.appendChild(img);
-                });
-            } catch (err) {
-              const p = document.createElement("p");
-              p.textContent = "Failed to load this trip.";
-              imagesDiv.appendChild(p);
-            }
+            folder.images.forEach((file) => {
+              const img = document.createElement("img");
+              img.loading = "lazy";
+              img.src = `trips/${folder.name}/${file}`;
+              img.alt = file;
+              img.addEventListener("click", () => disintegrate(img));
+              imagesDiv.appendChild(img);
+            });
           }
         } catch (err) {
           const p = document.createElement("p");
