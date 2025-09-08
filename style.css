@@ -223,8 +223,12 @@
         animation-delay: 0.8s;
       }
 
-      nav {
+      section:nth-of-type(3) {
         animation-delay: 1.1s;
+      }
+
+      nav {
+        animation-delay: 1.4s;
       }
 
       @keyframes fadeIn {
@@ -321,8 +325,18 @@ summary {
   width: 100%;
   border: 2px solid var(--primary-color);
   box-shadow: 0 0 5px var(--glow-color);
+  cursor: pointer;
 }
 
 .album-images img:hover {
   box-shadow: 0 0 10px var(--glow-color);
 }
+
+.pixel {
+  position: absolute;
+  pointer-events: none;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  width: 4px;
+  height: 4px;
+}
+
