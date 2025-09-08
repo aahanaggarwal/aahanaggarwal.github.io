@@ -7,10 +7,21 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap");
 
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       :root {
         --primary-color: #00ff41;
         --background-color: #0a0a0a;
         --glow-color: rgba(0, 255, 65, 0.75);
+      }
+
+      html,
+      body {
+        overflow-x: hidden;
       }
 
       body {
@@ -26,8 +37,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         z-index: -2;
         background: var(--background-color);
         opacity: 0.3;
@@ -72,6 +83,35 @@
         }
       }
 
+      .glitch {
+        display: inline-block;
+      }
+
+      .glitch.active {
+        animation: glitch 1s infinite;
+      }
+
+      @keyframes glitch {
+        0% {
+          transform: none;
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+        100% {
+          transform: none;
+        }
+      }
+
       h2 {
         color: var(--primary-color);
         border-bottom: 1px solid var(--primary-color);
@@ -91,12 +131,28 @@
         color: var(--primary-color);
         text-decoration: none;
         text-shadow: 0 0 5px var(--glow-color);
+        position: relative;
+      }
+
+      a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        height: 2px;
+        width: 0;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
       }
 
       a:hover {
         background-color: var(--primary-color);
         color: var(--background-color);
         box-shadow: 0 0 10px var(--glow-color);
+      }
+
+      a:hover::after {
+        width: 100%;
       }
 
       ul {
@@ -177,12 +233,12 @@
   </head>
   <body>
     <canvas id="matrix"></canvas>
-    <header>
-      <h1 class="typed-text">Aahan Aggarwal</h1>
-      <p class="contact-info">
-        Contact: <a href="mailto:me@aahan.dev">me@aahan.dev</a>
-      </p>
-    </header>
+      <header>
+        <h1 class="typed-text"><span class="glitch">Aahan Aggarwal</span></h1>
+        <p class="contact-info">
+          Contact: <a href="mailto:me@aahan.dev">me@aahan.dev</a>
+        </p>
+      </header>
 
     <main>
       <section>
@@ -233,13 +289,17 @@
       let drops;
 
       function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = document.documentElement.clientWidth;
+        canvas.height = document.documentElement.clientHeight;
         drops = Array.from({ length: columns() }, () => 1);
       }
 
       resize();
       window.addEventListener("resize", resize);
+
+      window.addEventListener("scroll", () => {
+        canvas.style.transform = `translateY(${window.scrollY * 0.1}px)`;
+      });
 
       const primary = getComputedStyle(
         document.documentElement,
@@ -268,6 +328,12 @@
       }
 
       draw();
+
+      const title = document.querySelector(".glitch");
+      setInterval(() => {
+        title.classList.add("active");
+        setTimeout(() => title.classList.remove("active"), 1000);
+      }, 4000);
     </script>
   </body>
 </html>
