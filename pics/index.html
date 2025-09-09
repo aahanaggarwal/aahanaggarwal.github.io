@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pictures - Aahan Aggarwal</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
     <canvas id="circuit"></canvas>
     <div id="cursor"></div>
     <header>
       <h1 class="typed-text"><span class="glitch">Pictures</span></h1>
-      <p class="contact-info"><a href="index.html">Home</a></p>
+      <p class="contact-info"><a href="../">Home</a></p>
     </header>
     <main>
       <div id="gallery"></div>
     </main>
 
-    <script src="main.js"></script>
+    <script src="../main.js"></script>
     <script>
       function disintegrate(img) {
         img.classList.add("animate-out");
@@ -36,7 +36,7 @@
       async function loadPics() {
         const gallery = document.getElementById("gallery");
         try {
-          const res = await fetch("trips/index.json");
+          const res = await fetch("index.json");
           if (!res.ok) throw new Error("index");
           const folders = (await res.json()).sort((a, b) => {
             const yearA = extractYear(a.name);
@@ -59,7 +59,7 @@
             folder.images.forEach((file) => {
               const img = document.createElement("img");
               img.loading = "lazy";
-              img.src = `trips/${folder.name}/${file}`;
+              img.src = `${folder.name}/${file}`;
               img.alt = file;
               img.addEventListener("click", () => disintegrate(img));
               imagesDiv.appendChild(img);
