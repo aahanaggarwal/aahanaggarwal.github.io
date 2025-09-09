@@ -36,7 +36,7 @@
       async function loadPics() {
         const gallery = document.getElementById("gallery");
         try {
-          const res = await fetch("pics/index.json");
+          const res = await fetch("trips/index.json");
           if (!res.ok) throw new Error("index");
           const folders = (await res.json()).sort((a, b) => {
             const yearA = extractYear(a.name);
@@ -59,7 +59,7 @@
             folder.images.forEach((file) => {
               const img = document.createElement("img");
               img.loading = "lazy";
-              img.src = `pics/${folder.name}/${file}`;
+              img.src = `trips/${folder.name}/${file}`;
               img.alt = file;
               img.addEventListener("click", () => disintegrate(img));
               imagesDiv.appendChild(img);
@@ -67,7 +67,7 @@
           }
         } catch (err) {
           const p = document.createElement("p");
-          p.textContent = "Failed to load pics.";
+          p.textContent = "Failed to load pictures.";
           gallery.appendChild(p);
         }
       }
