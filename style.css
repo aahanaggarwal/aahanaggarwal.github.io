@@ -190,6 +190,12 @@
         box-shadow: 0 0 10px var(--glow-color);
       }
 
+a.tickcounter:hover {
+  background-color: transparent;
+  color: var(--primary-color);
+  box-shadow: none;
+}
+
       a:hover::after {
         width: 100%;
       }
