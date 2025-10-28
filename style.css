@@ -345,4 +345,15 @@ summary {
   box-shadow: 0 0 10px var(--glow-color);
 }
 
+#countdown {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--glow-color);
+  font-size: 1.5em;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+#countdown span {
+  font-weight: bold;
+}
 
