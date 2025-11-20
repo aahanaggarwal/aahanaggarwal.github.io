@@ -1,12 +1,232 @@
+document.addEventListener("DOMContentLoaded", () => {
+  initCircuit();
+  initGlobalListeners();
+  initRouter();
+});
+
+/* --- Router --- */
+function initRouter() {
+  // Intercept all clicks on links
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    const href = link.getAttribute("href");
+    const url = new URL(link.href);
+
+    // Ignore external links or hash links
+    if (url.origin !== window.location.origin || href.startsWith("#")) {
+      return;
+    }
+
+    // Allow download links or explicit targets
+    if (link.getAttribute("target") === "_blank") return;
+
+    e.preventDefault();
+
+    // Clean URL (remove index.html)
+    let cleanPath = url.pathname;
+  // Ensure clean path (remove index.html)
+    if (cleanPath.endsWith("/index.html")) {
+      cleanPath = cleanPath.replace("/index.html", "/");
+    } else if (cleanPath.endsWith("index.html")) {
+       cleanPath = cleanPath.replace("index.html", "");
+    }
+
+  // Fix relative path issue for SPA
+  // If we are at /pics/ and click "Blog" (../blog/), the browser resolves the URL correctly to /blog/ before we get it.
+  // However, the cleanPath logic above assumes we want to push that exact resolved path.
+
+  // Note: if we are at /pics/ and click a link that resolves to /pics/index.html, cleanPath becomes /pics/
+
+    // Construct search/hash if needed
+    const cleanUrl = cleanPath + url.search + url.hash;
+
+    window.history.pushState({}, "", cleanUrl);
+    handleLocation();
+  });
+
+  // Handle browser navigation (back/forward)
+  window.addEventListener("popstate", handleLocation);
+
+  // Initial load
+  handleLocation(true);
+}
+
+async function handleLocation(isInitial = false) {
+  const path = window.location.pathname;
+  const search = window.location.search;
+
+  // If initial load, just trigger the specific logic for the current page
+  // because the HTML is already loaded.
+  if (isInitial) {
+      runPageScript(path, search);
+      return;
+  }
+
+  // Determine which file to fetch based on path
+  let fetchUrl = path;
+
+  // Normalization logic matching static server behavior
+  if (path.endsWith("/")) {
+    fetchUrl += "index.html";
+  } else if (!path.endsWith(".html")) {
+     // e.g. /blog -> /blog/index.html (if server redirects)
+     // or /blog -> /blog (if checking file existence).
+     // GitHub Pages usually handles /folder as /folder/index.html
+     // But if we want to fetch it, we should probably append index.html
+     // to be safe, unless we trust the server returns it for the dir.
+     // Let's assume appending index.html for directories.
+     // But how do we know if it's a directory?
+     // Our specific routes:
+     // / -> index.html
+     // /pics/ -> pics/index.html
+     // /blog/ -> blog/index.html
+     // /blog/view.html -> blog/view.html
+
+     // Simple router map for our known structure:
+     if (path === "/" || path === "/index.html") fetchUrl = "/index.html";
+     else if (path.startsWith("/pics")) fetchUrl = "/pics/index.html";
+     else if (path.startsWith("/blog") && !path.includes("view.html")) fetchUrl = "/blog/index.html";
+     else if (path.includes("view.html")) fetchUrl = "/blog/view.html";
+  }
+
+  // Fallback: if we are trying to fetch /pics/blog/ or similar weird paths due to relative link resolution failures in static server context (though URL object resolution should handle it).
+  // Actually, the issue in verification might be that "Blog" link in pics/index.html is relative "../blog/"
+  // If we are at /pics/, "../blog/" resolves to /blog/.
+  // The verification error showed: http://localhost:8000/pics/blog/
+  // This suggests the browser resolved it as /pics/blog/ ?
+  // No, if href is "../blog/", from /pics/, it should be /blog/.
+  // Unless /pics/ is treated as a file without trailing slash?
+  // If we are at /pics (no slash), then .. is root.
+  // If we are at /pics/ (slash), then .. is root.
+
+  // Let's check strict equality for cleaner routing map
+  if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
+  if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
+
+  try {
+    const res = await fetch(fetchUrl);
+    if (!res.ok) throw new Error(`Failed to load ${fetchUrl}: ${res.status}`);
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    // Swap Content
+    const newContent = doc.getElementById("content");
+    const oldContent = document.getElementById("content");
+
+    if (newContent && oldContent) {
+      oldContent.innerHTML = newContent.innerHTML;
+      // Also update class on body if needed (e.g., different themes?)
+      // Currently all use "crt".
+      document.title = doc.title;
+
+      // Re-run visuals
+      initDecryptEffect();
+
+      // Run Page Script
+      runPageScript(path, search);
+    } else {
+      console.error("Content wrapper #content not found in fetched page or current page.");
+      // Fallback: reload
+      window.location.reload();
+    }
+
+  } catch (err) {
+    console.error("Navigation error:", err);
+  }
+}
+
+function runPageScript(path, search) {
+    // Detect page type
+    if (path.startsWith("/pics")) {
+        loadPics();
+    } else if (path.startsWith("/blog")) {
+        if (path.includes("view.html") || search.includes("post=")) {
+             loadPost();
+        } else {
+             loadBlogList();
+        }
+    } else {
+        // Home page - nothing special dynamic unless we want to re-init something
+    }
+}
+
+/* --- Page Logic: Home / General --- */
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
-let primary = getComputedStyle(
-  document.documentElement,
-).getPropertyValue("--primary-color");
-
+let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
 let nodes = [];
 const nodeCount = 60;
 let cursorPos = { x: null, y: null };
+
+function initCircuit() {
+    if (!circuitCanvas) return;
+    resize();
+    window.addEventListener("resize", resize);
+    drawCircuit();
+
+    // Color update interval
+    setInterval(updateColor, 5000);
+}
+
+function initGlobalListeners() {
+    // Cursor
+    const cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", (e) => {
+        if(cursor) {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        }
+        cursorPos.x = e.clientX;
+        cursorPos.y = e.clientY;
+
+        // HUD Coords
+        const hudCoords = document.getElementById("hud-coords");
+        if (hudCoords) {
+            hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
+        }
+    });
+
+    document.addEventListener("click", () => {
+        if(cursor) {
+            cursor.classList.add("expand");
+            setTimeout(() => cursor.classList.remove("expand"), 200);
+        }
+    });
+
+    // HUD Timer
+    const hudTimer = document.getElementById("hud-timer");
+    const startTime = Date.now();
+    setInterval(() => {
+        if (hudTimer) {
+            const elapsed = Date.now() - startTime;
+            const date = new Date(elapsed);
+            const h = date.getUTCHours().toString().padStart(2, '0');
+            const m = date.getUTCMinutes().toString().padStart(2, '0');
+            const s = date.getUTCSeconds().toString().padStart(2, '0');
+            hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
+        }
+    }, 1000);
+
+    // Countdown Timer (Header) - Check existence periodically or on load?
+    // It's in header, which might be swapped. So we should check inside the interval.
+    // Or re-init it. Let's keep global interval but check element existence.
+    startCountdown();
+
+    // Initial Decrypt
+    initDecryptEffect();
+
+    // Title Glitch
+    const title = document.querySelector(".glitch");
+    if(title) {
+        setInterval(() => {
+            title.classList.add("active");
+            setTimeout(() => title.classList.remove("active"), 1000);
+        }, 4000);
+    }
+}
 
 function initNodes() {
   nodes = Array.from({ length: nodeCount }, () => ({
@@ -18,6 +238,7 @@ function initNodes() {
 }
 
 function resize() {
+  if(!circuitCanvas) return;
   const w = document.documentElement.clientWidth;
   const h = document.documentElement.clientHeight;
   circuitCanvas.width = w;
@@ -25,15 +246,8 @@ function resize() {
   initNodes();
 }
 
-window.addEventListener("resize", resize);
-resize();
-
-window.addEventListener("mousemove", (e) => {
-  cursorPos.x = e.clientX;
-  cursorPos.y = e.clientY;
-});
-
 function drawCircuit() {
+  if(!circuitCanvas) return;
   circuitCtx.fillStyle = "rgba(10, 10, 10, 0.1)";
   circuitCtx.fillRect(0, 0, circuitCanvas.width, circuitCanvas.height);
 
@@ -83,25 +297,6 @@ function drawCircuit() {
   requestAnimationFrame(drawCircuit);
 }
 
-drawCircuit();
-
-const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", (e) => {
-  cursor.style.left = `${e.clientX}px`;
-  cursor.style.top = `${e.clientY}px`;
-});
-
-document.addEventListener("click", () => {
-  cursor.classList.add("expand");
-  setTimeout(() => cursor.classList.remove("expand"), 200);
-});
-
-const title = document.querySelector(".glitch");
-setInterval(() => {
-  title.classList.add("active");
-  setTimeout(() => title.classList.remove("active"), 1000);
-}, 4000);
-
 function updateColor() {
   const hue = 110 + Math.floor(Math.random() * 40);
   primary = `hsl(${hue}, 70%, 50%)`;
@@ -111,17 +306,15 @@ function updateColor() {
     `hsla(${hue}, 70%, 50%, 0.75)`,
   );
 }
-setInterval(updateColor, 5000);
-// Timer Logic
-(function () {
-  const timerElement = document.getElementById("countdown-timer");
-  if (!timerElement) return;
 
-  // Target date: December 19, 2025 09:30:00 London Time
-  // London in December is GMT (UTC+0)
+function startCountdown() {
+  // Target date: December 19, 2025 09:30:00 London Time (GMT)
   const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
 
-  function updateTimer() {
+  setInterval(() => {
+    const timerElement = document.getElementById("countdown-timer");
+    if (!timerElement) return;
+
     const now = new Date().getTime();
     const distance = targetDate - now;
 
@@ -135,17 +328,12 @@ setInterval(updateColor, 5000);
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Format with colons: DDD:HH:MM:SS
-    // Ensure 2 digits for hours, minutes, seconds. Days can be variable length.
     timerElement.innerHTML =
       `${days}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
+  }, 1000);
+}
 
-  setInterval(updateTimer, 1000);
-  updateTimer(); // Initial call
-})();
-
-// --- Decrypt Effect ---
+/* --- Decrypt Effect --- */
 class DecryptEffect {
   constructor(element) {
     this.element = element;
@@ -162,6 +350,12 @@ class DecryptEffect {
   animate() {
     let iterations = 0;
     const interval = setInterval(() => {
+      // Check if element is still in DOM
+      if (!document.body.contains(this.element)) {
+          clearInterval(interval);
+          return;
+      }
+
       this.element.innerText = this.originalText
         .split("")
         .map((letter, index) => {
@@ -181,47 +375,145 @@ class DecryptEffect {
   }
 }
 
-document.querySelectorAll(".decrypt-effect").forEach((el) => {
-  // Wait a bit for the typing animation to finish or run in parallel?
-  // Let's run it immediately but maybe we should remove the typed-text class if we use this?
-  // Actually, the user asked for decrypting effect ON LOAD.
-  // The existing 'typed-text' is CSS animation. Let's override or coexist.
-  // For now, let's just run it.
-  new DecryptEffect(el);
-});
+function initDecryptEffect(specificElement = null) {
+    if (specificElement) {
+        new DecryptEffect(specificElement);
+    } else {
+        document.querySelectorAll(".decrypt-effect").forEach((el) => {
+            new DecryptEffect(el);
+        });
+    }
+}
 
-// --- HUD Logic ---
-const hudCoords = document.getElementById("hud-coords");
-const hudTimer = document.getElementById("hud-timer");
-const startTime = Date.now();
+/* --- Page Logic: Pics --- */
+async function loadPics() {
+  const gallery = document.getElementById("gallery");
+  if (!gallery) return;
 
-document.addEventListener("mousemove", (e) => {
-  if (hudCoords) {
-    hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
+  // Initialize Modal Listeners since they are part of the pics page structure
+  initModal();
+
+  try {
+    // Use absolute path for robustness in SPA
+    const res = await fetch("/pics/index.json");
+    if (!res.ok) throw new Error("index");
+
+    const data = await res.json();
+    const folders = Array.isArray(data) ? data : data.albums;
+    const baseUrl = data.base_url || "";
+
+    folders.sort((a, b) => {
+      const yearA = extractYear(a.name);
+      const yearB = extractYear(b.name);
+      if (isNaN(yearA) && isNaN(yearB)) return 0;
+      if (isNaN(yearA)) return 1;
+      if (isNaN(yearB)) return -1;
+      return yearB - yearA;
+    });
+
+    gallery.innerHTML = ""; // Clear loading/placeholder
+
+    for (const folder of folders) {
+      const details = document.createElement("details");
+      const summary = document.createElement("summary");
+      summary.textContent = folder.name;
+      details.appendChild(summary);
+      const imagesDiv = document.createElement("div");
+      imagesDiv.className = "album-images";
+      details.appendChild(imagesDiv);
+      gallery.appendChild(details);
+
+      folder.images.forEach((file) => {
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.crossOrigin = "anonymous";
+
+        let src = file;
+        if (!file.startsWith("http")) {
+          if (baseUrl) {
+            src = `${baseUrl}/${file}`;
+          } else {
+            // Fallback for local relative paths
+            src = `/pics/${folder.name}/${file}`;
+          }
+        }
+
+        img.src = src;
+        img.alt = file;
+        img.addEventListener("click", () => openModal(img.src));
+        imagesDiv.appendChild(img);
+
+        // Attach ASCII effect
+        attachAsciiEffect(img);
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    const p = document.createElement("p");
+    p.textContent = "Failed to load pictures.";
+    if(gallery) gallery.appendChild(p);
   }
-});
+}
 
-setInterval(() => {
-  if (hudTimer) {
-    const elapsed = Date.now() - startTime;
-    const date = new Date(elapsed);
-    const h = date.getUTCHours().toString().padStart(2, '0');
-    const m = date.getUTCMinutes().toString().padStart(2, '0');
-    const s = date.getUTCSeconds().toString().padStart(2, '0');
-    hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
-  }
-}, 1000);
+function extractYear(name) {
+  const match = name.match(/-(\d{4})$/);
+  return match ? parseInt(match[1], 10) : NaN;
+}
 
-// --- ASCII Art Logic ---
+// Modal Logic
+let modal, modalImg, closeBtn;
+
+function initModal() {
+    modal = document.getElementById("modal");
+    modalImg = document.getElementById("modal-img");
+    closeBtn = document.getElementById("close-modal");
+
+    if(!modal) return;
+
+    closeBtn.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        closeModal();
+      }
+    });
+}
+
+function openModal(src) {
+  if(!modalImg) return;
+  modalImg.src = src;
+  modal.classList.add("show");
+  setTimeout(() => {
+    modal.classList.add("clear");
+  }, 600);
+}
+
+function closeModal() {
+  if(!modal) return;
+  modal.classList.remove("show");
+  modal.classList.remove("clear");
+  setTimeout(() => {
+    if (!modal.classList.contains("show")) {
+      modalImg.src = "";
+    }
+  }, 300);
+}
+
+/* --- ASCII Effect --- */
 function generateAscii(img, canvas) {
   const ctx = canvas.getContext("2d");
-  const width = 100; // Low res for ASCII
+  const width = 100;
   const height = (img.height / img.width) * width;
 
   canvas.width = width;
   canvas.height = height;
 
-  // Draw image to small canvas to get pixel data
   const tempCanvas = document.createElement('canvas');
   tempCanvas.width = width;
   tempCanvas.height = height;
@@ -232,19 +524,9 @@ function generateAscii(img, canvas) {
   const data = imageData.data;
   const chars = "@%#*+=-:. ";
 
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.font = "10px monospace";
-  ctx.fillStyle = "#00ff41"; // Primary color
-
-  // We need to scale the text rendering to fit the original image size
-  // But here we are drawing on a small canvas. 
-  // Wait, we want the ASCII to overlay the ORIGINAL image.
-  // So the canvas should be the size of the original image.
-
+  // Prepare overlay canvas
   canvas.width = img.width;
   canvas.height = img.height;
-  // Clear again
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -253,7 +535,7 @@ function generateAscii(img, canvas) {
   const colWidth = canvas.width / width;
   const rowHeight = canvas.height / height;
 
-  ctx.font = `${colWidth * 1.5}px monospace`; // Adjust font size
+  ctx.font = `${colWidth * 1.5}px monospace`;
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
@@ -270,21 +552,16 @@ function generateAscii(img, canvas) {
   }
 }
 
-// Expose for use in pics/index.html
-window.attachAsciiEffect = function (imgElement) {
+function attachAsciiEffect(imgElement) {
   const wrapper = document.createElement("div");
   wrapper.className = "ascii-container";
-
-  // Insert wrapper before img
   imgElement.parentNode.insertBefore(wrapper, imgElement);
-  // Move img into wrapper
   wrapper.appendChild(imgElement);
 
   const canvas = document.createElement("canvas");
   canvas.className = "ascii-canvas";
   wrapper.appendChild(canvas);
 
-  // Generate when image loads or if already loaded
   if (imgElement.complete) {
     generateAscii(imgElement, canvas);
   } else {
@@ -292,52 +569,100 @@ window.attachAsciiEffect = function (imgElement) {
   }
 };
 
-// --- Markdown Parser ---
-window.parseMarkdown = function (text) {
+/* --- Page Logic: Blog List --- */
+async function loadBlogList() {
+    const list = document.getElementById("blog-list");
+    if(!list) return;
+
+    try {
+        const res = await fetch("/blog/posts.json");
+        if (!res.ok) throw new Error("Failed to load posts");
+        const posts = await res.json();
+
+        list.innerHTML = "";
+
+        posts.forEach(post => {
+            const li = document.createElement("li");
+            // Use clean URL link, e.g., view.html?post=...
+            // The router will handle navigation.
+            li.innerHTML = `
+              <span class="date">[${post.date}]</span>
+              <a href="view.html?post=${post.file}">${post.title}</a>
+            `;
+            list.appendChild(li);
+        });
+    } catch (err) {
+        list.innerHTML = "<li>Error loading transmission log. Connection failed.</li>";
+        console.error(err);
+    }
+}
+
+/* --- Page Logic: Blog Post View --- */
+async function loadPost() {
+    const params = new URLSearchParams(window.location.search);
+    const postFile = params.get("post");
+
+    const titleEl = document.getElementById("post-title");
+    const metaEl = document.getElementById("post-meta");
+    const contentEl = document.getElementById("post-content");
+
+    if (!postFile) {
+        if(titleEl) titleEl.innerText = "Error: No post specified";
+        return;
+    }
+
+    try {
+        const res = await fetch(`/blog/posts/${postFile}`);
+        if (!res.ok) throw new Error("Post not found");
+        const text = await res.text();
+
+        const titleMatch = text.match(/^title:\s*(.*)$/m);
+        const dateMatch = text.match(/^date:\s*(.*)$/m);
+        const tagsMatch = text.match(/^tags:\s*(.*)$/m);
+
+        const title = titleMatch ? titleMatch[1] : "Untitled";
+        const date = dateMatch ? dateMatch[1] : "Unknown Date";
+        const tags = tagsMatch ? tagsMatch[1] : "";
+
+        document.title = `${title} - Aahan Aggarwal`;
+        if(titleEl) {
+            titleEl.innerHTML = `<span class="glitch">${title}</span>`;
+            initDecryptEffect(titleEl);
+        }
+
+        if(metaEl) {
+            metaEl.innerHTML = `<span>Date: ${date}</span> | <span>Tags: [${tags}]</span>`;
+        }
+
+        if(contentEl) {
+            contentEl.innerHTML = parseMarkdown(text);
+        }
+
+    } catch (err) {
+        if(titleEl) titleEl.innerText = "Error: Post not found";
+        console.error(err);
+    }
+}
+
+function parseMarkdown(text) {
   // Remove frontmatter
   text = text.replace(/^---\n[\s\S]*?\n---\n/, '');
-
-  // Headers
   text = text.replace(/^# (.*$)/gim, '<h1>$1</h1>');
   text = text.replace(/^## (.*$)/gim, '<h2>$1</h2>');
   text = text.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-
-  // Blockquotes
   text = text.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
-
-  // Bold
   text = text.replace(/\*\*(.*)\*\*/gim, '<b>$1</b>');
-
-  // Italic
   text = text.replace(/\*(.*)\*/gim, '<i>$1</i>');
-
-  // Links
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>');
-
-  // Code Block
   text = text.replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>');
-
-  // Inline Code
   text = text.replace(/`([^`]+)`/gim, '<code>$1</code>');
-
-  // Lists (unordered)
   text = text.replace(/^\s*-\s(.*)/gim, '<ul><li>$1</li></ul>');
-  // Fix nested uls (hacky but works for simple lists)
   text = text.replace(/<\/ul>\s*<ul>/gim, '');
-
-  // Paragraphs (double newline)
   text = text.replace(/\n\n/gim, '</p><p>');
-
-  // Wrap in p if not starting with a tag
-  // This is a very basic parser, might need refinement
   if (!text.trim().startsWith('<')) {
     text = '<p>' + text + '</p>';
   }
-
-  // Line breaks
   text = text.replace(/\n/gim, '<br />');
-
-  // Clean up empty p tags
   text = text.replace(/<p><\/p>/gim, '');
 
   return text.trim();

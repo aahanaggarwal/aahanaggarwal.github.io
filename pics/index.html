@@ -13,135 +13,31 @@
   <nav id="top-nav">
     <div class="nav-logo">AAHAN.DEV</div>
     <ul>
-      <li><a href="../">Home</a></li>
-      <li><a href="./">Pics</a></li>
-      <li><a href="../blog/">Blog</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/pics/">Pics</a></li>
+      <li><a href="/blog/">Blog</a></li>
     </ul>
   </nav>
   <div id="hud-coords">X: 0000 Y: 0000</div>
   <div id="hud-timer">SESSION: 00:00:00</div>
   <canvas id="circuit"></canvas>
   <div id="cursor"></div>
-  <header>
-    <h1><span class="glitch decrypt-effect">Pictures</span></h1>
-  </header>
-  <main>
-    <div id="gallery"></div>
-  </main>
 
-  <div id="modal">
-    <span id="close-modal">&times;</span>
-    <img id="modal-img" />
+  <div id="content">
+    <header>
+      <h1><span class="glitch decrypt-effect">Pictures</span></h1>
+    </header>
+    <main>
+      <div id="gallery"></div>
+    </main>
+
+    <div id="modal">
+      <span id="close-modal">&times;</span>
+      <img id="modal-img" />
+    </div>
   </div>
 
   <script src="../main.js"></script>
-  <script>
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
-    const closeBtn = document.getElementById("close-modal");
-
-    function openModal(src) {
-      modalImg.src = src;
-      modal.classList.add("show");
-      setTimeout(() => {
-        modal.classList.add("clear");
-      }, 600);
-    }
-
-    function closeModal() {
-      modal.classList.remove("show");
-      modal.classList.remove("clear");
-      // Clear src after transition to avoid flickering
-      setTimeout(() => {
-        if (!modal.classList.contains("show")) {
-          modalImg.src = "";
-        }
-      }, 300);
-    }
-
-    closeBtn.addEventListener("click", closeModal);
-
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("show")) {
-        closeModal();
-      }
-    });
-
-    function extractYear(name) {
-      const match = name.match(/-(\d{4})$/);
-      return match ? parseInt(match[1], 10) : NaN;
-    }
-
-    async function loadPics() {
-      const gallery = document.getElementById("gallery");
-      try {
-        const res = await fetch("/pics/index.json");
-        if (!res.ok) throw new Error("index");
-
-        const data = await res.json();
-        // Handle both old (array) and new (object) structure for backward compatibility/safety
-        const folders = Array.isArray(data) ? data : data.albums;
-        const baseUrl = data.base_url || "";
-
-        folders.sort((a, b) => {
-          const yearA = extractYear(a.name);
-          const yearB = extractYear(b.name);
-          if (isNaN(yearA) && isNaN(yearB)) return 0;
-          if (isNaN(yearA)) return 1;
-          if (isNaN(yearB)) return -1;
-          return yearB - yearA;
-        });
-
-        for (const folder of folders) {
-          const details = document.createElement("details");
-          const summary = document.createElement("summary");
-          summary.textContent = folder.name;
-          details.appendChild(summary);
-          const imagesDiv = document.createElement("div");
-          imagesDiv.className = "album-images";
-          details.appendChild(imagesDiv);
-          gallery.appendChild(details);
-
-          folder.images.forEach((file) => {
-            const img = document.createElement("img");
-            img.loading = "lazy";
-            img.crossOrigin = "anonymous"; // Fix CORS for canvas pixel data access
-
-            // Construct URL: if file is already a full URL, use it; otherwise prepend base_url
-            let src = file;
-            if (!file.startsWith("http")) {
-              if (baseUrl) {
-                src = `${baseUrl}/${file}`;
-              } else {
-                // Fallback for local relative paths (old structure)
-                src = `${folder.name}/${file}`;
-              }
-            }
-
-            img.src = src;
-            img.alt = file;
-            img.addEventListener("click", () =>
-              openModal(img.src)
-            );
-            imagesDiv.appendChild(img);
-            // Attach ASCII effect
-            window.attachAsciiEffect(img);
-          });
-        }
-      } catch (err) {
-        const p = document.createElement("p");
-        p.textContent = "Failed to load pictures.";
-        gallery.appendChild(p);
-      }
-    }
-    loadPics();
-  </script>
 </body>
 
 </html>
