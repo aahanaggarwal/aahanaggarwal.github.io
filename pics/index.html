@@ -18,16 +18,45 @@
       <div id="gallery"></div>
     </main>
 
+    <div id="modal">
+      <span id="close-modal">&times;</span>
+      <img id="modal-img" />
+    </div>
+
     <script src="../main.js"></script>
     <script>
-      function disintegrate(img) {
-        img.classList.add("animate-out");
-        img.addEventListener(
-          "transitionend",
-          () => img.classList.remove("animate-out"),
-          { once: true }
-        );
+      const modal = document.getElementById("modal");
+      const modalImg = document.getElementById("modal-img");
+      const closeBtn = document.getElementById("close-modal");
+
+      function openModal(src) {
+        modalImg.src = src;
+        modal.classList.add("show");
       }
+
+      function closeModal() {
+        modal.classList.remove("show");
+        // Clear src after transition to avoid flickering
+        setTimeout(() => {
+          if (!modal.classList.contains("show")) {
+            modalImg.src = "";
+          }
+        }, 300);
+      }
+
+      closeBtn.addEventListener("click", closeModal);
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("show")) {
+          closeModal();
+        }
+      });
 
       function extractYear(name) {
         const match = name.match(/-(\d{4})$/);
@@ -62,7 +91,9 @@
               img.loading = "lazy";
               img.src = `${folder.name}/${file}`;
               img.alt = file;
-              img.addEventListener("click", () => disintegrate(img));
+              img.addEventListener("click", () =>
+                openModal(`${folder.name}/${file}`)
+              );
               imagesDiv.appendChild(img);
             });
           }
