@@ -1,109 +1,127 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pictures - Aahan Aggarwal</title>
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-  </head>
-  <body>
-    <canvas id="circuit"></canvas>
-    <div id="cursor"></div>
-    <header>
-      <h1 class="typed-text"><span class="glitch">Pictures</span></h1>
-      <p class="contact-info"><a href="../">Home</a></p>
-    </header>
-    <main>
-      <div id="gallery"></div>
-    </main>
 
-    <div id="modal">
-      <span id="close-modal">&times;</span>
-      <img id="modal-img" />
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pictures - Aahan Aggarwal</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+</head>
 
-    <script src="../main.js"></script>
-    <script>
-      const modal = document.getElementById("modal");
-      const modalImg = document.getElementById("modal-img");
-      const closeBtn = document.getElementById("close-modal");
+<body class="crt">
+  <nav id="top-nav">
+    <div class="nav-logo">AAHAN.DEV</div>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Pics</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+    </ul>
+  </nav>
+  <div id="hud-coords">X: 0000 Y: 0000</div>
+  <div id="hud-timer">SESSION: 00:00:00</div>
+  <canvas id="circuit"></canvas>
+  <div id="cursor"></div>
+  <header>
+    <h1><span class="glitch decrypt-effect">Pictures</span></h1>
+  </header>
+  <main>
+    <div id="gallery"></div>
+  </main>
 
-      function openModal(src) {
-        modalImg.src = src;
-        modal.classList.add("show");
-      }
+  <div id="modal">
+    <span id="close-modal">&times;</span>
+    <img id="modal-img" />
+  </div>
 
-      function closeModal() {
-        modal.classList.remove("show");
-        // Clear src after transition to avoid flickering
-        setTimeout(() => {
-          if (!modal.classList.contains("show")) {
-            modalImg.src = "";
-          }
-        }, 300);
-      }
+  <script src="../main.js"></script>
+  <script>
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
+    const closeBtn = document.getElementById("close-modal");
 
-      closeBtn.addEventListener("click", closeModal);
+    function openModal(src) {
+      modalImg.src = src;
+      modal.classList.add("show");
+      setTimeout(() => {
+        modal.classList.add("clear");
+      }, 600);
+    }
 
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          closeModal();
+    function closeModal() {
+      modal.classList.remove("show");
+      modal.classList.remove("clear");
+      // Clear src after transition to avoid flickering
+      setTimeout(() => {
+        if (!modal.classList.contains("show")) {
+          modalImg.src = "";
         }
-      });
+      }, 300);
+    }
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("show")) {
-          closeModal();
-        }
-      });
+    closeBtn.addEventListener("click", closeModal);
 
-      function extractYear(name) {
-        const match = name.match(/-(\d{4})$/);
-        return match ? parseInt(match[1], 10) : NaN;
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal();
       }
+    });
 
-      async function loadPics() {
-        const gallery = document.getElementById("gallery");
-        try {
-          const res = await fetch("index.json");
-          if (!res.ok) throw new Error("index");
-          const folders = (await res.json()).sort((a, b) => {
-            const yearA = extractYear(a.name);
-            const yearB = extractYear(b.name);
-            if (isNaN(yearA) && isNaN(yearB)) return 0;
-            if (isNaN(yearA)) return 1;
-            if (isNaN(yearB)) return -1;
-            return yearB - yearA;
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        closeModal();
+      }
+    });
+
+    function extractYear(name) {
+      const match = name.match(/-(\d{4})$/);
+      return match ? parseInt(match[1], 10) : NaN;
+    }
+
+    async function loadPics() {
+      const gallery = document.getElementById("gallery");
+      try {
+        const res = await fetch("index.json");
+        if (!res.ok) throw new Error("index");
+        const folders = (await res.json()).sort((a, b) => {
+          const yearA = extractYear(a.name);
+          const yearB = extractYear(b.name);
+          if (isNaN(yearA) && isNaN(yearB)) return 0;
+          if (isNaN(yearA)) return 1;
+          if (isNaN(yearB)) return -1;
+          return yearB - yearA;
+        });
+        for (const folder of folders) {
+          const details = document.createElement("details");
+          const summary = document.createElement("summary");
+          summary.textContent = folder.name;
+          details.appendChild(summary);
+          const imagesDiv = document.createElement("div");
+          imagesDiv.className = "album-images";
+          details.appendChild(imagesDiv);
+          gallery.appendChild(details);
+
+          folder.images.forEach((file) => {
+            const img = document.createElement("img");
+            img.loading = "lazy";
+            img.src = `${folder.name}/${file}`;
+            img.alt = file;
+            img.addEventListener("click", () =>
+              openModal(`${folder.name}/${file}`)
+            );
+            imagesDiv.appendChild(img);
+            // Attach ASCII effect
+            window.attachAsciiEffect(img);
           });
-          for (const folder of folders) {
-            const details = document.createElement("details");
-            const summary = document.createElement("summary");
-            summary.textContent = folder.name;
-            details.appendChild(summary);
-            const imagesDiv = document.createElement("div");
-            imagesDiv.className = "album-images";
-            details.appendChild(imagesDiv);
-            gallery.appendChild(details);
-
-            folder.images.forEach((file) => {
-              const img = document.createElement("img");
-              img.loading = "lazy";
-              img.src = `${folder.name}/${file}`;
-              img.alt = file;
-              img.addEventListener("click", () =>
-                openModal(`${folder.name}/${file}`)
-              );
-              imagesDiv.appendChild(img);
-            });
-          }
-        } catch (err) {
-          const p = document.createElement("p");
-          p.textContent = "Failed to load pictures.";
-          gallery.appendChild(p);
         }
+      } catch (err) {
+        const p = document.createElement("p");
+        p.textContent = "Failed to load pictures.";
+        gallery.appendChild(p);
       }
-      loadPics();
-    </script>
-  </body>
+    }
+    loadPics();
+  </script>
+</body>
+
 </html>

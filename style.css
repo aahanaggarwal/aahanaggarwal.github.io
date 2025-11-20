@@ -65,13 +65,11 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
-        background: repeating-linear-gradient(
-          to bottom,
-          rgba(0, 255, 65, 0.1),
-          rgba(0, 255, 65, 0.1) 1px,
-          transparent 1px,
-          transparent 2px
-        );
+        background: repeating-linear-gradient(to bottom,
+            rgba(0, 255, 65, 0.1),
+            rgba(0, 255, 65, 0.1) 1px,
+            transparent 1px,
+            transparent 2px);
       }
 
       #terminal p {
@@ -106,16 +104,19 @@
         from {
           width: 0;
         }
+
         to {
           width: 100%;
         }
       }
 
       @keyframes blink-caret {
+
         from,
         to {
           border-color: transparent;
         }
+
         50% {
           border-color: var(--primary-color);
         }
@@ -133,18 +134,23 @@
         0% {
           transform: none;
         }
+
         20% {
           transform: translate(-2px, 2px);
         }
+
         40% {
           transform: translate(-2px, -2px);
         }
+
         60% {
           transform: translate(2px, 2px);
         }
+
         80% {
           transform: translate(2px, -2px);
         }
+
         100% {
           transform: none;
         }
@@ -190,11 +196,11 @@
         box-shadow: 0 0 10px var(--glow-color);
       }
 
-a.tickcounter:hover {
-  background-color: transparent;
-  color: var(--primary-color);
-  box-shadow: none;
-}
+      a.tickcounter:hover {
+        background-color: transparent;
+        color: var(--primary-color);
+        box-shadow: none;
+      }
 
       a:hover::after {
         width: 100%;
@@ -285,109 +291,378 @@ a.tickcounter:hover {
         transform: translate(-50%, -50%) scale(2);
       }
 
-#gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
+      #gallery {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
 
-details {
-  border: 1px solid var(--primary-color);
-  padding: 1rem;
-}
+      details {
+        border: 1px solid var(--primary-color);
+        padding: 1rem;
+      }
 
-summary {
-  color: var(--primary-color);
-  text-shadow: 0 0 5px var(--glow-color);
-  font-size: 1.5em;
-  cursor: pointer;
-}
+      summary {
+        color: var(--primary-color);
+        text-shadow: 0 0 5px var(--glow-color);
+        font-size: 1.5em;
+        cursor: pointer;
+      }
 
-.album-images {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
+      .album-images {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+      }
 
-.album-images img {
-  width: 100%;
-  border: 2px solid var(--primary-color);
-  box-shadow: 0 0 5px var(--glow-color);
-  cursor: pointer;
-  transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
-}
+      .album-images img {
+        width: 100%;
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 5px var(--glow-color);
+        cursor: pointer;
+        transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
+      }
 
-.album-images img:hover {
-  box-shadow: 0 0 10px var(--glow-color);
-}
+      .album-images img:hover {
+        box-shadow: 0 0 10px var(--glow-color);
+      }
 
-#modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 2000;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+      #modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
-#modal.show {
-  display: flex;
-  opacity: 1;
-}
+      #modal.show {
+        display: flex;
+        opacity: 1;
+        z-index: 10000;
+        /* Always on top */
+      }
 
-#modal-img {
-  max-width: 90%;
-  max-height: 90%;
-  border: 2px solid var(--primary-color);
-  box-shadow: 0 0 20px var(--glow-color);
-  transform: scale(0.8);
-  transition: transform 0.3s ease;
-  object-fit: contain;
-}
+      /* Modal CRT Overlay - Fades out */
+      #modal::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(90deg,
+            rgba(255, 0, 0, 0.06),
+            rgba(0, 255, 0, 0.02),
+            rgba(0, 0, 255, 0.06));
+        z-index: 10001;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+        opacity: 1;
+      }
 
-#modal.show #modal-img {
-  transform: scale(1);
-}
+      #modal::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(18, 16, 16, 0.1);
+        z-index: 10001;
+        pointer-events: none;
+        animation: flicker 0.15s infinite;
+        transition: opacity 0.5s ease;
+        opacity: 1;
+      }
 
-#close-modal {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: var(--primary-color);
-  font-size: 40px;
-  font-weight: bold;
-  cursor: none;
-  text-shadow: 0 0 5px var(--glow-color);
-  transition: text-shadow 0.3s ease, transform 0.3s ease;
-}
+      #modal.clear::before,
+      #modal.clear::after {
+        opacity: 0;
+      }
 
-#close-modal:hover {
-  text-shadow: 0 0 15px var(--glow-color);
-  transform: scale(1.2);
-}
+      #modal-img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 20px var(--glow-color);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+        object-fit: contain;
+      }
+
+      #modal.show #modal-img {
+        animation: holoOpen 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      }
+
+      @keyframes holoOpen {
+        0% {
+          opacity: 0;
+          transform: scale(0.8) skewX(10deg);
+          filter: hue-rotate(90deg) blur(10px);
+          clip-path: inset(50% 0 50% 0);
+        }
+
+        50% {
+          opacity: 1;
+          transform: scale(1.05) skewX(-5deg);
+          filter: hue-rotate(-45deg) blur(2px);
+          clip-path: inset(0 0 0 0);
+        }
+
+        100% {
+          opacity: 1;
+          transform: scale(1) skewX(0deg);
+          filter: hue-rotate(0deg) blur(0);
+          clip-path: inset(0 0 0 0);
+        }
+      }
+
+      #close-modal {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: var(--primary-color);
+        font-size: 40px;
+        font-weight: bold;
+        cursor: none;
+        text-shadow: 0 0 5px var(--glow-color);
+        transition: text-shadow 0.3s ease, transform 0.3s ease;
+      }
+
+      #close-modal:hover {
+        text-shadow: 0 0 15px var(--glow-color);
+        transform: scale(1.2);
+      }
 
 
-#countdown-timer {
-  color: var(--primary-color);
-  font-family: "Fira Code", monospace;
-  font-size: 4em;
-  text-align: center;
-  width: 100%;
-  text-shadow: 0 0 10px var(--glow-color);
-  margin-top: 1rem;
-  font-weight: bold;
-  letter-spacing: 0.1em;
-}
+      #countdown-timer {
+        color: var(--primary-color);
+        font-family: "Fira Code", monospace;
+        font-size: 4em;
+        text-align: center;
+        width: 100%;
+        text-shadow: 0 0 10px var(--glow-color);
+        margin-top: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+      }
 
-@media (max-width: 600px) {
-  #countdown-timer {
-    font-size: 1.5em;
-  }
-}
+      @media (max-width: 600px) {
+        #countdown-timer {
+          font-size: 1.5em;
+        }
+      }
+
+      /* --- Sticky Top Nav --- */
+      #top-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.8);
+        backdrop-filter: blur(5px);
+        z-index: 1001;
+        padding: 0.5rem 2rem;
+        border-bottom: 1px solid var(--primary-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #top-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 2rem;
+      }
+
+      #top-nav li {
+        margin: 0;
+      }
+
+      #top-nav a {
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* --- CRT Overlay --- */
+      .crt::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(90deg,
+            rgba(255, 0, 0, 0.06),
+            rgba(0, 255, 0, 0.02),
+            rgba(0, 0, 255, 0.06));
+        z-index: 9998;
+        background-size: 100% 2px, 3px 100%;
+        pointer-events: none;
+      }
+
+      .crt::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(18, 16, 16, 0.1);
+        opacity: 0;
+        z-index: 9998;
+        pointer-events: none;
+        animation: flicker 0.15s infinite;
+      }
+
+      @keyframes flicker {
+        0% {
+          opacity: 0.027906;
+        }
+
+        5% {
+          opacity: 0.048532;
+        }
+
+        10% {
+          opacity: 0.026333;
+        }
+
+        15% {
+          opacity: 0.042511;
+        }
+
+        20% {
+          opacity: 0.027183;
+        }
+
+        25% {
+          opacity: 0.048919;
+        }
+
+        30% {
+          opacity: 0.028033;
+        }
+
+        35% {
+          opacity: 0.045802;
+        }
+
+        40% {
+          opacity: 0.026957;
+        }
+
+        45% {
+          opacity: 0.047807;
+        }
+
+        50% {
+          opacity: 0.028563;
+        }
+
+        55% {
+          opacity: 0.045545;
+        }
+
+        60% {
+          opacity: 0.026335;
+        }
+
+        65% {
+          opacity: 0.048874;
+        }
+
+        70% {
+          opacity: 0.026992;
+        }
+
+        75% {
+          opacity: 0.043505;
+        }
+
+        80% {
+          opacity: 0.028284;
+        }
+
+        85% {
+          opacity: 0.048358;
+        }
+
+        90% {
+          opacity: 0.026694;
+        }
+
+        95% {
+          opacity: 0.042527;
+        }
+
+        100% {
+          opacity: 0.027906;
+        }
+      }
+
+      /* --- HUD --- */
+      #hud-coords,
+      #hud-timer {
+        position: fixed;
+        font-size: 0.8em;
+        color: var(--primary-color);
+        opacity: 0.7;
+        z-index: 1002;
+        pointer-events: none;
+        font-family: "Fira Code", monospace;
+      }
+
+      #hud-coords {
+        bottom: 1rem;
+        left: 1rem;
+      }
+
+      #hud-timer {
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      /* --- ASCII Art Hover --- */
+      .ascii-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+      }
+
+      .ascii-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10;
+      }
+
+      .ascii-container:hover .ascii-canvas {
+        opacity: 1;
+      }

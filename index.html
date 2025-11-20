@@ -1,185 +1,199 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aahan Aggarwal</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  </head>
-  <body>
-    <canvas id="circuit"></canvas>
-    <div id="cursor"></div>
-    <div id="terminal"></div>
-    <header>
-      <h1 class="typed-text"><span class="glitch">Aahan Aggarwal</span></h1>
-      <p class="contact-info">
-        Contact: <a href="mailto:me@aahan.dev">me@aahan.dev</a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aahan Aggarwal</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body class="crt">
+  <nav id="top-nav">
+    <div class="nav-logo">AAHAN.DEV</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pics/index.html">Pics</a></li>
+      <li><a href="blog/index.html">Blog</a></li>
+    </ul>
+  </nav>
+  <div id="hud-coords">X: 0000 Y: 0000</div>
+  <div id="hud-timer">SESSION: 00:00:00</div>
+  <canvas id="circuit"></canvas>
+  <div id="cursor"></div>
+  <div id="terminal"></div>
+  <header>
+    <h1><span class="glitch decrypt-effect">Aahan Aggarwal</span></h1>
+    <p class="contact-info">
+      Contact: <a href="mailto:me@aahan.dev">me@aahan.dev</a>
+    </p>
+    <div id="countdown-timer"></div>
+  </header>
+
+  <main>
+    <section>
+      <h2>// Present</h2>
+      <p>
+        Software Engineer on the Code Search and Indexing team at
+        <a href="https://about.meta.com/">Meta</a> working on <a
+          href="https://github.com/facebookincubator/glean">Glean.</a>
       </p>
-      <div id="countdown-timer"></div>
-    </header>
+    </section>
 
-    <main>
-      <section>
-        <h2>// Present</h2>
-        <p>
-          Software Engineer on the Code Search and Indexing team at
-          <a href="https://about.meta.com/">Meta</a> working on <a href="https://github.com/facebookincubator/glean">Glean.</a>
-        </p>
-      </section>
+    <section>
+      <h2>// Past</h2>
+      <ul>
+        <li>Software Engineer on the Mobile GraphQL Runtime team at Meta.</li>
+        <li>
+          Software Engineer on Release Infrastructure for AR/VR devices at
+          Meta.
+        </li>
+        <li>
+          Master's in CS @
+          <a href="https://www.purdue.edu">Purdue University</a>.
+        </li>
+        <li>Bachelor's in CS @ Purdue University.</li>
+      </ul>
+    </section>
 
-      <section>
-        <h2>// Past</h2>
-        <ul>
-          <li>Software Engineer on the Mobile GraphQL Runtime team at Meta.</li>
-          <li>
-            Software Engineer on Release Infrastructure for AR/VR devices at
-            Meta.
-          </li>
-          <li>
-            Master's in CS @
-            <a href="https://www.purdue.edu">Purdue University</a>.
-          </li>
-          <li>Bachelor's in CS @ Purdue University.</li>
-        </ul>
-      </section>
+    <section>
+      <h2><a href="pics">// Pictures</a></h2>
+    </section>
 
-      <section>
-        <h2><a href="pics">// Pictures</a></h2>
-      </section>
+    <nav class="links">
+      <h2>// Links</h2>
+      <ul>
+        <li><a href="https://www.linkedin.com/in/aahanaggarwal99/">LinkedIn</a></li>
+        <li><a href="https://twitter.com/aahanaggarwal">Twitter</a></li>
+        <li><a href="https://github.com/aahanaggarwal/">GitHub</a></li>
+        <li><a href="https://www.instagram.com/aahan.aggarwal99/">Instagram</a></li>
+      </ul>
+    </nav>
+  </main>
 
-      <nav class="links">
-        <h2>// Links</h2>
-        <ul>
-          <li><a href="https://www.linkedin.com/in/aahanaggarwal99/">LinkedIn</a></li>
-          <li><a href="https://twitter.com/aahanaggarwal">Twitter</a></li>
-          <li><a href="https://github.com/aahanaggarwal/">GitHub</a></li>
-          <li><a href="https://www.instagram.com/aahan.aggarwal99/">Instagram</a></li>
-        </ul>
-      </nav>
-    </main>
+  <script src="main.js"></script>
+  <script>
+    const terminal = document.getElementById("terminal");
+    const termOutput = document.createElement("div");
+    terminal.appendChild(termOutput);
+    let termOpen = false;
+    let currentSpan;
 
-    <script src="main.js"></script>
-    <script>
-      const terminal = document.getElementById("terminal");
-      const termOutput = document.createElement("div");
-      terminal.appendChild(termOutput);
-      let termOpen = false;
-      let currentSpan;
+    function toggleTerminal() {
+      termOpen = !termOpen;
+      terminal.classList.toggle("show", termOpen);
+      if (termOpen) {
+        termOutput.innerHTML = "";
+        newTermLine();
+      }
+    }
 
-      function toggleTerminal() {
-        termOpen = !termOpen;
-        terminal.classList.toggle("show", termOpen);
-        if (termOpen) {
-          termOutput.innerHTML = "";
+    function newTermLine() {
+      const p = document.createElement("p");
+      p.className = "input-line";
+      const span = document.createElement("span");
+      p.appendChild(span);
+      termOutput.appendChild(p);
+      currentSpan = span;
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "`" && e.ctrlKey) {
+        toggleTerminal();
+        e.preventDefault();
+        return;
+      }
+      if (!termOpen) return;
+      if (e.key === "Backspace") {
+        currentSpan.textContent = currentSpan.textContent.slice(0, -1);
+        e.preventDefault();
+      } else if (e.key === "Enter") {
+        const cmd = currentSpan.textContent.trim();
+        handleCommand(cmd).then(() => {
           newTermLine();
-        }
+        });
+        e.preventDefault();
+      } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+        currentSpan.textContent += e.key;
+        e.preventDefault();
       }
+    });
 
-      function newTermLine() {
+    function handleCommand(cmd) {
+      return new Promise((resolve) => {
         const p = document.createElement("p");
-        p.className = "input-line";
-        const span = document.createElement("span");
-        p.appendChild(span);
-        termOutput.appendChild(p);
-        currentSpan = span;
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "`" && e.ctrlKey) {
-          toggleTerminal();
-          e.preventDefault();
-          return;
-        }
-        if (!termOpen) return;
-        if (e.key === "Backspace") {
-          currentSpan.textContent = currentSpan.textContent.slice(0, -1);
-          e.preventDefault();
-        } else if (e.key === "Enter") {
-          const cmd = currentSpan.textContent.trim();
-          handleCommand(cmd).then(() => {
-            newTermLine();
-          });
-          e.preventDefault();
-        } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
-          currentSpan.textContent += e.key;
-          e.preventDefault();
+        const [base, ...args] = cmd.split(/\s+/);
+        switch (base) {
+          case "help":
+            p.textContent =
+              "Commands: help, scan, clear, about, echo, date, joke, rickroll, sudo, secret";
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "scan":
+            p.textContent = "Scanning network...";
+            termOutput.appendChild(p);
+            setTimeout(() => {
+              const done = document.createElement("p");
+              done.textContent = "Scan complete. 0 vulnerabilities found.";
+              termOutput.appendChild(done);
+              resolve();
+            }, 1000);
+            break;
+          case "clear":
+            termOutput.innerHTML = "";
+            resolve();
+            break;
+          case "about":
+            p.textContent =
+              "I'm Aahan Aggarwal, a developer exploring circuits and code.";
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "echo":
+            p.textContent = args.join(" ");
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "date":
+            p.textContent = new Date().toString();
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "joke":
+            const jokes = [
+              "Why do programmers prefer dark mode? Because light attracts bugs.",
+              "There are only 10 types of people in the world: those who understand binary and those who don't.",
+            ];
+            p.textContent = jokes[Math.floor(Math.random() * jokes.length)];
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "rickroll":
+            p.innerHTML =
+              '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Never gonna give you up...</a>';
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "sudo":
+            p.textContent = "Nice try, you don't have sudo access here.";
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          case "secret":
+            p.textContent = "The cake is a lie.";
+            termOutput.appendChild(p);
+            resolve();
+            break;
+          default:
+            p.textContent = `Unknown command: ${cmd}`;
+            termOutput.appendChild(p);
+            resolve();
         }
       });
+    }
+  </script>
+</body>
 
-      function handleCommand(cmd) {
-        return new Promise((resolve) => {
-          const p = document.createElement("p");
-          const [base, ...args] = cmd.split(/\s+/);
-          switch (base) {
-            case "help":
-              p.textContent =
-                "Commands: help, scan, clear, about, echo, date, joke, rickroll, sudo, secret";
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "scan":
-              p.textContent = "Scanning network...";
-              termOutput.appendChild(p);
-              setTimeout(() => {
-                const done = document.createElement("p");
-                done.textContent = "Scan complete. 0 vulnerabilities found.";
-                termOutput.appendChild(done);
-                resolve();
-              }, 1000);
-              break;
-            case "clear":
-              termOutput.innerHTML = "";
-              resolve();
-              break;
-            case "about":
-              p.textContent =
-                "I'm Aahan Aggarwal, a developer exploring circuits and code.";
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "echo":
-              p.textContent = args.join(" ");
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "date":
-              p.textContent = new Date().toString();
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "joke":
-              const jokes = [
-                "Why do programmers prefer dark mode? Because light attracts bugs.",
-                "There are only 10 types of people in the world: those who understand binary and those who don't.",
-              ];
-              p.textContent = jokes[Math.floor(Math.random() * jokes.length)];
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "rickroll":
-              p.innerHTML =
-                '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Never gonna give you up...</a>';
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "sudo":
-              p.textContent = "Nice try, you don't have sudo access here.";
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            case "secret":
-              p.textContent = "The cake is a lie.";
-              termOutput.appendChild(p);
-              resolve();
-              break;
-            default:
-              p.textContent = `Unknown command: ${cmd}`;
-              termOutput.appendChild(p);
-              resolve();
-          }
-        });
-      }
-    </script>
-  </body>
 </html>
