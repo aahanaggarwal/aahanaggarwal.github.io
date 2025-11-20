@@ -21,3 +21,7 @@ website/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Cloudinary
+cloudinary_credentials.json
+__pycache__/

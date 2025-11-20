@@ -13,9 +13,9 @@
   <nav id="top-nav">
     <div class="nav-logo">AAHAN.DEV</div>
     <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="index.html">Pics</a></li>
-      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../">Home</a></li>
+      <li><a href="./">Pics</a></li>
+      <li><a href="../blog/">Blog</a></li>
     </ul>
   </nav>
   <div id="hud-coords">X: 0000 Y: 0000</div>
@@ -83,7 +83,13 @@
       try {
         const res = await fetch("index.json");
         if (!res.ok) throw new Error("index");
-        const folders = (await res.json()).sort((a, b) => {
+
+        const data = await res.json();
+        // Handle both old (array) and new (object) structure for backward compatibility/safety
+        const folders = Array.isArray(data) ? data : data.albums;
+        const baseUrl = data.base_url || "";
+
+        folders.sort((a, b) => {
           const yearA = extractYear(a.name);
           const yearB = extractYear(b.name);
           if (isNaN(yearA) && isNaN(yearB)) return 0;
@@ -91,6 +97,7 @@
           if (isNaN(yearB)) return -1;
           return yearB - yearA;
         });
+
         for (const folder of folders) {
           const details = document.createElement("details");
           const summary = document.createElement("summary");
@@ -104,10 +111,22 @@
           folder.images.forEach((file) => {
             const img = document.createElement("img");
             img.loading = "lazy";
-            img.src = `${folder.name}/${file}`;
+
+            // Construct URL: if file is already a full URL, use it; otherwise prepend base_url
+            let src = file;
+            if (!file.startsWith("http")) {
+              if (baseUrl) {
+                src = `${baseUrl}/${file}`;
+              } else {
+                // Fallback for local relative paths (old structure)
+                src = `${folder.name}/${file}`;
+              }
+            }
+
+            img.src = src;
             img.alt = file;
             img.addEventListener("click", () =>
-              openModal(`${folder.name}/${file}`)
+              openModal(img.src)
             );
             imagesDiv.appendChild(img);
             // Attach ASCII effect
