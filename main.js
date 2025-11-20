@@ -112,3 +112,33 @@
         );
       }
       setInterval(updateColor, 5000);
+// Timer Logic
+(function() {
+  const timerElement = document.getElementById("countdown-timer");
+  // Target date: December 19, 2025 09:30:00 London Time
+  // London in December is GMT (UTC+0)
+  const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance < 0) {
+      timerElement.innerHTML = "0:00:00:00";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Format with colons: DDD:HH:MM:SS
+    // Ensure 2 digits for hours, minutes, seconds. Days can be variable length.
+    timerElement.innerHTML =
+      `${days}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  setInterval(updateTimer, 1000);
+  updateTimer(); // Initial call
+})();
