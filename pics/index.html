@@ -81,7 +81,7 @@
     async function loadPics() {
       const gallery = document.getElementById("gallery");
       try {
-        const res = await fetch("index.json");
+        const res = await fetch("/pics/index.json");
         if (!res.ok) throw new Error("index");
 
         const data = await res.json();
@@ -111,6 +111,7 @@
           folder.images.forEach((file) => {
             const img = document.createElement("img");
             img.loading = "lazy";
+            img.crossOrigin = "anonymous"; // Fix CORS for canvas pixel data access
 
             // Construct URL: if file is already a full URL, use it; otherwise prepend base_url
             let src = file;
