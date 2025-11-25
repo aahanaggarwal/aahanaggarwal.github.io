@@ -7,67 +7,15 @@
     <title>Loading... - Aahan Aggarwal</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-    <style>
-        .blog-post {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .blog-meta {
-            color: var(--primary-color);
-            opacity: 0.7;
-            font-size: 0.9em;
-            margin-bottom: 2rem;
-            border-bottom: 1px dashed var(--primary-color);
-            padding-bottom: 0.5rem;
-        }
-
-        .blog-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 3rem;
-            font-size: 1.2em;
-        }
-
-        /* Markdown Specific Styles */
-        blockquote {
-            border-left: 4px solid var(--primary-color);
-            margin: 1rem 0;
-            padding-left: 1rem;
-            font-style: italic;
-            opacity: 0.8;
-        }
-
-        pre {
-            background: rgba(0, 255, 65, 0.1);
-            padding: 1rem;
-            overflow-x: auto;
-            border: 1px solid var(--primary-color);
-        }
-
-        code {
-            font-family: "Fira Code", monospace;
-            background: rgba(0, 255, 65, 0.1);
-            padding: 0.2rem 0.4rem;
-        }
-
-        pre code {
-            background: none;
-            padding: 0;
-        }
-    </style>
 </head>
 
 <body class="crt">
     <nav id="top-nav">
         <div class="nav-logo">AAHAN.DEV</div>
         <ul>
-            <li><a href="../">Home</a></li>
-            <li><a href="../pics/">Pics</a></li>
-            <li><a href="./">Blog</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pics/">Pics</a></li>
+            <li><a href="/blog/">Blog</a></li>
         </ul>
     </nav>
     <div id="hud-coords">X: 0000 Y: 0000</div>
@@ -76,73 +24,25 @@
     <canvas id="circuit"></canvas>
     <div id="cursor"></div>
 
-    <main class="blog-post">
-        <header>
-            <h1 id="post-title"><span class="glitch decrypt-effect">Loading...</span></h1>
-            <div class="blog-meta" id="post-meta">
-                <!-- Meta injected here -->
-            </div>
-        </header>
+    <div id="content">
+      <main class="blog-post">
+          <header>
+              <h1 id="post-title"><span class="glitch decrypt-effect">Loading...</span></h1>
+              <div class="blog-meta" id="post-meta">
+                  <!-- Meta injected here -->
+              </div>
+          </header>
 
-        <article id="post-content" class="blog-content">
-            <!-- Content injected here -->
-        </article>
+          <article id="post-content" class="blog-content">
+              <!-- Content injected here -->
+          </article>
 
-        <a href="./" class="back-link">
-            << Return to Log</a>
-    </main>
+          <a href="/blog/" class="back-link">
+              << Return to Log</a>
+      </main>
+    </div>
 
     <script src="../main.js"></script>
-    <script>
-        async function loadPost() {
-            const params = new URLSearchParams(window.location.search);
-            const postFile = params.get("post");
-
-            if (!postFile) {
-                document.getElementById("post-title").innerText = "Error: No post specified";
-                return;
-            }
-
-            try {
-                // Fetch the markdown file
-                const res = await fetch(`posts/${postFile}`);
-                if (!res.ok) throw new Error("Post not found");
-                const text = await res.text();
-
-                // Fetch metadata from posts.json to get the title/date cleanly
-                // Or parse frontmatter again here. Let's rely on posts.json for meta if possible, 
-                // but we need to read the file content anyway.
-                // Let's parse frontmatter manually for the title in the tab
-
-                const titleMatch = text.match(/^title:\s*(.*)$/m);
-                const dateMatch = text.match(/^date:\s*(.*)$/m);
-                const tagsMatch = text.match(/^tags:\s*(.*)$/m);
-
-                const title = titleMatch ? titleMatch[1] : "Untitled";
-                const date = dateMatch ? dateMatch[1] : "Unknown Date";
-                const tags = tagsMatch ? tagsMatch[1] : "";
-
-                document.title = `${title} - Aahan Aggarwal`;
-                document.getElementById("post-title").innerHTML = `<span class="glitch">${title}</span>`;
-
-                // Re-trigger decrypt effect if needed, or just let it be
-                // The decrypt effect runs on load on .decrypt-effect elements.
-                // Since we changed the innerHTML, we might want to re-run it.
-                new DecryptEffect(document.getElementById("post-title"));
-
-                document.getElementById("post-meta").innerHTML = `<span>Date: ${date}</span> | <span>Tags: [${tags}]</span>`;
-
-                // Render Markdown
-                document.getElementById("post-content").innerHTML = window.parseMarkdown(text);
-
-            } catch (err) {
-                document.getElementById("post-title").innerText = "Error: Post not found";
-                console.error(err);
-            }
-        }
-
-        loadPost();
-    </script>
 </body>
 
 </html>
