@@ -105,6 +105,25 @@ async function handleLocation(isInitial = false) {
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
 
+  // Pre-fetch blog post if applicable to save time
+  let preFetchPromise = null;
+  if (path.includes("view.html")) {
+    const params = new URLSearchParams(search);
+    const postFile = params.get("post");
+    if (postFile) {
+      preFetchPromise = fetch(`/blog/posts/${postFile}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Post not found");
+          return res.text();
+        })
+        .catch(err => {
+          console.error("Pre-fetch failed:", err);
+          return null;
+        });
+      window._preFetchedPost = preFetchPromise;
+    }
+  }
+
   try {
     const res = await fetch(fetchUrl);
     if (!res.ok) throw new Error(`Failed to load ${fetchUrl}: ${res.status}`);
@@ -124,6 +143,10 @@ async function handleLocation(isInitial = false) {
 
       // Re-run visuals
       initDecryptEffect();
+
+      // Force update timers for instant feedback
+      updateHudTimer();
+      updateCountdown();
 
       // Run Page Script
       runPageScript(path, search);
@@ -153,6 +176,10 @@ function runPageScript(path, search) {
   }
 }
 
+/* --- Data / State --- */
+const startTime = Date.now();
+const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
+
 /* --- Page Logic: Home / General --- */
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
@@ -160,6 +187,44 @@ let primary = getComputedStyle(document.documentElement).getPropertyValue("--pri
 let nodes = [];
 const nodeCount = 60;
 let cursorPos = { x: null, y: null };
+
+function updateHudTimer() {
+  const hudTimer = document.getElementById("hud-timer");
+  if (hudTimer) {
+    const elapsed = Date.now() - startTime;
+    const date = new Date(elapsed);
+    const h = date.getUTCHours().toString().padStart(2, '0');
+    const m = date.getUTCMinutes().toString().padStart(2, '0');
+    const s = date.getUTCSeconds().toString().padStart(2, '0');
+    hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
+  }
+}
+
+function updateCountdown() {
+  const timerElement = document.getElementById("countdown-timer");
+
+  // Continuous check to catch the exact moment
+  checkSurprise(targetDate);
+
+  if (!timerElement) return;
+
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance < 0) {
+    timerElement.innerHTML = "THE WAIT IS OVER";
+    timerElement.classList.add("glitch");
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  timerElement.innerHTML =
+    `${days}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
 
 function initCircuit() {
   if (!circuitCanvas) return;
@@ -197,18 +262,8 @@ function initGlobalListeners() {
   });
 
   // HUD Timer
-  const hudTimer = document.getElementById("hud-timer");
-  const startTime = Date.now();
-  setInterval(() => {
-    if (hudTimer) {
-      const elapsed = Date.now() - startTime;
-      const date = new Date(elapsed);
-      const h = date.getUTCHours().toString().padStart(2, '0');
-      const m = date.getUTCMinutes().toString().padStart(2, '0');
-      const s = date.getUTCSeconds().toString().padStart(2, '0');
-      hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
-    }
-  }, 1000);
+  updateHudTimer(); // Run immediately
+  setInterval(updateHudTimer, 1000);
 
   // Countdown Timer (Header) - Check existence periodically or on load?
   // It's in header, which might be swapped. So we should check inside the interval.
@@ -326,37 +381,11 @@ function updateColor() {
 }
 
 function startCountdown() {
-  // Target date: December 19, 2025 09:30:00 London Time (GMT)
-  const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
-
   // Initial check
   checkSurprise(targetDate);
 
-  setInterval(() => {
-    const timerElement = document.getElementById("countdown-timer");
-
-    // Continuous check to catch the exact moment
-    checkSurprise(targetDate);
-
-    if (!timerElement) return;
-
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance < 0) {
-      timerElement.innerHTML = "THE WAIT IS OVER";
-      timerElement.classList.add("glitch"); // Add glitch effect to the specific message
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    timerElement.innerHTML =
-      `${days}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }, 1000);
+  updateCountdown(); // Run immediately
+  setInterval(updateCountdown, 1000);
 }
 
 function checkSurprise(targetDate) {
@@ -665,9 +694,19 @@ async function loadPost() {
   }
 
   try {
-    const res = await fetch(`/blog/posts/${postFile}`);
-    if (!res.ok) throw new Error("Post not found");
-    const text = await res.text();
+    let text;
+    // Check for pre-fetched promise
+    if (window._preFetchedPost) {
+      text = await window._preFetchedPost;
+      window._preFetchedPost = null; // Clear it
+    }
+
+    // If no pre-fetch or it failed (null), fetch now
+    if (!text) {
+      const res = await fetch(`/blog/posts/${postFile}`);
+      if (!res.ok) throw new Error("Post not found");
+      text = await res.text();
+    }
 
     const titleMatch = text.match(/^title:\s*(.*)$/m);
     const dateMatch = text.match(/^date:\s*(.*)$/m);
