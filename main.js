@@ -591,7 +591,9 @@ function closeModal() {
 function generateAscii(img, canvas) {
   const ctx = canvas.getContext("2d");
   const width = 100;
-  const height = (img.height / img.width) * width;
+  // Use rendered aspect ratio (which is 1:1 square now)
+  const renderedRatio = img.width / img.height;
+  const height = width / renderedRatio; // Should be 100 if square
 
   canvas.width = width;
   canvas.height = height;
@@ -600,13 +602,31 @@ function generateAscii(img, canvas) {
   tempCanvas.width = width;
   tempCanvas.height = height;
   const tempCtx = tempCanvas.getContext('2d');
-  tempCtx.drawImage(img, 0, 0, width, height);
+
+  // Calculate crop to mimic object-fit: cover
+  const nw = img.naturalWidth;
+  const nh = img.naturalHeight;
+  let sx = 0, sy = 0, sw = nw, sh = nh;
+
+  // We want to crop to the user-visible aspect ratio (square)
+  // If natural is wider than tall -> crop sides
+  if (nw / nh > renderedRatio) {
+    sw = nh * renderedRatio;
+    sx = (nw - sw) / 2;
+  } else {
+    // If natural is taller -> crop top/bottom
+    sh = nw / renderedRatio;
+    sy = (nh - sh) / 2;
+  }
+
+  // Draw the cropped source into the temp canvas (squishing into 100x100 grid)
+  tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
 
   const imageData = tempCtx.getImageData(0, 0, width, height);
   const data = imageData.data;
   const chars = "@%#*+=-:. ";
 
-  // Prepare overlay canvas
+  // Prepare overlay canvas matching rendered size
   canvas.width = img.width;
   canvas.height = img.height;
   ctx.clearRect(0, 0, canvas.width, canvas.height);

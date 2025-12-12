@@ -41,6 +41,22 @@ def add_album(folder_path):
 
     base_url = data.get("base_url", "")
     
+    # Calculate next available image ID
+    max_id = 0
+    for album in data.get("albums", []):
+        for img_path in album.get("images", []):
+            try:
+                # Extract filename from path (e.g., ".../83.jpg" -> "83")
+                filename = Path(img_path).stem
+                img_id = int(filename)
+                if img_id > max_id:
+                    max_id = img_id
+            except ValueError:
+                continue
+    
+    next_id = max_id + 1
+    print(f"Starting auto-renumbering from ID: {next_id}")
+
     # Check if album already exists
     existing_album = next((a for a in data["albums"] if a["name"] == album_name), None)
     if existing_album:
@@ -61,10 +77,19 @@ def add_album(folder_path):
         return
 
     for img_file in files:
-        print(f"  Uploading {img_file.name}...")
+        # Use next available ID for the filename
+        new_filename = f"{next_id}{img_file.suffix.lower()}"
+        print(f"  Uploading {img_file.name} as {new_filename}...")
         
-        # Public ID: album_name/filename_without_ext
-        public_id = f"{album_name}/{img_file.stem}"
+        # Public ID: album_name/number (no extension for public_id usually, but keeping consistency)
+        # Actually standard cloudinary public_id doesn't always have extension, but user's existing ones seem to be
+        # mapped to "album/number". Let's stick to "album/number" format if that matches their preference,
+        # OR "album/number" and let Cloudinary add extension.
+        # Looking at index.json: "v.../album/album/83.jpg"
+        # The public_id used in previous code was: f"{album_name}/{img_file.stem}"
+        # If I change stem to number, it becomes "album_name/84". 
+        
+        public_id = f"{album_name}/{next_id}"
         
         try:
             response = cloudinary.uploader.upload(
@@ -90,6 +115,8 @@ def add_album(folder_path):
                 print(f"    -> Added: {stored_path}")
             else:
                 print(f"    -> Already in index")
+            
+            next_id += 1
                 
         except Exception as e:
             print(f"    Error uploading {img_file.name}: {e}")
