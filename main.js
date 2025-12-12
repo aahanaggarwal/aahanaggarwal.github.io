@@ -361,13 +361,27 @@ function startCountdown() {
 
 function checkSurprise(targetDate) {
   const now = Date.now();
-  if (now >= targetDate) {
+  const endDate = new Date("2025-12-28T00:00:00Z").getTime();
+
+  // Active period: After start date AND before end date
+  if (now >= targetDate && now < endDate) {
     if (!document.body.classList.contains("special-mode")) {
       document.body.classList.add("special-mode");
       // Force color update immediately
       primary = "#ff69b4";
       document.documentElement.style.setProperty("--primary-color", primary);
       document.documentElement.style.setProperty("--glow-color", "rgba(255, 105, 180, 0.75)");
+    }
+  } else {
+    // Outside active period (either before start or after end)
+    if (document.body.classList.contains("special-mode")) {
+      document.body.classList.remove("special-mode");
+      // NOTE: We don't necessarily need to reset color here immediately as updateColor loop will pick it up,
+      // but for immediate feedback if the timer crosses the boundary while open:
+      document.documentElement.style.removeProperty("--primary-color");
+      document.documentElement.style.removeProperty("--glow-color");
+      // Let the next updateColor() loop pick a random color or reset
+      updateColor();
     }
   }
 }
