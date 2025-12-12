@@ -23,7 +23,7 @@
         background-color: var(--background-color);
         color: var(--primary-color);
         margin: 0;
-        padding: 2rem 4rem;
+        padding: 2rem 4rem 2rem 3rem;
         animation: fadeIn 1s ease-in-out;
         cursor: none;
       }
@@ -203,7 +203,11 @@
 
       @media (max-width: 600px) {
         body {
-          padding: 1rem;
+          padding: 2rem 1rem 1rem 1rem;
+        }
+
+        #top-nav {
+          padding: 0.2rem 1rem;
         }
 
         h1 {
@@ -433,7 +437,7 @@
         background: rgba(10, 10, 10, 0.8);
         backdrop-filter: blur(5px);
         z-index: 1001;
-        padding: 0.5rem 2rem;
+        padding: 0.2rem 2rem;
         border-bottom: 1px solid var(--primary-color);
         display: flex;
         justify-content: space-between;
@@ -627,52 +631,52 @@
 
       /* --- Blog Post View --- */
       .blog-post {
-          max-width: 800px;
-          margin: 0 auto;
+        max-width: 800px;
+        margin: 0 auto;
       }
 
       .blog-meta {
-          color: var(--primary-color);
-          opacity: 0.7;
-          font-size: 0.9em;
-          margin-bottom: 2rem;
-          border-bottom: 1px dashed var(--primary-color);
-          padding-bottom: 0.5rem;
+        color: var(--primary-color);
+        opacity: 0.7;
+        font-size: 0.9em;
+        margin-bottom: 2rem;
+        border-bottom: 1px dashed var(--primary-color);
+        padding-bottom: 0.5rem;
       }
 
       .blog-content p {
-          margin-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
       }
 
       .back-link {
-          display: block;
-          margin-top: 3rem;
-          font-size: 1.2em;
+        display: block;
+        margin-top: 3rem;
+        font-size: 1.2em;
       }
 
       /* Markdown Specific Styles */
       blockquote {
-          border-left: 4px solid var(--primary-color);
-          margin: 1rem 0;
-          padding-left: 1rem;
-          font-style: italic;
-          opacity: 0.8;
+        border-left: 4px solid var(--primary-color);
+        margin: 1rem 0;
+        padding-left: 1rem;
+        font-style: italic;
+        opacity: 0.8;
       }
 
       pre {
-          background: rgba(0, 255, 65, 0.1);
-          padding: 1rem;
-          overflow-x: auto;
-          border: 1px solid var(--primary-color);
+        background: rgba(0, 255, 65, 0.1);
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid var(--primary-color);
       }
 
       code {
-          font-family: "Fira Code", monospace;
-          background: rgba(0, 255, 65, 0.1);
-          padding: 0.2rem 0.4rem;
+        font-family: "Fira Code", monospace;
+        background: rgba(0, 255, 65, 0.1);
+        padding: 0.2rem 0.4rem;
       }
 
       pre code {
-          background: none;
-          padding: 0;
+        background: none;
+        padding: 0;
       }
