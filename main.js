@@ -26,18 +26,18 @@ function initRouter() {
 
     // Clean URL (remove index.html)
     let cleanPath = url.pathname;
-  // Ensure clean path (remove index.html)
+    // Ensure clean path (remove index.html)
     if (cleanPath.endsWith("/index.html")) {
       cleanPath = cleanPath.replace("/index.html", "/");
     } else if (cleanPath.endsWith("index.html")) {
-       cleanPath = cleanPath.replace("index.html", "");
+      cleanPath = cleanPath.replace("index.html", "");
     }
 
-  // Fix relative path issue for SPA
-  // If we are at /pics/ and click "Blog" (../blog/), the browser resolves the URL correctly to /blog/ before we get it.
-  // However, the cleanPath logic above assumes we want to push that exact resolved path.
+    // Fix relative path issue for SPA
+    // If we are at /pics/ and click "Blog" (../blog/), the browser resolves the URL correctly to /blog/ before we get it.
+    // However, the cleanPath logic above assumes we want to push that exact resolved path.
 
-  // Note: if we are at /pics/ and click a link that resolves to /pics/index.html, cleanPath becomes /pics/
+    // Note: if we are at /pics/ and click a link that resolves to /pics/index.html, cleanPath becomes /pics/
 
     // Construct search/hash if needed
     const cleanUrl = cleanPath + url.search + url.hash;
@@ -60,8 +60,8 @@ async function handleLocation(isInitial = false) {
   // If initial load, just trigger the specific logic for the current page
   // because the HTML is already loaded.
   if (isInitial) {
-      runPageScript(path, search);
-      return;
+    runPageScript(path, search);
+    return;
   }
 
   // Determine which file to fetch based on path
@@ -71,24 +71,24 @@ async function handleLocation(isInitial = false) {
   if (path.endsWith("/")) {
     fetchUrl += "index.html";
   } else if (!path.endsWith(".html")) {
-     // e.g. /blog -> /blog/index.html (if server redirects)
-     // or /blog -> /blog (if checking file existence).
-     // GitHub Pages usually handles /folder as /folder/index.html
-     // But if we want to fetch it, we should probably append index.html
-     // to be safe, unless we trust the server returns it for the dir.
-     // Let's assume appending index.html for directories.
-     // But how do we know if it's a directory?
-     // Our specific routes:
-     // / -> index.html
-     // /pics/ -> pics/index.html
-     // /blog/ -> blog/index.html
-     // /blog/view.html -> blog/view.html
+    // e.g. /blog -> /blog/index.html (if server redirects)
+    // or /blog -> /blog (if checking file existence).
+    // GitHub Pages usually handles /folder as /folder/index.html
+    // But if we want to fetch it, we should probably append index.html
+    // to be safe, unless we trust the server returns it for the dir.
+    // Let's assume appending index.html for directories.
+    // But how do we know if it's a directory?
+    // Our specific routes:
+    // / -> index.html
+    // /pics/ -> pics/index.html
+    // /blog/ -> blog/index.html
+    // /blog/view.html -> blog/view.html
 
-     // Simple router map for our known structure:
-     if (path === "/" || path === "/index.html") fetchUrl = "/index.html";
-     else if (path.startsWith("/pics")) fetchUrl = "/pics/index.html";
-     else if (path.startsWith("/blog") && !path.includes("view.html")) fetchUrl = "/blog/index.html";
-     else if (path.includes("view.html")) fetchUrl = "/blog/view.html";
+    // Simple router map for our known structure:
+    if (path === "/" || path === "/index.html") fetchUrl = "/index.html";
+    else if (path.startsWith("/pics")) fetchUrl = "/pics/index.html";
+    else if (path.startsWith("/blog") && !path.includes("view.html")) fetchUrl = "/blog/index.html";
+    else if (path.includes("view.html")) fetchUrl = "/blog/view.html";
   }
 
   // Fallback: if we are trying to fetch /pics/blog/ or similar weird paths due to relative link resolution failures in static server context (though URL object resolution should handle it).
@@ -139,18 +139,18 @@ async function handleLocation(isInitial = false) {
 }
 
 function runPageScript(path, search) {
-    // Detect page type
-    if (path.startsWith("/pics")) {
-        loadPics();
-    } else if (path.startsWith("/blog")) {
-        if (path.includes("view.html") || search.includes("post=")) {
-             loadPost();
-        } else {
-             loadBlogList();
-        }
+  // Detect page type
+  if (path.startsWith("/pics")) {
+    loadPics();
+  } else if (path.startsWith("/blog")) {
+    if (path.includes("view.html") || search.includes("post=")) {
+      loadPost();
     } else {
-        // Home page - nothing special dynamic unless we want to re-init something
+      loadBlogList();
     }
+  } else {
+    // Home page - nothing special dynamic unless we want to re-init something
+  }
 }
 
 /* --- Page Logic: Home / General --- */
@@ -162,70 +162,70 @@ const nodeCount = 60;
 let cursorPos = { x: null, y: null };
 
 function initCircuit() {
-    if (!circuitCanvas) return;
-    resize();
-    window.addEventListener("resize", resize);
-    drawCircuit();
+  if (!circuitCanvas) return;
+  resize();
+  window.addEventListener("resize", resize);
+  drawCircuit();
 
-    // Color update interval
-    setInterval(updateColor, 5000);
+  // Color update interval
+  setInterval(updateColor, 5000);
 }
 
 function initGlobalListeners() {
-    // Cursor
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", (e) => {
-        if(cursor) {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        }
-        cursorPos.x = e.clientX;
-        cursorPos.y = e.clientY;
-
-        // HUD Coords
-        const hudCoords = document.getElementById("hud-coords");
-        if (hudCoords) {
-            hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
-        }
-    });
-
-    document.addEventListener("click", () => {
-        if(cursor) {
-            cursor.classList.add("expand");
-            setTimeout(() => cursor.classList.remove("expand"), 200);
-        }
-    });
-
-    // HUD Timer
-    const hudTimer = document.getElementById("hud-timer");
-    const startTime = Date.now();
-    setInterval(() => {
-        if (hudTimer) {
-            const elapsed = Date.now() - startTime;
-            const date = new Date(elapsed);
-            const h = date.getUTCHours().toString().padStart(2, '0');
-            const m = date.getUTCMinutes().toString().padStart(2, '0');
-            const s = date.getUTCSeconds().toString().padStart(2, '0');
-            hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
-        }
-    }, 1000);
-
-    // Countdown Timer (Header) - Check existence periodically or on load?
-    // It's in header, which might be swapped. So we should check inside the interval.
-    // Or re-init it. Let's keep global interval but check element existence.
-    startCountdown();
-
-    // Initial Decrypt
-    initDecryptEffect();
-
-    // Title Glitch
-    const title = document.querySelector(".glitch");
-    if(title) {
-        setInterval(() => {
-            title.classList.add("active");
-            setTimeout(() => title.classList.remove("active"), 1000);
-        }, 4000);
+  // Cursor
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", (e) => {
+    if (cursor) {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
     }
+    cursorPos.x = e.clientX;
+    cursorPos.y = e.clientY;
+
+    // HUD Coords
+    const hudCoords = document.getElementById("hud-coords");
+    if (hudCoords) {
+      hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
+    }
+  });
+
+  document.addEventListener("click", () => {
+    if (cursor) {
+      cursor.classList.add("expand");
+      setTimeout(() => cursor.classList.remove("expand"), 200);
+    }
+  });
+
+  // HUD Timer
+  const hudTimer = document.getElementById("hud-timer");
+  const startTime = Date.now();
+  setInterval(() => {
+    if (hudTimer) {
+      const elapsed = Date.now() - startTime;
+      const date = new Date(elapsed);
+      const h = date.getUTCHours().toString().padStart(2, '0');
+      const m = date.getUTCMinutes().toString().padStart(2, '0');
+      const s = date.getUTCSeconds().toString().padStart(2, '0');
+      hudTimer.innerText = `SESSION: ${h}:${m}:${s}`;
+    }
+  }, 1000);
+
+  // Countdown Timer (Header) - Check existence periodically or on load?
+  // It's in header, which might be swapped. So we should check inside the interval.
+  // Or re-init it. Let's keep global interval but check element existence.
+  startCountdown();
+
+  // Initial Decrypt
+  initDecryptEffect();
+
+  // Title Glitch
+  const title = document.querySelector(".glitch");
+  if (title) {
+    setInterval(() => {
+      title.classList.add("active");
+      setTimeout(() => title.classList.remove("active"), 1000);
+    }, 4000);
+  }
 }
 
 function initNodes() {
@@ -238,7 +238,7 @@ function initNodes() {
 }
 
 function resize() {
-  if(!circuitCanvas) return;
+  if (!circuitCanvas) return;
   const w = document.documentElement.clientWidth;
   const h = document.documentElement.clientHeight;
   circuitCanvas.width = w;
@@ -247,7 +247,7 @@ function resize() {
 }
 
 function drawCircuit() {
-  if(!circuitCanvas) return;
+  if (!circuitCanvas) return;
   circuitCtx.fillStyle = "rgba(10, 10, 10, 0.1)";
   circuitCtx.fillRect(0, 0, circuitCanvas.width, circuitCanvas.height);
 
@@ -258,9 +258,13 @@ function drawCircuit() {
     if (n.y < 0 || n.y > circuitCanvas.height) n.vy *= -1;
 
     circuitCtx.fillStyle = primary;
-    circuitCtx.beginPath();
-    circuitCtx.arc(n.x, n.y, 2, 0, Math.PI * 2);
-    circuitCtx.fill();
+    if (document.body.classList.contains("special-mode")) {
+      drawHeart(circuitCtx, n.x, n.y, 1); // Draw hearts
+    } else {
+      circuitCtx.beginPath();
+      circuitCtx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+      circuitCtx.fill();
+    }
 
     for (const m of nodes) {
       if (n === m) continue;
@@ -297,7 +301,21 @@ function drawCircuit() {
   requestAnimationFrame(drawCircuit);
 }
 
+function drawHeart(ctx, x, y, size) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(size, size);
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(-5, -5, -10, 0, 0, 10);
+  ctx.bezierCurveTo(10, 0, 5, -5, 0, 0);
+  ctx.fill();
+  ctx.restore();
+}
+
 function updateColor() {
+  if (document.body.classList.contains("special-mode")) return;
+
   const hue = 110 + Math.floor(Math.random() * 40);
   primary = `hsl(${hue}, 70%, 50%)`;
   document.documentElement.style.setProperty("--primary-color", primary);
@@ -311,15 +329,23 @@ function startCountdown() {
   // Target date: December 19, 2025 09:30:00 London Time (GMT)
   const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
 
+  // Initial check
+  checkSurprise(targetDate);
+
   setInterval(() => {
     const timerElement = document.getElementById("countdown-timer");
+
+    // Continuous check to catch the exact moment
+    checkSurprise(targetDate);
+
     if (!timerElement) return;
 
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     if (distance < 0) {
-      timerElement.innerHTML = "0:00:00:00";
+      timerElement.innerHTML = "THE WAIT IS OVER";
+      timerElement.classList.add("glitch"); // Add glitch effect to the specific message
       return;
     }
 
@@ -331,6 +357,19 @@ function startCountdown() {
     timerElement.innerHTML =
       `${days}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }, 1000);
+}
+
+function checkSurprise(targetDate) {
+  const now = Date.now();
+  if (now >= targetDate) {
+    if (!document.body.classList.contains("special-mode")) {
+      document.body.classList.add("special-mode");
+      // Force color update immediately
+      primary = "#ff69b4";
+      document.documentElement.style.setProperty("--primary-color", primary);
+      document.documentElement.style.setProperty("--glow-color", "rgba(255, 105, 180, 0.75)");
+    }
+  }
 }
 
 /* --- Decrypt Effect --- */
@@ -352,8 +391,8 @@ class DecryptEffect {
     const interval = setInterval(() => {
       // Check if element is still in DOM
       if (!document.body.contains(this.element)) {
-          clearInterval(interval);
-          return;
+        clearInterval(interval);
+        return;
       }
 
       this.element.innerText = this.originalText
@@ -376,13 +415,13 @@ class DecryptEffect {
 }
 
 function initDecryptEffect(specificElement = null) {
-    if (specificElement) {
-        new DecryptEffect(specificElement);
-    } else {
-        document.querySelectorAll(".decrypt-effect").forEach((el) => {
-            new DecryptEffect(el);
-        });
-    }
+  if (specificElement) {
+    new DecryptEffect(specificElement);
+  } else {
+    document.querySelectorAll(".decrypt-effect").forEach((el) => {
+      new DecryptEffect(el);
+    });
+  }
 }
 
 /* --- Page Logic: Pics --- */
@@ -451,7 +490,7 @@ async function loadPics() {
     console.error(err);
     const p = document.createElement("p");
     p.textContent = "Failed to load pictures.";
-    if(gallery) gallery.appendChild(p);
+    if (gallery) gallery.appendChild(p);
   }
 }
 
@@ -464,29 +503,29 @@ function extractYear(name) {
 let modal, modalImg, closeBtn;
 
 function initModal() {
-    modal = document.getElementById("modal");
-    modalImg = document.getElementById("modal-img");
-    closeBtn = document.getElementById("close-modal");
+  modal = document.getElementById("modal");
+  modalImg = document.getElementById("modal-img");
+  closeBtn = document.getElementById("close-modal");
 
-    if(!modal) return;
+  if (!modal) return;
 
-    closeBtn.addEventListener("click", closeModal);
+  closeBtn.addEventListener("click", closeModal);
 
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("show")) {
-        closeModal();
-      }
-    });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
 }
 
 function openModal(src) {
-  if(!modalImg) return;
+  if (!modalImg) return;
   modalImg.src = src;
   modal.classList.add("show");
   setTimeout(() => {
@@ -495,7 +534,7 @@ function openModal(src) {
 }
 
 function closeModal() {
-  if(!modal) return;
+  if (!modal) return;
   modal.classList.remove("show");
   modal.classList.remove("clear");
   setTimeout(() => {
@@ -571,77 +610,77 @@ function attachAsciiEffect(imgElement) {
 
 /* --- Page Logic: Blog List --- */
 async function loadBlogList() {
-    const list = document.getElementById("blog-list");
-    if(!list) return;
+  const list = document.getElementById("blog-list");
+  if (!list) return;
 
-    try {
-        const res = await fetch("/blog/posts.json");
-        if (!res.ok) throw new Error("Failed to load posts");
-        const posts = await res.json();
+  try {
+    const res = await fetch("/blog/posts.json");
+    if (!res.ok) throw new Error("Failed to load posts");
+    const posts = await res.json();
 
-        list.innerHTML = "";
+    list.innerHTML = "";
 
-        posts.forEach(post => {
-            const li = document.createElement("li");
-            // Use clean URL link, e.g., view.html?post=...
-            // The router will handle navigation.
-            li.innerHTML = `
+    posts.forEach(post => {
+      const li = document.createElement("li");
+      // Use clean URL link, e.g., view.html?post=...
+      // The router will handle navigation.
+      li.innerHTML = `
               <span class="date">[${post.date}]</span>
               <a href="view.html?post=${post.file}">${post.title}</a>
             `;
-            list.appendChild(li);
-        });
-    } catch (err) {
-        list.innerHTML = "<li>Error loading transmission log. Connection failed.</li>";
-        console.error(err);
-    }
+      list.appendChild(li);
+    });
+  } catch (err) {
+    list.innerHTML = "<li>Error loading transmission log. Connection failed.</li>";
+    console.error(err);
+  }
 }
 
 /* --- Page Logic: Blog Post View --- */
 async function loadPost() {
-    const params = new URLSearchParams(window.location.search);
-    const postFile = params.get("post");
+  const params = new URLSearchParams(window.location.search);
+  const postFile = params.get("post");
 
-    const titleEl = document.getElementById("post-title");
-    const metaEl = document.getElementById("post-meta");
-    const contentEl = document.getElementById("post-content");
+  const titleEl = document.getElementById("post-title");
+  const metaEl = document.getElementById("post-meta");
+  const contentEl = document.getElementById("post-content");
 
-    if (!postFile) {
-        if(titleEl) titleEl.innerText = "Error: No post specified";
-        return;
+  if (!postFile) {
+    if (titleEl) titleEl.innerText = "Error: No post specified";
+    return;
+  }
+
+  try {
+    const res = await fetch(`/blog/posts/${postFile}`);
+    if (!res.ok) throw new Error("Post not found");
+    const text = await res.text();
+
+    const titleMatch = text.match(/^title:\s*(.*)$/m);
+    const dateMatch = text.match(/^date:\s*(.*)$/m);
+    const tagsMatch = text.match(/^tags:\s*(.*)$/m);
+
+    const title = titleMatch ? titleMatch[1] : "Untitled";
+    const date = dateMatch ? dateMatch[1] : "Unknown Date";
+    const tags = tagsMatch ? tagsMatch[1] : "";
+
+    document.title = `${title} - Aahan Aggarwal`;
+    if (titleEl) {
+      titleEl.innerHTML = `<span class="glitch">${title}</span>`;
+      initDecryptEffect(titleEl);
     }
 
-    try {
-        const res = await fetch(`/blog/posts/${postFile}`);
-        if (!res.ok) throw new Error("Post not found");
-        const text = await res.text();
-
-        const titleMatch = text.match(/^title:\s*(.*)$/m);
-        const dateMatch = text.match(/^date:\s*(.*)$/m);
-        const tagsMatch = text.match(/^tags:\s*(.*)$/m);
-
-        const title = titleMatch ? titleMatch[1] : "Untitled";
-        const date = dateMatch ? dateMatch[1] : "Unknown Date";
-        const tags = tagsMatch ? tagsMatch[1] : "";
-
-        document.title = `${title} - Aahan Aggarwal`;
-        if(titleEl) {
-            titleEl.innerHTML = `<span class="glitch">${title}</span>`;
-            initDecryptEffect(titleEl);
-        }
-
-        if(metaEl) {
-            metaEl.innerHTML = `<span>Date: ${date}</span> | <span>Tags: [${tags}]</span>`;
-        }
-
-        if(contentEl) {
-            contentEl.innerHTML = parseMarkdown(text);
-        }
-
-    } catch (err) {
-        if(titleEl) titleEl.innerText = "Error: Post not found";
-        console.error(err);
+    if (metaEl) {
+      metaEl.innerHTML = `<span>Date: ${date}</span> | <span>Tags: [${tags}]</span>`;
     }
+
+    if (contentEl) {
+      contentEl.innerHTML = parseMarkdown(text);
+    }
+
+  } catch (err) {
+    if (titleEl) titleEl.innerText = "Error: Post not found";
+    console.error(err);
+  }
 }
 
 function parseMarkdown(text) {
