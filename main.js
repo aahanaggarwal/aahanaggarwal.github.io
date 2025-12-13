@@ -188,7 +188,7 @@ const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
 let nodes = [];
-const nodeCount = 60;
+const nodeCount = 100; // Increased from 60
 let cursorPos = { x: null, y: null };
 
 function updateHudTimer() {
@@ -241,21 +241,13 @@ function initCircuit() {
 
 function initGlobalListeners() {
   // Cursor
-  const cursor = document.getElementById("cursor");
+  // Cursor
+  // Optimization: Decoupled DOM updates from event listener to prevent layout thrashing
   document.addEventListener("mousemove", (e) => {
-    if (cursor) {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    }
     cursorPos.x = e.clientX;
     cursorPos.y = e.clientY;
-
-    // HUD Coords
-    const hudCoords = document.getElementById("hud-coords");
-    if (hudCoords) {
-      hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
-    }
   });
+
 
   document.addEventListener("click", () => {
     if (cursor) {
@@ -287,12 +279,38 @@ function initGlobalListeners() {
 }
 
 function initNodes() {
-  nodes = Array.from({ length: nodeCount }, () => ({
-    x: Math.random() * circuitCanvas.width,
-    y: Math.random() * circuitCanvas.height,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5,
-  }));
+  nodes = Array.from({ length: nodeCount }, () => {
+    // Generate speed using a Normal Distribution (Bell Curve)
+    // This creates the desired "S-curve" distribution effect (CDF)
+    // Most particles will be near the average, with tails for slow and fast.
+
+    // Box-Muller transform for high quality normal distribution
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+
+    // num is standard normal (mean 0, std 1)
+    // Shift to mean 0.5, scale to keep mostly within 0-1
+    // A standard deviation of 0.15 puts ~99% within [0, 1] range relative to mean 0.5
+    num = num / 6.0 + 0.5;
+
+    // Clamp to 0.1 - 1.0 to ensure positive speed
+    if (num > 1 || num < 0) num = Math.random(); // Fallback for outliers
+
+    // Map distribution to speed range
+    // Base speed multiplier: 0.1 (slow) to 1.5 (fast)
+    const minSpeed = 0.1;
+    const maxSpeed = 1.5;
+    const speedMult = minSpeed + (maxSpeed - minSpeed) * num;
+
+    return {
+      x: Math.random() * circuitCanvas.width,
+      y: Math.random() * circuitCanvas.height,
+      vx: (Math.random() - 0.5) * speedMult,
+      vy: (Math.random() - 0.5) * speedMult,
+    };
+  });
 }
 
 function resize() {
@@ -302,60 +320,190 @@ function resize() {
   circuitCanvas.width = w;
   circuitCanvas.height = h;
   initNodes();
+  initGrid(); // Initialize grid on resize
 }
 
-function drawCircuit() {
+// Optimization: Pre-allocate bins to avoid GC jitter
+const binCount = 10;
+const bins = Array.from({ length: binCount }, () => []);
+let lastTime = 0;
+
+function drawCircuit(timestamp) {
   if (!circuitCanvas) return;
+
+  // 1. DOM Updates (Throttled to Frame Rate)
+  // Move this from mousemove listener to here
+  if (cursorPos.x !== null) {
+    const cursor = document.getElementById("cursor");
+    if (cursor) {
+      cursor.style.transform = `translate(${cursorPos.x}px, ${cursorPos.y}px)`; // Use transform instead of left/top
+    }
+    const hudCoords = document.getElementById("hud-coords");
+    if (hudCoords) {
+      hudCoords.innerText = `X: ${cursorPos.x.toString().padStart(4, '0')} Y: ${cursorPos.y.toString().padStart(4, '0')}`;
+    }
+  }
+
+  // Delta Time Management
+  if (!lastTime) lastTime = timestamp;
+  let deltaTime = 0;
+  if (timestamp) {
+    deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+  }
+  if (deltaTime > 100) deltaTime = 100;
+  if (deltaTime < 0) deltaTime = 16.67;
+  const timeScale = deltaTime / 16.67;
+  const safeTimeScale = timeScale || 1;
+
+  // Frame Clearing
   circuitCtx.fillStyle = "rgba(10, 10, 10, 0.1)";
   circuitCtx.fillRect(0, 0, circuitCanvas.width, circuitCanvas.height);
 
+  // Optimization: Binning for lines
+  // Recycle bins
+  for (let i = 0; i < binCount; i++) {
+    bins[i].length = 0;
+  }
+
+  // Clear Grid
+  for (let i = 0; i < grid.length; i++) {
+    grid[i].length = 0;
+  }
+
+  const limit = 60;
+  const limitSq = limit * limit;
+  const cursorLimit = 120;
+  const cursorLimitSq = cursorLimit * cursorLimit;
+  const time = Date.now() * 0.001;
+
+  // 1. Physics & Grid Insertion
   for (const n of nodes) {
-    n.x += n.vx;
-    n.y += n.vy;
+    n.x += n.vx * safeTimeScale;
+    n.y += n.vy * safeTimeScale;
+
     if (n.x < 0 || n.x > circuitCanvas.width) n.vx *= -1;
     if (n.y < 0 || n.y > circuitCanvas.height) n.vy *= -1;
 
-    circuitCtx.fillStyle = primary;
-    if (document.body.classList.contains("special-mode")) {
-      drawHeart(circuitCtx, n.x, n.y, 1); // Draw hearts
-    } else {
-      circuitCtx.beginPath();
-      circuitCtx.arc(n.x, n.y, 2, 0, Math.PI * 2);
-      circuitCtx.fill();
-    }
+    // Add to Grid
+    // Clamp to valid indices
+    const col = Math.floor(n.x / cellSize);
+    const row = Math.floor(n.y / cellSize);
 
-    for (const m of nodes) {
-      if (n === m) continue;
-      const dx = n.x - m.x;
-      const dy = n.y - m.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 60) {
-        circuitCtx.strokeStyle = primary;
-        circuitCtx.globalAlpha = 0.2;
-        circuitCtx.beginPath();
-        circuitCtx.moveTo(n.x, n.y);
-        circuitCtx.lineTo(m.x, m.y);
-        circuitCtx.stroke();
-        circuitCtx.globalAlpha = 1;
-      }
+    if (col >= 0 && col < gridCols && row >= 0 && row < gridRows) {
+      const idx = row * gridCols + col;
+      grid[idx].push(n);
     }
+  }
 
-    if (cursorPos.x !== null) {
-      const dx = n.x - cursorPos.x;
-      const dy = n.y - cursorPos.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 120) {
-        circuitCtx.strokeStyle = primary;
-        circuitCtx.globalAlpha = 0.4;
-        circuitCtx.beginPath();
-        circuitCtx.moveTo(n.x, n.y);
-        circuitCtx.lineTo(cursorPos.x, cursorPos.y);
-        circuitCtx.stroke();
-        circuitCtx.globalAlpha = 1;
+  // 2. Interaction Loop (Using Neighbor Search)
+  // For each cell...
+  for (let r = 0; r < gridRows; r++) {
+    for (let c = 0; c < gridCols; c++) {
+      const cellIdx = r * gridCols + c;
+      const cellNodes = grid[cellIdx];
+      if (cellNodes.length === 0) continue;
+
+      // Check against own cell and neighbors
+      // 3x3 Block roughly centered on [c,r]
+      // Actually we only need to check [c,r], [c+1,r], [c-1,r+1], [c,r+1], [c+1,r+1] 
+      // to avoid duplicates if we enforced order? 
+      // But standard neighbor search is safer for simplicity: Check all 9 neighbors?
+      // Or 4 neighbors (Half-shell) to avoid double counting? 
+      // Let's do Half-Shell: Right, Bottom-Left, Bottom, Bottom-Right + Own Cell
+
+      const neighborOffsets = [
+        [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1]
+      ];
+
+      for (const n of cellNodes) {
+
+        // Check neighbors
+        for (const [ox, oy] of neighborOffsets) {
+          const nc = c + ox;
+          const nr = r + oy;
+
+          if (nc >= 0 && nc < gridCols && nr >= 0 && nr < gridRows) {
+            const nIdx = nr * gridCols + nc;
+            const neighborNodes = grid[nIdx];
+
+            for (const m of neighborNodes) {
+              if (n === m) continue;
+              // Logic same as before
+
+              const dx = n.x - m.x;
+              if (dx > limit || dx < -limit) continue;
+              const dy = n.y - m.y;
+              if (dy > limit || dy < -limit) continue;
+
+              const distSq = dx * dx + dy * dy;
+              if (distSq < limitSq) {
+                const dist = Math.sqrt(distSq);
+                const alpha = 1 - (dist / limit);
+                const binIndex = (alpha * 9) | 0;
+                if (binIndex >= 0 && binIndex < binCount) {
+                  bins[binIndex].push(n.x, n.y, m.x, m.y);
+                }
+              }
+            }
+          }
+        }
+
+        // Cursor (Check all nodes vs cursor - easier than grid-ing cursor)
+        if (cursorPos.x !== null) {
+          const dx = n.x - cursorPos.x;
+          // Fast AABB
+          if (dx <= cursorLimit && dx >= -cursorLimit) {
+            const dy = n.y - cursorPos.y;
+            if (dy <= cursorLimit && dy >= -cursorLimit) {
+              const distSq = dx * dx + dy * dy;
+              if (distSq < cursorLimitSq) {
+                const dist = Math.sqrt(distSq);
+                const alpha = (1 - (dist / cursorLimit)) * 0.8;
+                const binIndex = (alpha * 9) | 0;
+                if (binIndex >= 0 && binIndex < binCount) {
+                  bins[binIndex].push(n.x, n.y, cursorPos.x, cursorPos.y);
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
 
+  // 3. Draw Lines
+  circuitCtx.lineWidth = 1;
+  circuitCtx.strokeStyle = primary;
+  for (let i = 0; i < binCount; i++) {
+    const bin = bins[i];
+    if (bin.length === 0) continue;
+
+    const binAlpha = (i + 1) / binCount;
+    circuitCtx.globalAlpha = binAlpha;
+    circuitCtx.beginPath();
+    for (let j = 0; j < bin.length; j += 4) {
+      circuitCtx.moveTo(bin[j], bin[j + 1]);
+      circuitCtx.lineTo(bin[j + 2], bin[j + 3]);
+    }
+    circuitCtx.stroke();
+  }
+
+  // 4. Draw Dots
+  circuitCtx.fillStyle = primary;
+  for (const n of nodes) {
+    const breathingRadius = 2 + Math.sin(time + n.x * 0.01 + n.y * 0.01) * 0.5;
+    if (document.body.classList.contains("special-mode")) {
+      drawHeart(circuitCtx, n.x, n.y, 1);
+    } else {
+      circuitCtx.globalAlpha = 0.6;
+      circuitCtx.beginPath();
+      circuitCtx.arc(n.x, n.y, breathingRadius, 0, Math.PI * 2);
+      circuitCtx.fill();
+    }
+  }
+
+  circuitCtx.globalAlpha = 1.0;
   requestAnimationFrame(drawCircuit);
 }
 
