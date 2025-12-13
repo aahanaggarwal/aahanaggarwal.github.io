@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aahan Aggarwal - Graph</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+
+<body class="crt">
+  <nav id="top-nav">
+    <div class="nav-logo">AAHAN.DEV</div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/pics/">Pics</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/graph/">Graph</a></li>
+    </ul>
+  </nav>
+  <div id="hud-coords">X: 0000 Y: 0000</div>
+  <div id="hud-timer">SESSION: 00:00:00</div>
+  <canvas id="circuit"></canvas>
+  <div id="cursor"></div>
+
+  <div id="content">
+    <div id="graph-layout">
+      <aside id="graph-sidebar">
+        <h2>// Equations</h2>
+        <div id="equation-list">
+          <!-- Populated by JS -->
+          <div class="equation-input-group">
+            <span class="prompt">></span>
+            <input type="text" class="equation-input" autofocus />
+          </div>
+        </div>
+        <button id="add-equation" class="btn">[+] Add Equation</button>
+        <div id="graph-controls">
+          <p>Controls:</p>
+          <ul>
+            <li>Pan: Drag</li>
+            <li>Zoom: Scroll</li>
+            <li>Reset: Double Click</li>
+          </ul>
+        </div>
+      </aside>
+      <div id="graph-container">
+        <canvas id="graph-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="/main.js"></script>
+</body>
+
+</html>

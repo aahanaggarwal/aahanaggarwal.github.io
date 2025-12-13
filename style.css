@@ -259,6 +259,36 @@
         transform: translate(-50%, -50%) scale(2);
       }
 
+      #cursor.plus-mode {
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      #cursor.plus-mode::before,
+      #cursor.plus-mode::after {
+        content: '';
+        position: absolute;
+        background: var(--primary-color);
+        box-shadow: 0 0 8px var(--glow-color);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #cursor.plus-mode::before {
+        width: 2px;
+        height: 100%;
+      }
+
+      #cursor.plus-mode::after {
+        width: 100%;
+        height: 2px;
+      }
+
       #gallery {
         display: flex;
         flex-direction: column;
@@ -717,4 +747,109 @@
         animation: heartbeat 2s infinite;
         color: var(--primary-color);
         text-shadow: 0 0 10px var(--glow-color);
+      }
+
+      /* --- Graph Page --- */
+      #graph-layout {
+        display: flex;
+        height: calc(100vh - 150px);
+        gap: 1rem;
+        border: 1px solid var(--primary-color);
+        padding: 1rem;
+        box-shadow: 0 0 10px var(--glow-color);
+      }
+
+      #graph-sidebar {
+        width: 300px;
+        border-right: 1px solid var(--primary-color);
+        padding-right: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #graph-container {
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+        cursor: none;
+      }
+
+      #graph-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .equation-input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        background: rgba(0, 255, 65, 0.05);
+      }
+
+      .equation-input-group .prompt {
+        padding: 0 0.5rem;
+        font-weight: bold;
+      }
+
+      .equation-input {
+        background: transparent;
+        border: none;
+        color: var(--primary-color);
+        font-family: "Fira Code", monospace;
+        font-size: 1em;
+        width: 100%;
+        padding: 0.5rem;
+        outline: none;
+      }
+
+      .equation-input:focus {
+        background: rgba(0, 255, 65, 0.1);
+      }
+
+      #add-equation {
+        margin-top: 1rem;
+        background: transparent;
+        border: 1px dashed var(--primary-color);
+        color: var(--primary-color);
+        font-family: "Fira Code", monospace;
+        padding: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+      }
+
+      #add-equation:hover {
+        background: var(--primary-color);
+        color: var(--background-color);
+      }
+
+      #graph-controls {
+        margin-top: auto;
+        font-size: 0.8em;
+        opacity: 0.8;
+      }
+
+      #graph-controls ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      @media (max-width: 768px) {
+        #graph-layout {
+          flex-direction: column;
+          height: auto;
+        }
+
+        #graph-sidebar {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid var(--primary-color);
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        #graph-container {
+          height: 400px;
+        }
       }

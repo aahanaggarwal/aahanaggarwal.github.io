@@ -104,6 +104,7 @@ async function handleLocation(isInitial = false) {
   // Let's check strict equality for cleaner routing map
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
+  if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
 
   // Pre-fetch blog post if applicable to save time
   let preFetchPromise = null;
@@ -171,6 +172,8 @@ function runPageScript(path, search) {
     } else {
       loadBlogList();
     }
+  } else if (path.startsWith("/graph")) {
+    loadGraph();
   } else {
     // Home page - nothing special dynamic unless we want to re-init something
   }
@@ -779,3 +782,339 @@ function parseMarkdown(text) {
 
   return text.trim();
 };
+
+/* --- Page Logic: Graph --- */
+let graphCanvas, graphCtx;
+let equations = []; // Start empty
+let scale = 40; // Pixels per unit
+let offsetX = 0, offsetY = 0; // Pan offset
+let isDragging = false;
+let lastMouseX, lastMouseY;
+
+function loadGraph() {
+  graphCanvas = document.getElementById("graph-canvas");
+  if (!graphCanvas) return;
+  graphCtx = graphCanvas.getContext("2d");
+
+  // Initial sizing
+  resizeGraph();
+  window.addEventListener("resize", resizeGraph);
+
+  // Event Listeners
+  graphCanvas.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    lastMouseX = e.clientX;
+    lastMouseY = e.clientY;
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      const dx = e.clientX - lastMouseX;
+      const dy = e.clientY - lastMouseY;
+      offsetX += dx;
+      offsetY += dy;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+      drawGraph();
+    }
+  });
+
+  window.addEventListener("mouseup", () => isDragging = false);
+
+  // Cursor Mode
+  const cursor = document.getElementById("cursor");
+  graphCanvas.addEventListener("mouseenter", () => {
+    if (cursor) cursor.classList.add("plus-mode");
+  });
+  graphCanvas.addEventListener("mouseleave", () => {
+    if (cursor) cursor.classList.remove("plus-mode");
+  });
+
+  graphCanvas.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const zoomIntensity = 0.1;
+    const scroll = e.deltaY < 0 ? 1 : -1;
+    const zoom = Math.exp(scroll * zoomIntensity);
+    scale *= zoom;
+    drawGraph();
+  });
+
+  graphCanvas.addEventListener("dblclick", () => {
+    offsetX = 0;
+    offsetY = 0;
+    scale = 40;
+    drawGraph();
+  });
+
+  // Sidebar Controls
+  const addBtn = document.getElementById("add-equation");
+  const eqList = document.getElementById("equation-list");
+
+  if (addBtn && eqList) {
+    // Clear list and re-populate from state
+    eqList.innerHTML = "";
+    if (equations.length === 0) equations.push(""); // Ensure at least one input
+    equations.forEach(eq => addEquationInput(eqList, eq));
+
+    // Add new input handler
+    addBtn.onclick = () => {
+      equations.push("");
+      addEquationInput(eqList, "");
+    };
+  }
+
+  drawGraph();
+}
+
+function addEquationInput(container, value) {
+  const group = document.createElement("div");
+  group.className = "equation-input-group";
+  group.innerHTML = `<span class="prompt">></span><input type="text" class="equation-input" value="${value}" />`;
+  container.appendChild(group);
+
+  const input = group.querySelector("input");
+  input.addEventListener("input", (e) => {
+    // Update equations array based on index
+    const index = Array.from(container.children).indexOf(group);
+    equations[index] = e.target.value;
+    drawGraph();
+  });
+
+  // Enter key to add new
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      document.getElementById("add-equation").click();
+    }
+  });
+
+  // Auto-focus new inputs if empty
+  if (value === "") input.focus();
+}
+
+function resizeGraph() {
+  if (!graphCanvas) return;
+  const container = document.getElementById("graph-container");
+  if (container) {
+    graphCanvas.width = container.clientWidth;
+    graphCanvas.height = container.clientHeight;
+    drawGraph();
+  }
+}
+
+function drawGraph() {
+  if (!graphCtx || !graphCanvas) return;
+  const w = graphCanvas.width;
+  const h = graphCanvas.height;
+  const cx = w / 2 + offsetX;
+  const cy = h / 2 + offsetY;
+
+  // Clear
+  graphCtx.fillStyle = "#0a0a0a"; // Match background
+  graphCtx.fillRect(0, 0, w, h);
+
+  // Grid
+  graphCtx.lineWidth = 1;
+  graphCtx.strokeStyle = "rgba(0, 255, 65, 0.2)";
+
+  const startCol = Math.floor(-cx / scale);
+  const endCol = Math.floor((w - cx) / scale) + 1;
+  const startRow = Math.floor(-cy / scale);
+  const endRow = Math.floor((h - cy) / scale) + 1;
+
+  graphCtx.beginPath();
+  for (let c = startCol; c <= endCol; c++) {
+    const x = cx + c * scale;
+    graphCtx.moveTo(x, 0);
+    graphCtx.lineTo(x, h);
+  }
+  for (let r = startRow; r <= endRow; r++) {
+    const y = cy + r * scale;
+    graphCtx.moveTo(0, y);
+    graphCtx.lineTo(w, y);
+  }
+  graphCtx.stroke();
+
+  // Axes
+  graphCtx.lineWidth = 2;
+  graphCtx.strokeStyle = "rgba(0, 255, 65, 0.8)";
+  graphCtx.beginPath();
+  graphCtx.moveTo(0, cy);
+  graphCtx.lineTo(w, cy);
+  graphCtx.moveTo(cx, 0);
+  graphCtx.lineTo(cx, h);
+  graphCtx.stroke();
+
+  // Collision Buffer
+  const collisionBuffer = new Int8Array(w * h);
+
+  // Plot Equations
+  graphCtx.lineWidth = 2;
+  equations.forEach((eq, index) => {
+    if (!eq.trim()) return;
+
+    try {
+      plotEquation(eq, cx, cy, w, h, index + 1, collisionBuffer);
+    } catch (e) {
+      // Ignore invalid equations
+    }
+  });
+
+  // Draw all pending intersections
+  if (pendingIntersections.length > 0) {
+    graphCtx.save();
+    graphCtx.shadowColor = "#fff";
+    graphCtx.shadowBlur = 15;
+    graphCtx.fillStyle = "#fff";
+    for (const p of pendingIntersections) {
+      graphCtx.beginPath();
+      graphCtx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+      graphCtx.fill();
+    }
+    graphCtx.restore();
+  }
+  pendingIntersections = []; // Clear for next frame
+}
+
+function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer) {
+  // Normalize equation
+  let eq = eqStr.toLowerCase().replace(/\s+/g, '');
+
+  // Implicit Multiplication
+  eq = eq.replace(/(\d)([a-z(])/g, '$1*$2');
+  eq = eq.replace(/([xy])([xy])/g, '$1*$2');
+  eq = eq.replace(/(\))([a-z0-9])/g, '$1*$2');
+
+  // Validation
+  if (!/^[xy0-9+\-*/^().=sincostanlogexppisqrtabs]+$/.test(eq)) return;
+
+  // Detect form
+  let isXFunc = false; // x = f(y)
+  let funcBody = "";
+
+  if (eq.startsWith("y=")) {
+    funcBody = eq.substring(2);
+  } else if (eq.startsWith("x=")) {
+    isXFunc = true;
+    funcBody = eq.substring(2);
+  } else {
+    funcBody = eq;
+  }
+
+  // Convert math
+  funcBody = funcBody.replace(/\^/g, '**');
+  const mathFuncs = ['sin', 'cos', 'tan', 'log', 'exp', 'sqrt', 'abs', 'PI'];
+  mathFuncs.forEach(f => {
+    funcBody = funcBody.split(f).join(`Math.${f}`);
+  });
+
+  graphCtx.strokeStyle = "#00ff41";
+  graphCtx.beginPath();
+
+  const independentVar = isXFunc ? 'y' : 'x';
+  const f = new Function(independentVar, `return ${funcBody}`);
+
+  let first = true;
+  let prevPx = null, prevPy = null;
+
+  // Rasterize line segment to buffer
+  const rasterize = (x0, y0, x1, y1) => {
+    // Bresenham's-ish or simple stepping
+    const dx = Math.abs(x1 - x0);
+    const dy = Math.abs(y1 - y0);
+    const sx = (x0 < x1) ? 1 : -1;
+    const sy = (y0 < y1) ? 1 : -1;
+    let err = dx - dy;
+
+    let x = x0, y = y0;
+
+    // Limit iterations to avoid freeze on huge jumps (which we shouldn't have due to clipping/1px steps, but canvas clip doesn't clip coordinates)
+    // If jump is too large (asymptote), we shouldn't rasterize it anyway.
+    if (dx > w || dy > h) return;
+
+    while (true) {
+      // Check bounds
+      if (x >= 0 && x < w && y >= 0 && y < h) {
+        const idx = Math.floor(y) * w + Math.floor(x);
+        const existing = collisionBuffer[idx];
+        if (existing !== 0 && existing !== eqId) {
+          drawIntersection(x, y);
+        }
+        collisionBuffer[idx] = eqId;
+      }
+
+      if (Math.abs(x - x1) < 1 && Math.abs(y - y1) < 1) break;
+
+      const e2 = 2 * err;
+      if (e2 > -dy) { err -= dy; x += sx; }
+      if (e2 < dx) { err += dx; y += sy; }
+    }
+  };
+
+  if (isXFunc) {
+    for (let py = 0; py <= h; py += 1) {
+      const worldY = (cy - py) / scale;
+
+      try {
+        const worldX = f(worldY);
+        if (isNaN(worldX) || !isFinite(worldX)) {
+          first = true; prevPx = null; prevPy = null;
+          continue;
+        }
+
+        const px = cx + worldX * scale;
+
+        // Don't draw/rasterize if waaaay off screen
+        if (Math.abs(px) > 2 * w) {
+          first = true; prevPx = null; prevPy = null;
+          continue;
+        }
+
+        if (first) {
+          graphCtx.moveTo(px, py);
+          first = false;
+        } else {
+          graphCtx.lineTo(px, py);
+          // Rasterize between (prevPx, prevPy) and (px, py)
+          rasterize(Math.floor(prevPx), Math.floor(prevPy), Math.floor(px), Math.floor(py));
+        }
+        prevPx = px;
+        prevPy = py;
+      } catch (e) { first = true; prevPx = null; prevPy = null; }
+    }
+  } else {
+    for (let px = 0; px <= w; px += 1) {
+      const worldX = (px - cx) / scale;
+      try {
+        const worldY = f(worldX);
+        if (isNaN(worldY) || !isFinite(worldY)) {
+          first = true; prevPx = null; prevPy = null;
+          continue;
+        }
+
+        const py = cy - worldY * scale;
+        if (Math.abs(py) > 2 * h) {
+          first = true; prevPx = null; prevPy = null;
+          continue;
+        }
+
+        if (first) {
+          graphCtx.moveTo(px, py);
+          first = false;
+        } else {
+          graphCtx.lineTo(px, py);
+          rasterize(Math.floor(prevPx), Math.floor(prevPy), Math.floor(px), Math.floor(py));
+        }
+        prevPx = px;
+        prevPy = py;
+      } catch (e) { first = true; prevPx = null; prevPy = null; }
+    }
+  }
+  graphCtx.stroke();
+}
+
+// Intersections queue
+let pendingIntersections = [];
+
+function drawIntersection(x, y) {
+  pendingIntersections.push({ x, y });
+}
