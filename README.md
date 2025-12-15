@@ -32,3 +32,19 @@ At https://aahanaggarwal.github.io or https://aahan.dev
    python3 update_blog.py
    ```
    This generates `blog/posts.json`, which the site uses to display the list of blog posts.
+
+## Development
+
+### Building and Running Locally
+To build the WebAssembly modules and start a local development server, use the `dev.sh` script:
+
+```bash
+./dev.sh
+```
+
+This script will:
+1. Ensure Rust and `wasm-pack` are installed.
+2. Build the Wasm modules for the Graph and Sand tools.
+3. Start a local Python web server on port 8000.
+
+Access the site at `http://localhost:8000`.

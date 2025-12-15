@@ -23,10 +23,11 @@ cd ..
 
 echo "Starting Server..."
 # Kill process on port 8000 if it exists
-PID=$(lsof -ti:8000)
+# Kill process on port 8000 if it exists
+PID=$(lsof -ti:8000 || true)
 if [ -n "$PID" ]; then
   echo "Killing process on port 8000 (PID: $PID)..."
-  kill -9 $PID
+  kill -9 $PID || true
 fi
 
 python3 server.py
