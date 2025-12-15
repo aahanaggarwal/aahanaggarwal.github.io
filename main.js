@@ -137,6 +137,10 @@ async function handleLocation(isInitial = false) {
     const oldContent = document.getElementById("content");
 
     if (newContent && oldContent) {
+      // Swap Content
+      // We must copy attributes too (id is same, but class/style might differ)
+      oldContent.className = newContent.className;
+      oldContent.setAttribute("style", newContent.getAttribute("style") || "");
       oldContent.innerHTML = newContent.innerHTML;
       // Also update class on body if needed (e.g., different themes?)
       // Currently all use "crt".
@@ -869,7 +873,11 @@ function loadGraph() {
 function addEquationInput(container, value) {
   const group = document.createElement("div");
   group.className = "equation-input-group";
-  group.innerHTML = `<span class="prompt">></span><input type="text" class="equation-input" value="${value}" />`;
+  group.innerHTML = `
+    <span class="prompt">></span>
+    <input type="text" class="equation-input" value="${value}" />
+    <button class="btn-delete" title="Delete equation">X</button>
+  `;
   container.appendChild(group);
 
   const input = group.querySelector("input");
@@ -885,6 +893,15 @@ function addEquationInput(container, value) {
     if (e.key === "Enter") {
       document.getElementById("add-equation").click();
     }
+  });
+
+  // Delete button
+  const deleteBtn = group.querySelector(".btn-delete");
+  deleteBtn.addEventListener("click", () => {
+    const index = Array.from(container.children).indexOf(group);
+    equations.splice(index, 1);
+    container.removeChild(group);
+    drawGraph(); // Update graph
   });
 
   // Auto-focus new inputs if empty
