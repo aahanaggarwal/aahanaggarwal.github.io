@@ -16,7 +16,8 @@ fi
 
 echo "Building Wasm..."
 cd wasm
-wasm-pack build --target web
+wasm-pack build graph --target web --out-dir ../graph/pkg
+wasm-pack build sand --target web --out-dir ../sand/pkg
 cd ..
 
 
