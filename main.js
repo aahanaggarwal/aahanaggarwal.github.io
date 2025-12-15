@@ -186,7 +186,7 @@ function runPageScript(path, search) {
 }
 
 /* --- Data / State --- */
-import initWasm, { plot_equation } from './wasm/pkg/graph_wasm.js';
+import initWasm, { plot_equation } from './graph/pkg/graph_wasm.js';
 const startTime = Date.now();
 const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
 

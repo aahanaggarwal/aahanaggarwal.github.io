@@ -29,3 +29,5 @@ __pycache__/
 # Rust Wasm
 wasm/target
 wasm/pkg
+graph/pkg
+sand/pkg

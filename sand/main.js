@@ -1,4 +1,4 @@
-import init, { Universe, Cell } from '../wasm/sand/pkg/sand.js';
+import init, { Universe, Cell } from './pkg/sand.js';
 
 const CELL_SIZE = 4;
 const GRID_WIDTH = 128;
