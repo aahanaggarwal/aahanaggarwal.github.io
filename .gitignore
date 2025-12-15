@@ -25,3 +25,7 @@ yarn-error.log*
 # Cloudinary
 cloudinary_credentials.json
 __pycache__/
+
+# Rust Wasm
+wasm/target
+wasm/pkg

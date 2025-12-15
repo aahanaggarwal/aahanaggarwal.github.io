@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  initCircuit();
-  initGlobalListeners();
-  initRouter();
+  initWasm().then(() => {
+    initCircuit();
+    initGlobalListeners();
+    initRouter();
+  });
 });
 
 /* --- Router --- */
@@ -184,6 +186,7 @@ function runPageScript(path, search) {
 }
 
 /* --- Data / State --- */
+import initWasm, { plot_equation } from './wasm/pkg/graph_wasm.js';
 const startTime = Date.now();
 const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
 
@@ -993,140 +996,27 @@ function drawGraph() {
 }
 
 function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer) {
-  // Normalize equation
-  let eq = eqStr.toLowerCase().replace(/\s+/g, '');
+  // Pass to WebAssembly
+  try {
+    const result = plot_equation(eqStr, w, h, Number(scale), Number(cx), Number(cy), collisionBuffer, eqId);
 
-  // Implicit Multiplication
-  eq = eq.replace(/(\d)([a-z(])/g, '$1*$2');
-  eq = eq.replace(/([xy])([xy])/g, '$1*$2');
-  eq = eq.replace(/(\))([a-z0-9])/g, '$1*$2');
+    // Draw Pixels
+    const pixels = result.get_pixels();
+    graphCtx.fillStyle = "#00ff41";
+    for (let i = 0; i < pixels.length; i += 2) {
+      graphCtx.fillRect(pixels[i], pixels[i + 1], 1, 1);
+    }
 
-  // Validation
-  if (!/^[xy0-9+\-*/^().=sincostanlogexppisqrtabs]+$/.test(eq)) return;
+    // Handle Intersections
+    const intersections = result.get_intersections();
+    for (let i = 0; i < intersections.length; i += 2) {
+      drawIntersection(intersections[i], intersections[i + 1]);
+    }
 
-  // Detect form
-  let isXFunc = false; // x = f(y)
-  let funcBody = "";
-
-  if (eq.startsWith("y=")) {
-    funcBody = eq.substring(2);
-  } else if (eq.startsWith("x=")) {
-    isXFunc = true;
-    funcBody = eq.substring(2);
-  } else {
-    funcBody = eq;
+  } catch (e) {
+    console.warn("Wasm plot error:", e);
+    // Fallback or ignore
   }
-
-  // Convert math
-  funcBody = funcBody.replace(/\^/g, '**');
-  const mathFuncs = ['sin', 'cos', 'tan', 'log', 'exp', 'sqrt', 'abs', 'PI'];
-  mathFuncs.forEach(f => {
-    funcBody = funcBody.split(f).join(`Math.${f}`);
-  });
-
-  graphCtx.strokeStyle = "#00ff41";
-  graphCtx.beginPath();
-
-  const independentVar = isXFunc ? 'y' : 'x';
-  const f = new Function(independentVar, `return ${funcBody}`);
-
-  let first = true;
-  let prevPx = null, prevPy = null;
-
-  // Rasterize line segment to buffer
-  const rasterize = (x0, y0, x1, y1) => {
-    // Bresenham's-ish or simple stepping
-    const dx = Math.abs(x1 - x0);
-    const dy = Math.abs(y1 - y0);
-    const sx = (x0 < x1) ? 1 : -1;
-    const sy = (y0 < y1) ? 1 : -1;
-    let err = dx - dy;
-
-    let x = x0, y = y0;
-
-    // Limit iterations to avoid freeze on huge jumps (which we shouldn't have due to clipping/1px steps, but canvas clip doesn't clip coordinates)
-    // If jump is too large (asymptote), we shouldn't rasterize it anyway.
-    if (dx > w || dy > h) return;
-
-    while (true) {
-      // Check bounds
-      if (x >= 0 && x < w && y >= 0 && y < h) {
-        const idx = Math.floor(y) * w + Math.floor(x);
-        const existing = collisionBuffer[idx];
-        if (existing !== 0 && existing !== eqId) {
-          drawIntersection(x, y);
-        }
-        collisionBuffer[idx] = eqId;
-      }
-
-      if (Math.abs(x - x1) < 1 && Math.abs(y - y1) < 1) break;
-
-      const e2 = 2 * err;
-      if (e2 > -dy) { err -= dy; x += sx; }
-      if (e2 < dx) { err += dx; y += sy; }
-    }
-  };
-
-  if (isXFunc) {
-    for (let py = 0; py <= h; py += 1) {
-      const worldY = (cy - py) / scale;
-
-      try {
-        const worldX = f(worldY);
-        if (isNaN(worldX) || !isFinite(worldX)) {
-          first = true; prevPx = null; prevPy = null;
-          continue;
-        }
-
-        const px = cx + worldX * scale;
-
-        // Don't draw/rasterize if waaaay off screen
-        if (Math.abs(px) > 2 * w) {
-          first = true; prevPx = null; prevPy = null;
-          continue;
-        }
-
-        if (first) {
-          graphCtx.moveTo(px, py);
-          first = false;
-        } else {
-          graphCtx.lineTo(px, py);
-          // Rasterize between (prevPx, prevPy) and (px, py)
-          rasterize(Math.floor(prevPx), Math.floor(prevPy), Math.floor(px), Math.floor(py));
-        }
-        prevPx = px;
-        prevPy = py;
-      } catch (e) { first = true; prevPx = null; prevPy = null; }
-    }
-  } else {
-    for (let px = 0; px <= w; px += 1) {
-      const worldX = (px - cx) / scale;
-      try {
-        const worldY = f(worldX);
-        if (isNaN(worldY) || !isFinite(worldY)) {
-          first = true; prevPx = null; prevPy = null;
-          continue;
-        }
-
-        const py = cy - worldY * scale;
-        if (Math.abs(py) > 2 * h) {
-          first = true; prevPx = null; prevPy = null;
-          continue;
-        }
-
-        if (first) {
-          graphCtx.moveTo(px, py);
-          first = false;
-        } else {
-          graphCtx.lineTo(px, py);
-          rasterize(Math.floor(prevPx), Math.floor(prevPy), Math.floor(px), Math.floor(py));
-        }
-        prevPx = px;
-        prevPy = py;
-      } catch (e) { first = true; prevPx = null; prevPy = null; }
-    }
-  }
-  graphCtx.stroke();
 }
 
 // Intersections queue
