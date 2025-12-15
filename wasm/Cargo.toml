@@ -2,6 +2,7 @@
 members = [
     "graph",
     "sand",
+    "pong",
 ]
 resolver = "2"
 

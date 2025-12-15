@@ -18,8 +18,10 @@ echo "Building Wasm..."
 cd wasm
 wasm-pack build graph --target web --out-dir "$(pwd)/../graph/pkg"
 wasm-pack build sand --target web --out-dir "$(pwd)/../sand/pkg"
+wasm-pack build pong --target web --out-dir "$(pwd)/../pong/pkg"
 rm ../graph/pkg/.gitignore || true
 rm ../sand/pkg/.gitignore || true
+rm ../pong/pkg/.gitignore || true
 cd ..
 
 

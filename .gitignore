@@ -31,3 +31,4 @@ wasm/target
 wasm/pkg
 graph/pkg
 sand/pkg
+pong/pkg

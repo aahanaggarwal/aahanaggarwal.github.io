@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong - Aahan Aggarwal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/style.css?v=4">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+        #pong-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            /* Occupy most of the screen */
+        }
+
+        #pong-canvas {
+            border: 2px solid var(--text-color);
+            box-shadow: 0 0 10px var(--text-color);
+            max-width: 100%;
+        }
+
+        #score-board {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            text-shadow: 0 0 10px currentColor;
+            /* glow */
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s;
+            animation-iteration-count: 1;
+        }
+
+        .controls-hint {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body class="crt">
+    <nav id="top-nav">
+        <div class="nav-logo"><a href="/">AAHAN.DEV</a></div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/pics/">Pics</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Tools</a>
+                <div class="dropdown-content">
+                    <a href="/graph/">Graph</a>
+                    <a href="/sand/">Sand</a>
+                    <a href="/pong/">Pong</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="cursor"></div>
+
+    <div id="content">
+        <main id="pong-container">
+            <div id="score-board">
+                <span id="streak">0</span>
+            </div>
+
+            <canvas id="pong-canvas"></canvas>
+
+            <div class="controls-hint">
+                CONTROLS: W/S OR ARROWS &nbsp; | &nbsp; BEST: <span id="high-score">0</span>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

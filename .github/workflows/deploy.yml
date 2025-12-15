@@ -36,8 +36,10 @@ jobs:
         run: |
           wasm-pack build graph --target web --out-dir ../../graph/pkg
           wasm-pack build sand --target web --out-dir ../../sand/pkg
+          wasm-pack build pong --target web --out-dir ../../pong/pkg
           rm ../graph/pkg/.gitignore
           rm ../sand/pkg/.gitignore
+          rm ../pong/pkg/.gitignore
 
 
       - name: Setup Pages
