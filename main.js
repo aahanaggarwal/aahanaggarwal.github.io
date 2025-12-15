@@ -251,8 +251,10 @@ function initGlobalListeners() {
   const cursor = document.getElementById("cursor");
   document.addEventListener("mousemove", (e) => {
     if (cursor) {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
+      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      // clear top/left to avoid conflict if set elsewhere (initially)
+      cursor.style.top = '';
+      cursor.style.left = '';
     }
     cursorPos.x = e.clientX;
     cursorPos.y = e.clientY;
@@ -793,9 +795,11 @@ function parseMarkdown(text) {
 /* --- Page Logic: Graph --- */
 let graphCanvas, graphCtx;
 let equations = []; // Start empty
+let variables = {}; // Variable values { "a": 1.0 }
 let scale = 40; // Pixels per unit
 let offsetX = 0, offsetY = 0; // Pan offset
 let isDragging = false;
+let isInteracting = false; // LOD State
 let lastMouseX, lastMouseY;
 
 function loadGraph() {
@@ -803,15 +807,34 @@ function loadGraph() {
   if (!graphCanvas) return;
   graphCtx = graphCanvas.getContext("2d");
 
+  // Start Render Loop
+  startGraphRenderLoop();
+
   // Initial sizing
   resizeGraph();
   window.addEventListener("resize", resizeGraph);
+
+  // Interaction State for LOD
+  let interactionTimeout;
+  const startInteraction = () => {
+    isInteracting = true;
+    clearTimeout(interactionTimeout);
+    drawGraph(); // Redraw immediately with low res
+  };
+  const endInteraction = () => {
+    clearTimeout(interactionTimeout);
+    interactionTimeout = setTimeout(() => {
+      isInteracting = false;
+      drawGraph(); // Redraw with high res
+    }, 500);
+  };
 
   // Event Listeners
   graphCanvas.addEventListener("mousedown", (e) => {
     isDragging = true;
     lastMouseX = e.clientX;
     lastMouseY = e.clientY;
+    startInteraction();
   });
 
   window.addEventListener("mousemove", (e) => {
@@ -822,11 +845,14 @@ function loadGraph() {
       offsetY += dy;
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
-      drawGraph();
+      startInteraction(); // Continuous interaction
     }
   });
 
-  window.addEventListener("mouseup", () => isDragging = false);
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    endInteraction();
+  });
 
   // Cursor Mode
   const cursor = document.getElementById("cursor");
@@ -839,11 +865,46 @@ function loadGraph() {
 
   graphCanvas.addEventListener("wheel", (e) => {
     e.preventDefault();
-    const zoomIntensity = 0.1;
+    startInteraction();
+
+    // Config
+    const zoomIntensity = 0.05; // Faster scroll per user request
     const scroll = e.deltaY < 0 ? 1 : -1;
     const zoom = Math.exp(scroll * zoomIntensity);
+
+    // Mouse-Centered Zoom Logic
+    // 1. Get mouse position relative to canvas
+    const rect = graphCanvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // 2. Identify the world point under the mouse BEFORE zoom
+    // cx = w/2 + offsetX
+    // x_screen = cx + x_world * scale
+    // x_world = (x_screen - cx) / scale
+
+    const w = graphCanvas.width / (window.devicePixelRatio || 1); // Logical width
+    const h = graphCanvas.height / (window.devicePixelRatio || 1); // Logical height
+
+    const cx = w / 2 + offsetX;
+    const cy = h / 2 + offsetY;
+
+    const mouseWorldX = (mouseX - cx) / scale;
+    const mouseWorldY = (mouseY - cy) / scale;
+
+    // 3. Apply Zoom
     scale *= zoom;
-    drawGraph();
+
+    // 4. Calculate new offset so that mouseWorld is still under mouseX
+    // new_cx = mouseX - mouseWorldX * new_scale
+    // w/2 + new_offsetX = mouseX - mouseWorldX * new_scale
+    // new_offsetX = mouseX - mouseWorldX * new_scale - w/2
+
+    offsetX = mouseX - (mouseWorldX * scale) - (w / 2);
+    offsetY = mouseY - (mouseWorldY * scale) - (h / 2);
+
+    // Debounce end interaction
+    endInteraction();
   });
 
   graphCanvas.addEventListener("dblclick", () => {
@@ -915,47 +976,107 @@ function resizeGraph() {
   if (!graphCanvas) return;
   const container = document.getElementById("graph-container");
   if (container) {
-    graphCanvas.width = container.clientWidth;
-    graphCanvas.height = container.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
+    const rect = container.getBoundingClientRect();
+
+    // Set physical size
+    graphCanvas.width = rect.width * dpr;
+    graphCanvas.height = rect.height * dpr;
+
+    // Set CSS size (logical)
+    graphCanvas.style.width = `${rect.width}px`;
+    graphCanvas.style.height = `${rect.height}px`;
+
+    // Scale context to use logical coordinates for drawing primitive shapes if needed?
+    // Actually, we pass physical W/H to Wasm, so Wasm returns physical coords.
+    // If we simply draw using those coords, we don't need context scale.
+    // BUT line width needs to be scaled? 
+    // If we draw 2px line on 2x dpr, it's 2 physical pixels = 1 logical pixel.
+    // That makes it crisp (hairline).
+    // Let's stick to unscaled context and physical coordinates for maximum sharpness.
+
     drawGraph();
   }
 }
 
+// Graph Render Loop (RAF)
+let graphRenderLoopId;
+let graphNeedsUpdate = false;
+
+function startGraphRenderLoop() {
+  if (graphRenderLoopId) cancelAnimationFrame(graphRenderLoopId);
+
+  const loop = () => {
+    if (graphNeedsUpdate) {
+      drawGraphLogic(); // The actual draw function
+      graphNeedsUpdate = false;
+    }
+    graphRenderLoopId = requestAnimationFrame(loop);
+  };
+  graphRenderLoopId = requestAnimationFrame(loop);
+}
+
+function stopGraphRenderLoop() {
+  if (graphRenderLoopId) cancelAnimationFrame(graphRenderLoopId);
+}
+
+// Rename original drawGraph to drawGraphLogic and wrap it
 function drawGraph() {
+  graphNeedsUpdate = true;
+}
+
+function drawGraphLogic() {
   if (!graphCtx || !graphCanvas) return;
   const w = graphCanvas.width;
   const h = graphCanvas.height;
-  const cx = w / 2 + offsetX;
-  const cy = h / 2 + offsetY;
+
+  // Determine grid size and LOD
+  // Wasm expects physical pixels for w/h
+  // but let's be careful about scale.
+  // We want to draw in physical pixels. 
+  // offsetX/Y and scale are in Logical Pixels (managed by events).
+
+  // Convert context to physical
+  const dpr = window.devicePixelRatio || 1;
+  const cx = (w / 2 + offsetX * dpr);
+  const cy = (h / 2 + offsetY * dpr);
+  const physicalScale = scale * dpr;
+
+  // LOD decision
+  // High DPI (Retina) with step=1 is too heavy (millions of calcs).
+  // We relax the step size. 
+  // Step 3 on Retina (2x) = 1.5 logical pixels. Visually perfect.
+  // Step 12 during interaction = 6 logical pixels. Responsive.
+  const step = isInteracting ? 12 : 3;
 
   // Clear
-  graphCtx.fillStyle = "#0a0a0a"; // Match background
+  graphCtx.fillStyle = "#0a0a0a";
   graphCtx.fillRect(0, 0, w, h);
 
   // Grid
-  graphCtx.lineWidth = 1;
+  graphCtx.lineWidth = 1 * dpr; // 1 logical pixel
   graphCtx.strokeStyle = "rgba(0, 255, 65, 0.2)";
 
-  const startCol = Math.floor(-cx / scale);
-  const endCol = Math.floor((w - cx) / scale) + 1;
-  const startRow = Math.floor(-cy / scale);
-  const endRow = Math.floor((h - cy) / scale) + 1;
+  const startCol = Math.floor(-cx / physicalScale);
+  const endCol = Math.floor((w - cx) / physicalScale) + 1;
+  const startRow = Math.floor(-cy / physicalScale);
+  const endRow = Math.floor((h - cy) / physicalScale) + 1;
 
   graphCtx.beginPath();
   for (let c = startCol; c <= endCol; c++) {
-    const x = cx + c * scale;
+    const x = cx + c * physicalScale;
     graphCtx.moveTo(x, 0);
     graphCtx.lineTo(x, h);
   }
   for (let r = startRow; r <= endRow; r++) {
-    const y = cy + r * scale;
+    const y = cy + r * physicalScale;
     graphCtx.moveTo(0, y);
     graphCtx.lineTo(w, y);
   }
   graphCtx.stroke();
 
   // Axes
-  graphCtx.lineWidth = 2;
+  graphCtx.lineWidth = 2 * dpr;
   graphCtx.strokeStyle = "rgba(0, 255, 65, 0.8)";
   graphCtx.beginPath();
   graphCtx.moveTo(0, cy);
@@ -967,13 +1088,37 @@ function drawGraph() {
   // Collision Buffer
   const collisionBuffer = new Int8Array(w * h);
 
+  // Identify variables from all equations
+  const allVars = new Set();
+  equations.forEach(eq => {
+    extractVariables(eq).forEach(v => allVars.add(v));
+  });
+
+  // Sync state
+  // Remove unused
+  Object.keys(variables).forEach(v => {
+    if (!allVars.has(v)) delete variables[v];
+  });
+  // Add new
+  allVars.forEach(v => {
+    if (variables[v] === undefined) variables[v] = 1.0;
+  });
+
+  // Update UI
+  updateVariableControls();
+
+  // Prepare vars for Wasm
+  const varNames = Object.keys(variables);
+  const varValues = Object.values(variables);
+
   // Plot Equations
-  graphCtx.lineWidth = 2;
+  graphCtx.lineWidth = 2 * dpr;
   equations.forEach((eq, index) => {
     if (!eq.trim()) return;
 
     try {
-      plotEquation(eq, cx, cy, w, h, index + 1, collisionBuffer);
+      // Pass LOD 'step' to Wasm
+      plotEquation(eq, cx, cy, w, h, index + 1, collisionBuffer, varNames, varValues, step, physicalScale);
     } catch (e) {
       // Ignore invalid equations
     }
@@ -995,17 +1140,46 @@ function drawGraph() {
   pendingIntersections = []; // Clear for next frame
 }
 
-function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer) {
+function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer, varNames, varValues, step, pScale) {
   // Pass to WebAssembly
   try {
-    const result = plot_equation(eqStr, w, h, Number(scale), Number(cx), Number(cy), collisionBuffer, eqId);
+    // 1. Substitute variables in JS using Regex for safety (Word Boundaries)
+    // This prevents "a" from replacing "a" in "tan", etc.
+    let processedEq = eqStr;
+    varNames.forEach((name, i) => {
+      const val = varValues[i];
+      // Regex: \bname\b matches whole word only
+      const re = new RegExp(`\\b${name}\\b`, 'g');
+      processedEq = processedEq.replace(re, `(${val})`);
+    });
 
-    // Draw Pixels
-    const pixels = result.get_pixels();
-    graphCtx.fillStyle = "#00ff41";
-    for (let i = 0; i < pixels.length; i += 2) {
-      graphCtx.fillRect(pixels[i], pixels[i + 1], 1, 1);
+    const result = plot_equation(
+      processedEq,
+      w,
+      h,
+      Number(pScale), // Use physical scale
+      Number(cx),
+      Number(cy),
+      Number(step),   // New LOD parameter
+      collisionBuffer,
+      eqId,
+      [], // varNames (unused now)
+      new Float64Array([]) // varValues (unused now)
+    );
+
+    // Draw Lines
+    const lines = result.get_lines();
+    graphCtx.beginPath();
+    graphCtx.strokeStyle = "#00ff41";
+    // Lines are [x1, y1, x2, y2, ...]
+    for (let i = 0; i < lines.length; i += 4) {
+      // Create separate paths or one big path?
+      // One big path with moveTo/lineTo is faster but segments are disconnected.
+      // So we must moveTo for every segment.
+      graphCtx.moveTo(lines[i], lines[i + 1]);
+      graphCtx.lineTo(lines[i + 2], lines[i + 3]);
     }
+    graphCtx.stroke();
 
     // Handle Intersections
     const intersections = result.get_intersections();
@@ -1018,6 +1192,85 @@ function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer) {
     // Fallback or ignore
   }
 }
+
+// Variable Helper Functions
+function extractVariables(eq) {
+  // Find all letter tokens that are NOT known functions/constants
+  const tokens = eq.match(/[a-zA-Z]+/g) || [];
+  const knowns = new Set([
+    "x", "y",
+    "sin", "cos", "tan", "asin", "acos", "atan", "sinh", "cosh", "tanh",
+    "log", "ln", "exp", "sqrt", "abs", "floor", "ceil", "round", "sign",
+    "pi", "e", "max", "min", "pow"
+  ]);
+
+  const vars = [];
+  tokens.forEach(t => {
+    const low = t.toLowerCase();
+    if (!knowns.has(low)) {
+      vars.push(t); // Keep original case? Or lowercase? prompt said "a" and "y".
+      // Let's assume case-sensitive or user prefers lowercase.
+      // JS and lib.rs replace exact string.
+    }
+  });
+  return vars;
+}
+
+function updateVariableControls() {
+  const container = document.getElementById("variable-list");
+  if (!container) return;
+
+  // We want to preserve focus if rebuilding.
+  // Ideally only append/remove differences.
+  // But strictly rebuilding is easier. 
+  // To avoid losing slider interaction state during drag (which calls drawGraph -> updateVariableControls),
+  // WE MUST NOT DESTROY elements being dragged.
+
+  // Diff inputs
+  const currentKeys = Object.keys(variables).sort();
+
+  // Check existing UI
+  const existingGroups = Array.from(container.children);
+  const existingKeys = existingGroups.map(el => el.dataset.var).sort();
+
+  // If identical, just update values? 
+  // No, if user is dragging slider, the value in `variables` is updated by input listener.
+  // We don't need to push back to DOM unless external change.
+  // So if keys match, DO NOTHING?
+  if (JSON.stringify(currentKeys) === JSON.stringify(existingKeys)) {
+    return;
+  }
+
+  // Full Rebuild (only when structure changes)
+  container.innerHTML = "";
+  currentKeys.forEach(key => {
+    const group = document.createElement("div");
+    group.className = "variable-control-group";
+    group.dataset.var = key; // Mark for diffing
+
+    // Style this in JS or CSS? CSS is better but I'll add inline for speed or expect CSS updates?
+    // Using existing classes style.
+
+    group.innerHTML = `
+      <span class="var-name">${key} = </span>
+      <input type="range" class="var-slider" min="-10" max="10" step="0.1" value="${variables[key]}">
+      <span class="var-val">${variables[key]}</span>
+    `;
+
+    const slider = group.querySelector(".var-slider");
+    const label = group.querySelector(".var-val");
+
+    slider.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value);
+      variables[key] = val;
+      label.innerText = val;
+      drawGraph();
+    });
+
+    container.appendChild(group);
+  });
+}
+
 
 // Intersections queue
 let pendingIntersections = [];

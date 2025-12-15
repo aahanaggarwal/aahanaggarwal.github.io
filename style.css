@@ -923,3 +923,32 @@
           height: 400px;
         }
       }
+/* --- Graph Variables --- */
+#variable-list {
+  margin-top: 20px;
+  border-top: 1px solid var(--primary-color);
+  padding-top: 10px;
+}
+
+.variable-control-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.var-name {
+  font-weight: bold;
+  min-width: 30px;
+}
+
+.var-slider {
+  flex-grow: 1;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.var-val {
+  min-width: 40px;
+  text-align: right;
+}

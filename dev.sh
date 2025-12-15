@@ -28,4 +28,4 @@ if [ -n "$PID" ]; then
   kill -9 $PID
 fi
 
-python3 -m http.server 8000
+python3 server.py
