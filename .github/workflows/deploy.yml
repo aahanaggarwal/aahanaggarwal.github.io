@@ -34,8 +34,9 @@ jobs:
       - name: Build Wasm
         working-directory: wasm
         run: |
-          wasm-pack build --target web
-          rm pkg/.gitignore
+          wasm-pack build graph --target web --out-dir ../graph/pkg
+          wasm-pack build sand --target web --out-dir ../sand/pkg
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
