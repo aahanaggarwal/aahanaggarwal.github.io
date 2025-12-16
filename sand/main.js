@@ -5,28 +5,36 @@ const GRID_WIDTH = 128;
 const GRID_HEIGHT = 128;
 
 const COLORS = [
-    [0, 0, 0, 0],
-    [237, 201, 175, 255],
-    [0, 119, 190, 255],
-    [128, 128, 128, 255],
-    [139, 69, 19, 255],
-    [255, 69, 0, 255],
-    [169, 169, 169, 255],
-    [50, 50, 50, 255],
-    [173, 255, 47, 255],
-    [207, 16, 32, 255],
-    [34, 139, 34, 255],
+    [0, 0, 0, 0],             // Empty
+    [237, 201, 175, 255],     // Sand
+    [0, 119, 190, 255],       // Water
+    [128, 128, 128, 255],     // Stone
+    [139, 69, 19, 255],       // Wood
+    [255, 69, 0, 255],        // Fire
+    [220, 220, 220, 255],     // Steam
+    [50, 50, 50, 255],        // Oil
+    [173, 255, 47, 255],      // Acid
+    [207, 16, 32, 255],       // Lava
+    [34, 139, 34, 255],       // Plant
+    [173, 216, 230, 255],     // Ice
+    // Hidden Elements
+    [50, 50, 50, 150],        // Smoke (Semi-transparent)
+    [200, 220, 255, 180],     // Glass (Semi-transparent Blueish)
+    [40, 0, 60, 255],         // Obsidian (Dark Purple)
+    [64, 64, 64, 255],        // Gunpowder (Dark Grey)
 ];
 
 const ELEMENT_NAMES = [
     "Empty", "Sand", "Water", "Stone", "Wood", "Fire",
-    "Ash", "Oil", "Acid", "Lava", "Plant"
+    "Steam", "Oil", "Acid", "Lava", "Plant", "Ice",
+    "Smoke", "Glass", "Obsidian", "Gunpowder"
 ];
 
 let universe;
 let memory;
 let selectedColor = 1;
 let isDrawing = false;
+let isPaused = false;
 let animationId;
 let mouseX = -1;
 let mouseY = -1;
@@ -46,14 +54,16 @@ async function run() {
 
     setupControls();
     setupCursor();
+    setupKeyboard();
 
     const renderLoop = () => {
         if (isDrawing) {
             paint(canvas);
         }
 
-        universe.tick();
-        // console.log("Tick called");
+        if (!isPaused) {
+            universe.tick();
+        }
         draw(ctx);
         animationId = requestAnimationFrame(renderLoop);
     };
@@ -99,15 +109,42 @@ function draw(ctx) {
 
 function setupControls() {
     const container = document.getElementById('controls');
+    const existingBtns = container.querySelectorAll('.color-btn');
+    existingBtns.forEach(b => b.remove());
+
+    // Create Tooltip Element
+    let tooltip = document.getElementById('custom-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'custom-tooltip';
+        tooltip.style.position = 'absolute';
+        tooltip.style.padding = '8px 12px';
+        tooltip.style.background = '#000';
+        tooltip.style.border = '2px solid #33ff00';
+        tooltip.style.color = '#33ff00';
+        tooltip.style.fontFamily = "'Courier New', Courier, monospace";
+        tooltip.style.fontSize = '14px';
+        tooltip.style.fontWeight = 'bold';
+        tooltip.style.pointerEvents = 'none'; // Don't block clicks
+        tooltip.style.display = 'none';
+        tooltip.style.zIndex = '1000';
+        tooltip.style.boxShadow = '0 0 10px #33ff00';
+        tooltip.style.textTransform = 'uppercase';
+        document.body.appendChild(tooltip);
+    }
 
     ELEMENT_NAMES.forEach((name, idx) => {
         if (idx === 0) return;
+        if (name === "Fire") return; // Hidden from UI
+        if (["Smoke", "Glass", "Obsidian"].includes(name)) return;
 
         const btn = document.createElement('div');
         btn.className = 'color-btn';
         const rgba = COLORS[idx];
         btn.style.backgroundColor = `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3] / 255})`;
-        btn.title = name;
+
+        // Remove native title
+        // btn.title = name; 
 
         if (idx === selectedColor) btn.classList.add('active');
 
@@ -117,12 +154,34 @@ function setupControls() {
             btn.classList.add('active');
         };
 
+        // Custom Tooltip Data
+        btn.onmouseenter = () => {
+            tooltip.innerText = name;
+            tooltip.style.display = 'block';
+        };
+        btn.onmousemove = (e) => {
+            tooltip.style.left = (e.pageX + 15) + 'px';
+            tooltip.style.top = (e.pageY + 15) + 'px';
+        };
+        btn.onmouseleave = () => {
+            tooltip.style.display = 'none';
+        };
+
         container.appendChild(btn);
     });
 
     document.getElementById('reset-btn').onclick = () => {
         universe.clear();
     };
+}
+
+function setupKeyboard() {
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+            isPaused = !isPaused;
+            e.preventDefault();
+        }
+    });
 }
 
 function getCoords(e, canvas) {
