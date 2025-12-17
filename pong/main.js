@@ -1,6 +1,6 @@
 import init, { PongGame } from './pkg/pong.js';
 
-async function run() {
+export async function run() {
     await init();
 
     const canvas = document.getElementById('pong-canvas');
@@ -23,6 +23,20 @@ async function run() {
     let highScore = parseInt(localStorage.getItem('pong_high_score') || '0');
     highScoreEl.innerText = highScore;
 
+    // Game State
+    let isPaused = false;
+    const speedIndicator = document.getElementById('speed-indicator');
+    const speedValue = document.getElementById('speed-value');
+
+    // Pause Overlay
+    let pauseOverlay = document.querySelector('.paused-overlay');
+    if (!pauseOverlay) {
+        pauseOverlay = document.createElement('div');
+        pauseOverlay.className = 'paused-overlay';
+        pauseOverlay.innerText = '⏸'; // Symbol
+        document.body.appendChild(pauseOverlay); // Global append for overlay
+    }
+
     // Cursor Logic
     const cursor = document.getElementById("cursor");
     document.addEventListener("mousemove", (e) => {
@@ -38,31 +52,99 @@ async function run() {
     });
 
     // Input Handling
-    window.addEventListener('keydown', (e) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
+            e.preventDefault();
             game.set_player_movement(-1);
         } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
+            e.preventDefault();
             game.set_player_movement(1);
+        } else if (e.key === ' ') {
+            e.preventDefault();
+            if (!e.repeat) togglePause();
         }
-    });
+    };
 
-    window.addEventListener('keyup', (e) => {
+    const handleKeyUp = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
-            // Only stop if we were moving in that direction
-            // This is a simplification; handling simultaneous keys perfectly needs more state
             game.set_player_movement(0);
         } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
             game.set_player_movement(0);
         }
-    });
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    const togglePause = () => {
+        isPaused = !isPaused;
+        if (isPaused) {
+            if (pauseOverlay) pauseOverlay.classList.add('visible');
+        } else {
+            if (pauseOverlay) pauseOverlay.classList.remove('visible');
+        }
+    };
+
+    const handleVisibilityChange = () => {
+        if (document.hidden) {
+            if (!isPaused) togglePause();
+        }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Touch Handling (Mobile)
+    const handleTouch = (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const relativeY = touch.clientY - rect.top;
+
+        // Simple logic: if touch is in top half, move up. Bottom half, move down.
+        // Better logic: move paddle towards touch Y? 
+        // Let's stick to the requested "playable on mobile" with simple controls first.
+        // Actually, direct mapping is best for touch.
+
+        // But game expects -1, 0, 1. 
+        // Let's implement virtual buttons or just zones?
+        // Zones: Top half = Up, Bottom half = Down.
+
+        if (relativeY < rect.height / 2) {
+            game.set_player_movement(-1);
+        } else {
+            game.set_player_movement(1);
+        }
+    };
+
+    const stopTouch = (e) => {
+        e.preventDefault();
+        game.set_player_movement(0);
+    };
+
+    canvas.addEventListener('touchstart', handleTouch, { passive: false });
+    canvas.addEventListener('touchmove', handleTouch, { passive: false });
+    canvas.addEventListener('touchend', stopTouch);
 
     function render() {
+        // Cleanup check
+        if (!document.body.contains(canvas)) {
+            // Clean up overlay
+            if (pauseOverlay) pauseOverlay.remove();
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener("keyup", handleKeyUp);
+            return; // Stop loop
+        }
+
+        if (isPaused) {
+            requestAnimationFrame(render);
+            return;
+        }
+
         // Update Game State
         game.tick();
 
         // Clear Canvas
-        ctx.fillStyle = '#0a0a0a'; // Match background or black
-        ctx.fillRect(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height); // Transparent
 
         // Draw Elements
         // Green phosphor color, match site variable usually
@@ -109,10 +191,23 @@ async function run() {
             localStorage.setItem('pong_high_score', highScore);
         }
 
+        // Update Speed
+        if (speedIndicator && speedValue) {
+            const speed = game.get_ball_speed();
+            // Normalize: start speed is 8.0, display as 1.0
+            const normalizedSpeed = speed / 8.0;
+            speedIndicator.style.display = 'block';
+            speedValue.innerText = normalizedSpeed.toFixed(1);
+        }
+
         requestAnimationFrame(render);
     }
 
     requestAnimationFrame(render);
 }
 
-run().catch(console.error);
+// run().catch(console.error);
+// Allow external call or auto-run if standalone
+if (!window.HAS_SPA_ROUTER) {
+    run().catch(console.error);
+}

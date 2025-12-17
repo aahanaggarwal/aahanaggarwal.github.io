@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  window.HAS_SPA_ROUTER = true;
   initWasm().then(() => {
     initCircuit();
     initGlobalListeners();
@@ -180,6 +181,10 @@ function runPageScript(path, search) {
     }
   } else if (path.startsWith("/graph")) {
     loadGraph();
+  } else if (path.startsWith("/pong")) {
+    import('./pong/main.js').then(module => {
+      module.run();
+    });
   } else {
     // Home page - nothing special dynamic unless we want to re-init something
   }

@@ -70,10 +70,10 @@ impl PongGame {
         self.ball_spin = 0.0;
         
         // Randomize start direction slightly
-        let speed = 5.0;
+        let speed = 8.0;
         let angle = (random() * PI / 4.0) - PI / 8.0; // +/- 22.5 degrees
         
-        let direction = if random() > 0.5 { 1.0 } else { -1.0 };
+        let direction = 1.0; // Always towards AI (Right)
         
         self.ball_dx = direction * speed * angle.cos();
         self.ball_dy = speed * angle.sin();
@@ -284,5 +284,9 @@ impl PongGame {
     
     pub fn set_player_movement(&mut self, move_dir: i32) {
         self.player_move = move_dir;
+    }
+    
+    pub fn get_ball_speed(&self) -> f64 {
+        (self.ball_dx.powi(2) + self.ball_dy.powi(2)).sqrt()
     }
 }
