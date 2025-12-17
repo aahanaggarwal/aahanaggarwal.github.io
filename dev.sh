@@ -19,11 +19,12 @@ cd wasm
 wasm-pack build graph --target web --out-dir "$(pwd)/../graph/pkg"
 wasm-pack build sand --target web --out-dir "$(pwd)/../sand/pkg"
 wasm-pack build pong --target web --out-dir "$(pwd)/../pong/pkg"
-rm ../graph/pkg/.gitignore || true
-rm ../sand/pkg/.gitignore || true
-rm ../pong/pkg/.gitignore || true
 cd ..
 
+
+
+echo "Running Optimizer..."
+cargo run --manifest-path tools/optimizer/Cargo.toml
 
 echo "Starting Server..."
 # Kill process on port 8000 if it exists
@@ -34,4 +35,5 @@ if [ -n "$PID" ]; then
   kill -9 $PID || true
 fi
 
+cd dist
 python3 server.py

@@ -37,10 +37,10 @@ jobs:
           wasm-pack build graph --target web --out-dir ../../graph/pkg
           wasm-pack build sand --target web --out-dir ../../sand/pkg
           wasm-pack build pong --target web --out-dir ../../pong/pkg
-          rm ../graph/pkg/.gitignore
-          rm ../sand/pkg/.gitignore
-          rm ../pong/pkg/.gitignore
 
+
+      - name: Optimize Assets
+        run: cargo run --manifest-path tools/optimizer/Cargo.toml
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -48,7 +48,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
       - name: Deploy to GitHub Pages
         id: deployment

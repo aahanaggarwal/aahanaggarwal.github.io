@@ -32,3 +32,7 @@ wasm/pkg
 graph/pkg
 sand/pkg
 pong/pkg
+
+# Minification
+dist/
+tools/optimizer/target/
