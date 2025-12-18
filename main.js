@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   window.HAS_SPA_ROUTER = true;
-  initWasm().then(() => {
-    initCircuit();
-    initGlobalListeners();
-    initRouter();
-  });
+
+  // Initialize critical components immediately
+  initCircuit();
+  initGlobalListeners();
+  initRouter();
+
+  // Initialize Wasm (Graph) asynchronously
+  initWasm().catch(err => console.error("Wasm init failed:", err));
 });
 
 function initRouter() {
@@ -61,7 +64,11 @@ async function handleLocation(isInitial = false) {
 
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
+  if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
+  if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
   if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
+  if (path === "/sand" || path === "/sand/") fetchUrl = "/sand/index.html";
+  if (path === "/pong" || path === "/pong/") fetchUrl = "/pong/index.html";
 
   let preFetchPromise = null;
   if (path.includes("view.html")) {
@@ -128,11 +135,15 @@ function runPageScript(path, search) {
     import('./pong/main.js').then(module => {
       module.run();
     });
+  } else if (path.startsWith("/sand")) {
+    import('./sand/main.js').then(module => {
+      module.run();
+    });
   } else {
   }
 }
 
-import initWasm, { plot_equation } from './graph/pkg/graph_wasm.js';
+import initWasm, { plot_equation } from '/graph/pkg/graph_wasm.js';
 const startTime = Date.now();
 const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
 const circuitCanvas = document.getElementById("circuit");

@@ -13,63 +13,6 @@
         body {
             overflow: hidden;
         }
-
-        #sand-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: calc(100vh - 60px);
-            margin-top: 60px;
-        }
-
-        canvas {
-            border: 1px solid #33ff00;
-            box-shadow: 0 0 10px #33ff00;
-            image-rendering: pixelated;
-            max-width: 90vw;
-            max-height: 70vh;
-            cursor: none;
-        }
-
-        #controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .color-btn {
-            width: 30px;
-            height: 30px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .color-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .color-btn.active {
-            border-color: #fff;
-            box-shadow: 0 0 5px #fff;
-        }
-
-        #reset-btn {
-            padding: 5px 15px;
-            background: transparent;
-            border: 1px solid #33ff00;
-            color: #33ff00;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        #reset-btn:hover {
-            background: #33ff00;
-            color: #000;
-        }
     </style>
 </head>
 
@@ -91,15 +34,21 @@
         </ul>
     </nav>
 
-    <div id="sand-container">
-        <canvas id="sand-canvas"></canvas>
-        <div id="controls">
-            <button id="reset-btn">RESET</button>
-        </div>
-    </div>
+    <div id="hud-coords">X: 0000 Y: 0000</div>
+    <div id="hud-timer">SESSION: 00:00:00</div>
+    <canvas id="circuit"></canvas>
     <div id="cursor"></div>
 
-    <script type="module" src="main.js"></script>
+    <div id="content">
+        <div id="sand-container">
+            <canvas id="sand-canvas"></canvas>
+            <div id="controls">
+                <button id="reset-btn">RESET</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
 </body>
 
 </html>

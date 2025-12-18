@@ -40,7 +40,7 @@ let mouseX = -1;
 let mouseY = -1;
 const radius = 1;
 
-async function run() {
+export async function run() {
     const wasm = await init();
     memory = wasm.memory;
 
@@ -267,4 +267,6 @@ function setupCursor() {
     });
 }
 
-run();
+if (!window.HAS_SPA_ROUTER) {
+    run();
+}
