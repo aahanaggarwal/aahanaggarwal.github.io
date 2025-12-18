@@ -21,8 +21,6 @@ wasm-pack build sand --target web --out-dir "$(pwd)/../sand/pkg"
 wasm-pack build pong --target web --out-dir "$(pwd)/../pong/pkg"
 cd ..
 
-
-
 echo "Running Optimizer..."
 cargo run --manifest-path tools/optimizer/Cargo.toml
 

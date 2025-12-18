@@ -1,5 +1,5 @@
-use wasm_bindgen::prelude::*;
 use std::iter;
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -11,7 +11,7 @@ pub enum Cell {
     Stone = 3,
     Wood = 4,
     Fire = 5,
-    Steam = 6, 
+    Steam = 6,
     Oil = 7,
     Acid = 8,
     Lava = 9,
@@ -25,13 +25,22 @@ pub enum Cell {
 
 impl Cell {
     fn from_u8(v: u8) -> Cell {
-        if v > 15 { return Cell::Empty; } 
+        if v > 15 {
+            return Cell::Empty;
+        }
         unsafe { std::mem::transmute(v) }
     }
 
     fn is_solid(&self) -> bool {
         match self {
-            Cell::Sand | Cell::Stone | Cell::Wood | Cell::Plant | Cell::Ice | Cell::Glass | Cell::Obsidian | Cell::Gunpowder => true,
+            Cell::Sand
+            | Cell::Stone
+            | Cell::Wood
+            | Cell::Plant
+            | Cell::Ice
+            | Cell::Glass
+            | Cell::Obsidian
+            | Cell::Gunpowder => true,
             _ => false,
         }
     }
@@ -49,10 +58,12 @@ impl Cell {
             _ => false,
         }
     }
-    
+
     fn is_static(&self) -> bool {
         match self {
-            Cell::Stone | Cell::Wood | Cell::Plant | Cell::Ice | Cell::Glass | Cell::Obsidian => true,
+            Cell::Stone | Cell::Wood | Cell::Plant | Cell::Ice | Cell::Glass | Cell::Obsidian => {
+                true
+            }
             _ => false,
         }
     }
@@ -62,11 +73,11 @@ impl Cell {
             Cell::Stone | Cell::Obsidian => 100,
             Cell::Glass => 60,
             Cell::Sand => 50,
-            Cell::Ice => 25, 
+            Cell::Ice => 25,
             Cell::Water | Cell::Acid => 30,
-            Cell::Lava => 40, 
+            Cell::Lava => 40,
             Cell::Oil => 10,
-            Cell::Wood | Cell::Plant => 20, 
+            Cell::Wood | Cell::Plant => 20,
             Cell::Gunpowder => 45, // Slightly lighter than sand
             Cell::Fire | Cell::Steam | Cell::Smoke => -10,
             Cell::Empty => 0,
@@ -75,23 +86,27 @@ impl Cell {
 
     fn base_temperature(&self) -> i8 {
         match self {
-            Cell::Fire => 120, 
+            Cell::Fire => 120,
             Cell::Lava => 120, // Max Heat
-            Cell::Ice => -50,  
+            Cell::Ice => -50,
             Cell::Steam => 100,
             Cell::Smoke => 80,
             Cell::Water | Cell::Acid | Cell::Oil => 20,
             Cell::Plant => 20,
-            Cell::Plant => 20,
-            Cell::Sand | Cell::Stone | Cell::Wood | Cell::Glass | Cell::Obsidian | Cell::Gunpowder => 20,
+            Cell::Sand
+            | Cell::Stone
+            | Cell::Wood
+            | Cell::Glass
+            | Cell::Obsidian
+            | Cell::Gunpowder => 20,
             Cell::Empty => 20,
         }
     }
 
     fn flammability(&self) -> u8 {
         match self {
-            Cell::Wood => 60,  
-            Cell::Plant => 60, 
+            Cell::Wood => 60,
+            Cell::Plant => 60,
             Cell::Oil => 90,
             Cell::Gunpowder => 100, // Instant
             _ => 0,
@@ -126,27 +141,33 @@ impl Universe {
         }
     }
 
-    pub fn width(&self) -> u32 { self.width }
-    pub fn height(&self) -> u32 { self.height }
-    pub fn cells(&self) -> *const u8 { self.cells.as_ptr() }
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+    pub fn cells(&self) -> *const u8 {
+        self.cells.as_ptr()
+    }
 
     pub fn tick(&mut self) {
         self.generation = self.generation.wrapping_add(1);
-        
+
         // Heat Diffusion
         self.diffuse_heat();
 
         if self.generation % 2 == 0 {
             for row in (0..self.height).rev() {
-                 for col in 0..self.width {
-                     self.update_pixel(row, col);
-                 }
+                for col in 0..self.width {
+                    self.update_pixel(row, col);
+                }
             }
         } else {
-             for row in (0..self.height).rev() {
-                 for col in (0..self.width).rev() {
-                     self.update_pixel(row, col);
-                 }
+            for row in (0..self.height).rev() {
+                for col in (0..self.width).rev() {
+                    self.update_pixel(row, col);
+                }
             }
         }
     }
@@ -156,18 +177,18 @@ impl Universe {
             for x in 0..self.width {
                 let idx = self.get_index(y, x);
                 let cell = Cell::from_u8(self.cells[idx]);
-                
+
                 // CRITICAL FIX: Heat Sources SET their temp and DO NOT AVERAGE down.
                 match cell {
                     Cell::Lava | Cell::Fire => {
-                         self.temps[idx] = 120;
-                         continue; 
-                    },
+                        self.temps[idx] = 120;
+                        continue;
+                    }
                     Cell::Ice => {
                         // Ice actively cools
                         self.temps[idx] = -30;
                         continue;
-                    },
+                    }
                     _ => {}
                 }
 
@@ -184,16 +205,16 @@ impl Universe {
                         count += 1;
                     }
                 }
-                
+
                 // Average
-                let mut avg = (sum / count) as i8; 
-                
+                let mut avg = (sum / count) as i8;
+
                 // Air cooling (Lossy system to prevent heat buildup)
                 if cell == Cell::Empty && avg > 20 {
-                    avg -= 1; 
+                    avg -= 1;
                 }
-                
-                self.temps[idx] = avg; 
+
+                self.temps[idx] = avg;
             }
         }
     }
@@ -202,7 +223,9 @@ impl Universe {
         let idx = self.get_index(row, col);
         let cell_u8 = self.cells[idx];
         let cell = Cell::from_u8(cell_u8);
-        if cell == Cell::Empty { return; }
+        if cell == Cell::Empty {
+            return;
+        }
 
         let temp = self.temps[idx];
 
@@ -211,185 +234,197 @@ impl Universe {
         match cell {
             Cell::Water => {
                 // Boil
-                if temp > 100 { 
-                    if (self.rand() % 10) == 0 { 
+                if temp > 100 {
+                    if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Steam);
                     }
-                    return; 
+                    return;
                 }
                 // Freeze
-                if temp < -5 { 
+                if temp < -5 {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Ice);
                     }
                     return;
                 }
-            },
+            }
             Cell::Ice => {
                 if temp > 0 {
-                    if (self.rand() % 20) == 0 { 
+                    if (self.rand() % 20) == 0 {
                         self.set_cell(row, col, Cell::Water);
                     }
                     return;
                 }
-            },
+            }
             Cell::Lava => {
                 // Lava NO LONGER cools by self-check (temp < 90).
                 // Since temp is locked at 120, this check would fail anyway.
                 // Obsidian is created by NEIGHBOR reaction with Water.
                 // Stone is created by NEIGHBOR reaction or extreme conditions (not just air).
                 // So we do NOTHING here. Lava flows until it hits water.
-            },
+            }
             Cell::Sand => {
-                if temp > 100 { // Melt
-                    if (self.rand() % 50) == 0 { 
+                if temp > 100 {
+                    // Melt
+                    if (self.rand() % 50) == 0 {
                         self.set_cell(row, col, Cell::Glass);
                     }
                     return;
                 }
-            },
+            }
             Cell::Fire => {
-                 if (self.rand() & 15) == 0 {
+                if (self.rand() & 15) == 0 {
                     if (self.rand() & 1) == 0 {
-                        self.set_cell(row, col, Cell::Smoke); 
+                        self.set_cell(row, col, Cell::Smoke);
                     } else {
                         self.set_cell(row, col, Cell::Empty);
                     }
                     return;
                 }
-            },
+            }
             Cell::Smoke => {
                 if (self.rand() & 15) == 0 {
                     self.set_cell(row, col, Cell::Empty);
                     return;
                 }
-            },
+            }
             Cell::Steam => {
                 if temp < 80 {
-                     if (self.rand() % 20) == 0 {
-                         self.set_cell(row, col, Cell::Water);
-                     }
-                     return;
+                    if (self.rand() % 20) == 0 {
+                        self.set_cell(row, col, Cell::Water);
+                    }
+                    return;
                 }
-            },
+            }
             _ => {}
         }
 
         // --- NEIGHBOR INTERACTIONS ---
         // --- MANDATORY NEIGHBOR CHECKS (Critical Interactions) ---
         // We ALWAYS check these if the cell involves volatile elements, to ensure responsiveness.
-        if cell == Cell::Ice || cell == Cell::Lava || cell == Cell::Acid || cell == Cell::Oil || cell == Cell::Gunpowder {
-             let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
-             // Check ALL neighbors for critical reactions
-             for (dy, dx) in neighbors.iter() {
-                 let ny = row as i32 + dy;
-                 let nx = col as i32 + dx;
-                 if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
-                     let nidx = self.get_index(ny as u32, nx as u32);
-                     let ncell = Cell::from_u8(self.cells[nidx]);
+        if cell == Cell::Ice
+            || cell == Cell::Lava
+            || cell == Cell::Acid
+            || cell == Cell::Oil
+            || cell == Cell::Gunpowder
+        {
+            let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+            // Check ALL neighbors for critical reactions
+            for (dy, dx) in neighbors.iter() {
+                let ny = row as i32 + dy;
+                let nx = col as i32 + dx;
+                if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
+                    let nidx = self.get_index(ny as u32, nx as u32);
+                    let ncell = Cell::from_u8(self.cells[nidx]);
 
-                     // Ice + Lava
-                     if (cell == Cell::Ice && ncell == Cell::Lava) {
-                         self.set_cell(row, col, Cell::Steam);
-                         self.set_cell(ny as u32, nx as u32, Cell::Obsidian);
-                         return; // Cell changed, stop
-                     }
+                    // Ice + Lava
+                    if cell == Cell::Ice && ncell == Cell::Lava {
+                        self.set_cell(row, col, Cell::Steam);
+                        self.set_cell(ny as u32, nx as u32, Cell::Obsidian);
+                        return; // Cell changed, stop
+                    }
 
-                     // Gunpowder Ignition
-                     if cell == Cell::Gunpowder {
-                         if ncell == Cell::Fire || ncell == Cell::Lava {
-                             self.explode(row, col);
-                             return;
-                         }
-                     }
-                 }
-             }
+                    // Gunpowder Ignition
+                    if cell == Cell::Gunpowder {
+                        if ncell == Cell::Fire || ncell == Cell::Lava {
+                            self.explode(row, col);
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         // --- RANDOM NEIGHBOR INTERACTIONS (Slow Processes) ---
-        if (self.rand() & 7) == 0 { 
-             let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
-             let (dy, dx) = neighbors[(self.rand() as usize) % 4];
-             let ny = row as i32 + dy;
-             let nx = col as i32 + dx;
-             
-             if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
-                 let nidx = self.get_index(ny as u32, nx as u32);
-                 let ncell = Cell::from_u8(self.cells[nidx]);
-                 
-                 // Acid Interactions
-                 if cell == Cell::Acid {
-                     // Acid + Lava -> Explosion/Fire
-                     if ncell == Cell::Lava {
-                         self.set_cell(row, col, Cell::Fire);
-                         self.set_cell(ny as u32, nx as u32, Cell::Steam); // Poof
-                         return;
-                     }
-                     // Erosion
-                     if ncell == Cell::Stone || ncell == Cell::Obsidian {
-                         if (self.rand() % 20) == 0 {
-                             self.set_cell(ny as u32, nx as u32, Cell::Sand);
-                             if (self.rand() % 2) == 0 { self.set_cell(row, col, Cell::Empty); }
-                         }
-                         return;
-                     }
-                     // Dissolving
-                     if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
-                         if (self.rand() % 10) == 0 {
-                            self.set_cell(ny as u32, nx as u32, Cell::Smoke); 
-                            self.set_cell(row, col, Cell::Empty); 
-                         }
-                         return;
-                     }
-                 }
-                 
-                 // Lava Interactions (Ice handled above)
-                 if cell == Cell::Lava {
-                     if ncell == Cell::Water {
-                         // Lava + Water -> Obsidian
-                         self.set_cell(row, col, Cell::Obsidian); 
-                         self.set_cell(ny as u32, nx as u32, Cell::Steam);
-                         return;
-                     }
-                     // Wood/Plant/Oil/Gunpowder ignition
-                     if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
-                         self.set_cell(ny as u32, nx as u32, Cell::Fire);
-                     }
-                     if ncell == Cell::Oil {
-                         self.set_cell(ny as u32, nx as u32, Cell::Fire);
-                     }
-                 }
-                 
-                 // Growth
-                 if cell == Cell::Water && ncell == Cell::Plant {
-                     if (self.rand() % 20) == 0 {
-                         self.set_cell(row, col, Cell::Plant);
-                     }
-                 }
-                 
-                 // Fire spread
-                 if ncell == Cell::Fire || ncell == Cell::Lava {
-                     let prob = cell.flammability();
-                     if prob > 0 && ((self.rand() as u8) % 100 < prob) {
-                         self.set_cell(row, col, Cell::Fire);
-                         return;
-                     }
-                 }
-             }
+        if (self.rand() & 7) == 0 {
+            let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+            let (dy, dx) = neighbors[(self.rand() as usize) % 4];
+            let ny = row as i32 + dy;
+            let nx = col as i32 + dx;
+
+            if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
+                let nidx = self.get_index(ny as u32, nx as u32);
+                let ncell = Cell::from_u8(self.cells[nidx]);
+
+                // Acid Interactions
+                if cell == Cell::Acid {
+                    // Acid + Lava -> Explosion/Fire
+                    if ncell == Cell::Lava {
+                        self.set_cell(row, col, Cell::Fire);
+                        self.set_cell(ny as u32, nx as u32, Cell::Steam); // Poof
+                        return;
+                    }
+                    // Erosion
+                    if ncell == Cell::Stone || ncell == Cell::Obsidian {
+                        if (self.rand() % 20) == 0 {
+                            self.set_cell(ny as u32, nx as u32, Cell::Sand);
+                            if (self.rand() % 2) == 0 {
+                                self.set_cell(row, col, Cell::Empty);
+                            }
+                        }
+                        return;
+                    }
+                    // Dissolving
+                    if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
+                        if (self.rand() % 10) == 0 {
+                            self.set_cell(ny as u32, nx as u32, Cell::Smoke);
+                            self.set_cell(row, col, Cell::Empty);
+                        }
+                        return;
+                    }
+                }
+
+                // Lava Interactions (Ice handled above)
+                if cell == Cell::Lava {
+                    if ncell == Cell::Water {
+                        // Lava + Water -> Obsidian
+                        self.set_cell(row, col, Cell::Obsidian);
+                        self.set_cell(ny as u32, nx as u32, Cell::Steam);
+                        return;
+                    }
+                    // Wood/Plant/Oil/Gunpowder ignition
+                    if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
+                        self.set_cell(ny as u32, nx as u32, Cell::Fire);
+                    }
+                    if ncell == Cell::Oil {
+                        self.set_cell(ny as u32, nx as u32, Cell::Fire);
+                    }
+                }
+
+                // Growth
+                if cell == Cell::Water && ncell == Cell::Plant {
+                    if (self.rand() % 20) == 0 {
+                        self.set_cell(row, col, Cell::Plant);
+                    }
+                }
+
+                // Fire spread
+                if ncell == Cell::Fire || ncell == Cell::Lava {
+                    let prob = cell.flammability();
+                    if prob > 0 && ((self.rand() as u8) % 100 < prob) {
+                        self.set_cell(row, col, Cell::Fire);
+                        return;
+                    }
+                }
+            }
         }
 
         // --- MOVEMENT ---
-        if cell.is_static() { return; }
+        if cell.is_static() {
+            return;
+        }
 
         if cell.is_gas() {
-             self.move_gas(row, col, cell_u8, cell);
+            self.move_gas(row, col, cell_u8, cell);
         } else {
-             self.move_solid_liquid(row, col, cell_u8, cell);
+            self.move_solid_liquid(row, col, cell_u8, cell);
         }
     }
 
-    fn move_solid_liquid(&mut self, row: u32, col: u32, cell_u8: u8, cell: Cell) {
-        if row == self.height - 1 { return; } 
+    fn move_solid_liquid(&mut self, row: u32, col: u32, _cell_u8: u8, cell: Cell) {
+        if row == self.height - 1 {
+            return;
+        }
 
         let idx = self.get_index(row, col);
         let below_idx = self.get_index(row + 1, col);
@@ -397,120 +432,128 @@ impl Universe {
 
         // 1. Gravity (Down)
         // Aggressive falls: always take the spot if possible
-        if below_cell == Cell::Empty || (cell.density() > below_cell.density() && !below_cell.is_solid()) {
-             self.swap(idx, below_idx);
-             return;
+        if below_cell == Cell::Empty
+            || (cell.density() > below_cell.density() && !below_cell.is_solid())
+        {
+            self.swap(idx, below_idx);
+            return;
         }
 
         // 2. Slide (Diagonal)
         let spread = self.toss_coin();
         let dirs = if spread { [-1, 1] } else { [1, -1] };
-        
+
         for &dir in &dirs {
-             let target_col = col as i32 + dir;
-             if target_col >= 0 && target_col < self.width as i32 {
-                 let t_col = target_col as u32;
-                 let diag_idx = self.get_index(row + 1, t_col);
-                 let diag_cell = Cell::from_u8(self.cells[diag_idx]);
-                 
-                 if diag_cell == Cell::Empty || (cell.density() > diag_cell.density() && !diag_cell.is_solid()) {
-                      self.swap(idx, diag_idx);
-                      return;
-                 }
-             }
+            let target_col = col as i32 + dir;
+            if target_col >= 0 && target_col < self.width as i32 {
+                let t_col = target_col as u32;
+                let diag_idx = self.get_index(row + 1, t_col);
+                let diag_cell = Cell::from_u8(self.cells[diag_idx]);
+
+                if diag_cell == Cell::Empty
+                    || (cell.density() > diag_cell.density() && !diag_cell.is_solid())
+                {
+                    self.swap(idx, diag_idx);
+                    return;
+                }
+            }
         }
 
         // 3. Liquid Spread (Horizontal)
         if cell.is_liquid() {
-             // Check immediate side first
-             for &dir in &dirs {
-                 let target_col = col as i32 + dir;
-                 if target_col >= 0 && target_col < self.width as i32 {
-                     let t_col = target_col as u32;
-                     let side_idx = self.get_index(row, t_col);
-                     let side_cell = Cell::from_u8(self.cells[side_idx]);
+            // Check immediate side first
+            for &dir in &dirs {
+                let target_col = col as i32 + dir;
+                if target_col >= 0 && target_col < self.width as i32 {
+                    let t_col = target_col as u32;
+                    let side_idx = self.get_index(row, t_col);
+                    let side_cell = Cell::from_u8(self.cells[side_idx]);
 
-                     if side_cell == Cell::Empty || (cell.density() > side_cell.density() && !side_cell.is_solid()) {
-                          self.swap(idx, side_idx);
-                          return;
-                     }
-                 }
-             }
-             // Check 2 pixels away (faster leveling)
-             for &dir in &dirs {
-                 let target_col = col as i32 + (dir * 2);
-                 if target_col >= 0 && target_col < self.width as i32 {
-                     // Check if path is clear (same fluid)
-                     let mid_col = (col as i32 + dir) as u32;
-                     let mid_idx = self.get_index(row, mid_col);
-                     let mid_cell = Cell::from_u8(self.cells[mid_idx]);
-                     
-                     if mid_cell == cell {
-                         let t_col = target_col as u32;
-                         let side_idx = self.get_index(row, t_col);
-                         let side_cell = Cell::from_u8(self.cells[side_idx]);
-                         if side_cell == Cell::Empty {
-                              self.swap(idx, side_idx);
-                              return;
-                         }
-                     }
-                 }
-             }
+                    if side_cell == Cell::Empty
+                        || (cell.density() > side_cell.density() && !side_cell.is_solid())
+                    {
+                        self.swap(idx, side_idx);
+                        return;
+                    }
+                }
+            }
+            // Check 2 pixels away (faster leveling)
+            for &dir in &dirs {
+                let target_col = col as i32 + (dir * 2);
+                if target_col >= 0 && target_col < self.width as i32 {
+                    // Check if path is clear (same fluid)
+                    let mid_col = (col as i32 + dir) as u32;
+                    let mid_idx = self.get_index(row, mid_col);
+                    let mid_cell = Cell::from_u8(self.cells[mid_idx]);
+
+                    if mid_cell == cell {
+                        let t_col = target_col as u32;
+                        let side_idx = self.get_index(row, t_col);
+                        let side_cell = Cell::from_u8(self.cells[side_idx]);
+                        if side_cell == Cell::Empty {
+                            self.swap(idx, side_idx);
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 
-    fn move_gas(&mut self, row: u32, col: u32, cell_u8: u8, cell: Cell) {
-         if row == 0 { return; } 
+    fn move_gas(&mut self, row: u32, col: u32, _cell_u8: u8, _cell: Cell) {
+        if row == 0 {
+            return;
+        }
 
-         let idx = self.get_index(row, col);
-         let above_idx = self.get_index(row - 1, col);
-         let above_cell = Cell::from_u8(self.cells[above_idx]);
+        let idx = self.get_index(row, col);
+        let above_idx = self.get_index(row - 1, col);
+        let above_cell = Cell::from_u8(self.cells[above_idx]);
 
-         // 1. Rise
-         if above_cell == Cell::Empty || above_cell.is_liquid() {
-              self.swap(idx, above_idx);
-              return;
-         }
+        // 1. Rise
+        if above_cell == Cell::Empty || above_cell.is_liquid() {
+            self.swap(idx, above_idx);
+            return;
+        }
 
         // 2. Diffuse Up Diagonally
         let spread = self.toss_coin();
         let dirs = if spread { [-1, 1] } else { [1, -1] };
-        
+
         for &dir in &dirs {
-             let target_col = col as i32 + dir;
-             if target_col >= 0 && target_col < self.width as i32 {
-                 let t_col = target_col as u32;
-                 let diag_idx = self.get_index(row - 1, t_col);
-                 let diag_cell = Cell::from_u8(self.cells[diag_idx]);
-                 
-                 if diag_cell == Cell::Empty || diag_cell.is_liquid() {
-                      self.swap(idx, diag_idx);
-                      return;
-                 }
-             }
+            let target_col = col as i32 + dir;
+            if target_col >= 0 && target_col < self.width as i32 {
+                let t_col = target_col as u32;
+                let diag_idx = self.get_index(row - 1, t_col);
+                let diag_cell = Cell::from_u8(self.cells[diag_idx]);
+
+                if diag_cell == Cell::Empty || diag_cell.is_liquid() {
+                    self.swap(idx, diag_idx);
+                    return;
+                }
+            }
         }
 
-         // 3. Gas Spread Horizontally
-         for &dir in &dirs {
-             let target_col = col as i32 + dir;
-             if target_col >= 0 && target_col < self.width as i32 {
-                 let t_col = target_col as u32;
-                 let side_idx = self.get_index(row, t_col);
-                 let side_cell = Cell::from_u8(self.cells[side_idx]);
+        // 3. Gas Spread Horizontally
+        for &dir in &dirs {
+            let target_col = col as i32 + dir;
+            if target_col >= 0 && target_col < self.width as i32 {
+                let t_col = target_col as u32;
+                let side_idx = self.get_index(row, t_col);
+                let side_cell = Cell::from_u8(self.cells[side_idx]);
 
-                 if side_cell == Cell::Empty {
-                      self.swap(idx, side_idx);
-                      return;
-                 }
-             }
-         }
+                if side_cell == Cell::Empty {
+                    self.swap(idx, side_idx);
+                    return;
+                }
+            }
+        }
     }
 
     fn swap(&mut self, idx1: usize, idx2: usize) {
         self.cells.swap(idx1, idx2);
         self.temps.swap(idx1, idx2);
     }
-    
+
     fn set_cell(&mut self, row: u32, col: u32, cell: Cell) {
         let idx = self.get_index(row, col);
         self.cells[idx] = cell as u8;
@@ -518,23 +561,26 @@ impl Universe {
         if cell != Cell::Empty {
             self.temps[idx] = cell.base_temperature();
         } else {
-             // If becoming empty, does it keep temp? 
-             // Air holds heat. Let's keep it.
+            // If becoming empty, does it keep temp?
+            // Air holds heat. Let's keep it.
         }
     }
 
     pub fn paint(&mut self, row: u32, col: u32, color_val: u8, radius: i32) {
         let r_squared = radius * radius;
         let cell = Cell::from_u8(color_val);
-        
+
         for r in -radius..=radius {
             for c in -radius..=radius {
-                if r*r + c*c <= r_squared {
+                if r * r + c * c <= r_squared {
                     let target_row = (row as i32 + r) as i32;
                     let target_col = (col as i32 + c) as i32;
-                    
-                    if target_row >= 0 && target_row < self.height as i32 && 
-                       target_col >= 0 && target_col < self.width as i32 {
+
+                    if target_row >= 0
+                        && target_row < self.height as i32
+                        && target_col >= 0
+                        && target_col < self.width as i32
+                    {
                         self.set_cell(target_row as u32, target_col as u32, cell);
                     }
                 }
@@ -551,18 +597,22 @@ impl Universe {
             let ny = row as i32 + dy;
             let nx = col as i32 + dx;
             if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
-                 if (self.rand() % 2) == 0 {
-                     self.set_cell(ny as u32, nx as u32, Cell::Fire);
-                 } else {
-                     self.set_cell(ny as u32, nx as u32, Cell::Smoke);
-                 }
+                if (self.rand() % 2) == 0 {
+                    self.set_cell(ny as u32, nx as u32, Cell::Fire);
+                } else {
+                    self.set_cell(ny as u32, nx as u32, Cell::Smoke);
+                }
             }
         }
     }
-    
+
     pub fn clear(&mut self) {
-        self.cells = iter::repeat(Cell::Empty as u8).take((self.width * self.height) as usize).collect();
-        self.temps = iter::repeat(20).take((self.width * self.height) as usize).collect();
+        self.cells = iter::repeat(Cell::Empty as u8)
+            .take((self.width * self.height) as usize)
+            .collect();
+        self.temps = iter::repeat(20)
+            .take((self.width * self.height) as usize)
+            .collect();
     }
 
     fn get_index(&self, row: u32, col: u32) -> usize {
@@ -577,7 +627,7 @@ impl Universe {
         self.rng = x;
         x
     }
-    
+
     fn toss_coin(&mut self) -> bool {
         self.rand() & 1 == 0
     }

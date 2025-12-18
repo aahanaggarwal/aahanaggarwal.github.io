@@ -1,4 +1,5 @@
 use anyhow::{Context, Result};
+
 use lightningcss::stylesheet::{ParserOptions, PrinterOptions, StyleSheet};
 use minify_html::{minify, Cfg};
 use oxc_allocator::Allocator;
@@ -40,7 +41,7 @@ fn main() -> Result<()> {
             if !path.is_file() {
                 return false;
             }
-            
+
             for ignore in IGNORE_DIRS {
                 if path.components().any(|c| c.as_os_str() == *ignore) {
                     return false;
@@ -48,10 +49,10 @@ fn main() -> Result<()> {
             }
             if let Some(file_name) = path.file_name() {
                 if file_name.to_string_lossy().starts_with('.') {
-                   if file_name.to_string_lossy() == ".nojekyll" {
-                       return true;
-                   }
-                   return false; 
+                    if file_name.to_string_lossy() == ".nojekyll" {
+                        return true;
+                    }
+                    return false;
                 }
             }
 
@@ -113,7 +114,7 @@ fn minify_css_file(src: &Path, dest: &Path) -> Result<()> {
     // Use lightningcss to minify
     let stylesheet = StyleSheet::parse(&content, ParserOptions::default())
         .map_err(|e| anyhow::anyhow!("Failed to parse CSS {:?}: {}", src, e))?;
-    
+
     let options = PrinterOptions {
         minify: true,
         ..PrinterOptions::default()
@@ -125,19 +126,26 @@ fn minify_css_file(src: &Path, dest: &Path) -> Result<()> {
 
 fn minify_js_file(src: &Path, dest: &Path) -> Result<()> {
     let source_text = fs::read_to_string(src)?;
+
     let allocator = Allocator::default();
-    let source_type = SourceType::from_path(src).unwrap_or(SourceType::default()).with_module(true);
-    
+    let source_type = SourceType::from_path(src)
+        .unwrap_or(SourceType::default())
+        .with_module(true);
+
     let parser = Parser::new(&allocator, &source_text, source_type);
     let ret = parser.parse();
 
     if !ret.errors.is_empty() {
-         eprintln!("Warning: Failed to parse JS {:?}, copying instead. Errors: {:?}", src, ret.errors);
-         fs::copy(src, dest)?;
-         return Ok(());
+        eprintln!(
+            "Warning: Failed to parse JS {:?}, copying instead. Errors: {:?}",
+            src, ret.errors
+        );
+        fs::copy(src, dest)?;
+        return Ok(());
     }
 
     let mut program = ret.program;
+
     let minifier_options = MinifierOptions {
         mangle: true,
         compress: CompressOptions {
@@ -145,7 +153,7 @@ fn minify_js_file(src: &Path, dest: &Path) -> Result<()> {
             ..CompressOptions::default()
         },
     };
-    let ret = Minifier::new(minifier_options).build(&allocator, &mut program);
+    Minifier::new(minifier_options).build(&allocator, &mut program);
 
     let codegen_options = CodegenOptions {
         minify: true,
