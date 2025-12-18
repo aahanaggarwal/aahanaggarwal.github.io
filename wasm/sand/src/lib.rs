@@ -84,13 +84,13 @@ impl Cell {
         }
     }
 
-    fn base_temperature(&self) -> i8 {
+    fn base_temperature(&self) -> i16 {
         match self {
-            Cell::Fire => 120,
-            Cell::Lava => 120,
-            Cell::Ice => -50,
-            Cell::Steam => 100,
-            Cell::Smoke => 80,
+            Cell::Fire => 800,
+            Cell::Lava => 30000,
+            Cell::Ice => -20,
+            Cell::Steam => 300,
+            Cell::Smoke => 300,
             Cell::Water | Cell::Acid | Cell::Oil => 20,
             Cell::Plant => 20,
             Cell::Sand
@@ -119,7 +119,8 @@ pub struct Universe {
     width: u32,
     height: u32,
     cells: Vec<u8>,
-    temps: Vec<i8>,
+    temps: Vec<i16>,
+    moved: Vec<bool>,
     rng: u32,
     generation: u8,
 }
@@ -130,12 +131,14 @@ impl Universe {
         let count = (width * height) as usize;
         let cells = vec![Cell::Empty as u8; count];
         let temps = vec![20; count];
+        let moved = vec![false; count];
 
         Universe {
             width,
             height,
             cells,
             temps,
+            moved,
             rng: 0xB45BE,
             generation: 0,
         }
@@ -153,6 +156,9 @@ impl Universe {
 
     pub fn tick(&mut self) {
         self.generation = self.generation.wrapping_add(1);
+
+        // Reset moved status
+        self.moved.fill(false);
 
         self.diffuse_heat();
 
@@ -178,19 +184,19 @@ impl Universe {
                 let cell = Cell::from_u8(self.cells[idx]);
 
                 match cell {
-                    Cell::Lava | Cell::Fire => {
-                        self.temps[idx] = 120;
+                    Cell::Fire => {
+                        self.temps[idx] = 800;
                         continue;
                     }
                     Cell::Ice => {
-                        self.temps[idx] = -30;
+                        self.temps[idx] = -20;
                         continue;
                     }
                     _ => {}
                 }
 
-                let mut sum: i16 = self.temps[idx] as i16;
-                let mut count = 1;
+                let mut sum: i32 = (self.temps[idx] as i32) * 1024;
+                let mut count = 1024;
 
                 let dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
                 for (dy, dx) in dirs.iter() {
@@ -198,15 +204,22 @@ impl Universe {
                     let nx = x as i32 + dx;
                     if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
                         let nidx = self.get_index(ny as u32, nx as u32);
-                        sum += self.temps[nidx] as i16;
+                        sum += self.temps[nidx] as i32;
                         count += 1;
                     }
                 }
 
-                let mut avg = (sum / count) as i8;
+                let mut avg = (sum / count) as i16;
 
-                if cell == Cell::Empty && avg > 20 {
-                    avg -= 1;
+                // Ambient cooling/heating toward 20
+                if cell == Cell::Empty {
+                    if (idx + self.generation as usize) % 10 == 0 {
+                        if avg > 20 {
+                            avg -= 1;
+                        } else if avg < 20 {
+                            avg += 1;
+                        }
+                    }
                 }
 
                 self.temps[idx] = avg;
@@ -216,6 +229,11 @@ impl Universe {
 
     fn update_pixel(&mut self, row: u32, col: u32) {
         let idx = self.get_index(row, col);
+
+        if self.moved[idx] {
+            return;
+        }
+
         let cell_u8 = self.cells[idx];
         let cell = Cell::from_u8(cell_u8);
         if cell == Cell::Empty {
@@ -247,9 +265,17 @@ impl Universe {
                     return;
                 }
             }
-            Cell::Lava => {}
+            Cell::Lava => {
+                if temp < 800 {
+                    if (self.rand() % 10) == 0 {
+                        self.set_cell(row, col, Cell::Stone);
+                        self.temps[idx] = temp;
+                    }
+                    return;
+                }
+            }
             Cell::Sand => {
-                if temp > 100 {
+                if temp > 500 {
                     // Melt
                     if (self.rand() % 50) == 0 {
                         self.set_cell(row, col, Cell::Glass);
@@ -511,6 +537,8 @@ impl Universe {
     fn swap(&mut self, idx1: usize, idx2: usize) {
         self.cells.swap(idx1, idx2);
         self.temps.swap(idx1, idx2);
+        self.moved[idx1] = true;
+        self.moved[idx2] = true;
     }
 
     fn set_cell(&mut self, row: u32, col: u32, cell: Cell) {
@@ -565,6 +593,9 @@ impl Universe {
             .take((self.width * self.height) as usize)
             .collect();
         self.temps = iter::repeat(20)
+            .take((self.width * self.height) as usize)
+            .collect();
+        self.moved = iter::repeat(false)
             .take((self.width * self.height) as usize)
             .collect();
     }

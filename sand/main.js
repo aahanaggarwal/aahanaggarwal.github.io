@@ -72,6 +72,8 @@ export async function run() {
     setupInteractions(canvas);
 }
 
+let U32_COLORS = null;
+
 function draw(ctx) {
     const cellsPtr = universe.cells();
     const width = universe.width();
@@ -87,17 +89,23 @@ function draw(ctx) {
     }
 
     const imgData = window.offscreenData;
-    const data = imgData.data;
+
+    // Create 32-bit view of the image data buffer
+    const buf32 = new Uint32Array(imgData.data.buffer);
+
+    // Precompute 32-bit colors if needed
+    if (!U32_COLORS) {
+        U32_COLORS = new Uint32Array(COLORS.length);
+        for (let i = 0; i < COLORS.length; i++) {
+            const [r, g, b, a] = COLORS[i];
+            // Little-endian: A B G R
+            U32_COLORS[i] = ((a << 24) | (b << 16) | (g << 8) | r) >>> 0;
+        }
+    }
 
     for (let i = 0; i < cells.length; i++) {
         const colorIdx = cells[i];
-        const color = COLORS[colorIdx] || COLORS[0];
-
-        const base = i * 4;
-        data[base] = color[0];
-        data[base + 1] = color[1];
-        data[base + 2] = color[2];
-        data[base + 3] = color[3];
+        buf32[i] = U32_COLORS[colorIdx];
     }
 
     window.offscreenCtx.putImageData(imgData, 0, 0);
