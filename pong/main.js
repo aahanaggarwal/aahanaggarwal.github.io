@@ -171,14 +171,14 @@ export async function run() {
         let currentStreak = game.streak();
 
         // Shake check
-        if (streakEl.innerText != currentStreak) {
+        if (streakEl.innerText !== currentStreak.toString()) {
             // Score changed (up or reset)
-            if (currentStreak > 0) {
-                const container = document.getElementById('pong-container');
-                if (container) {
-                    container.classList.add('shake');
-                    setTimeout(() => container.classList.remove('shake'), 300);
-                }
+            const container = document.getElementById('pong-container');
+            if (container) {
+                // Reset animation to ensure it plays again if triggered quickly
+                container.classList.remove('shake');
+                void container.offsetWidth; // Trigger reflow
+                container.classList.add('shake');
             }
         }
 
