@@ -7,7 +7,6 @@ OUTPUT_FILE = 'blog/posts.json'
 
 def parse_frontmatter(content):
     meta = {}
-    # Simple frontmatter parser (between --- and ---)
     match = re.match(r'^---\n(.*?)\n---\n', content, re.DOTALL)
     if match:
         frontmatter = match.group(1)
@@ -30,11 +29,9 @@ def main():
                 content = f.read()
                 meta = parse_frontmatter(content)
                 
-                # Fallback if date/title not in frontmatter
                 if 'title' not in meta:
                     meta['title'] = filename.replace('.md', '').replace('-', ' ').title()
                 if 'date' not in meta:
-                    # Try to extract date from filename YYYY-MM-DD
                     date_match = re.match(r'^(\d{4}-\d{2}-\d{2})', filename)
                     if date_match:
                         meta['date'] = date_match.group(1)
@@ -48,7 +45,6 @@ def main():
                     'tags': meta.get('tags', '')
                 })
 
-    # Sort by date descending
     posts.sort(key=lambda x: x['date'], reverse=True)
 
     with open(OUTPUT_FILE, 'w') as f:

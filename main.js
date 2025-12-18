@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* --- Router --- */
 function initRouter() {
-  // Intercept all clicks on links
   document.addEventListener("click", (e) => {
     const link = e.target.closest("a");
     if (!link) return;
@@ -17,42 +15,28 @@ function initRouter() {
     const href = link.getAttribute("href");
     const url = new URL(link.href);
 
-    // Ignore external links or hash links
     if (url.origin !== window.location.origin || href.startsWith("#")) {
       return;
     }
-
-    // Allow download links or explicit targets
     if (link.getAttribute("target") === "_blank") return;
 
     e.preventDefault();
 
-    // Clean URL (remove index.html)
     let cleanPath = url.pathname;
-    // Ensure clean path (remove index.html)
     if (cleanPath.endsWith("/index.html")) {
       cleanPath = cleanPath.replace("/index.html", "/");
     } else if (cleanPath.endsWith("index.html")) {
       cleanPath = cleanPath.replace("index.html", "");
     }
 
-    // Fix relative path issue for SPA
-    // If we are at /pics/ and click "Blog" (../blog/), the browser resolves the URL correctly to /blog/ before we get it.
-    // However, the cleanPath logic above assumes we want to push that exact resolved path.
-
-    // Note: if we are at /pics/ and click a link that resolves to /pics/index.html, cleanPath becomes /pics/
-
-    // Construct search/hash if needed
     const cleanUrl = cleanPath + url.search + url.hash;
 
     window.history.pushState({}, "", cleanUrl);
     handleLocation();
   });
 
-  // Handle browser navigation (back/forward)
   window.addEventListener("popstate", handleLocation);
 
-  // Initial load
   handleLocation(true);
 }
 
@@ -60,56 +44,25 @@ async function handleLocation(isInitial = false) {
   const path = window.location.pathname;
   const search = window.location.search;
 
-  // If initial load, just trigger the specific logic for the current page
-  // because the HTML is already loaded.
   if (isInitial) {
     runPageScript(path, search);
     return;
   }
-
-  // Determine which file to fetch based on path
   let fetchUrl = path;
 
-  // Normalization logic matching static server behavior
   if (path.endsWith("/")) {
     fetchUrl += "index.html";
   } else if (!path.endsWith(".html")) {
-    // e.g. /blog -> /blog/index.html (if server redirects)
-    // or /blog -> /blog (if checking file existence).
-    // GitHub Pages usually handles /folder as /folder/index.html
-    // But if we want to fetch it, we should probably append index.html
-    // to be safe, unless we trust the server returns it for the dir.
-    // Let's assume appending index.html for directories.
-    // But how do we know if it's a directory?
-    // Our specific routes:
-    // / -> index.html
-    // /pics/ -> pics/index.html
-    // /blog/ -> blog/index.html
-    // /blog/view.html -> blog/view.html
-
-    // Simple router map for our known structure:
     if (path === "/" || path === "/index.html") fetchUrl = "/index.html";
     else if (path.startsWith("/pics")) fetchUrl = "/pics/index.html";
     else if (path.startsWith("/blog") && !path.includes("view.html")) fetchUrl = "/blog/index.html";
     else if (path.includes("view.html")) fetchUrl = "/blog/view.html";
   }
 
-  // Fallback: if we are trying to fetch /pics/blog/ or similar weird paths due to relative link resolution failures in static server context (though URL object resolution should handle it).
-  // Actually, the issue in verification might be that "Blog" link in pics/index.html is relative "../blog/"
-  // If we are at /pics/, "../blog/" resolves to /blog/.
-  // The verification error showed: http://localhost:8000/pics/blog/
-  // This suggests the browser resolved it as /pics/blog/ ?
-  // No, if href is "../blog/", from /pics/, it should be /blog/.
-  // Unless /pics/ is treated as a file without trailing slash?
-  // If we are at /pics (no slash), then .. is root.
-  // If we are at /pics/ (slash), then .. is root.
-
-  // Let's check strict equality for cleaner routing map
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
   if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
 
-  // Pre-fetch blog post if applicable to save time
   let preFetchPromise = null;
   if (path.includes("view.html")) {
     const params = new URLSearchParams(search);
@@ -135,32 +88,23 @@ async function handleLocation(isInitial = false) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
 
-    // Swap Content
     const newContent = doc.getElementById("content");
     const oldContent = document.getElementById("content");
 
     if (newContent && oldContent) {
-      // Swap Content
-      // We must copy attributes too (id is same, but class/style might differ)
       oldContent.className = newContent.className;
       oldContent.setAttribute("style", newContent.getAttribute("style") || "");
       oldContent.innerHTML = newContent.innerHTML;
-      // Also update class on body if needed (e.g., different themes?)
-      // Currently all use "crt".
       document.title = doc.title;
 
-      // Re-run visuals
       initDecryptEffect();
 
-      // Force update timers for instant feedback
       updateHudTimer();
       updateCountdown();
 
-      // Run Page Script
       runPageScript(path, search);
     } else {
       console.error("Content wrapper #content not found in fetched page or current page.");
-      // Fallback: reload
       window.location.reload();
     }
 
@@ -170,7 +114,6 @@ async function handleLocation(isInitial = false) {
 }
 
 function runPageScript(path, search) {
-  // Detect page type
   if (path.startsWith("/pics")) {
     loadPics();
   } else if (path.startsWith("/blog")) {
@@ -186,16 +129,12 @@ function runPageScript(path, search) {
       module.run();
     });
   } else {
-    // Home page - nothing special dynamic unless we want to re-init something
   }
 }
 
-/* --- Data / State --- */
 import initWasm, { plot_equation } from './graph/pkg/graph_wasm.js';
 const startTime = Date.now();
 const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
-
-/* --- Page Logic: Home / General --- */
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
@@ -218,7 +157,6 @@ function updateHudTimer() {
 function updateCountdown() {
   const timerElement = document.getElementById("countdown-timer");
 
-  // Continuous check to catch the exact moment
   checkSurprise(targetDate);
 
   if (!timerElement) return;
@@ -247,24 +185,20 @@ function initCircuit() {
   window.addEventListener("resize", resize);
   drawCircuit();
 
-  // Color update interval
   setInterval(updateColor, 5000);
 }
 
 function initGlobalListeners() {
-  // Cursor
   const cursor = document.getElementById("cursor");
   document.addEventListener("mousemove", (e) => {
     if (cursor) {
       cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      // clear top/left to avoid conflict if set elsewhere (initially)
       cursor.style.top = '';
       cursor.style.left = '';
     }
     cursorPos.x = e.clientX;
     cursorPos.y = e.clientY;
 
-    // HUD Coords
     const hudCoords = document.getElementById("hud-coords");
     if (hudCoords) {
       hudCoords.innerText = `X: ${e.clientX.toString().padStart(4, '0')} Y: ${e.clientY.toString().padStart(4, '0')}`;
@@ -278,19 +212,13 @@ function initGlobalListeners() {
     }
   });
 
-  // HUD Timer
-  updateHudTimer(); // Run immediately
+
+  updateHudTimer();
   setInterval(updateHudTimer, 1000);
 
-  // Countdown Timer (Header) - Check existence periodically or on load?
-  // It's in header, which might be swapped. So we should check inside the interval.
-  // Or re-init it. Let's keep global interval but check element existence.
   startCountdown();
-
-  // Initial Decrypt
   initDecryptEffect();
 
-  // Title Glitch
   const title = document.querySelector(".glitch");
   if (title) {
     setInterval(() => {
@@ -331,7 +259,7 @@ function drawCircuit() {
 
     circuitCtx.fillStyle = primary;
     if (document.body.classList.contains("special-mode")) {
-      drawHeart(circuitCtx, n.x, n.y, 1); // Draw hearts
+      drawHeart(circuitCtx, n.x, n.y, 1);
     } else {
       circuitCtx.beginPath();
       circuitCtx.arc(n.x, n.y, 2, 0, Math.PI * 2);
@@ -398,10 +326,9 @@ function updateColor() {
 }
 
 function startCountdown() {
-  // Initial check
   checkSurprise(targetDate);
 
-  updateCountdown(); // Run immediately
+  updateCountdown();
   setInterval(updateCountdown, 1000);
 }
 
@@ -409,30 +336,23 @@ function checkSurprise(targetDate) {
   const now = Date.now();
   const endDate = new Date("2025-12-28T00:00:00Z").getTime();
 
-  // Active period: After start date AND before end date
   if (now >= targetDate && now < endDate) {
     if (!document.body.classList.contains("special-mode")) {
       document.body.classList.add("special-mode");
-      // Force color update immediately
       primary = "#ff69b4";
       document.documentElement.style.setProperty("--primary-color", primary);
       document.documentElement.style.setProperty("--glow-color", "rgba(255, 105, 180, 0.75)");
     }
   } else {
-    // Outside active period (either before start or after end)
     if (document.body.classList.contains("special-mode")) {
       document.body.classList.remove("special-mode");
-      // NOTE: We don't necessarily need to reset color here immediately as updateColor loop will pick it up,
-      // but for immediate feedback if the timer crosses the boundary while open:
       document.documentElement.style.removeProperty("--primary-color");
       document.documentElement.style.removeProperty("--glow-color");
-      // Let the next updateColor() loop pick a random color or reset
       updateColor();
     }
   }
 }
 
-/* --- Decrypt Effect --- */
 class DecryptEffect {
   constructor(element) {
     this.element = element;
@@ -449,7 +369,6 @@ class DecryptEffect {
   animate() {
     let iterations = 0;
     const interval = setInterval(() => {
-      // Check if element is still in DOM
       if (!document.body.contains(this.element)) {
         clearInterval(interval);
         return;
@@ -469,7 +388,7 @@ class DecryptEffect {
         clearInterval(interval);
       }
 
-      iterations += 1 / 4; // Speed control
+      iterations += 1 / 4;
     }, 70);
   }
 }
@@ -484,16 +403,12 @@ function initDecryptEffect(specificElement = null) {
   }
 }
 
-/* --- Page Logic: Pics --- */
 async function loadPics() {
   const gallery = document.getElementById("gallery");
   if (!gallery) return;
-
-  // Initialize Modal Listeners since they are part of the pics page structure
   initModal();
 
   try {
-    // Use absolute path for robustness in SPA
     const res = await fetch("/pics/index.json");
     if (!res.ok) throw new Error("index");
 
@@ -510,7 +425,7 @@ async function loadPics() {
       return yearB - yearA;
     });
 
-    gallery.innerHTML = ""; // Clear loading/placeholder
+    gallery.innerHTML = "";
 
     for (const folder of folders) {
       const details = document.createElement("details");
@@ -532,7 +447,6 @@ async function loadPics() {
           if (baseUrl) {
             src = `${baseUrl}/${file}`;
           } else {
-            // Fallback for local relative paths
             src = `/pics/${folder.name}/${file}`;
           }
         }
@@ -541,8 +455,6 @@ async function loadPics() {
         img.alt = file;
         img.addEventListener("click", () => openModal(img.src));
         imagesDiv.appendChild(img);
-
-        // Attach ASCII effect
         attachAsciiEffect(img);
       });
     }
@@ -559,7 +471,6 @@ function extractYear(name) {
   return match ? parseInt(match[1], 10) : NaN;
 }
 
-// Modal Logic
 let modal, modalImg, closeBtn;
 
 function initModal() {
@@ -604,13 +515,11 @@ function closeModal() {
   }, 300);
 }
 
-/* --- ASCII Effect --- */
 function generateAscii(img, canvas) {
   const ctx = canvas.getContext("2d");
   const width = 100;
-  // Use rendered aspect ratio (which is 1:1 square now)
   const renderedRatio = img.width / img.height;
-  const height = width / renderedRatio; // Should be 100 if square
+  const height = width / renderedRatio;
 
   canvas.width = width;
   canvas.height = height;
@@ -620,30 +529,23 @@ function generateAscii(img, canvas) {
   tempCanvas.height = height;
   const tempCtx = tempCanvas.getContext('2d');
 
-  // Calculate crop to mimic object-fit: cover
   const nw = img.naturalWidth;
   const nh = img.naturalHeight;
   let sx = 0, sy = 0, sw = nw, sh = nh;
-
-  // We want to crop to the user-visible aspect ratio (square)
-  // If natural is wider than tall -> crop sides
   if (nw / nh > renderedRatio) {
     sw = nh * renderedRatio;
     sx = (nw - sw) / 2;
   } else {
-    // If natural is taller -> crop top/bottom
     sh = nw / renderedRatio;
     sy = (nh - sh) / 2;
   }
 
-  // Draw the cropped source into the temp canvas (squishing into 100x100 grid)
   tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, width, height);
 
   const imageData = tempCtx.getImageData(0, 0, width, height);
   const data = imageData.data;
   const chars = "@%#*+=-:. ";
 
-  // Prepare overlay canvas matching rendered size
   canvas.width = img.width;
   canvas.height = img.height;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -688,7 +590,6 @@ function attachAsciiEffect(imgElement) {
   }
 };
 
-/* --- Page Logic: Blog List --- */
 async function loadBlogList() {
   const list = document.getElementById("blog-list");
   if (!list) return;
@@ -702,8 +603,6 @@ async function loadBlogList() {
 
     posts.forEach(post => {
       const li = document.createElement("li");
-      // Use clean URL link, e.g., view.html?post=...
-      // The router will handle navigation.
       li.innerHTML = `
               <span class="date">[${post.date}]</span>
               <a href="view.html?post=${post.file}">${post.title}</a>
@@ -716,7 +615,6 @@ async function loadBlogList() {
   }
 }
 
-/* --- Page Logic: Blog Post View --- */
 async function loadPost() {
   const params = new URLSearchParams(window.location.search);
   const postFile = params.get("post");
@@ -732,13 +630,10 @@ async function loadPost() {
 
   try {
     let text;
-    // Check for pre-fetched promise
     if (window._preFetchedPost) {
       text = await window._preFetchedPost;
-      window._preFetchedPost = null; // Clear it
+      window._preFetchedPost = null;
     }
-
-    // If no pre-fetch or it failed (null), fetch now
     if (!text) {
       const res = await fetch(`/blog/posts/${postFile}`);
       if (!res.ok) throw new Error("Post not found");
@@ -774,7 +669,6 @@ async function loadPost() {
 }
 
 function parseMarkdown(text) {
-  // Remove frontmatter
   text = text.replace(/^---\n[\s\S]*?\n---\n/, '');
   text = text.replace(/^# (.*$)/gim, '<h1>$1</h1>');
   text = text.replace(/^## (.*$)/gim, '<h2>$1</h2>');
@@ -797,14 +691,13 @@ function parseMarkdown(text) {
   return text.trim();
 };
 
-/* --- Page Logic: Graph --- */
 let graphCanvas, graphCtx;
-let equations = []; // Start empty
-let variables = {}; // Variable values { "a": 1.0 }
-let scale = 40; // Pixels per unit
-let offsetX = 0, offsetY = 0; // Pan offset
+let equations = [];
+let variables = {};
+let scale = 40;
+let offsetX = 0, offsetY = 0;
 let isDragging = false;
-let isInteracting = false; // LOD State
+let isInteracting = false;
 let lastMouseX, lastMouseY;
 
 function loadGraph() {
@@ -812,29 +705,24 @@ function loadGraph() {
   if (!graphCanvas) return;
   graphCtx = graphCanvas.getContext("2d");
 
-  // Start Render Loop
   startGraphRenderLoop();
 
-  // Initial sizing
   resizeGraph();
   window.addEventListener("resize", resizeGraph);
-
-  // Interaction State for LOD
   let interactionTimeout;
   const startInteraction = () => {
     isInteracting = true;
     clearTimeout(interactionTimeout);
-    drawGraph(); // Redraw immediately with low res
+    drawGraph();
   };
   const endInteraction = () => {
     clearTimeout(interactionTimeout);
     interactionTimeout = setTimeout(() => {
       isInteracting = false;
-      drawGraph(); // Redraw with high res
+      drawGraph();
     }, 500);
   };
 
-  // Event Listeners
   graphCanvas.addEventListener("mousedown", (e) => {
     isDragging = true;
     lastMouseX = e.clientX;
@@ -850,7 +738,7 @@ function loadGraph() {
       offsetY += dy;
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
-      startInteraction(); // Continuous interaction
+      startInteraction();
     }
   });
 
@@ -859,7 +747,6 @@ function loadGraph() {
     endInteraction();
   });
 
-  // Cursor Mode
   const cursor = document.getElementById("cursor");
   graphCanvas.addEventListener("mouseenter", () => {
     if (cursor) cursor.classList.add("plus-mode");
@@ -871,25 +758,15 @@ function loadGraph() {
   graphCanvas.addEventListener("wheel", (e) => {
     e.preventDefault();
     startInteraction();
-
-    // Config
-    const zoomIntensity = 0.05; // Faster scroll per user request
+    const zoomIntensity = 0.05;
     const scroll = e.deltaY < 0 ? 1 : -1;
     const zoom = Math.exp(scroll * zoomIntensity);
-
-    // Mouse-Centered Zoom Logic
-    // 1. Get mouse position relative to canvas
     const rect = graphCanvas.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // 2. Identify the world point under the mouse BEFORE zoom
-    // cx = w/2 + offsetX
-    // x_screen = cx + x_world * scale
-    // x_world = (x_screen - cx) / scale
-
-    const w = graphCanvas.width / (window.devicePixelRatio || 1); // Logical width
-    const h = graphCanvas.height / (window.devicePixelRatio || 1); // Logical height
+    const w = graphCanvas.width / (window.devicePixelRatio || 1);
+    const h = graphCanvas.height / (window.devicePixelRatio || 1);
 
     const cx = w / 2 + offsetX;
     const cy = h / 2 + offsetY;
@@ -897,18 +774,10 @@ function loadGraph() {
     const mouseWorldX = (mouseX - cx) / scale;
     const mouseWorldY = (mouseY - cy) / scale;
 
-    // 3. Apply Zoom
     scale *= zoom;
-
-    // 4. Calculate new offset so that mouseWorld is still under mouseX
-    // new_cx = mouseX - mouseWorldX * new_scale
-    // w/2 + new_offsetX = mouseX - mouseWorldX * new_scale
-    // new_offsetX = mouseX - mouseWorldX * new_scale - w/2
 
     offsetX = mouseX - (mouseWorldX * scale) - (w / 2);
     offsetY = mouseY - (mouseWorldY * scale) - (h / 2);
-
-    // Debounce end interaction
     endInteraction();
   });
 
@@ -919,17 +788,13 @@ function loadGraph() {
     drawGraph();
   });
 
-  // Sidebar Controls
   const addBtn = document.getElementById("add-equation");
   const eqList = document.getElementById("equation-list");
 
   if (addBtn && eqList) {
-    // Clear list and re-populate from state
     eqList.innerHTML = "";
-    if (equations.length === 0) equations.push(""); // Ensure at least one input
+    if (equations.length === 0) equations.push("");
     equations.forEach(eq => addEquationInput(eqList, eq));
-
-    // Add new input handler
     addBtn.onclick = () => {
       equations.push("");
       addEquationInput(eqList, "");
@@ -951,29 +816,24 @@ function addEquationInput(container, value) {
 
   const input = group.querySelector("input");
   input.addEventListener("input", (e) => {
-    // Update equations array based on index
     const index = Array.from(container.children).indexOf(group);
     equations[index] = e.target.value;
     drawGraph();
   });
-
-  // Enter key to add new
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       document.getElementById("add-equation").click();
     }
   });
 
-  // Delete button
   const deleteBtn = group.querySelector(".btn-delete");
   deleteBtn.addEventListener("click", () => {
     const index = Array.from(container.children).indexOf(group);
     equations.splice(index, 1);
     container.removeChild(group);
-    drawGraph(); // Update graph
+    drawGraph();
   });
 
-  // Auto-focus new inputs if empty
   if (value === "") input.focus();
 }
 
@@ -984,27 +844,16 @@ function resizeGraph() {
     const dpr = window.devicePixelRatio || 1;
     const rect = container.getBoundingClientRect();
 
-    // Set physical size
     graphCanvas.width = rect.width * dpr;
     graphCanvas.height = rect.height * dpr;
 
-    // Set CSS size (logical)
     graphCanvas.style.width = `${rect.width}px`;
     graphCanvas.style.height = `${rect.height}px`;
-
-    // Scale context to use logical coordinates for drawing primitive shapes if needed?
-    // Actually, we pass physical W/H to Wasm, so Wasm returns physical coords.
-    // If we simply draw using those coords, we don't need context scale.
-    // BUT line width needs to be scaled? 
-    // If we draw 2px line on 2x dpr, it's 2 physical pixels = 1 logical pixel.
-    // That makes it crisp (hairline).
-    // Let's stick to unscaled context and physical coordinates for maximum sharpness.
 
     drawGraph();
   }
 }
 
-// Graph Render Loop (RAF)
 let graphRenderLoopId;
 let graphNeedsUpdate = false;
 
@@ -1013,7 +862,7 @@ function startGraphRenderLoop() {
 
   const loop = () => {
     if (graphNeedsUpdate) {
-      drawGraphLogic(); // The actual draw function
+      drawGraphLogic();
       graphNeedsUpdate = false;
     }
     graphRenderLoopId = requestAnimationFrame(loop);
@@ -1021,11 +870,7 @@ function startGraphRenderLoop() {
   graphRenderLoopId = requestAnimationFrame(loop);
 }
 
-function stopGraphRenderLoop() {
-  if (graphRenderLoopId) cancelAnimationFrame(graphRenderLoopId);
-}
 
-// Rename original drawGraph to drawGraphLogic and wrap it
 function drawGraph() {
   graphNeedsUpdate = true;
 }
@@ -1034,32 +879,17 @@ function drawGraphLogic() {
   if (!graphCtx || !graphCanvas) return;
   const w = graphCanvas.width;
   const h = graphCanvas.height;
-
-  // Determine grid size and LOD
-  // Wasm expects physical pixels for w/h
-  // but let's be careful about scale.
-  // We want to draw in physical pixels. 
-  // offsetX/Y and scale are in Logical Pixels (managed by events).
-
-  // Convert context to physical
   const dpr = window.devicePixelRatio || 1;
   const cx = (w / 2 + offsetX * dpr);
   const cy = (h / 2 + offsetY * dpr);
   const physicalScale = scale * dpr;
 
-  // LOD decision
-  // High DPI (Retina) with step=1 is too heavy (millions of calcs).
-  // We relax the step size. 
-  // Step 3 on Retina (2x) = 1.5 logical pixels. Visually perfect.
-  // Step 12 during interaction = 6 logical pixels. Responsive.
   const step = isInteracting ? 12 : 3;
 
-  // Clear
   graphCtx.fillStyle = "#0a0a0a";
   graphCtx.fillRect(0, 0, w, h);
 
-  // Grid
-  graphCtx.lineWidth = 1 * dpr; // 1 logical pixel
+  graphCtx.lineWidth = 1 * dpr;
   graphCtx.strokeStyle = "rgba(0, 255, 65, 0.2)";
 
   const startCol = Math.floor(-cx / physicalScale);
@@ -1080,7 +910,6 @@ function drawGraphLogic() {
   }
   graphCtx.stroke();
 
-  // Axes
   graphCtx.lineWidth = 2 * dpr;
   graphCtx.strokeStyle = "rgba(0, 255, 65, 0.8)";
   graphCtx.beginPath();
@@ -1090,46 +919,36 @@ function drawGraphLogic() {
   graphCtx.lineTo(cx, h);
   graphCtx.stroke();
 
-  // Collision Buffer
   const collisionBuffer = new Int8Array(w * h);
 
-  // Identify variables from all equations
   const allVars = new Set();
   equations.forEach(eq => {
     extractVariables(eq).forEach(v => allVars.add(v));
   });
 
-  // Sync state
-  // Remove unused
   Object.keys(variables).forEach(v => {
     if (!allVars.has(v)) delete variables[v];
   });
-  // Add new
   allVars.forEach(v => {
     if (variables[v] === undefined) variables[v] = 1.0;
   });
 
-  // Update UI
   updateVariableControls();
 
-  // Prepare vars for Wasm
   const varNames = Object.keys(variables);
   const varValues = Object.values(variables);
 
-  // Plot Equations
   graphCtx.lineWidth = 2 * dpr;
   equations.forEach((eq, index) => {
     if (!eq.trim()) return;
 
     try {
-      // Pass LOD 'step' to Wasm
       plotEquation(eq, cx, cy, w, h, index + 1, collisionBuffer, varNames, varValues, step, physicalScale);
     } catch (e) {
-      // Ignore invalid equations
+      console.error(`Error plotting equation ${index + 1}:`, e);
     }
   });
 
-  // Draw all pending intersections
   if (pendingIntersections.length > 0) {
     graphCtx.save();
     graphCtx.shadowColor = "#fff";
@@ -1142,18 +961,14 @@ function drawGraphLogic() {
     }
     graphCtx.restore();
   }
-  pendingIntersections = []; // Clear for next frame
+  pendingIntersections = [];
 }
 
 function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer, varNames, varValues, step, pScale) {
-  // Pass to WebAssembly
   try {
-    // 1. Substitute variables in JS using Regex for safety (Word Boundaries)
-    // This prevents "a" from replacing "a" in "tan", etc.
     let processedEq = eqStr;
     varNames.forEach((name, i) => {
       const val = varValues[i];
-      // Regex: \bname\b matches whole word only
       const re = new RegExp(`\\b${name}\\b`, 'g');
       processedEq = processedEq.replace(re, `(${val})`);
     });
@@ -1162,31 +977,25 @@ function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer, varNames, varV
       processedEq,
       w,
       h,
-      Number(pScale), // Use physical scale
+      Number(pScale),
       Number(cx),
       Number(cy),
-      Number(step),   // New LOD parameter
+      Number(step),
       collisionBuffer,
       eqId,
-      [], // varNames (unused now)
-      new Float64Array([]) // varValues (unused now)
+      [],
+      new Float64Array([])
     );
 
-    // Draw Lines
     const lines = result.get_lines();
     graphCtx.beginPath();
     graphCtx.strokeStyle = "#00ff41";
-    // Lines are [x1, y1, x2, y2, ...]
     for (let i = 0; i < lines.length; i += 4) {
-      // Create separate paths or one big path?
-      // One big path with moveTo/lineTo is faster but segments are disconnected.
-      // So we must moveTo for every segment.
       graphCtx.moveTo(lines[i], lines[i + 1]);
       graphCtx.lineTo(lines[i + 2], lines[i + 3]);
     }
     graphCtx.stroke();
 
-    // Handle Intersections
     const intersections = result.get_intersections();
     for (let i = 0; i < intersections.length; i += 2) {
       drawIntersection(intersections[i], intersections[i + 1]);
@@ -1194,13 +1003,10 @@ function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer, varNames, varV
 
   } catch (e) {
     console.warn("Wasm plot error:", e);
-    // Fallback or ignore
   }
 }
 
-// Variable Helper Functions
 function extractVariables(eq) {
-  // Find all letter tokens that are NOT known functions/constants
   const tokens = eq.match(/[a-zA-Z]+/g) || [];
   const knowns = new Set([
     "x", "y",
@@ -1213,9 +1019,7 @@ function extractVariables(eq) {
   tokens.forEach(t => {
     const low = t.toLowerCase();
     if (!knowns.has(low)) {
-      vars.push(t); // Keep original case? Or lowercase? prompt said "a" and "y".
-      // Let's assume case-sensitive or user prefers lowercase.
-      // JS and lib.rs replace exact string.
+      vars.push(t);
     }
   });
   return vars;
@@ -1225,36 +1029,20 @@ function updateVariableControls() {
   const container = document.getElementById("variable-list");
   if (!container) return;
 
-  // We want to preserve focus if rebuilding.
-  // Ideally only append/remove differences.
-  // But strictly rebuilding is easier. 
-  // To avoid losing slider interaction state during drag (which calls drawGraph -> updateVariableControls),
-  // WE MUST NOT DESTROY elements being dragged.
-
-  // Diff inputs
   const currentKeys = Object.keys(variables).sort();
 
-  // Check existing UI
   const existingGroups = Array.from(container.children);
   const existingKeys = existingGroups.map(el => el.dataset.var).sort();
 
-  // If identical, just update values? 
-  // No, if user is dragging slider, the value in `variables` is updated by input listener.
-  // We don't need to push back to DOM unless external change.
-  // So if keys match, DO NOTHING?
   if (JSON.stringify(currentKeys) === JSON.stringify(existingKeys)) {
     return;
   }
 
-  // Full Rebuild (only when structure changes)
   container.innerHTML = "";
   currentKeys.forEach(key => {
     const group = document.createElement("div");
     group.className = "variable-control-group";
-    group.dataset.var = key; // Mark for diffing
-
-    // Style this in JS or CSS? CSS is better but I'll add inline for speed or expect CSS updates?
-    // Using existing classes style.
+    group.dataset.var = key;
 
     group.innerHTML = `
       <span class="var-name">${key} = </span>
@@ -1277,7 +1065,6 @@ function updateVariableControls() {
 }
 
 
-// Intersections queue
 let pendingIntersections = [];
 
 function drawIntersection(x, y) {

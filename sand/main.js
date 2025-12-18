@@ -112,7 +112,6 @@ function setupControls() {
     const existingBtns = container.querySelectorAll('.color-btn');
     existingBtns.forEach(b => b.remove());
 
-    // Create Tooltip Element
     let tooltip = document.getElementById('custom-tooltip');
     if (!tooltip) {
         tooltip = document.createElement('div');
@@ -125,7 +124,7 @@ function setupControls() {
         tooltip.style.fontFamily = "'Courier New', Courier, monospace";
         tooltip.style.fontSize = '14px';
         tooltip.style.fontWeight = 'bold';
-        tooltip.style.pointerEvents = 'none'; // Don't block clicks
+        tooltip.style.pointerEvents = 'none';
         tooltip.style.display = 'none';
         tooltip.style.zIndex = '1000';
         tooltip.style.boxShadow = '0 0 10px #33ff00';
@@ -135,16 +134,13 @@ function setupControls() {
 
     ELEMENT_NAMES.forEach((name, idx) => {
         if (idx === 0) return;
-        if (name === "Fire") return; // Hidden from UI
+        if (name === "Fire") return;
         if (["Smoke", "Glass", "Obsidian"].includes(name)) return;
 
         const btn = document.createElement('div');
         btn.className = 'color-btn';
         const rgba = COLORS[idx];
         btn.style.backgroundColor = `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3] / 255})`;
-
-        // Remove native title
-        // btn.title = name; 
 
         if (idx === selectedColor) btn.classList.add('active');
 
@@ -154,7 +150,6 @@ function setupControls() {
             btn.classList.add('active');
         };
 
-        // Custom Tooltip Data
         btn.onmouseenter = () => {
             tooltip.innerText = name;
             tooltip.style.display = 'block';

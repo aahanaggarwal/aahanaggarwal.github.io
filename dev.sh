@@ -26,7 +26,6 @@ cargo run --manifest-path tools/optimizer/Cargo.toml
 
 echo "Starting Server..."
 # Kill process on port 8000 if it exists
-# Kill process on port 8000 if it exists
 PID=$(lsof -ti:8000 || true)
 if [ -n "$PID" ]; then
   echo "Killing process on port 8000 (PID: $PID)..."

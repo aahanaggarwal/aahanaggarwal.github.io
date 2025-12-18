@@ -83,7 +83,6 @@ fn process_file(path: &Path) -> Result<()> {
     let extension = path.extension().and_then(|s| s.to_str()).unwrap_or("");
     let file_name = path.file_name().and_then(|s| s.to_str()).unwrap_or("");
 
-    // Special handling for pre-minified files or Wasm glue code that shouldn't be touched if fragile
     if file_name.contains(".min.") {
         return copy_file(path, &dest_path);
     }
@@ -111,7 +110,6 @@ fn minify_html_file(src: &Path, dest: &Path) -> Result<()> {
 
 fn minify_css_file(src: &Path, dest: &Path) -> Result<()> {
     let content = fs::read_to_string(src)?;
-    // Use lightningcss to minify
     let stylesheet = StyleSheet::parse(&content, ParserOptions::default())
         .map_err(|e| anyhow::anyhow!("Failed to parse CSS {:?}: {}", src, e))?;
 

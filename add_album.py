@@ -6,7 +6,6 @@ import cloudinary.uploader
 import cloudinary.api
 from pathlib import Path
 
-# Load credentials
 def load_credentials():
     creds_file = Path("cloudinary_credentials.json")
     if creds_file.exists():
@@ -34,19 +33,16 @@ def add_album(folder_path):
     album_name = folder_path.name
     print(f"Processing album: {album_name}")
 
-    # Load existing index
     index_file = Path("pics/index.json")
     with open(index_file, "r") as f:
         data = json.load(f)
 
     base_url = data.get("base_url", "")
     
-    # Calculate next available image ID
     max_id = 0
     for album in data.get("albums", []):
         for img_path in album.get("images", []):
             try:
-                # Extract filename from path (e.g., ".../83.jpg" -> "83")
                 filename = Path(img_path).stem
                 img_id = int(filename)
                 if img_id > max_id:
@@ -57,7 +53,6 @@ def add_album(folder_path):
     next_id = max_id + 1
     print(f"Starting auto-renumbering from ID: {next_id}")
 
-    # Check if album already exists
     existing_album = next((a for a in data["albums"] if a["name"] == album_name), None)
     if existing_album:
         print(f"Album '{album_name}' already exists. Adding new images to it.")
@@ -66,7 +61,6 @@ def add_album(folder_path):
         album_data = {"name": album_name, "images": []}
         data["albums"].append(album_data)
 
-    # Supported extensions
     valid_exts = {".jpg", ".jpeg", ".png", ".webp", ".heic", ".gif"}
     
     files = [f for f in folder_path.iterdir() if f.suffix.lower() in valid_exts]
@@ -77,17 +71,8 @@ def add_album(folder_path):
         return
 
     for img_file in files:
-        # Use next available ID for the filename
         new_filename = f"{next_id}{img_file.suffix.lower()}"
         print(f"  Uploading {img_file.name} as {new_filename}...")
-        
-        # Public ID: album_name/number (no extension for public_id usually, but keeping consistency)
-        # Actually standard cloudinary public_id doesn't always have extension, but user's existing ones seem to be
-        # mapped to "album/number". Let's stick to "album/number" format if that matches their preference,
-        # OR "album/number" and let Cloudinary add extension.
-        # Looking at index.json: "v.../album/album/83.jpg"
-        # The public_id used in previous code was: f"{album_name}/{img_file.stem}"
-        # If I change stem to number, it becomes "album_name/84". 
         
         public_id = f"{album_name}/{next_id}"
         
@@ -102,7 +87,6 @@ def add_album(folder_path):
             
             secure_url = response["secure_url"]
             
-            # Optimize URL storage
             if secure_url.startswith(base_url):
                 stored_path = secure_url[len(base_url):]
                 if stored_path.startswith("/"):
@@ -121,7 +105,6 @@ def add_album(folder_path):
         except Exception as e:
             print(f"    Error uploading {img_file.name}: {e}")
 
-    # Save index
     with open(index_file, "w") as f:
         json.dump(data, f, indent=4)
     

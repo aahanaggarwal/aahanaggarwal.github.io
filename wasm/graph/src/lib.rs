@@ -2,7 +2,6 @@ use meval::Expr;
 use std::f64;
 use wasm_bindgen::prelude::*;
 
-// Enable panic hook for better debugging in browser console
 #[wasm_bindgen(start)]
 pub fn main_js() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
@@ -34,14 +33,6 @@ impl PlotResult {
     }
 }
 
-// Helper to linear interpolate between two values
-// Helper to linear interpolate between two values (Unused currently)
-#[allow(dead_code)]
-fn lerp(val1: f64, val2: f64, t: f64) -> f64 {
-    val1 + (val2 - val1) * t
-}
-
-// Inverse lerp to find where value is zero (root finding between v1 and v2)
 fn get_t(v1: f64, v2: f64) -> f64 {
     if (v2 - v1).abs() < 1e-9 {
         0.5
@@ -66,11 +57,8 @@ pub fn plot_equation(
 ) -> PlotResult {
     let mut result = PlotResult::new();
 
-    // 1. Prepare Equation
-    // Variable substitution is now handled in JS to ensure safety (regex word boundaries).
     let clean_eq = eq_str.to_string();
 
-    // 2. Preprocess implicit =
     let parts: Vec<&str> = clean_eq.split('=').collect();
     let expr_str = if parts.len() > 1 {
         format!("({}) - ({})", parts[0], parts[1])
@@ -78,7 +66,6 @@ pub fn plot_equation(
         parts[0].to_string()
     };
 
-    // 3. Parse and Bind
     let expr: Expr = match expr_str.parse() {
         Ok(e) => e,
         Err(_) => return result,
@@ -89,25 +76,12 @@ pub fn plot_equation(
         Err(_) => return result,
     };
 
-    // 4. Marching Squares Setup with LOD
-    // Grid alignment: we must ensure we hit the boundaries or close to them.
-    // Iterating by step.
-
-    // We need 2 rows: current (py) and next (py + step).
-    // Buffer width needs to accommodate the stepped access.
-    // Actually simpler: just recompute row vals.
-    // We can't reuse comfortably because of the step stride unless we store full row.
-    // Optimization: Store sparse row?
-    // Or just store `w / step + 1` values.
-
     let step_f = step as f64;
-    let grid_cols = (w / step) + 2; // +2 for safety margin
+    let grid_cols = (w / step) + 2;
 
-    // Arrays to store evaluation results for a row
     let mut current_row_vals: Vec<f64> = vec![0.0; grid_cols as usize];
     let mut next_row_vals: Vec<f64> = vec![0.0; grid_cols as usize];
 
-    // Compute Row 0 (py = 0)
     for i in 0..grid_cols {
         let px = i * step;
         let wx = (px - center_x) as f64 / scale;
@@ -115,12 +89,9 @@ pub fn plot_equation(
         current_row_vals[i as usize] = func(wx, wy);
     }
 
-    // Iterate rows
     let mut py = 0;
     while py < h {
         let next_py = py + step;
-
-        // Compute Next Row
         let wy_next = (center_y - next_py) as f64 / scale;
         for i in 0..grid_cols {
             let px = i * step;
@@ -128,7 +99,6 @@ pub fn plot_equation(
             next_row_vals[i as usize] = func(wx, wy_next);
         }
 
-        // Process Cells
         let mut px = 0;
         let mut i = 0;
         while px < w {
@@ -152,11 +122,10 @@ pub fn plot_equation(
             }
 
             if case != 0 && case != 15 {
-                // Interpolate
                 let off_top = get_t(tl, tr) * step_f;
-                let off_right = get_t(tr, br) * step_f; // along Y
+                let off_right = get_t(tr, br) * step_f;
                 let off_bottom = get_t(bl, br) * step_f;
-                let off_left = get_t(tl, bl) * step_f; // along Y
+                let off_left = get_t(tl, bl) * step_f;
 
                 let p_top_x = px as f64 + off_top;
                 let p_top_y = py as f64;
@@ -230,13 +199,10 @@ pub fn plot_equation(
                     _ => {}
                 }
 
-                // Collision Detection (Approximate center of large cell)
                 let center_px = px + (step / 2);
                 let center_py = py + (step / 2);
                 let idx = (center_py * w + center_px) as usize;
 
-                // Only check if within bounds and if we are in High Res (step=1) or if we want collision in low res
-                // Usually collisions only needed for idle state.
                 if idx < collision_buffer.len() {
                     let existing = collision_buffer[idx];
                     if existing != 0 && existing != eq_id {
@@ -251,7 +217,6 @@ pub fn plot_equation(
             i += 1;
         }
 
-        // Move next row to current
         current_row_vals.copy_from_slice(&next_row_vals);
         py += step;
     }

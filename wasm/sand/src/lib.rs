@@ -78,7 +78,7 @@ impl Cell {
             Cell::Lava => 40,
             Cell::Oil => 10,
             Cell::Wood | Cell::Plant => 20,
-            Cell::Gunpowder => 45, // Slightly lighter than sand
+            Cell::Gunpowder => 45,
             Cell::Fire | Cell::Steam | Cell::Smoke => -10,
             Cell::Empty => 0,
         }
@@ -87,7 +87,7 @@ impl Cell {
     fn base_temperature(&self) -> i8 {
         match self {
             Cell::Fire => 120,
-            Cell::Lava => 120, // Max Heat
+            Cell::Lava => 120,
             Cell::Ice => -50,
             Cell::Steam => 100,
             Cell::Smoke => 80,
@@ -108,7 +108,7 @@ impl Cell {
             Cell::Wood => 60,
             Cell::Plant => 60,
             Cell::Oil => 90,
-            Cell::Gunpowder => 100, // Instant
+            Cell::Gunpowder => 100,
             _ => 0,
         }
     }
@@ -154,7 +154,6 @@ impl Universe {
     pub fn tick(&mut self) {
         self.generation = self.generation.wrapping_add(1);
 
-        // Heat Diffusion
         self.diffuse_heat();
 
         if self.generation % 2 == 0 {
@@ -178,14 +177,12 @@ impl Universe {
                 let idx = self.get_index(y, x);
                 let cell = Cell::from_u8(self.cells[idx]);
 
-                // CRITICAL FIX: Heat Sources SET their temp and DO NOT AVERAGE down.
                 match cell {
                     Cell::Lava | Cell::Fire => {
                         self.temps[idx] = 120;
                         continue;
                     }
                     Cell::Ice => {
-                        // Ice actively cools
                         self.temps[idx] = -30;
                         continue;
                     }
@@ -206,10 +203,8 @@ impl Universe {
                     }
                 }
 
-                // Average
                 let mut avg = (sum / count) as i8;
 
-                // Air cooling (Lossy system to prevent heat buildup)
                 if cell == Cell::Empty && avg > 20 {
                     avg -= 1;
                 }
@@ -229,18 +224,14 @@ impl Universe {
 
         let temp = self.temps[idx];
 
-        // --- REACTIONS & PHASE CHANGES ---
-
         match cell {
             Cell::Water => {
-                // Boil
                 if temp > 100 {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Steam);
                     }
                     return;
                 }
-                // Freeze
                 if temp < -5 {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Ice);
@@ -256,13 +247,7 @@ impl Universe {
                     return;
                 }
             }
-            Cell::Lava => {
-                // Lava NO LONGER cools by self-check (temp < 90).
-                // Since temp is locked at 120, this check would fail anyway.
-                // Obsidian is created by NEIGHBOR reaction with Water.
-                // Stone is created by NEIGHBOR reaction or extreme conditions (not just air).
-                // So we do NOTHING here. Lava flows until it hits water.
-            }
+            Cell::Lava => {}
             Cell::Sand => {
                 if temp > 100 {
                     // Melt
@@ -299,9 +284,6 @@ impl Universe {
             _ => {}
         }
 
-        // --- NEIGHBOR INTERACTIONS ---
-        // --- MANDATORY NEIGHBOR CHECKS (Critical Interactions) ---
-        // We ALWAYS check these if the cell involves volatile elements, to ensure responsiveness.
         if cell == Cell::Ice
             || cell == Cell::Lava
             || cell == Cell::Acid
@@ -309,7 +291,6 @@ impl Universe {
             || cell == Cell::Gunpowder
         {
             let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
-            // Check ALL neighbors for critical reactions
             for (dy, dx) in neighbors.iter() {
                 let ny = row as i32 + dy;
                 let nx = col as i32 + dx;
@@ -317,14 +298,12 @@ impl Universe {
                     let nidx = self.get_index(ny as u32, nx as u32);
                     let ncell = Cell::from_u8(self.cells[nidx]);
 
-                    // Ice + Lava
                     if cell == Cell::Ice && ncell == Cell::Lava {
                         self.set_cell(row, col, Cell::Steam);
                         self.set_cell(ny as u32, nx as u32, Cell::Obsidian);
-                        return; // Cell changed, stop
+                        return;
                     }
 
-                    // Gunpowder Ignition
                     if cell == Cell::Gunpowder {
                         if ncell == Cell::Fire || ncell == Cell::Lava {
                             self.explode(row, col);
@@ -335,7 +314,6 @@ impl Universe {
             }
         }
 
-        // --- RANDOM NEIGHBOR INTERACTIONS (Slow Processes) ---
         if (self.rand() & 7) == 0 {
             let neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0)];
             let (dy, dx) = neighbors[(self.rand() as usize) % 4];
@@ -346,15 +324,12 @@ impl Universe {
                 let nidx = self.get_index(ny as u32, nx as u32);
                 let ncell = Cell::from_u8(self.cells[nidx]);
 
-                // Acid Interactions
                 if cell == Cell::Acid {
-                    // Acid + Lava -> Explosion/Fire
                     if ncell == Cell::Lava {
                         self.set_cell(row, col, Cell::Fire);
-                        self.set_cell(ny as u32, nx as u32, Cell::Steam); // Poof
+                        self.set_cell(ny as u32, nx as u32, Cell::Steam);
                         return;
                     }
-                    // Erosion
                     if ncell == Cell::Stone || ncell == Cell::Obsidian {
                         if (self.rand() % 20) == 0 {
                             self.set_cell(ny as u32, nx as u32, Cell::Sand);
@@ -364,7 +339,6 @@ impl Universe {
                         }
                         return;
                     }
-                    // Dissolving
                     if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
                         if (self.rand() % 10) == 0 {
                             self.set_cell(ny as u32, nx as u32, Cell::Smoke);
@@ -374,15 +348,13 @@ impl Universe {
                     }
                 }
 
-                // Lava Interactions (Ice handled above)
                 if cell == Cell::Lava {
                     if ncell == Cell::Water {
-                        // Lava + Water -> Obsidian
                         self.set_cell(row, col, Cell::Obsidian);
                         self.set_cell(ny as u32, nx as u32, Cell::Steam);
                         return;
                     }
-                    // Wood/Plant/Oil/Gunpowder ignition
+
                     if ncell == Cell::Wood || ncell == Cell::Plant || ncell == Cell::Gunpowder {
                         self.set_cell(ny as u32, nx as u32, Cell::Fire);
                     }
@@ -391,14 +363,12 @@ impl Universe {
                     }
                 }
 
-                // Growth
                 if cell == Cell::Water && ncell == Cell::Plant {
                     if (self.rand() % 20) == 0 {
                         self.set_cell(row, col, Cell::Plant);
                     }
                 }
 
-                // Fire spread
                 if ncell == Cell::Fire || ncell == Cell::Lava {
                     let prob = cell.flammability();
                     if prob > 0 && ((self.rand() as u8) % 100 < prob) {
@@ -409,7 +379,6 @@ impl Universe {
             }
         }
 
-        // --- MOVEMENT ---
         if cell.is_static() {
             return;
         }
@@ -430,8 +399,6 @@ impl Universe {
         let below_idx = self.get_index(row + 1, col);
         let below_cell = Cell::from_u8(self.cells[below_idx]);
 
-        // 1. Gravity (Down)
-        // Aggressive falls: always take the spot if possible
         if below_cell == Cell::Empty
             || (cell.density() > below_cell.density() && !below_cell.is_solid())
         {
@@ -439,7 +406,6 @@ impl Universe {
             return;
         }
 
-        // 2. Slide (Diagonal)
         let spread = self.toss_coin();
         let dirs = if spread { [-1, 1] } else { [1, -1] };
 
@@ -459,9 +425,7 @@ impl Universe {
             }
         }
 
-        // 3. Liquid Spread (Horizontal)
         if cell.is_liquid() {
-            // Check immediate side first
             for &dir in &dirs {
                 let target_col = col as i32 + dir;
                 if target_col >= 0 && target_col < self.width as i32 {
@@ -477,11 +441,9 @@ impl Universe {
                     }
                 }
             }
-            // Check 2 pixels away (faster leveling)
             for &dir in &dirs {
                 let target_col = col as i32 + (dir * 2);
                 if target_col >= 0 && target_col < self.width as i32 {
-                    // Check if path is clear (same fluid)
                     let mid_col = (col as i32 + dir) as u32;
                     let mid_idx = self.get_index(row, mid_col);
                     let mid_cell = Cell::from_u8(self.cells[mid_idx]);
@@ -509,13 +471,11 @@ impl Universe {
         let above_idx = self.get_index(row - 1, col);
         let above_cell = Cell::from_u8(self.cells[above_idx]);
 
-        // 1. Rise
         if above_cell == Cell::Empty || above_cell.is_liquid() {
             self.swap(idx, above_idx);
             return;
         }
 
-        // 2. Diffuse Up Diagonally
         let spread = self.toss_coin();
         let dirs = if spread { [-1, 1] } else { [1, -1] };
 
@@ -533,7 +493,6 @@ impl Universe {
             }
         }
 
-        // 3. Gas Spread Horizontally
         for &dir in &dirs {
             let target_col = col as i32 + dir;
             if target_col >= 0 && target_col < self.width as i32 {
@@ -557,12 +516,8 @@ impl Universe {
     fn set_cell(&mut self, row: u32, col: u32, cell: Cell) {
         let idx = self.get_index(row, col);
         self.cells[idx] = cell as u8;
-        // Important: Update Temp
         if cell != Cell::Empty {
             self.temps[idx] = cell.base_temperature();
-        } else {
-            // If becoming empty, does it keep temp?
-            // Air holds heat. Let's keep it.
         }
     }
 
@@ -590,7 +545,6 @@ impl Universe {
 
     fn explode(&mut self, row: u32, col: u32) {
         self.paint(row, col, Cell::Fire as u8, 3);
-        // Add random scatter of smoke/fire
         for _ in 0..10 {
             let dy = (self.rand() % 10) as i32 - 5;
             let dx = (self.rand() % 10) as i32 - 5;
