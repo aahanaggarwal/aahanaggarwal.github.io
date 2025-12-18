@@ -2,8 +2,8 @@ use anyhow::{Context, Result};
 use lightningcss::stylesheet::{ParserOptions, PrinterOptions, StyleSheet};
 use minify_html::{minify, Cfg};
 use oxc_allocator::Allocator;
-use oxc_codegen::Codegen;
-use oxc_minifier::{Minifier, MinifierOptions};
+use oxc_codegen::{Codegen, CodegenOptions};
+use oxc_minifier::{CompressOptions, Minifier, MinifierOptions};
 use oxc_parser::Parser;
 use oxc_span::SourceType;
 use rayon::prelude::*;
@@ -126,7 +126,7 @@ fn minify_css_file(src: &Path, dest: &Path) -> Result<()> {
 fn minify_js_file(src: &Path, dest: &Path) -> Result<()> {
     let source_text = fs::read_to_string(src)?;
     let allocator = Allocator::default();
-    let source_type = SourceType::from_path(src).unwrap_or(SourceType::default());
+    let source_type = SourceType::from_path(src).unwrap_or(SourceType::default()).with_module(true);
     
     let parser = Parser::new(&allocator, &source_text, source_type);
     let ret = parser.parse();
@@ -138,10 +138,20 @@ fn minify_js_file(src: &Path, dest: &Path) -> Result<()> {
     }
 
     let mut program = ret.program;
-    let minifier_options = MinifierOptions::default(); 
+    let minifier_options = MinifierOptions {
+        mangle: true,
+        compress: CompressOptions {
+            drop_console: true,
+            ..CompressOptions::default()
+        },
+    };
     let ret = Minifier::new(minifier_options).build(&allocator, &mut program);
 
-    let minified = Codegen::new().build(&program);
+    let codegen_options = CodegenOptions {
+        minify: true,
+        ..CodegenOptions::default()
+    };
+    let minified = Codegen::new().with_options(codegen_options).build(&program);
 
     fs::write(dest, minified.source_text)?;
     Ok(())
