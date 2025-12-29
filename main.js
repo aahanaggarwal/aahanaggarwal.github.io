@@ -227,7 +227,7 @@ function initGlobalListeners() {
   updateHudTimer();
   setInterval(updateHudTimer, 1000);
 
-  startCountdown();
+  // startCountdown();
   initDecryptEffect();
 
   const title = document.querySelector(".glitch");
