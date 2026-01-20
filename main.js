@@ -145,7 +145,7 @@ function runPageScript(path, search) {
 
 import initWasm, { plot_equation } from '/graph/pkg/graph_wasm.js';
 const startTime = Date.now();
-const targetDate = new Date("2025-12-19T09:30:00Z").getTime();
+const targetDate = new Date("2026-04-02T09:30:00Z").getTime();
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
