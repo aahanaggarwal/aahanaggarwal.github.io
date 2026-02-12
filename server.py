@@ -1,5 +1,8 @@
 import http.server
+import mimetypes
 import socketserver
+
+mimetypes.add_type('application/wasm', '.wasm')
 
 PORT = 8000
 
@@ -14,6 +17,6 @@ class ReusableTCPServer(socketserver.TCPServer):
     allow_reuse_address = True
 
 if __name__ == '__main__':
-    with ReusableTCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
-        print(f"Serving HTTP on 0.0.0.0 port {PORT} (No Cache)...")
+    with ReusableTCPServer(("127.0.0.1", PORT), NoCacheHTTPRequestHandler) as httpd:
+        print(f"Serving HTTP on 127.0.0.1 port {PORT} (No Cache)...")
         httpd.serve_forever()

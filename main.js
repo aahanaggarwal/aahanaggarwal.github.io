@@ -71,8 +71,6 @@ async function handleLocation(isInitial = false) {
 
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
-  if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
-  if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
   if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
   if (path === "/sand" || path === "/sand/") fetchUrl = "/sand/index.html";
   if (path === "/pong" || path === "/pong/") fetchUrl = "/pong/index.html";
@@ -151,8 +149,13 @@ function runPageScript(path, search) {
 }
 
 import initWasm, { plot_equation } from '/graph/pkg/graph_wasm.js';
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 const startTime = Date.now();
-const targetDate = new Date("2026-04-02T09:30:00Z").getTime();
+const targetDate = new Date("2026-04-02T12:00:00Z").getTime();
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
@@ -266,6 +269,7 @@ function resize() {
 
 function drawCircuit() {
   if (!circuitCanvas) return;
+  if (document.hidden) { requestAnimationFrame(drawCircuit); return; }
   circuitCtx.fillStyle = "rgba(10, 10, 10, 0.1)";
   circuitCtx.fillRect(0, 0, circuitCanvas.width, circuitCanvas.height);
 
@@ -284,22 +288,6 @@ function drawCircuit() {
       circuitCtx.fill();
     }
 
-    for (const m of nodes) {
-      if (n === m) continue;
-      const dx = n.x - m.x;
-      const dy = n.y - m.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 60) {
-        circuitCtx.strokeStyle = primary;
-        circuitCtx.globalAlpha = 0.2;
-        circuitCtx.beginPath();
-        circuitCtx.moveTo(n.x, n.y);
-        circuitCtx.lineTo(m.x, m.y);
-        circuitCtx.stroke();
-        circuitCtx.globalAlpha = 1;
-      }
-    }
-
     if (cursorPos.x !== null) {
       const dx = n.x - cursorPos.x;
       const dy = n.y - cursorPos.y;
@@ -310,6 +298,25 @@ function drawCircuit() {
         circuitCtx.beginPath();
         circuitCtx.moveTo(n.x, n.y);
         circuitCtx.lineTo(cursorPos.x, cursorPos.y);
+        circuitCtx.stroke();
+        circuitCtx.globalAlpha = 1;
+      }
+    }
+  }
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const n = nodes[i];
+      const m = nodes[j];
+      const dx = n.x - m.x;
+      const dy = n.y - m.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 60) {
+        circuitCtx.strokeStyle = primary;
+        circuitCtx.globalAlpha = 0.2;
+        circuitCtx.beginPath();
+        circuitCtx.moveTo(n.x, n.y);
+        circuitCtx.lineTo(m.x, m.y);
         circuitCtx.stroke();
         circuitCtx.globalAlpha = 1;
       }
@@ -505,6 +512,7 @@ function initModal() {
   closeBtn = document.getElementById("close-modal");
 
   if (!modal) return;
+  if (!closeBtn) return;
 
   closeBtn.addEventListener("click", closeModal);
 
@@ -526,6 +534,7 @@ function initModal() {
 }
 
 function openModal(src) {
+  if (!modal) return;
   if (!modalImg) return;
   modalImg.src = src;
   modal.classList.add("show");
@@ -635,7 +644,7 @@ async function loadBlogList() {
       const li = document.createElement("li");
       li.innerHTML = `
               <span class="date">[${post.date}]</span>
-              <a href="view.html?post=${post.file}">${post.title}</a>
+              <a href="/blog/view.html?post=${post.file}">${escapeHtml(post.title)}</a>
             `;
       list.appendChild(li);
     });
@@ -680,12 +689,12 @@ async function loadPost() {
 
     document.title = `${title} - Aahan Aggarwal`;
     if (titleEl) {
-      titleEl.innerHTML = `<span class="glitch">${title}</span>`;
+      titleEl.innerHTML = `<span class="glitch">${escapeHtml(title)}</span>`;
       initDecryptEffect(titleEl);
     }
 
     if (metaEl) {
-      metaEl.innerHTML = `<span>Date: ${date}</span> | <span>Tags: [${tags}]</span>`;
+      metaEl.innerHTML = `<span>Date: ${escapeHtml(date)}</span> | <span>Tags: [${escapeHtml(tags)}]</span>`;
     }
 
     if (contentEl) {
@@ -868,6 +877,8 @@ function loadGraph() {
     cachedCollisionBuffer = null;
     cachedCollisionW = 0;
     cachedCollisionH = 0;
+    cachedCollisionBufW = 0;
+    cachedCollisionBufH = 0;
   };
 }
 
@@ -876,7 +887,7 @@ function addEquationInput(container, value) {
   group.className = "equation-input-group";
   group.innerHTML = `
     <span class="prompt">></span>
-    <input type="text" class="equation-input" value="${value}" />
+    <input type="text" class="equation-input" value="${value.replace(/"/g, '&quot;')}" />
     <button class="btn-delete" title="Delete equation">X</button>
   `;
   container.appendChild(group);
@@ -926,6 +937,8 @@ let graphNeedsUpdate = false;
 let cachedCollisionBuffer = null;
 let cachedCollisionW = 0;
 let cachedCollisionH = 0;
+let cachedCollisionBufW = 0;
+let cachedCollisionBufH = 0;
 
 function startGraphRenderLoop() {
   if (graphRenderLoopId) cancelAnimationFrame(graphRenderLoopId);
@@ -989,10 +1002,18 @@ function drawGraphLogic() {
   graphCtx.lineTo(cx, h);
   graphCtx.stroke();
 
+  const bufW = Math.ceil(w / step);
+  const bufH = Math.ceil(h / step);
   if (w !== cachedCollisionW || h !== cachedCollisionH) {
-    cachedCollisionBuffer = new Int8Array(w * h);
+    cachedCollisionBuffer = new Int8Array(bufW * bufH);
     cachedCollisionW = w;
     cachedCollisionH = h;
+    cachedCollisionBufW = bufW;
+    cachedCollisionBufH = bufH;
+  } else if (bufW !== cachedCollisionBufW || bufH !== cachedCollisionBufH) {
+    cachedCollisionBuffer = new Int8Array(bufW * bufH);
+    cachedCollisionBufW = bufW;
+    cachedCollisionBufH = bufH;
   } else {
     cachedCollisionBuffer.fill(0);
   }

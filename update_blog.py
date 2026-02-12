@@ -7,7 +7,7 @@ OUTPUT_FILE = 'blog/posts.json'
 
 def parse_frontmatter(content):
     meta = {}
-    match = re.match(r'^---\n(.*?)\n---\n', content, re.DOTALL)
+    match = re.match(r'^---\r?\n(.*?)\r?\n---\r?\n', content, re.DOTALL)
     if match:
         frontmatter = match.group(1)
         for line in frontmatter.split('\n'):
@@ -25,7 +25,7 @@ def main():
     for filename in os.listdir(POSTS_DIR):
         if filename.endswith('.md'):
             filepath = os.path.join(POSTS_DIR, filename)
-            with open(filepath, 'r') as f:
+            with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
                 meta = parse_frontmatter(content)
                 
@@ -47,7 +47,7 @@ def main():
 
     posts.sort(key=lambda x: x['date'], reverse=True)
 
-    with open(OUTPUT_FILE, 'w') as f:
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(posts, f, indent=2)
     
     print(f"Successfully updated {OUTPUT_FILE} with {len(posts)} posts.")

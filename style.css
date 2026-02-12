@@ -466,6 +466,13 @@
         }
       }
 
+      .nav-logo {
+        font-weight: bold;
+        font-size: 1.1em;
+        letter-spacing: 2px;
+        color: var(--primary-color);
+      }
+
       /* --- Sticky Top Nav --- */
       #top-nav {
         position: fixed;
@@ -995,8 +1002,8 @@
       }
 
       #pong-canvas {
-        border: 2px solid var(--text-color);
-        box-shadow: 0 0 10px var(--text-color);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 10px var(--primary-color);
         max-width: 100%;
         background: #0a0a0a;
       }
@@ -1064,6 +1071,41 @@
         animation-iteration-count: 1;
       }
 
+      .paused-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        color: var(--primary-color);
+        font-size: 4rem;
+        font-family: 'Courier New', Courier, monospace;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+      }
+
+      .paused-overlay.visible {
+        display: flex;
+      }
+
+      #speed-indicator {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.75rem;
+        color: var(--primary-color);
+        opacity: 0.6;
+        margin-top: 8px;
+      }
+
+      .controls-hint {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.7rem;
+        color: var(--primary-color);
+        opacity: 0.4;
+        margin-top: 6px;
+      }
 
       /* --- Sand Physics Page --- */
       #sand-container {

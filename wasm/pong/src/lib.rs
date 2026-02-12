@@ -165,10 +165,15 @@ impl PongGame {
         self.ball_x += self.ball_dx * dt;
         self.ball_y += self.ball_dy * dt;
 
-        if self.ball_y <= 0.0 || self.ball_y + self.ball_size >= self.height {
-            self.ball_dy = -self.ball_dy;
+        if self.ball_y <= 0.0 {
+            self.ball_y = 0.0;
+            self.ball_dy = self.ball_dy.abs();
             self.ball_spin *= 0.5;
-
+            self.ball_dy += (random() - 0.5) * 0.2;
+        } else if self.ball_y + self.ball_size >= self.height {
+            self.ball_y = self.height - self.ball_size;
+            self.ball_dy = -self.ball_dy.abs();
+            self.ball_spin *= 0.5;
             self.ball_dy += (random() - 0.5) * 0.2;
         }
 

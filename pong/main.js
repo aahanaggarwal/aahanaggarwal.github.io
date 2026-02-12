@@ -11,8 +11,6 @@ export async function run() {
     canvas.width = width;
     canvas.height = height;
     const game = PongGame.new(width, height);
-    const scoreLeftEl = document.getElementById('score-left');
-    const scoreRightEl = document.getElementById('score-right');
     const streakEl = document.getElementById('streak');
     const highScoreEl = document.getElementById('high-score');
 
@@ -31,19 +29,23 @@ export async function run() {
     }
 
     const cursor = document.getElementById("cursor");
-    const handleMouseMove = (e) => {
-        if (cursor) {
-            cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-        }
-    };
-    const handleClick = () => {
-        if (cursor) {
-            cursor.classList.add("expand");
-            setTimeout(() => cursor.classList.remove("expand"), 200);
-        }
-    };
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("click", handleClick);
+    let handleMouseMove = null;
+    let handleClick = null;
+    if (!window.HAS_SPA_ROUTER) {
+        handleMouseMove = (e) => {
+            if (cursor) {
+                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            }
+        };
+        handleClick = () => {
+            if (cursor) {
+                cursor.classList.add("expand");
+                setTimeout(() => cursor.classList.remove("expand"), 200);
+            }
+        };
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("click", handleClick);
+    }
 
     const handleKeyDown = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
@@ -104,7 +106,10 @@ export async function run() {
 
     canvas.addEventListener('touchstart', handleTouch, { passive: false });
     canvas.addEventListener('touchmove', handleTouch, { passive: false });
-    canvas.addEventListener('touchend', stopTouch);
+    canvas.addEventListener('touchend', stopTouch, { passive: false });
+
+    const textColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--primary-color').trim() || '#33ff00';
 
     let lastTime = 0;
 
@@ -112,8 +117,8 @@ export async function run() {
         if (!document.body.contains(canvas)) {
             if (pauseOverlay) pauseOverlay.remove();
             document.removeEventListener("visibilitychange", handleVisibilityChange);
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("click", handleClick);
+            if (handleMouseMove) document.removeEventListener("mousemove", handleMouseMove);
+            if (handleClick) document.removeEventListener("click", handleClick);
             window.removeEventListener("keydown", handleKeyDown);
             window.removeEventListener("keyup", handleKeyUp);
             return;
@@ -135,8 +140,6 @@ export async function run() {
 
         ctx.clearRect(0, 0, width, height);
 
-        const computedStyle = getComputedStyle(document.documentElement);
-        const textColor = computedStyle.getPropertyValue('--text-color').trim() || '#33ff00';
         ctx.fillStyle = textColor;
 
         ctx.shadowBlur = 10;

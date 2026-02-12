@@ -22,6 +22,17 @@ const IGNORE_DIRS: &[&str] = &[
     "node_modules",
     "dist",
 ];
+const IGNORE_FILES: &[&str] = &[
+    "server.py",
+    "dev.sh",
+    "update_blog.py",
+    "add_album.py",
+    "CLAUDE.md",
+    "README.md",
+    ".gitignore",
+    "Cargo.toml",
+    "Cargo.lock",
+];
 
 fn main() -> Result<()> {
     let start = std::time::Instant::now();
@@ -48,8 +59,12 @@ fn main() -> Result<()> {
                 }
             }
             if let Some(file_name) = path.file_name() {
-                if file_name.to_string_lossy().starts_with('.') {
-                    if file_name.to_string_lossy() == ".nojekyll" {
+                let name = file_name.to_string_lossy();
+                if IGNORE_FILES.iter().any(|&f| f == name) {
+                    return false;
+                }
+                if name.starts_with('.') {
+                    if name == ".nojekyll" {
                         return true;
                     }
                     return false;

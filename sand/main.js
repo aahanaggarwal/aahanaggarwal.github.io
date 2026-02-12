@@ -55,6 +55,10 @@ const radius = 1;
 
 let abortController = null;
 
+let offscreenCanvas = null;
+let offscreenCtx = null;
+let offscreenData = null;
+
 export async function run() {
     // Clean up previous run
     if (abortController) abortController.abort();
@@ -66,6 +70,9 @@ export async function run() {
     isPaused = false;
     mouseX = -1;
     mouseY = -1;
+    offscreenCanvas = null;
+    offscreenCtx = null;
+    offscreenData = null;
 
     const wasm = await init();
     memory = wasm.memory;
@@ -111,15 +118,15 @@ function draw(ctx) {
     const height = universe.height();
     const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
 
-    if (!window.offscreenCanvas) {
-        window.offscreenCanvas = document.createElement('canvas');
-        window.offscreenCanvas.width = width;
-        window.offscreenCanvas.height = height;
-        window.offscreenCtx = window.offscreenCanvas.getContext('2d');
-        window.offscreenData = window.offscreenCtx.createImageData(width, height);
+    if (!offscreenCanvas) {
+        offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = width;
+        offscreenCanvas.height = height;
+        offscreenCtx = offscreenCanvas.getContext('2d');
+        offscreenData = offscreenCtx.createImageData(width, height);
     }
 
-    const imgData = window.offscreenData;
+    const imgData = offscreenData;
     const buf32 = new Uint32Array(imgData.data.buffer);
 
     if (!U32_COLORS) {
@@ -134,11 +141,11 @@ function draw(ctx) {
         buf32[i] = U32_COLORS[cells[i]];
     }
 
-    window.offscreenCtx.putImageData(imgData, 0, 0);
+    offscreenCtx.putImageData(imgData, 0, 0);
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(window.offscreenCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.drawImage(offscreenCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
 function setupControls() {

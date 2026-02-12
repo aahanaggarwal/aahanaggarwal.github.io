@@ -59,7 +59,7 @@ pub fn plot_equation(
 
     let clean_eq = eq_str.to_string();
 
-    let parts: Vec<&str> = clean_eq.split('=').collect();
+    let parts: Vec<&str> = clean_eq.splitn(2, '=').collect();
     let expr_str = if parts.len() > 1 {
         format!("({}) - ({})", parts[0], parts[1])
     } else {
@@ -207,7 +207,10 @@ pub fn plot_equation(
 
                 let center_px = px + (step / 2);
                 let center_py = py + (step / 2);
-                let idx = (center_py * w + center_px) as usize;
+                let buf_w = (w + step - 1) / step;
+                let bx = center_px / step;
+                let by = center_py / step;
+                let idx = (by * buf_w + bx) as usize;
 
                 if idx < collision_buffer.len() {
                     let existing = collision_buffer[idx];
@@ -223,7 +226,7 @@ pub fn plot_equation(
             i += 1;
         }
 
-        current_row_vals.copy_from_slice(&next_row_vals);
+        std::mem::swap(&mut current_row_vals, &mut next_row_vals);
         py += step;
     }
 

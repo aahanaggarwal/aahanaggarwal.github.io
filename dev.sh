@@ -33,4 +33,4 @@ if [ -n "$PID" ]; then
 fi
 
 cd dist
-python3 server.py
+python3 ../server.py

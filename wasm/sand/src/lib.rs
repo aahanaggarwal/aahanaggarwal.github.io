@@ -582,6 +582,10 @@ impl Universe {
             let ny = row as i32 + dy;
             let nx = col as i32 + dx;
             if ny >= 0 && ny < self.height as i32 && nx >= 0 && nx < self.width as i32 {
+                let existing = Cell::from_u8(self.cells[self.get_index(ny as u32, nx as u32)]);
+                if existing == Cell::Stone || existing == Cell::Obsidian || existing == Cell::Glass {
+                    continue;
+                }
                 if (self.rand() % 2) == 0 {
                     self.set_cell(ny as u32, nx as u32, Cell::Fire);
                 } else {
