@@ -12,14 +12,6 @@ const HEARTBEAT_MS = 2000;
 const HEARTBEAT_TIMEOUT = 6000;
 const CONNECT_TIMEOUT = 15000;
 
-const ICE_CONFIG = {
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' },
-    ]
-};
-
 // === Module state ===
 let game = null, memory = null;
 let canvas = null, ctx = null;
@@ -43,7 +35,7 @@ function send(msg) {
         // PeerJS Issue #240: conn.open can be stale. Check DataChannel directly.
         const dc = conn.dataChannel;
         const ready = (dc && dc.readyState === 'open') || conn.open;
-        if (ready) conn.send(msg);
+        if (ready) conn.send(JSON.stringify(msg));
     } catch (e) {
         // Connection may have closed between check and send
     }
@@ -88,6 +80,14 @@ function loadPeerJS() {
 
 function clearConnectTimeout() {
     if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
+}
+
+function parseMsg(raw) {
+    if (typeof raw === 'string') {
+        try { return JSON.parse(raw); } catch (e) { return null; }
+    }
+    if (raw && typeof raw === 'object' && raw.type) return raw;
+    return null;
 }
 
 // === Heartbeat ===
@@ -308,9 +308,11 @@ function initOnlineGame() {
 function setupConnection(c, onOpen) {
     conn = c;
 
-    c.on('data', (msg) => {
+    c.on('data', (raw) => {
         lastPeerActivity = Date.now();
-        if (msg && msg.type === 'ping') return;
+        const msg = parseMsg(raw);
+        if (!msg) return;
+        if (msg.type === 'ping') return;
         handleMessage(msg);
     });
 
@@ -346,12 +348,10 @@ function handleMessage(msg) {
     if (!msg || !msg.type) return;
     switch (msg.type) {
         case 'ready':
-            // Host receives: guest is connected and ready
             send({ type: 'start' });
             initOnlineGame();
             break;
         case 'start':
-            // Guest receives: host confirmed, start game
             initOnlineGame();
             break;
         case 'dir':
@@ -448,40 +448,47 @@ export async function run() {
         });
     }, { signal });
 
-    // Create room (host)
+    // Create room (host) — no custom config, use PeerJS defaults (includes TURN)
     document.getElementById('btn-create')?.addEventListener('click', async () => {
         try {
-            setStatus('Loading...');
+            setStatus('Loading PeerJS...');
             await loadPeerJS();
             const code = generateCode();
-            peer = new window.Peer(code, { debug: 0, config: ICE_CONFIG });
+            setStatus('Connecting to server...');
+            peer = new window.Peer(code, { debug: 2 });
 
             peer.on('open', () => {
                 setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
+                clearConnectTimeout();
             });
 
             peer.on('connection', (c) => {
                 playerNumber = 1;
                 mode = 'online';
-                setStatus('Opponent connected. Starting...');
+                setStatus('Opponent found. Opening data channel...');
                 setupConnection(c, () => {
-                    // Connection is open — wait for guest's 'ready' message.
-                    // No action needed here; handleMessage('ready') drives the flow.
+                    setStatus('Channel open. Waiting for ready signal...');
                 });
             });
 
             peer.on('error', (err) => {
+                clearConnectTimeout();
                 if (err.type === 'unavailable-id') {
                     setStatus('Room code taken. Try again.');
                 } else {
-                    setStatus('Error: ' + err.message);
+                    setStatus('Error: ' + err.type + ' - ' + err.message);
                 }
             });
 
-            // Timeout if signaling server is unreachable
+            peer.on('disconnected', () => {
+                setStatus('Lost connection to server. Reconnecting...');
+                if (peer && !peer.destroyed) peer.reconnect();
+            });
+
             connectTimeout = setTimeout(() => {
-                if (!peer || peer.disconnected) {
-                    setStatus('Could not reach server. Try again.');
+                if (!peer || !peer.open) {
+                    setStatus('Server unreachable. Try again.');
+                    if (peer) { peer.destroy(); peer = null; }
                 }
             }, CONNECT_TIMEOUT);
 
@@ -490,7 +497,7 @@ export async function run() {
         }
     }, { signal });
 
-    // Join room (guest)
+    // Join room (guest) — no custom config, use PeerJS defaults (includes TURN)
     document.getElementById('btn-join')?.addEventListener('click', async () => {
         const input = document.getElementById('room-input');
         const code = input?.value?.toUpperCase()?.trim();
@@ -500,17 +507,17 @@ export async function run() {
         }
 
         try {
-            setStatus('Connecting...');
+            setStatus('Loading PeerJS...');
             await loadPeerJS();
-            peer = new window.Peer({ debug: 0, config: ICE_CONFIG });
+            setStatus('Connecting to server...');
+            peer = new window.Peer({ debug: 2 });
 
             peer.on('open', () => {
-                // Use serialization:'json' to avoid BinaryPack encoding issues.
-                const c = peer.connect(code, { reliable: true, serialization: 'json' });
+                setStatus('Joining room ' + code + '...');
+                const c = peer.connect(code, { reliable: true });
                 playerNumber = 2;
                 mode = 'online';
                 setupConnection(c, () => {
-                    // Connection is confirmed open — send ready handshake
                     setStatus('Connected! Starting...');
                     send({ type: 'ready' });
                 });
@@ -519,13 +526,16 @@ export async function run() {
             peer.on('error', (err) => {
                 clearConnectTimeout();
                 if (err.type === 'peer-unavailable') {
-                    setStatus('Room not found. Check the code.');
+                    setStatus('Room "' + code + '" not found. Check the code.');
                 } else {
-                    setStatus('Error: ' + err.message);
+                    setStatus('Error: ' + err.type + ' - ' + err.message);
                 }
             });
 
-            // Timeout if connection never establishes
+            peer.on('disconnected', () => {
+                setStatus('Lost connection to server.');
+            });
+
             connectTimeout = setTimeout(() => {
                 if (!conn || !conn.open) {
                     setStatus('Connection timed out. Try again.');
