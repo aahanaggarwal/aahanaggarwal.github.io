@@ -8,6 +8,12 @@ const P1_COLOR = '#00ffff';
 const P2_COLOR = '#ff6600';
 const P1_HEAD = '#ffffff';
 const P2_HEAD = '#ffffff';
+const NOSTR_RELAYS = [
+    'wss://relay.damus.io',
+    'wss://nos.lol',
+    'wss://relay.nostr.band'
+];
+const NOSTR_KIND = 25050; // ephemeral event kind
 
 // === Module state ===
 let game = null, memory = null;
@@ -16,16 +22,98 @@ let tickInterval = null, animFrameId = null;
 let abortController = null;
 let mode = null;
 let playerNumber = 0;
-let peer = null, conn = null;
 let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
+let relay = null;
+
+// === Nostr Relay (pure WebSocket, no WebRTC) ===
+
+class GameRelay {
+    constructor() {
+        this.sockets = [];
+        this.seenIds = new Set();
+        this.sk = null;
+        this.pk = null;
+        this.peerPk = null;
+        this.roomCode = null;
+        this.nostr = null;
+        this.onMessage = null;
+    }
+
+    async connect(roomCode) {
+        this.roomCode = roomCode;
+        this.nostr = await import('https://esm.sh/nostr-tools@2/pure');
+        this.sk = this.nostr.generateSecretKey();
+        this.pk = this.nostr.getPublicKey(this.sk);
+
+        const results = await Promise.allSettled(
+            NOSTR_RELAYS.map(url => this._connectOne(url))
+        );
+        this.sockets = results
+            .filter(r => r.status === 'fulfilled')
+            .map(r => r.value);
+
+        if (this.sockets.length === 0) throw new Error('No relays available');
+
+        const req = JSON.stringify(['REQ', 'game', {
+            kinds: [NOSTR_KIND],
+            '#t': [roomCode],
+            since: Math.floor(Date.now() / 1000) - 60
+        }]);
+        for (const ws of this.sockets) ws.send(req);
+    }
+
+    _connectOne(url) {
+        return new Promise((resolve, reject) => {
+            const ws = new WebSocket(url);
+            const timer = setTimeout(() => { ws.close(); reject(); }, 5000);
+            ws.onopen = () => { clearTimeout(timer); resolve(ws); };
+            ws.onerror = () => { clearTimeout(timer); reject(); };
+            ws.onmessage = (e) => this._handleRaw(e);
+        });
+    }
+
+    send(msg) {
+        if (!this.nostr) return;
+        const event = this.nostr.finalizeEvent({
+            kind: NOSTR_KIND,
+            tags: [['t', this.roomCode]],
+            content: JSON.stringify(msg),
+            created_at: Math.floor(Date.now() / 1000),
+        }, this.sk);
+        const data = JSON.stringify(['EVENT', event]);
+        for (const ws of this.sockets) {
+            if (ws.readyState === WebSocket.OPEN) ws.send(data);
+        }
+    }
+
+    _handleRaw(e) {
+        try {
+            const data = JSON.parse(e.data);
+            if (data[0] !== 'EVENT' || !data[2]) return;
+            const event = data[2];
+            if (event.pubkey === this.pk) return;
+            if (this.peerPk && event.pubkey !== this.peerPk) return;
+            if (this.seenIds.has(event.id)) return;
+            this.seenIds.add(event.id);
+            if (this.seenIds.size > 1000) {
+                this.seenIds = new Set([...this.seenIds].slice(-500));
+            }
+            if (!this.peerPk) this.peerPk = event.pubkey;
+            const msg = JSON.parse(event.content);
+            if (this.onMessage) this.onMessage(msg);
+        } catch {}
+    }
+
+    close() {
+        for (const ws of this.sockets) ws.close();
+        this.sockets = [];
+        this.seenIds.clear();
+    }
+}
 
 // === Helpers ===
-
-function send(msg) {
-    if (conn && conn.open) conn.send(JSON.stringify(msg));
-}
 
 function setStatus(text) {
     const el = document.getElementById('tron-status');
@@ -53,15 +141,10 @@ function generateCode() {
     return code;
 }
 
-function loadPeerJS() {
-    if (window.Peer) return Promise.resolve();
-    return new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = 'https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
-        s.onload = resolve;
-        s.onerror = () => reject(new Error('Failed to load PeerJS'));
-        document.head.appendChild(s);
-    });
+function send(msg) {
+    if (relay) {
+        try { relay.send(msg); } catch (e) { /* relay may have closed */ }
+    }
 }
 
 // === Countdown ===
@@ -163,14 +246,6 @@ function handleGameOver() {
     overlay.classList.add('visible');
 }
 
-function startGame() {
-    game = TronGame.new(GRID_W, GRID_H);
-    gameActive = true;
-    setupInput();
-    tickInterval = setInterval(gameTick, TICK_MS);
-    animFrameId = requestAnimationFrame(render);
-}
-
 // === Rematch ===
 
 function requestRematch() {
@@ -193,7 +268,7 @@ function newRound() {
 
 // === Rendering ===
 
-function render(timestamp) {
+function render() {
     if (!canvas || !document.body.contains(canvas)) {
         cleanup();
         return;
@@ -268,23 +343,14 @@ function initOnlineGame() {
     });
 }
 
-function setupConnection(c) {
-    conn = c;
-    conn.on('data', (raw) => {
-        const msg = typeof raw === 'string' ? JSON.parse(raw) : raw;
-        handleMessage(msg);
-    });
-    conn.on('close', () => {
-        setStatus('Opponent disconnected');
-        gameActive = false;
-        if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
-    });
-}
-
 function handleMessage(msg) {
+    if (!msg || !msg.type) return;
     switch (msg.type) {
         case 'ready':
             // Host receives: guest is connected and ready. Start both sides.
+            if (gameActive || game) break;
+            playerNumber = 1;
+            mode = 'online';
             send({ type: 'start' });
             initOnlineGame();
             break;
@@ -325,6 +391,22 @@ function handleMessage(msg) {
     }
 }
 
+async function joinOnlineRoom(code, isHost) {
+    setStatus('Connecting to relay...');
+    relay = new GameRelay();
+    relay.onMessage = handleMessage;
+    await relay.connect(code);
+
+    if (isHost) {
+        setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
+    } else {
+        playerNumber = 2;
+        mode = 'online';
+        setStatus('Joined room ' + code + '. Waiting for host...');
+        send({ type: 'ready' });
+    }
+}
+
 // === Cleanup & Run ===
 
 export function cleanup() {
@@ -335,8 +417,7 @@ export function cleanup() {
     if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (conn) { conn.close(); conn = null; }
-    if (peer) { peer.destroy(); peer = null; }
+    if (relay) { relay.close(); relay = null; }
     if (game) { game.free(); game = null; }
 
     canvas = null;
@@ -347,10 +428,6 @@ export function cleanup() {
     p1Score = 0;
     p2Score = 0;
     gameActive = false;
-
-    // Remove PeerJS script if we added it
-    const peerScript = document.querySelector('script[src*="peerjs"]');
-    if (peerScript) peerScript.remove();
 }
 
 export async function run() {
@@ -392,32 +469,10 @@ export async function run() {
     // Create room
     document.getElementById('btn-create')?.addEventListener('click', async () => {
         try {
-            setStatus('Loading...');
-            await loadPeerJS();
             const code = generateCode();
-            peer = new window.Peer(code, { debug: 1 });
-
-            peer.on('open', () => {
-                setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
-            });
-
-            peer.on('connection', (c) => {
-                playerNumber = 1;
-                mode = 'online';
-                setupConnection(c);
-                setStatus('Opponent connected. Starting...');
-                // Don't start game yet — wait for guest's "ready" message
-            });
-
-            peer.on('error', (err) => {
-                if (err.type === 'unavailable-id') {
-                    setStatus('Room code taken. Try again.');
-                } else {
-                    setStatus('Error: ' + err.message);
-                }
-            });
+            await joinOnlineRoom(code, true);
         } catch (e) {
-            setStatus('Failed to load networking library');
+            setStatus('Failed to connect: ' + e.message);
         }
     }, { signal });
 
@@ -429,29 +484,10 @@ export async function run() {
             setStatus('Enter a 4-letter room code');
             return;
         }
-
         try {
-            setStatus('Connecting...');
-            await loadPeerJS();
-            peer = new window.Peer({ debug: 1 });
-
-            peer.on('open', () => {
-                const c = peer.connect(code, { reliable: true });
-                playerNumber = 2;
-                mode = 'online';
-                setupConnection(c);
-                c.on('open', () => {
-                    setStatus('Connected! Waiting for host...');
-                    send({ type: 'ready' });
-                });
-                c.on('error', () => setStatus('Failed to connect'));
-            });
-
-            peer.on('error', (err) => {
-                setStatus('Error: ' + err.message);
-            });
+            await joinOnlineRoom(code, false);
         } catch (e) {
-            setStatus('Failed to load networking library');
+            setStatus('Failed to connect: ' + e.message);
         }
     }, { signal });
 
