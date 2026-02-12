@@ -3,6 +3,7 @@ members = [
     "graph",
     "sand",
     "pong",
+    "tron",
 ]
 resolver = "2"
 

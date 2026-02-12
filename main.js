@@ -76,6 +76,7 @@ async function handleLocation(isInitial = false) {
   if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
   if (path === "/sand" || path === "/sand/") fetchUrl = "/sand/index.html";
   if (path === "/pong" || path === "/pong/") fetchUrl = "/pong/index.html";
+  if (path === "/tron" || path === "/tron/") fetchUrl = "/tron/index.html";
 
   let preFetchPromise = null;
   if (path.includes("view.html")) {
@@ -149,6 +150,12 @@ function runPageScript(path, search) {
     });
   } else if (path.startsWith("/sand")) {
     import('./sand/main.js').then(module => {
+      if (navId !== calledNav) return;
+      module.run();
+      currentPageCleanup = () => module.cleanup();
+    });
+  } else if (path.startsWith("/tron")) {
+    import('./tron/main.js').then(module => {
       if (navId !== calledNav) return;
       module.run();
       currentPageCleanup = () => module.cleanup();

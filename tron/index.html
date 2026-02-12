@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong - Aahan Aggarwal</title>
+    <title>Tron - Aahan Aggarwal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/style.css?v=4">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
 </head>
 
 <body class="crt">
@@ -37,19 +36,31 @@
     <div id="cursor"></div>
 
     <div id="content">
-        <main id="pong-container">
-            <div id="score-board">
-                <span id="streak">0</span>
+        <div id="tron-container">
+            <div id="tron-lobby">
+                <h1 class="tron-title decrypt-effect">TRON</h1>
+                <div id="tron-menu">
+                    <button id="btn-local" class="tron-btn">LOCAL GAME</button>
+                    <button id="btn-create" class="tron-btn">CREATE ROOM</button>
+                    <div id="join-row">
+                        <input id="room-input" type="text" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false">
+                        <button id="btn-join" class="tron-btn">JOIN</button>
+                    </div>
+                </div>
+                <div id="tron-status"></div>
             </div>
 
-            <canvas id="pong-canvas"></canvas>
-
-            <div id="speed-indicator" style="display: none;">SPEED: <span id="speed-value">0</span></div>
-
-            <div class="controls-hint">
-                CONTROLS: W/S OR ARROWS &nbsp; | &nbsp; BEST: <span id="high-score">0</span>
+            <div id="tron-game" style="display:none;">
+                <div id="tron-scores">
+                    <span id="p1-score" class="tron-p1">P1: 0</span>
+                    <span id="tron-round"></span>
+                    <span id="p2-score" class="tron-p2">P2: 0</span>
+                </div>
+                <canvas id="tron-canvas" width="800" height="600"></canvas>
+                <div id="tron-overlay"></div>
+                <div class="controls-hint" id="tron-controls"></div>
             </div>
-        </main>
+        </div>
     </div>
 
     <script type="module" src="/main.js"></script>

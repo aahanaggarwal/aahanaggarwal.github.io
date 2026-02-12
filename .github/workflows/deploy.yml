@@ -35,6 +35,7 @@ jobs:
           wasm-pack build graph --target web --out-dir ../../graph/pkg
           wasm-pack build sand --target web --out-dir ../../sand/pkg
           wasm-pack build pong --target web --out-dir ../../pong/pkg
+          wasm-pack build tron --target web --out-dir ../../tron/pkg
 
 
       - name: Optimize Assets

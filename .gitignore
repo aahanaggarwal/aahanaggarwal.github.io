@@ -32,6 +32,7 @@ wasm/pkg
 graph/pkg
 sand/pkg
 pong/pkg
+tron/pkg
 
 # Minification
 dist/

@@ -20,6 +20,7 @@ echo "Building Wasm..."
 wasm-pack build "$ROOT/wasm/graph" --target web --out-dir "$ROOT/graph/pkg"
 wasm-pack build "$ROOT/wasm/sand" --target web --out-dir "$ROOT/sand/pkg"
 wasm-pack build "$ROOT/wasm/pong" --target web --out-dir "$ROOT/pong/pkg"
+wasm-pack build "$ROOT/wasm/tron" --target web --out-dir "$ROOT/tron/pkg"
 
 echo "Running Optimizer..."
 cd "$ROOT"

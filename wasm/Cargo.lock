@@ -285,6 +285,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "tron"
+version = "0.1.0"
+dependencies = [
+ "wasm-bindgen",
+]
+
+[[package]]
 name = "unicode-ident"
 version = "1.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
