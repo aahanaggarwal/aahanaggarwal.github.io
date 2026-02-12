@@ -22,6 +22,7 @@ wasm-pack build "$ROOT/wasm/sand" --target web --out-dir "$ROOT/sand/pkg"
 wasm-pack build "$ROOT/wasm/pong" --target web --out-dir "$ROOT/pong/pkg"
 
 echo "Running Optimizer..."
+cd "$ROOT"
 cargo run --manifest-path "$ROOT/tools/optimizer/Cargo.toml"
 
 echo "Starting Server..."

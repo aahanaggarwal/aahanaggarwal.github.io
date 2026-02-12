@@ -21,6 +21,7 @@ const IGNORE_DIRS: &[&str] = &[
     "tools",
     "node_modules",
     "dist",
+    "wasm",
 ];
 const IGNORE_FILES: &[&str] = &[
     "server.py",
@@ -32,6 +33,7 @@ const IGNORE_FILES: &[&str] = &[
     ".gitignore",
     "Cargo.toml",
     "Cargo.lock",
+    "cloudinary_credentials.json",
 ];
 
 fn main() -> Result<()> {
@@ -63,9 +65,12 @@ fn main() -> Result<()> {
                 if IGNORE_FILES.iter().any(|&f| f == name) {
                     return false;
                 }
-                if name.starts_with('.') {
-                    if name == ".nojekyll" {
-                        return true;
+            }
+            for component in path.components() {
+                let s = component.as_os_str().to_string_lossy();
+                if s.starts_with('.') && s != "." {
+                    if s == ".nojekyll" {
+                        continue;
                     }
                     return false;
                 }

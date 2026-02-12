@@ -180,6 +180,7 @@ impl PongGame {
         if self.ball_x <= self.paddle_width
             && self.ball_y + self.ball_size >= self.paddle_left_y
             && self.ball_y <= self.paddle_left_y + self.paddle_height
+            && self.ball_dx < 0.0
         {
             let paddle_center = self.paddle_left_y + self.paddle_height / 2.0;
             let ball_center = self.ball_y + self.ball_size / 2.0;
@@ -206,6 +207,7 @@ impl PongGame {
         if self.ball_x + self.ball_size >= self.width - self.paddle_width
             && self.ball_y + self.ball_size >= self.paddle_right_y
             && self.ball_y <= self.paddle_right_y + self.paddle_height
+            && self.ball_dx > 0.0
         {
             let paddle_center = self.paddle_right_y + self.paddle_height / 2.0;
             let ball_center = self.ball_y + self.ball_size / 2.0;

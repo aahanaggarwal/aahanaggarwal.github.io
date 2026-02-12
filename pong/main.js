@@ -1,36 +1,86 @@
 import init, { PongGame } from './pkg/pong.js';
 
+let animFrameId = null;
+let game = null;
+let pauseOverlay = null;
+let handleKeyDown = null;
+let handleKeyUp = null;
+let handleVisibilityChange = null;
+let handleMouseMove = null;
+let handleClick = null;
+let canvas = null;
+let handleTouch = null;
+let stopTouch = null;
+
+export function cleanup() {
+    if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+    }
+    if (handleKeyDown) window.removeEventListener('keydown', handleKeyDown);
+    if (handleKeyUp) window.removeEventListener('keyup', handleKeyUp);
+    if (handleVisibilityChange) document.removeEventListener('visibilitychange', handleVisibilityChange);
+    if (handleMouseMove) document.removeEventListener('mousemove', handleMouseMove);
+    if (handleClick) document.removeEventListener('click', handleClick);
+    if (canvas) {
+        if (handleTouch) {
+            canvas.removeEventListener('touchstart', handleTouch);
+            canvas.removeEventListener('touchmove', handleTouch);
+        }
+        if (stopTouch) canvas.removeEventListener('touchend', stopTouch);
+    }
+    if (pauseOverlay) {
+        pauseOverlay.remove();
+        pauseOverlay = null;
+    }
+    if (game) {
+        game.free();
+        game = null;
+    }
+    handleKeyDown = null;
+    handleKeyUp = null;
+    handleVisibilityChange = null;
+    handleMouseMove = null;
+    handleClick = null;
+    handleTouch = null;
+    stopTouch = null;
+    canvas = null;
+}
+
 export async function run() {
+    cleanup();
     await init();
 
-    const canvas = document.getElementById('pong-canvas');
+    canvas = document.getElementById('pong-canvas');
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
     const width = 800;
     const height = 600;
 
     canvas.width = width;
     canvas.height = height;
-    const game = PongGame.new(width, height);
+    game = PongGame.new(width, height);
     const streakEl = document.getElementById('streak');
     const highScoreEl = document.getElementById('high-score');
 
     let highScore = parseInt(localStorage.getItem('pong_high_score') || '0');
-    highScoreEl.innerText = highScore;
+    if (highScoreEl) highScoreEl.innerText = highScore;
 
     let isPaused = false;
     const speedIndicator = document.getElementById('speed-indicator');
     const speedValue = document.getElementById('speed-value');
-    let pauseOverlay = document.querySelector('.paused-overlay');
+
+    const pongContainer = document.getElementById('pong-container');
+    pauseOverlay = document.querySelector('.paused-overlay');
     if (!pauseOverlay) {
         pauseOverlay = document.createElement('div');
         pauseOverlay.className = 'paused-overlay';
         pauseOverlay.innerText = '⏸';
-        document.body.appendChild(pauseOverlay);
+        (pongContainer || document.body).appendChild(pauseOverlay);
     }
 
     const cursor = document.getElementById("cursor");
-    let handleMouseMove = null;
-    let handleClick = null;
     if (!window.HAS_SPA_ROUTER) {
         handleMouseMove = (e) => {
             if (cursor) {
@@ -47,7 +97,16 @@ export async function run() {
         document.addEventListener("click", handleClick);
     }
 
-    const handleKeyDown = (e) => {
+    const togglePause = () => {
+        isPaused = !isPaused;
+        if (isPaused) {
+            if (pauseOverlay) pauseOverlay.classList.add('visible');
+        } else {
+            if (pauseOverlay) pauseOverlay.classList.remove('visible');
+        }
+    };
+
+    handleKeyDown = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
             e.preventDefault();
             game.set_player_movement(-1);
@@ -60,7 +119,7 @@ export async function run() {
         }
     };
 
-    const handleKeyUp = (e) => {
+    handleKeyUp = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
             game.set_player_movement(0);
         } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
@@ -71,23 +130,14 @@ export async function run() {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
 
-    const togglePause = () => {
-        isPaused = !isPaused;
-        if (isPaused) {
-            if (pauseOverlay) pauseOverlay.classList.add('visible');
-        } else {
-            if (pauseOverlay) pauseOverlay.classList.remove('visible');
-        }
-    };
-
-    const handleVisibilityChange = () => {
+    handleVisibilityChange = () => {
         if (document.hidden) {
             if (!isPaused) togglePause();
         }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    const handleTouch = (e) => {
+    handleTouch = (e) => {
         e.preventDefault();
         const touch = e.touches[0];
         const rect = canvas.getBoundingClientRect();
@@ -99,7 +149,7 @@ export async function run() {
         }
     };
 
-    const stopTouch = (e) => {
+    stopTouch = (e) => {
         e.preventDefault();
         game.set_player_movement(0);
     };
@@ -115,18 +165,14 @@ export async function run() {
 
     function render(timestamp) {
         if (!document.body.contains(canvas)) {
-            if (pauseOverlay) pauseOverlay.remove();
-            document.removeEventListener("visibilitychange", handleVisibilityChange);
-            if (handleMouseMove) document.removeEventListener("mousemove", handleMouseMove);
-            if (handleClick) document.removeEventListener("click", handleClick);
-            window.removeEventListener("keydown", handleKeyDown);
-            window.removeEventListener("keyup", handleKeyUp);
+            cleanup();
             return;
         }
 
+        animFrameId = requestAnimationFrame(render);
+
         if (isPaused) {
             lastTime = 0;
-            requestAnimationFrame(render);
             return;
         }
 
@@ -145,27 +191,25 @@ export async function run() {
         ctx.shadowBlur = 10;
         ctx.shadowColor = textColor;
 
-
         ctx.fillRect(10, game.paddle_left_y(), 10, 100);
         ctx.fillRect(width - 20, game.paddle_right_y(), 10, 100);
 
         ctx.fillRect(game.ball_x(), game.ball_y(), 10, 10);
         let currentStreak = game.streak();
 
-        if (streakEl.innerText !== currentStreak.toString()) {
-            const container = document.getElementById('pong-container');
-            if (container) {
-                container.classList.remove('shake');
-                void container.offsetWidth;
-                container.classList.add('shake');
+        if (streakEl && streakEl.innerText !== currentStreak.toString()) {
+            if (pongContainer) {
+                pongContainer.classList.remove('shake');
+                void pongContainer.offsetWidth;
+                pongContainer.classList.add('shake');
             }
         }
 
-        streakEl.innerText = currentStreak;
+        if (streakEl) streakEl.innerText = currentStreak;
 
         if (currentStreak > highScore) {
             highScore = currentStreak;
-            highScoreEl.innerText = highScore;
+            if (highScoreEl) highScoreEl.innerText = highScore;
             localStorage.setItem('pong_high_score', highScore);
         }
 
@@ -175,11 +219,9 @@ export async function run() {
             speedIndicator.style.display = 'block';
             speedValue.innerText = normalizedSpeed.toFixed(1);
         }
-
-        requestAnimationFrame(render);
     }
 
-    requestAnimationFrame(render);
+    animFrameId = requestAnimationFrame(render);
 }
 
 if (!window.HAS_SPA_ROUTER) {

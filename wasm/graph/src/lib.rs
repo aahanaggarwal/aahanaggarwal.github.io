@@ -145,6 +145,10 @@ pub fn plot_equation(
                 let p_left_x = px as f64;
                 let p_left_y = py as f64 + off_left;
 
+                let wx_center = ((px + step / 2) - center_x) as f64 / scale;
+                let wy_center = (center_y - (py + step / 2)) as f64 / scale;
+                let center_val = func(wx_center, wy_center);
+
                 match case {
                     1 => push_line(
                         &mut result.lines,
@@ -163,28 +167,26 @@ pub fn plot_equation(
                     3 => push_line(&mut result.lines, p_left_x, p_left_y, p_right_x, p_right_y),
                     4 => push_line(&mut result.lines, p_top_x, p_top_y, p_right_x, p_right_y),
                     5 => {
-                        push_line(&mut result.lines, p_left_x, p_left_y, p_top_x, p_top_y);
-                        push_line(
-                            &mut result.lines,
-                            p_bottom_x,
-                            p_bottom_y,
-                            p_right_x,
-                            p_right_y,
-                        );
+                        if center_val > 0.0 {
+                            push_line(&mut result.lines, p_left_x, p_left_y, p_bottom_x, p_bottom_y);
+                            push_line(&mut result.lines, p_top_x, p_top_y, p_right_x, p_right_y);
+                        } else {
+                            push_line(&mut result.lines, p_left_x, p_left_y, p_top_x, p_top_y);
+                            push_line(&mut result.lines, p_bottom_x, p_bottom_y, p_right_x, p_right_y);
+                        }
                     }
                     6 => push_line(&mut result.lines, p_top_x, p_top_y, p_bottom_x, p_bottom_y),
                     7 => push_line(&mut result.lines, p_left_x, p_left_y, p_top_x, p_top_y),
                     8 => push_line(&mut result.lines, p_left_x, p_left_y, p_top_x, p_top_y),
                     9 => push_line(&mut result.lines, p_top_x, p_top_y, p_bottom_x, p_bottom_y),
                     10 => {
-                        push_line(
-                            &mut result.lines,
-                            p_left_x,
-                            p_left_y,
-                            p_bottom_x,
-                            p_bottom_y,
-                        );
-                        push_line(&mut result.lines, p_top_x, p_top_y, p_right_x, p_right_y);
+                        if center_val > 0.0 {
+                            push_line(&mut result.lines, p_left_x, p_left_y, p_top_x, p_top_y);
+                            push_line(&mut result.lines, p_bottom_x, p_bottom_y, p_right_x, p_right_y);
+                        } else {
+                            push_line(&mut result.lines, p_left_x, p_left_y, p_bottom_x, p_bottom_y);
+                            push_line(&mut result.lines, p_top_x, p_top_y, p_right_x, p_right_y);
+                        }
                     }
                     11 => push_line(&mut result.lines, p_top_x, p_top_y, p_right_x, p_right_y),
                     12 => push_line(&mut result.lines, p_left_x, p_left_y, p_right_x, p_right_y),

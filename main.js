@@ -1,4 +1,5 @@
 let currentPageCleanup = null;
+let navId = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   window.HAS_SPA_ROUTER = true;
@@ -46,6 +47,7 @@ function initRouter() {
 }
 
 async function handleLocation(isInitial = false) {
+  const thisNav = ++navId;
   const path = window.location.pathname;
   const search = window.location.search;
 
@@ -95,8 +97,10 @@ async function handleLocation(isInitial = false) {
 
   try {
     const res = await fetch(fetchUrl);
+    if (thisNav !== navId) return;
     if (!res.ok) throw new Error(`Failed to load ${fetchUrl}: ${res.status}`);
     const html = await res.text();
+    if (thisNav !== navId) return;
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
 
@@ -126,6 +130,7 @@ async function handleLocation(isInitial = false) {
 }
 
 function runPageScript(path, search) {
+  const calledNav = navId;
   if (path.startsWith("/pics")) {
     loadPics();
   } else if (path.startsWith("/blog")) {
@@ -138,11 +143,15 @@ function runPageScript(path, search) {
     loadGraph();
   } else if (path.startsWith("/pong")) {
     import('./pong/main.js').then(module => {
+      if (navId !== calledNav) return;
       module.run();
+      currentPageCleanup = () => module.cleanup();
     });
   } else if (path.startsWith("/sand")) {
     import('./sand/main.js').then(module => {
+      if (navId !== calledNav) return;
       module.run();
+      currentPageCleanup = () => module.cleanup();
     });
   } else {
   }
@@ -213,9 +222,8 @@ function initGlobalListeners() {
   const cursor = document.getElementById("cursor");
   document.addEventListener("mousemove", (e) => {
     if (cursor) {
-      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      cursor.style.top = '';
-      cursor.style.left = '';
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
     }
     cursorPos.x = e.clientX;
     cursorPos.y = e.clientY;

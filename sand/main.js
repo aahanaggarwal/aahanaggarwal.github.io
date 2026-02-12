@@ -63,6 +63,7 @@ export async function run() {
     // Clean up previous run
     if (abortController) abortController.abort();
     if (animationId) cancelAnimationFrame(animationId);
+    if (universe) { universe.free(); universe = null; }
     abortController = new AbortController();
     const signal = abortController.signal;
 
@@ -73,6 +74,8 @@ export async function run() {
     offscreenCanvas = null;
     offscreenCtx = null;
     offscreenData = null;
+
+    document.body.style.overflow = 'hidden';
 
     const wasm = await init();
     memory = wasm.memory;
@@ -301,6 +304,35 @@ function setupInteractions(canvas, signal) {
         mouseX = -1;
         mouseY = -1;
     }, { signal });
+}
+
+export function cleanup() {
+    if (abortController) {
+        abortController.abort();
+        abortController = null;
+    }
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+    const tooltip = document.getElementById('custom-tooltip');
+    if (tooltip && tooltip.parentNode) {
+        tooltip.parentNode.removeChild(tooltip);
+    }
+    document.body.style.overflow = '';
+    if (universe) {
+        universe.free();
+        universe = null;
+    }
+    memory = null;
+    offscreenCanvas = null;
+    offscreenCtx = null;
+    offscreenData = null;
+    U32_COLORS = null;
+    isDrawing = false;
+    isPaused = false;
+    mouseX = -1;
+    mouseY = -1;
 }
 
 if (!window.HAS_SPA_ROUTER) {

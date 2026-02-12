@@ -194,6 +194,10 @@ impl Universe {
                         self.temps_back[idx] = -20;
                         continue;
                     }
+                    Cell::Lava => {
+                        self.temps_back[idx] = 30000;
+                        continue;
+                    }
                     _ => {}
                 }
 
@@ -250,14 +254,14 @@ impl Universe {
                 if temp > 100 {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Steam);
+                        return;
                     }
-                    return;
                 }
                 if temp < -5 {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Ice);
+                        return;
                     }
-                    return;
                 }
             }
             Cell::Ice => {
@@ -273,17 +277,16 @@ impl Universe {
                     if (self.rand() % 10) == 0 {
                         self.set_cell(row, col, Cell::Stone);
                         self.temps[idx] = temp;
+                        return;
                     }
-                    return;
                 }
             }
             Cell::Sand => {
                 if temp > 500 {
-                    // Melt
                     if (self.rand() % 50) == 0 {
                         self.set_cell(row, col, Cell::Glass);
+                        return;
                     }
-                    return;
                 }
             }
             Cell::Fire => {
@@ -306,8 +309,8 @@ impl Universe {
                 if temp < 80 {
                     if (self.rand() % 20) == 0 {
                         self.set_cell(row, col, Cell::Water);
+                        return;
                     }
-                    return;
                 }
             }
             _ => {}
