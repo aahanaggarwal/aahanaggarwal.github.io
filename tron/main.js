@@ -8,17 +8,12 @@ const P1_COLOR = '#00ffff';
 const P2_COLOR = '#ff6600';
 const P1_HEAD = '#ffffff';
 const P2_HEAD = '#ffffff';
-const HEARTBEAT_MS = 2000;
-const HEARTBEAT_TIMEOUT = 6000;
-const CONNECT_TIMEOUT = 15000;
-
-const ICE_CONFIG = {
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' },
-    ]
-};
+const NOSTR_RELAYS = [
+    'wss://relay.damus.io',
+    'wss://nos.lol',
+    'wss://relay.nostr.band'
+];
+const NOSTR_KIND = 25050; // ephemeral event kind
 
 // === Module state ===
 let game = null, memory = null;
@@ -30,8 +25,93 @@ let playerNumber = 0;
 let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
-let room = null;
-let sendMsg = null;
+let relay = null;
+
+// === Nostr Relay (pure WebSocket, no WebRTC) ===
+
+class GameRelay {
+    constructor() {
+        this.sockets = [];
+        this.seenIds = new Set();
+        this.sk = null;
+        this.pk = null;
+        this.peerPk = null;
+        this.roomCode = null;
+        this.nostr = null;
+        this.onMessage = null;
+    }
+
+    async connect(roomCode) {
+        this.roomCode = roomCode;
+        this.nostr = await import('https://esm.sh/nostr-tools@2/pure');
+        this.sk = this.nostr.generateSecretKey();
+        this.pk = this.nostr.getPublicKey(this.sk);
+
+        const results = await Promise.allSettled(
+            NOSTR_RELAYS.map(url => this._connectOne(url))
+        );
+        this.sockets = results
+            .filter(r => r.status === 'fulfilled')
+            .map(r => r.value);
+
+        if (this.sockets.length === 0) throw new Error('No relays available');
+
+        const req = JSON.stringify(['REQ', 'game', {
+            kinds: [NOSTR_KIND],
+            '#t': [roomCode],
+            since: Math.floor(Date.now() / 1000) - 60
+        }]);
+        for (const ws of this.sockets) ws.send(req);
+    }
+
+    _connectOne(url) {
+        return new Promise((resolve, reject) => {
+            const ws = new WebSocket(url);
+            const timer = setTimeout(() => { ws.close(); reject(); }, 5000);
+            ws.onopen = () => { clearTimeout(timer); resolve(ws); };
+            ws.onerror = () => { clearTimeout(timer); reject(); };
+            ws.onmessage = (e) => this._handleRaw(e);
+        });
+    }
+
+    send(msg) {
+        if (!this.nostr) return;
+        const event = this.nostr.finalizeEvent({
+            kind: NOSTR_KIND,
+            tags: [['t', this.roomCode]],
+            content: JSON.stringify(msg),
+            created_at: Math.floor(Date.now() / 1000),
+        }, this.sk);
+        const data = JSON.stringify(['EVENT', event]);
+        for (const ws of this.sockets) {
+            if (ws.readyState === WebSocket.OPEN) ws.send(data);
+        }
+    }
+
+    _handleRaw(e) {
+        try {
+            const data = JSON.parse(e.data);
+            if (data[0] !== 'EVENT' || !data[2]) return;
+            const event = data[2];
+            if (event.pubkey === this.pk) return;
+            if (this.peerPk && event.pubkey !== this.peerPk) return;
+            if (this.seenIds.has(event.id)) return;
+            this.seenIds.add(event.id);
+            if (this.seenIds.size > 1000) {
+                this.seenIds = new Set([...this.seenIds].slice(-500));
+            }
+            if (!this.peerPk) this.peerPk = event.pubkey;
+            const msg = JSON.parse(event.content);
+            if (this.onMessage) this.onMessage(msg);
+        } catch {}
+    }
+
+    close() {
+        for (const ws of this.sockets) ws.close();
+        this.sockets = [];
+        this.seenIds.clear();
+    }
+}
 
 // === Helpers ===
 
@@ -62,34 +142,9 @@ function generateCode() {
 }
 
 function send(msg) {
-    if (sendMsg) {
-        try { sendMsg(msg); } catch (e) { /* connection may have closed */ }
+    if (relay) {
+        try { relay.send(msg); } catch (e) { /* relay may have closed */ }
     }
-}
-
-function clearConnectTimeout() {
-    if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
-}
-
-// === Heartbeat ===
-
-function startHeartbeat() {
-    stopHeartbeat();
-    lastPeerActivity = Date.now();
-    heartbeatInterval = setInterval(() => {
-        if (!conn) { stopHeartbeat(); return; }
-        send({ type: 'ping' });
-        if (Date.now() - lastPeerActivity > HEARTBEAT_TIMEOUT) {
-            stopHeartbeat();
-            setStatus('Connection lost');
-            gameActive = false;
-            if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
-        }
-    }, HEARTBEAT_MS);
-}
-
-function stopHeartbeat() {
-    if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
 }
 
 // === Countdown ===
@@ -242,7 +297,7 @@ function render() {
     }
 }
 
-// === Networking (trystero) ===
+// === Online game setup ===
 
 function initOnlineGame() {
     showGame();
@@ -260,6 +315,13 @@ function initOnlineGame() {
 function handleMessage(msg) {
     if (!msg || !msg.type) return;
     switch (msg.type) {
+        case 'ready':
+            if (gameActive || game) break;
+            playerNumber = 1;
+            mode = 'online';
+            send({ type: 'start' });
+            initOnlineGame();
+            break;
         case 'start':
             initOnlineGame();
             break;
@@ -290,31 +352,19 @@ function handleMessage(msg) {
 }
 
 async function joinOnlineRoom(code, isHost) {
-    setStatus('Loading networking...');
-    const { joinRoom } = await import('https://esm.sh/trystero/nostr');
+    setStatus('Connecting to relay...');
+    relay = new GameRelay();
+    relay.onMessage = handleMessage;
+    await relay.connect(code);
 
-    setStatus(isHost ? ('ROOM: ' + code + ' \u2014 Waiting for opponent...') : ('Joining room ' + code + '...'));
-
-    room = joinRoom({ appId: 'aahan-tron' }, code);
-    const [_sendMsg, getMsg] = room.makeAction('game');
-    sendMsg = _sendMsg;
-
-    getMsg((msg) => handleMessage(msg));
-
-    room.onPeerJoin(() => {
-        playerNumber = isHost ? 1 : 2;
+    if (isHost) {
+        setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
+    } else {
+        playerNumber = 2;
         mode = 'online';
-        if (isHost) {
-            send({ type: 'start' });
-            initOnlineGame();
-        }
-    });
-
-    room.onPeerLeave(() => {
-        setStatus('Opponent disconnected');
-        gameActive = false;
-        if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
-    });
+        setStatus('Joined room ' + code + '. Waiting for host...');
+        send({ type: 'ready' });
+    }
 }
 
 // === Cleanup & Run ===
@@ -324,10 +374,9 @@ export function cleanup() {
     if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (room) { room.leave(); room = null; }
+    if (relay) { relay.close(); relay = null; }
     if (game) { game.free(); game = null; }
 
-    sendMsg = null;
     canvas = null;
     ctx = null;
     memory = null;
@@ -378,7 +427,7 @@ export async function run() {
             const code = generateCode();
             await joinOnlineRoom(code, true);
         } catch (e) {
-            setStatus('Failed to load networking: ' + e.message);
+            setStatus('Failed to connect: ' + e.message);
         }
     }, { signal });
 
@@ -393,7 +442,7 @@ export async function run() {
         try {
             await joinOnlineRoom(code, false);
         } catch (e) {
-            setStatus('Failed to load networking: ' + e.message);
+            setStatus('Failed to connect: ' + e.message);
         }
     }, { signal });
 
