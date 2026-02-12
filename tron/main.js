@@ -8,6 +8,17 @@ const P1_COLOR = '#00ffff';
 const P2_COLOR = '#ff6600';
 const P1_HEAD = '#ffffff';
 const P2_HEAD = '#ffffff';
+const HEARTBEAT_MS = 2000;
+const HEARTBEAT_TIMEOUT = 6000;
+const CONNECT_TIMEOUT = 15000;
+
+const ICE_CONFIG = {
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+    ]
+};
 
 // === Module state ===
 let game = null, memory = null;
@@ -54,6 +65,31 @@ function send(msg) {
     if (sendMsg) {
         try { sendMsg(msg); } catch (e) { /* connection may have closed */ }
     }
+}
+
+function clearConnectTimeout() {
+    if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
+}
+
+// === Heartbeat ===
+
+function startHeartbeat() {
+    stopHeartbeat();
+    lastPeerActivity = Date.now();
+    heartbeatInterval = setInterval(() => {
+        if (!conn) { stopHeartbeat(); return; }
+        send({ type: 'ping' });
+        if (Date.now() - lastPeerActivity > HEARTBEAT_TIMEOUT) {
+            stopHeartbeat();
+            setStatus('Connection lost');
+            gameActive = false;
+            if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+        }
+    }, HEARTBEAT_MS);
+}
+
+function stopHeartbeat() {
+    if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
 }
 
 // === Countdown ===
