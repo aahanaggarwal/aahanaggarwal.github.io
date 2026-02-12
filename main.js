@@ -1,3 +1,5 @@
+let currentPageCleanup = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   window.HAS_SPA_ROUTER = true;
 
@@ -46,6 +48,11 @@ function initRouter() {
 async function handleLocation(isInitial = false) {
   const path = window.location.pathname;
   const search = window.location.search;
+
+  if (currentPageCleanup) {
+    currentPageCleanup();
+    currentPageCleanup = null;
+  }
 
   if (isInitial) {
     runPageScript(path, search);
@@ -419,6 +426,13 @@ async function loadPics() {
   if (!gallery) return;
   initModal();
 
+  currentPageCleanup = () => {
+    if (picsKeydownHandler) {
+      document.removeEventListener("keydown", picsKeydownHandler);
+      picsKeydownHandler = null;
+    }
+  };
+
   try {
     const res = await fetch("/pics/index.json");
     if (!res.ok) throw new Error("index");
@@ -483,6 +497,7 @@ function extractYear(name) {
 }
 
 let modal, modalImg, closeBtn;
+let picsKeydownHandler = null;
 
 function initModal() {
   modal = document.getElementById("modal");
@@ -499,11 +514,15 @@ function initModal() {
     }
   });
 
-  document.addEventListener("keydown", (e) => {
+  if (picsKeydownHandler) {
+    document.removeEventListener("keydown", picsKeydownHandler);
+  }
+  picsKeydownHandler = (e) => {
     if (e.key === "Escape" && modal.classList.contains("show")) {
       closeModal();
     }
-  });
+  };
+  document.addEventListener("keydown", picsKeydownHandler);
 }
 
 function openModal(src) {
@@ -681,15 +700,25 @@ async function loadPost() {
 
 function parseMarkdown(text) {
   text = text.replace(/^---\n[\s\S]*?\n---\n/, '');
+
+  const codeBlocks = [];
+  text = text.replace(/```([\s\S]*?)```/gim, (match) => {
+    codeBlocks.push(match);
+    return `%%CODEBLOCK_${codeBlocks.length - 1}%%`;
+  });
+  const inlineCodes = [];
+  text = text.replace(/`([^`]+)`/gim, (match) => {
+    inlineCodes.push(match);
+    return `%%INLINECODE_${inlineCodes.length - 1}%%`;
+  });
+
   text = text.replace(/^# (.*$)/gim, '<h1>$1</h1>');
   text = text.replace(/^## (.*$)/gim, '<h2>$1</h2>');
   text = text.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   text = text.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
-  text = text.replace(/\*\*(.*)\*\*/gim, '<b>$1</b>');
-  text = text.replace(/\*(.*)\*/gim, '<i>$1</i>');
+  text = text.replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>');
+  text = text.replace(/\*(.*?)\*/gim, '<i>$1</i>');
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>');
-  text = text.replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>');
-  text = text.replace(/`([^`]+)`/gim, '<code>$1</code>');
   text = text.replace(/^\s*-\s(.*)/gim, '<ul><li>$1</li></ul>');
   text = text.replace(/<\/ul>\s*<ul>/gim, '');
   text = text.replace(/\n\n/gim, '</p><p>');
@@ -699,8 +728,17 @@ function parseMarkdown(text) {
   text = text.replace(/\n/gim, '<br />');
   text = text.replace(/<p><\/p>/gim, '');
 
+  codeBlocks.forEach((block, i) => {
+    const html = block.replace(/```([\s\S]*?)```/, '<pre><code>$1</code></pre>');
+    text = text.replace(`%%CODEBLOCK_${i}%%`, html);
+  });
+  inlineCodes.forEach((code, i) => {
+    const html = code.replace(/`([^`]+)`/, '<code>$1</code>');
+    text = text.replace(`%%INLINECODE_${i}%%`, html);
+  });
+
   return text.trim();
-};
+}
 
 let graphCanvas, graphCtx;
 let equations = [];
@@ -741,7 +779,7 @@ function loadGraph() {
     startInteraction();
   });
 
-  window.addEventListener("mousemove", (e) => {
+  const graphMouseMove = (e) => {
     if (isDragging) {
       const dx = e.clientX - lastMouseX;
       const dy = e.clientY - lastMouseY;
@@ -751,12 +789,14 @@ function loadGraph() {
       lastMouseY = e.clientY;
       startInteraction();
     }
-  });
+  };
+  window.addEventListener("mousemove", graphMouseMove);
 
-  window.addEventListener("mouseup", () => {
+  const graphMouseUp = () => {
     isDragging = false;
     endInteraction();
-  });
+  };
+  window.addEventListener("mouseup", graphMouseUp);
 
   const cursor = document.getElementById("cursor");
   graphCanvas.addEventListener("mouseenter", () => {
@@ -813,6 +853,22 @@ function loadGraph() {
   }
 
   drawGraph();
+
+  currentPageCleanup = () => {
+    if (graphRenderLoopId) {
+      cancelAnimationFrame(graphRenderLoopId);
+      graphRenderLoopId = null;
+    }
+    window.removeEventListener("mousemove", graphMouseMove);
+    window.removeEventListener("mouseup", graphMouseUp);
+    window.removeEventListener("resize", resizeGraph);
+    isDragging = false;
+    isInteracting = false;
+    graphCtx = null;
+    cachedCollisionBuffer = null;
+    cachedCollisionW = 0;
+    cachedCollisionH = 0;
+  };
 }
 
 function addEquationInput(container, value) {
@@ -867,6 +923,9 @@ function resizeGraph() {
 
 let graphRenderLoopId;
 let graphNeedsUpdate = false;
+let cachedCollisionBuffer = null;
+let cachedCollisionW = 0;
+let cachedCollisionH = 0;
 
 function startGraphRenderLoop() {
   if (graphRenderLoopId) cancelAnimationFrame(graphRenderLoopId);
@@ -930,7 +989,14 @@ function drawGraphLogic() {
   graphCtx.lineTo(cx, h);
   graphCtx.stroke();
 
-  const collisionBuffer = new Int8Array(w * h);
+  if (w !== cachedCollisionW || h !== cachedCollisionH) {
+    cachedCollisionBuffer = new Int8Array(w * h);
+    cachedCollisionW = w;
+    cachedCollisionH = h;
+  } else {
+    cachedCollisionBuffer.fill(0);
+  }
+  const collisionBuffer = cachedCollisionBuffer;
 
   const allVars = new Set();
   equations.forEach(eq => {
@@ -998,18 +1064,22 @@ function plotEquation(eqStr, cx, cy, w, h, eqId, collisionBuffer, varNames, varV
       new Float64Array([])
     );
 
-    const lines = result.get_lines();
-    graphCtx.beginPath();
-    graphCtx.strokeStyle = "#00ff41";
-    for (let i = 0; i < lines.length; i += 4) {
-      graphCtx.moveTo(lines[i], lines[i + 1]);
-      graphCtx.lineTo(lines[i + 2], lines[i + 3]);
-    }
-    graphCtx.stroke();
+    try {
+      const lines = result.get_lines();
+      graphCtx.beginPath();
+      graphCtx.strokeStyle = "#00ff41";
+      for (let i = 0; i < lines.length; i += 4) {
+        graphCtx.moveTo(lines[i], lines[i + 1]);
+        graphCtx.lineTo(lines[i + 2], lines[i + 3]);
+      }
+      graphCtx.stroke();
 
-    const intersections = result.get_intersections();
-    for (let i = 0; i < intersections.length; i += 2) {
-      drawIntersection(intersections[i], intersections[i + 1]);
+      const intersections = result.get_intersections();
+      for (let i = 0; i < intersections.length; i += 2) {
+        drawIntersection(intersections[i], intersections[i + 1]);
+      }
+    } finally {
+      result.free();
     }
 
   } catch (e) {

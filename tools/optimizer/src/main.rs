@@ -147,7 +147,7 @@ fn minify_js_file(src: &Path, dest: &Path) -> Result<()> {
     let minifier_options = MinifierOptions {
         mangle: true,
         compress: CompressOptions {
-            drop_console: true,
+            drop_console: false,
             ..CompressOptions::default()
         },
     };

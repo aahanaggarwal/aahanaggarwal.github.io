@@ -1,4 +1,4 @@
-import init, { Universe, Cell } from './pkg/sand.js';
+import init, { Universe } from './pkg/sand.js';
 
 const CELL_SIZE = 4;
 const GRID_WIDTH = 128;
@@ -30,6 +30,19 @@ const ELEMENT_NAMES = [
     "Smoke", "Glass", "Obsidian", "Gunpowder"
 ];
 
+const ELEMENT_KEYS = {
+    '1': 1,  // Sand
+    '2': 2,  // Water
+    '3': 3,  // Stone
+    '4': 4,  // Wood
+    '5': 7,  // Oil
+    '6': 8,  // Acid
+    '7': 9,  // Lava
+    '8': 10, // Plant
+    '9': 11, // Ice
+    '0': 15, // Gunpowder
+};
+
 let universe;
 let memory;
 let selectedColor = 1;
@@ -40,25 +53,43 @@ let mouseX = -1;
 let mouseY = -1;
 const radius = 1;
 
+let abortController = null;
+
 export async function run() {
+    // Clean up previous run
+    if (abortController) abortController.abort();
+    if (animationId) cancelAnimationFrame(animationId);
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
+    isDrawing = false;
+    isPaused = false;
+    mouseX = -1;
+    mouseY = -1;
+
     const wasm = await init();
     memory = wasm.memory;
 
     universe = Universe.new(GRID_WIDTH, GRID_HEIGHT);
 
     const canvas = document.getElementById('sand-canvas');
+    if (!canvas) return;
     canvas.width = GRID_WIDTH * CELL_SIZE;
     canvas.height = GRID_HEIGHT * CELL_SIZE;
 
     const ctx = canvas.getContext('2d');
 
     setupControls();
-    setupCursor();
-    setupKeyboard();
+    setupKeyboard(signal);
 
     const renderLoop = () => {
+        if (!document.body.contains(canvas)) {
+            cancelAnimationFrame(animationId);
+            return;
+        }
+
         if (isDrawing) {
-            paint(canvas);
+            paint();
         }
 
         if (!isPaused) {
@@ -69,7 +100,7 @@ export async function run() {
     };
     renderLoop();
 
-    setupInteractions(canvas);
+    setupInteractions(canvas, signal);
 }
 
 let U32_COLORS = null;
@@ -89,23 +120,18 @@ function draw(ctx) {
     }
 
     const imgData = window.offscreenData;
-
-    // Create 32-bit view of the image data buffer
     const buf32 = new Uint32Array(imgData.data.buffer);
 
-    // Precompute 32-bit colors if needed
     if (!U32_COLORS) {
         U32_COLORS = new Uint32Array(COLORS.length);
         for (let i = 0; i < COLORS.length; i++) {
             const [r, g, b, a] = COLORS[i];
-            // Little-endian: A B G R
             U32_COLORS[i] = ((a << 24) | (b << 16) | (g << 8) | r) >>> 0;
         }
     }
 
     for (let i = 0; i < cells.length; i++) {
-        const colorIdx = cells[i];
-        buf32[i] = U32_COLORS[colorIdx];
+        buf32[i] = U32_COLORS[cells[i]];
     }
 
     window.offscreenCtx.putImageData(imgData, 0, 0);
@@ -117,6 +143,7 @@ function draw(ctx) {
 
 function setupControls() {
     const container = document.getElementById('controls');
+    if (!container) return;
     const existingBtns = container.querySelectorAll('.color-btn');
     existingBtns.forEach(b => b.remove());
 
@@ -124,19 +151,13 @@ function setupControls() {
     if (!tooltip) {
         tooltip = document.createElement('div');
         tooltip.id = 'custom-tooltip';
-        tooltip.style.position = 'absolute';
-        tooltip.style.padding = '8px 12px';
-        tooltip.style.background = '#000';
-        tooltip.style.border = '2px solid #33ff00';
-        tooltip.style.color = '#33ff00';
-        tooltip.style.fontFamily = "'Courier New', Courier, monospace";
-        tooltip.style.fontSize = '14px';
-        tooltip.style.fontWeight = 'bold';
-        tooltip.style.pointerEvents = 'none';
-        tooltip.style.display = 'none';
-        tooltip.style.zIndex = '1000';
-        tooltip.style.boxShadow = '0 0 10px #33ff00';
-        tooltip.style.textTransform = 'uppercase';
+        tooltip.style.cssText = `
+            position: absolute; padding: 8px 12px; background: #000;
+            border: 2px solid #33ff00; color: #33ff00;
+            font-family: 'Courier New', Courier, monospace; font-size: 14px;
+            font-weight: bold; pointer-events: none; display: none;
+            z-index: 1000; box-shadow: 0 0 10px #33ff00; text-transform: uppercase;
+        `;
         document.body.appendChild(tooltip);
     }
 
@@ -147,19 +168,22 @@ function setupControls() {
 
         const btn = document.createElement('div');
         btn.className = 'color-btn';
+        btn.dataset.idx = idx;
         const rgba = COLORS[idx];
         btn.style.backgroundColor = `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3] / 255})`;
 
+        const keyLabel = Object.entries(ELEMENT_KEYS).find(([, v]) => v === idx);
+        if (keyLabel) {
+            btn.setAttribute('data-key', keyLabel[0]);
+        }
+
         if (idx === selectedColor) btn.classList.add('active');
 
-        btn.onclick = () => {
-            selectedColor = idx;
-            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        };
+        btn.onclick = () => selectElement(idx);
 
         btn.onmouseenter = () => {
-            tooltip.innerText = name;
+            const keyHint = keyLabel ? ` [${keyLabel[0]}]` : '';
+            tooltip.innerText = name + keyHint;
             tooltip.style.display = 'block';
         };
         btn.onmousemove = (e) => {
@@ -178,13 +202,25 @@ function setupControls() {
     };
 }
 
-function setupKeyboard() {
+function selectElement(idx) {
+    selectedColor = idx;
+    const container = document.getElementById('controls');
+    if (!container) return;
+    container.querySelectorAll('.color-btn').forEach((b, i) => {
+        b.classList.toggle('active', b.dataset.idx === String(idx));
+    });
+}
+
+function setupKeyboard(signal) {
     document.addEventListener('keydown', (e) => {
         if (e.code === 'Space') {
             isPaused = !isPaused;
             e.preventDefault();
         }
-    });
+        if (ELEMENT_KEYS[e.key] !== undefined) {
+            selectElement(ELEMENT_KEYS[e.key]);
+        }
+    }, { signal });
 }
 
 function getCoords(e, canvas) {
@@ -209,16 +245,12 @@ function getCoords(e, canvas) {
     };
 }
 
-function paint(canvas) {
+function paint() {
     if (mouseX === -1 || mouseY === -1) return;
-
-    const dx = mouseX;
-    const dy = mouseY;
-
-    universe.paint(dy, dx, selectedColor, radius);
+    universe.paint(mouseY, mouseX, selectedColor, radius);
 }
 
-function setupInteractions(canvas) {
+function setupInteractions(canvas, signal) {
     const updateMouse = (e) => {
         const coords = getCoords(e, canvas);
         mouseX = coords.x;
@@ -229,50 +261,39 @@ function setupInteractions(canvas) {
         isDrawing = true;
         updateMouse(e);
         universe.paint(mouseY, mouseX, selectedColor, radius);
-    });
+    }, { signal });
 
     canvas.addEventListener('mousemove', (e) => {
         updateMouse(e);
-    });
+    }, { signal });
 
     window.addEventListener('mouseup', () => {
         isDrawing = false;
         mouseX = -1;
         mouseY = -1;
-    });
+    }, { signal });
 
     canvas.addEventListener('mouseleave', () => {
         mouseX = -1;
-    });
+        mouseY = -1;
+    }, { signal });
 
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         isDrawing = true;
         updateMouse(e);
-    }, { passive: false });
+    }, { passive: false, signal });
 
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         updateMouse(e);
-    }, { passive: false });
+    }, { passive: false, signal });
 
-    window.addEventListener('touchend', () => isDrawing = false);
-}
-
-function setupCursor() {
-    const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", (e) => {
-        if (cursor) {
-            cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-        }
-    });
-
-    document.addEventListener("click", () => {
-        if (cursor) {
-            cursor.classList.add("expand");
-            setTimeout(() => cursor.classList.remove("expand"), 200);
-        }
-    });
+    window.addEventListener('touchend', () => {
+        isDrawing = false;
+        mouseX = -1;
+        mouseY = -1;
+    }, { signal });
 }
 
 if (!window.HAS_SPA_ROUTER) {

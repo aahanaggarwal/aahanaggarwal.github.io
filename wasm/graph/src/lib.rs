@@ -107,6 +107,12 @@ pub fn plot_equation(
             let bl = next_row_vals[i];
             let br = next_row_vals[i + 1];
 
+            if tl.is_nan() || tr.is_nan() || bl.is_nan() || br.is_nan() {
+                px += step;
+                i += 1;
+                continue;
+            }
+
             let mut case = 0;
             if tl > 0.0 {
                 case |= 8;

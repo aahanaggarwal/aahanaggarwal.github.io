@@ -1,4 +1,3 @@
-use std::iter;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -120,6 +119,7 @@ pub struct Universe {
     height: u32,
     cells: Vec<u8>,
     temps: Vec<i16>,
+    temps_back: Vec<i16>,
     moved: Vec<bool>,
     rng: u32,
     generation: u8,
@@ -131,6 +131,7 @@ impl Universe {
         let count = (width * height) as usize;
         let cells = vec![Cell::Empty as u8; count];
         let temps = vec![20; count];
+        let temps_back = vec![20; count];
         let moved = vec![false; count];
 
         Universe {
@@ -138,6 +139,7 @@ impl Universe {
             height,
             cells,
             temps,
+            temps_back,
             moved,
             rng: 0xB45BE,
             generation: 0,
@@ -185,11 +187,11 @@ impl Universe {
 
                 match cell {
                     Cell::Fire => {
-                        self.temps[idx] = 800;
+                        self.temps_back[idx] = 800;
                         continue;
                     }
                     Cell::Ice => {
-                        self.temps[idx] = -20;
+                        self.temps_back[idx] = -20;
                         continue;
                     }
                     _ => {}
@@ -211,7 +213,6 @@ impl Universe {
 
                 let mut avg = (sum / count) as i16;
 
-                // Ambient cooling/heating toward 20
                 if cell == Cell::Empty {
                     if (idx + self.generation as usize) % 10 == 0 {
                         if avg > 20 {
@@ -222,9 +223,11 @@ impl Universe {
                     }
                 }
 
-                self.temps[idx] = avg;
+                self.temps_back[idx] = avg;
             }
         }
+
+        std::mem::swap(&mut self.temps, &mut self.temps_back);
     }
 
     fn update_pixel(&mut self, row: u32, col: u32) {
@@ -589,15 +592,10 @@ impl Universe {
     }
 
     pub fn clear(&mut self) {
-        self.cells = iter::repeat(Cell::Empty as u8)
-            .take((self.width * self.height) as usize)
-            .collect();
-        self.temps = iter::repeat(20)
-            .take((self.width * self.height) as usize)
-            .collect();
-        self.moved = iter::repeat(false)
-            .take((self.width * self.height) as usize)
-            .collect();
+        self.cells.fill(Cell::Empty as u8);
+        self.temps.fill(20);
+        self.temps_back.fill(20);
+        self.moved.fill(false);
     }
 
     fn get_index(&self, row: u32, col: u32) -> usize {

@@ -31,17 +31,19 @@ export async function run() {
     }
 
     const cursor = document.getElementById("cursor");
-    document.addEventListener("mousemove", (e) => {
+    const handleMouseMove = (e) => {
         if (cursor) {
             cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
         }
-    });
-    document.addEventListener("click", () => {
+    };
+    const handleClick = () => {
         if (cursor) {
             cursor.classList.add("expand");
             setTimeout(() => cursor.classList.remove("expand"), 200);
         }
-    });
+    };
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("click", handleClick);
 
     const handleKeyDown = (e) => {
         if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
@@ -104,20 +106,32 @@ export async function run() {
     canvas.addEventListener('touchmove', handleTouch, { passive: false });
     canvas.addEventListener('touchend', stopTouch);
 
-    function render() {
+    let lastTime = 0;
+
+    function render(timestamp) {
         if (!document.body.contains(canvas)) {
             if (pauseOverlay) pauseOverlay.remove();
             document.removeEventListener("visibilitychange", handleVisibilityChange);
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("click", handleClick);
             window.removeEventListener("keydown", handleKeyDown);
             window.removeEventListener("keyup", handleKeyUp);
             return;
         }
 
         if (isPaused) {
+            lastTime = 0;
             requestAnimationFrame(render);
             return;
         }
-        game.tick();
+
+        if (!lastTime) lastTime = timestamp;
+        const elapsed = timestamp - lastTime;
+        lastTime = timestamp;
+
+        const targetFrameMs = 1000 / 60;
+        const dt = Math.min(elapsed / targetFrameMs, 3);
+        game.tick_with_dt(dt);
 
         ctx.clearRect(0, 0, width, height);
 

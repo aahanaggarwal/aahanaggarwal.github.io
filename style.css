@@ -1124,3 +1124,11 @@
         background: var(--primary-color);
         color: var(--background-color);
       }
+
+      #sand-hint {
+        margin-top: 10px;
+        font-size: 0.7em;
+        opacity: 0.5;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }

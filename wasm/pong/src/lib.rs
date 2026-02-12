@@ -25,13 +25,14 @@ pub struct PongGame {
     ball_spin: f64,
 
     streak: u32,
+    serve_right: bool,
 
     // -1: Up, 0: Stop, 1: Down
     player_move: i32,
 
     // AI State
     ai_target_y: f64,
-    ai_reaction_timer: i32,
+    ai_reaction_timer: f64,
 }
 
 #[wasm_bindgen]
@@ -54,11 +55,12 @@ impl PongGame {
             ball_spin: 0.0,
 
             streak: 0,
+            serve_right: random() > 0.5,
 
             player_move: 0,
 
             ai_target_y: height / 2.0,
-            ai_reaction_timer: 0,
+            ai_reaction_timer: 0.0,
         };
         game.reset_ball();
         game
@@ -72,14 +74,21 @@ impl PongGame {
         let speed = 8.0;
         let angle = (random() * PI / 4.0) - PI / 8.0;
 
-        let direction = 1.0;
+        let direction = if self.serve_right { 1.0 } else { -1.0 };
+        self.serve_right = !self.serve_right;
 
         self.ball_dx = direction * speed * angle.cos();
         self.ball_dy = speed * angle.sin();
     }
 
     pub fn tick(&mut self) {
-        let speed = 6.0;
+        self.tick_with_dt(1.0);
+    }
+
+    pub fn tick_with_dt(&mut self, dt: f64) {
+        let max_speed = self.paddle_height * 0.4;
+
+        let speed = 6.0 * dt;
         if self.player_move == -1 {
             self.paddle_left_y -= speed;
         } else if self.player_move == 1 {
@@ -93,11 +102,11 @@ impl PongGame {
             self.paddle_left_y = self.height - self.paddle_height;
         }
 
-        self.ai_reaction_timer += 1;
+        self.ai_reaction_timer += dt;
 
         if self.ball_dx > 0.0 {
-            if self.ai_reaction_timer > 10 {
-                self.ai_reaction_timer = 0;
+            if self.ai_reaction_timer > 10.0 {
+                self.ai_reaction_timer = 0.0;
 
                 let perfect_target = self.ball_y - self.paddle_height / 2.0;
 
@@ -109,20 +118,21 @@ impl PongGame {
                 self.ai_target_y = perfect_target + error;
             }
 
-            let ai_speed = 6.0;
+            let ai_speed = 6.0 * dt;
             if self.paddle_right_y < self.ai_target_y - 5.0 {
                 self.paddle_right_y += ai_speed;
             } else if self.paddle_right_y > self.ai_target_y + 5.0 {
                 self.paddle_right_y -= ai_speed;
             }
         } else {
-            self.ai_reaction_timer = 0;
+            self.ai_reaction_timer = 0.0;
 
             let center_y = (self.height - self.paddle_height) / 2.0;
+            let drift = 3.0 * dt;
             if self.paddle_right_y < center_y - 5.0 {
-                self.paddle_right_y += 3.0;
+                self.paddle_right_y += drift;
             } else if self.paddle_right_y > center_y + 5.0 {
-                self.paddle_right_y -= 3.0;
+                self.paddle_right_y -= drift;
             }
         }
 
@@ -135,8 +145,8 @@ impl PongGame {
 
         let current_speed = (self.ball_dx.powi(2) + self.ball_dy.powi(2)).sqrt();
 
-        self.ball_dy += self.ball_spin;
-        self.ball_spin *= 0.96;
+        self.ball_dy += self.ball_spin * dt;
+        self.ball_spin *= (0.96_f64).powf(dt);
 
         let new_speed_sq = self.ball_dx.powi(2) + self.ball_dy.powi(2);
         if new_speed_sq > 0.0001 {
@@ -148,10 +158,12 @@ impl PongGame {
         if self.ball_dy.abs() < 0.5 {
             let sign = if self.ball_dy >= 0.0 { 1.0 } else { -1.0 };
             self.ball_dy = sign * 0.5;
+            let total = current_speed;
+            self.ball_dx = self.ball_dx.signum() * (total * total - 0.25).max(0.0).sqrt();
         }
 
-        self.ball_x += self.ball_dx;
-        self.ball_y += self.ball_dy;
+        self.ball_x += self.ball_dx * dt;
+        self.ball_y += self.ball_dy * dt;
 
         if self.ball_y <= 0.0 || self.ball_y + self.ball_size >= self.height {
             self.ball_dy = -self.ball_dy;
@@ -171,7 +183,7 @@ impl PongGame {
             let bounce_angle = relative_intersect * (PI / 2.5);
 
             let current_speed = (self.ball_dx.powi(2) + self.ball_dy.powi(2)).sqrt();
-            let new_speed = current_speed * 1.05;
+            let new_speed = (current_speed * 1.05).min(max_speed);
 
             self.ball_dx = new_speed * bounce_angle.cos();
             self.ball_dy = new_speed * bounce_angle.sin();
@@ -197,7 +209,7 @@ impl PongGame {
             let bounce_angle = relative_intersect * (PI / 2.5);
 
             let current_speed = (self.ball_dx.powi(2) + self.ball_dy.powi(2)).sqrt();
-            let new_speed = current_speed * 1.05;
+            let new_speed = (current_speed * 1.05).min(max_speed);
 
             self.ball_dx = -1.0 * new_speed * bounce_angle.cos();
             self.ball_dy = new_speed * bounce_angle.sin();
