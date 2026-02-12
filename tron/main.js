@@ -255,10 +255,23 @@ function render(timestamp) {
 
 // === Networking ===
 
+function initOnlineGame() {
+    showGame();
+    const ctrl = document.getElementById('tron-controls');
+    if (ctrl) ctrl.textContent = (playerNumber === 1 ? 'YOU ARE CYAN' : 'YOU ARE ORANGE') + '  |  WASD or ARROWS';
+    game = TronGame.new(GRID_W, GRID_H);
+    setupInput();
+    animFrameId = requestAnimationFrame(render);
+    startCountdown(() => {
+        gameActive = true;
+        tickInterval = setInterval(gameTick, TICK_MS);
+    });
+}
+
 function setupConnection(c) {
     conn = c;
     conn.on('data', (raw) => {
-        const msg = JSON.parse(raw);
+        const msg = typeof raw === 'string' ? JSON.parse(raw) : raw;
         handleMessage(msg);
     });
     conn.on('close', () => {
@@ -271,14 +284,13 @@ function setupConnection(c) {
 function handleMessage(msg) {
     switch (msg.type) {
         case 'ready':
-            // Guest confirmed ready — host already started countdown in c.on('open')
+            // Host receives: guest is connected and ready. Start both sides.
+            send({ type: 'start' });
+            initOnlineGame();
             break;
         case 'start':
-            // Guest receives: host says start
-            startCountdown(() => {
-                gameActive = true;
-                tickInterval = setInterval(gameTick, TICK_MS);
-            });
+            // Guest receives: host confirmed, start game
+            initOnlineGame();
             break;
         case 'dir':
             if (game) {
@@ -383,7 +395,7 @@ export async function run() {
             setStatus('Loading...');
             await loadPeerJS();
             const code = generateCode();
-            peer = new window.Peer(code, { debug: 0 });
+            peer = new window.Peer(code, { debug: 1 });
 
             peer.on('open', () => {
                 setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
@@ -393,21 +405,8 @@ export async function run() {
                 playerNumber = 1;
                 mode = 'online';
                 setupConnection(c);
-                const beginHost = () => {
-                    showGame();
-                    const ctrl = document.getElementById('tron-controls');
-                    if (ctrl) ctrl.textContent = 'YOU ARE CYAN  |  WASD or ARROWS';
-                    game = TronGame.new(GRID_W, GRID_H);
-                    setupInput();
-                    animFrameId = requestAnimationFrame(render);
-                    send({ type: 'start' });
-                    startCountdown(() => {
-                        gameActive = true;
-                        tickInterval = setInterval(gameTick, TICK_MS);
-                    });
-                };
-                if (c.open) beginHost();
-                else c.on('open', beginHost);
+                setStatus('Opponent connected. Starting...');
+                // Don't start game yet — wait for guest's "ready" message
             });
 
             peer.on('error', (err) => {
@@ -434,24 +433,17 @@ export async function run() {
         try {
             setStatus('Connecting...');
             await loadPeerJS();
-            peer = new window.Peer({ debug: 0 });
+            peer = new window.Peer({ debug: 1 });
 
             peer.on('open', () => {
                 const c = peer.connect(code, { reliable: true });
                 playerNumber = 2;
                 mode = 'online';
                 setupConnection(c);
-                const beginGuest = () => {
-                    showGame();
-                    const ctrl = document.getElementById('tron-controls');
-                    if (ctrl) ctrl.textContent = 'YOU ARE ORANGE  |  WASD or ARROWS';
-                    game = TronGame.new(GRID_W, GRID_H);
-                    setupInput();
-                    animFrameId = requestAnimationFrame(render);
+                c.on('open', () => {
+                    setStatus('Connected! Waiting for host...');
                     send({ type: 'ready' });
-                };
-                if (c.open) beginGuest();
-                else c.on('open', beginGuest);
+                });
                 c.on('error', () => setStatus('Failed to connect'));
             });
 
