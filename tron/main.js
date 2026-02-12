@@ -393,8 +393,7 @@ export async function run() {
                 playerNumber = 1;
                 mode = 'online';
                 setupConnection(c);
-                // Wait for data channel to actually open before starting
-                c.on('open', () => {
+                const beginHost = () => {
                     showGame();
                     const ctrl = document.getElementById('tron-controls');
                     if (ctrl) ctrl.textContent = 'YOU ARE CYAN  |  WASD or ARROWS';
@@ -406,7 +405,9 @@ export async function run() {
                         gameActive = true;
                         tickInterval = setInterval(gameTick, TICK_MS);
                     });
-                });
+                };
+                if (c.open) beginHost();
+                else c.on('open', beginHost);
             });
 
             peer.on('error', (err) => {
@@ -437,10 +438,10 @@ export async function run() {
 
             peer.on('open', () => {
                 const c = peer.connect(code, { reliable: true });
-                c.on('open', () => {
-                    playerNumber = 2;
-                    mode = 'online';
-                    setupConnection(c);
+                playerNumber = 2;
+                mode = 'online';
+                setupConnection(c);
+                const beginGuest = () => {
                     showGame();
                     const ctrl = document.getElementById('tron-controls');
                     if (ctrl) ctrl.textContent = 'YOU ARE ORANGE  |  WASD or ARROWS';
@@ -448,7 +449,9 @@ export async function run() {
                     setupInput();
                     animFrameId = requestAnimationFrame(render);
                     send({ type: 'ready' });
-                });
+                };
+                if (c.open) beginGuest();
+                else c.on('open', beginGuest);
                 c.on('error', () => setStatus('Failed to connect'));
             });
 
