@@ -271,12 +271,7 @@ function setupConnection(c) {
 function handleMessage(msg) {
     switch (msg.type) {
         case 'ready':
-            // Host receives: guest is ready, start countdown on both sides
-            send({ type: 'start' });
-            startCountdown(() => {
-                gameActive = true;
-                tickInterval = setInterval(gameTick, TICK_MS);
-            });
+            // Guest confirmed ready — host already started countdown in c.on('open')
             break;
         case 'start':
             // Guest receives: host says start
@@ -398,17 +393,19 @@ export async function run() {
                 playerNumber = 1;
                 mode = 'online';
                 setupConnection(c);
-                showGame();
-                const ctrl = document.getElementById('tron-controls');
-                if (ctrl) ctrl.textContent = 'YOU ARE CYAN  |  WASD or ARROWS';
-                game = TronGame.new(GRID_W, GRID_H);
-                setupInput();
-                animFrameId = requestAnimationFrame(render);
-                // Host starts countdown; guest will start when it receives "start"
-                send({ type: 'start' });
-                startCountdown(() => {
-                    gameActive = true;
-                    tickInterval = setInterval(gameTick, TICK_MS);
+                // Wait for data channel to actually open before starting
+                c.on('open', () => {
+                    showGame();
+                    const ctrl = document.getElementById('tron-controls');
+                    if (ctrl) ctrl.textContent = 'YOU ARE CYAN  |  WASD or ARROWS';
+                    game = TronGame.new(GRID_W, GRID_H);
+                    setupInput();
+                    animFrameId = requestAnimationFrame(render);
+                    send({ type: 'start' });
+                    startCountdown(() => {
+                        gameActive = true;
+                        tickInterval = setInterval(gameTick, TICK_MS);
+                    });
                 });
             });
 
