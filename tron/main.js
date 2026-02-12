@@ -8,6 +8,17 @@ const P1_COLOR = '#00ffff';
 const P2_COLOR = '#ff6600';
 const P1_HEAD = '#ffffff';
 const P2_HEAD = '#ffffff';
+const HEARTBEAT_MS = 2000;
+const HEARTBEAT_TIMEOUT = 6000;
+const CONNECT_TIMEOUT = 15000;
+
+const ICE_CONFIG = {
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+    ]
+};
 
 // === Module state ===
 let game = null, memory = null;
@@ -20,11 +31,22 @@ let peer = null, conn = null;
 let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
+let heartbeatInterval = null;
+let lastPeerActivity = 0;
+let connectTimeout = null;
 
 // === Helpers ===
 
 function send(msg) {
-    if (conn && conn.open) conn.send(JSON.stringify(msg));
+    if (!conn) return;
+    try {
+        // PeerJS Issue #240: conn.open can be stale. Check DataChannel directly.
+        const dc = conn.dataChannel;
+        const ready = (dc && dc.readyState === 'open') || conn.open;
+        if (ready) conn.send(msg);
+    } catch (e) {
+        // Connection may have closed between check and send
+    }
 }
 
 function setStatus(text) {
@@ -62,6 +84,31 @@ function loadPeerJS() {
         s.onerror = () => reject(new Error('Failed to load PeerJS'));
         document.head.appendChild(s);
     });
+}
+
+function clearConnectTimeout() {
+    if (connectTimeout) { clearTimeout(connectTimeout); connectTimeout = null; }
+}
+
+// === Heartbeat ===
+
+function startHeartbeat() {
+    stopHeartbeat();
+    lastPeerActivity = Date.now();
+    heartbeatInterval = setInterval(() => {
+        if (!conn) { stopHeartbeat(); return; }
+        send({ type: 'ping' });
+        if (Date.now() - lastPeerActivity > HEARTBEAT_TIMEOUT) {
+            stopHeartbeat();
+            setStatus('Connection lost');
+            gameActive = false;
+            if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+        }
+    }, HEARTBEAT_MS);
+}
+
+function stopHeartbeat() {
+    if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
 }
 
 // === Countdown ===
@@ -163,14 +210,6 @@ function handleGameOver() {
     overlay.classList.add('visible');
 }
 
-function startGame() {
-    game = TronGame.new(GRID_W, GRID_H);
-    gameActive = true;
-    setupInput();
-    tickInterval = setInterval(gameTick, TICK_MS);
-    animFrameId = requestAnimationFrame(render);
-}
-
 // === Rematch ===
 
 function requestRematch() {
@@ -193,7 +232,7 @@ function newRound() {
 
 // === Rendering ===
 
-function render(timestamp) {
+function render() {
     if (!canvas || !document.body.contains(canvas)) {
         cleanup();
         return;
@@ -204,11 +243,9 @@ function render(timestamp) {
     const gridPtr = game.grid_ptr();
     const cells = new Uint8Array(memory.buffer, gridPtr, GRID_W * GRID_H);
 
-    // Clear
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, 800, 600);
 
-    // Subtle grid lines
     ctx.strokeStyle = 'rgba(0, 255, 65, 0.04)';
     ctx.lineWidth = 0.5;
     for (let x = 0; x <= 800; x += CELL_PX) {
@@ -224,7 +261,6 @@ function render(timestamp) {
         ctx.stroke();
     }
 
-    // Trails
     ctx.shadowBlur = 0;
     for (let i = 0; i < cells.length; i++) {
         if (cells[i] === 0) continue;
@@ -234,7 +270,6 @@ function render(timestamp) {
         ctx.fillRect(x + 1, y + 1, CELL_PX - 2, CELL_PX - 2);
     }
 
-    // Player heads with glow
     if (game.p1_alive()) {
         const hx = game.p1_x() * CELL_PX, hy = game.p1_y() * CELL_PX;
         ctx.shadowColor = P1_COLOR;
@@ -268,23 +303,50 @@ function initOnlineGame() {
     });
 }
 
-function setupConnection(c) {
+// Unified connection setup for both host and guest.
+// onOpen is called when the DataConnection is confirmed ready.
+function setupConnection(c, onOpen) {
     conn = c;
-    conn.on('data', (raw) => {
-        const msg = typeof raw === 'string' ? JSON.parse(raw) : raw;
+
+    c.on('data', (msg) => {
+        lastPeerActivity = Date.now();
+        if (msg && msg.type === 'ping') return;
         handleMessage(msg);
     });
-    conn.on('close', () => {
+
+    c.on('close', () => {
+        stopHeartbeat();
         setStatus('Opponent disconnected');
         gameActive = false;
         if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     });
+
+    c.on('error', (err) => {
+        stopHeartbeat();
+        setStatus('Connection error: ' + (err.message || err));
+    });
+
+    // PeerJS Issue #293: The 'open' event may have already fired before we
+    // attach our listener. Always check conn.open / dataChannel.readyState first.
+    function handleOpen() {
+        clearConnectTimeout();
+        startHeartbeat();
+        if (onOpen) onOpen();
+    }
+
+    const dc = c.dataChannel;
+    if (c.open || (dc && dc.readyState === 'open')) {
+        handleOpen();
+    } else {
+        c.on('open', handleOpen);
+    }
 }
 
 function handleMessage(msg) {
+    if (!msg || !msg.type) return;
     switch (msg.type) {
         case 'ready':
-            // Host receives: guest is connected and ready. Start both sides.
+            // Host receives: guest is connected and ready
             send({ type: 'start' });
             initOnlineGame();
             break;
@@ -299,7 +361,6 @@ function handleMessage(msg) {
             }
             break;
         case 'checksum':
-            // Guest compares checksums
             if (game && playerNumber === 2) {
                 const local = game.checksum();
                 if (local !== msg.sum) {
@@ -308,13 +369,11 @@ function handleMessage(msg) {
             }
             break;
         case 'sync':
-            // Guest loads full state from host
             if (game) {
                 game.load_state(new Uint8Array(msg.data));
             }
             break;
         case 'desync':
-            // Host sends full state to guest
             if (game && playerNumber === 1) {
                 send({ type: 'sync', data: Array.from(game.serialize_state()) });
             }
@@ -335,6 +394,8 @@ export function cleanup() {
     if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+    clearConnectTimeout();
+    stopHeartbeat();
     if (conn) { conn.close(); conn = null; }
     if (peer) { peer.destroy(); peer = null; }
     if (game) { game.free(); game = null; }
@@ -348,7 +409,6 @@ export function cleanup() {
     p2Score = 0;
     gameActive = false;
 
-    // Remove PeerJS script if we added it
     const peerScript = document.querySelector('script[src*="peerjs"]');
     if (peerScript) peerScript.remove();
 }
@@ -368,7 +428,6 @@ export async function run() {
     p1Score = 0;
     p2Score = 0;
 
-    // Show lobby, hide game
     const lobby = document.getElementById('tron-lobby');
     const gameEl = document.getElementById('tron-game');
     if (lobby) lobby.style.display = '';
@@ -389,13 +448,13 @@ export async function run() {
         });
     }, { signal });
 
-    // Create room
+    // Create room (host)
     document.getElementById('btn-create')?.addEventListener('click', async () => {
         try {
             setStatus('Loading...');
             await loadPeerJS();
             const code = generateCode();
-            peer = new window.Peer(code, { debug: 1 });
+            peer = new window.Peer(code, { debug: 0, config: ICE_CONFIG });
 
             peer.on('open', () => {
                 setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
@@ -404,9 +463,11 @@ export async function run() {
             peer.on('connection', (c) => {
                 playerNumber = 1;
                 mode = 'online';
-                setupConnection(c);
                 setStatus('Opponent connected. Starting...');
-                // Don't start game yet — wait for guest's "ready" message
+                setupConnection(c, () => {
+                    // Connection is open — wait for guest's 'ready' message.
+                    // No action needed here; handleMessage('ready') drives the flow.
+                });
             });
 
             peer.on('error', (err) => {
@@ -416,12 +477,20 @@ export async function run() {
                     setStatus('Error: ' + err.message);
                 }
             });
+
+            // Timeout if signaling server is unreachable
+            connectTimeout = setTimeout(() => {
+                if (!peer || peer.disconnected) {
+                    setStatus('Could not reach server. Try again.');
+                }
+            }, CONNECT_TIMEOUT);
+
         } catch (e) {
             setStatus('Failed to load networking library');
         }
     }, { signal });
 
-    // Join room
+    // Join room (guest)
     document.getElementById('btn-join')?.addEventListener('click', async () => {
         const input = document.getElementById('room-input');
         const code = input?.value?.toUpperCase()?.trim();
@@ -433,23 +502,37 @@ export async function run() {
         try {
             setStatus('Connecting...');
             await loadPeerJS();
-            peer = new window.Peer({ debug: 1 });
+            peer = new window.Peer({ debug: 0, config: ICE_CONFIG });
 
             peer.on('open', () => {
-                const c = peer.connect(code, { reliable: true });
+                // Use serialization:'json' to avoid BinaryPack encoding issues.
+                const c = peer.connect(code, { reliable: true, serialization: 'json' });
                 playerNumber = 2;
                 mode = 'online';
-                setupConnection(c);
-                c.on('open', () => {
-                    setStatus('Connected! Waiting for host...');
+                setupConnection(c, () => {
+                    // Connection is confirmed open — send ready handshake
+                    setStatus('Connected! Starting...');
                     send({ type: 'ready' });
                 });
-                c.on('error', () => setStatus('Failed to connect'));
             });
 
             peer.on('error', (err) => {
-                setStatus('Error: ' + err.message);
+                clearConnectTimeout();
+                if (err.type === 'peer-unavailable') {
+                    setStatus('Room not found. Check the code.');
+                } else {
+                    setStatus('Error: ' + err.message);
+                }
             });
+
+            // Timeout if connection never establishes
+            connectTimeout = setTimeout(() => {
+                if (!conn || !conn.open) {
+                    setStatus('Connection timed out. Try again.');
+                    if (peer) { peer.destroy(); peer = null; }
+                }
+            }, CONNECT_TIMEOUT);
+
         } catch (e) {
             setStatus('Failed to load networking library');
         }
