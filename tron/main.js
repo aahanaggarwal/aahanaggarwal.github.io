@@ -2,7 +2,7 @@ import wasmInit, { TronGame } from './pkg/tron.js';
 
 // === Constants ===
 const GRID_W = 80, GRID_H = 60, CELL_PX = 10;
-const TICK_MS = 100;
+const TICK_MS = 120;
 const CHECKSUM_INTERVAL = 30;
 const P1_COLOR = '#00ffff';
 const P2_COLOR = '#ff6600';
@@ -17,7 +17,7 @@ const CONNECT_TIMEOUT = 15000;
 // === Module state ===
 let game = null, memory = null;
 let canvas = null, ctx = null;
-let tickInterval = null, animFrameId = null;
+let lastTickTime = 0, animFrameId = null;
 let abortController = null;
 let mode = null;
 let playerNumber = 0;
@@ -80,7 +80,6 @@ function startHeartbeat() {
             stopHeartbeat();
             setStatus('Connection lost');
             gameActive = false;
-            if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
         }
     }, HEARTBEAT_MS);
 }
@@ -154,8 +153,6 @@ function gameTick() {
     game.tick();
     if (game.is_game_over()) {
         gameActive = false;
-        clearInterval(tickInterval);
-        tickInterval = null;
         handleGameOver();
         return;
     }
@@ -191,15 +188,24 @@ function newRound() {
     gameActive = false;
     startCountdown(() => {
         gameActive = true;
-        tickInterval = setInterval(gameTick, TICK_MS);
+        lastTickTime = performance.now();
     });
 }
 
 // === Rendering ===
 
-function render() {
+function render(timestamp) {
     if (!canvas || !document.body.contains(canvas)) { cleanup(); return; }
     animFrameId = requestAnimationFrame(render);
+    
+    if (gameActive && game) {
+        if (!lastTickTime) lastTickTime = timestamp;
+        if (timestamp - lastTickTime >= TICK_MS) {
+            gameTick();
+            lastTickTime = timestamp;
+        }
+    }
+
     if (!game || !memory) return;
     const gridPtr = game.grid_ptr();
     const cells = new Uint8Array(memory.buffer, gridPtr, GRID_W * GRID_H);
@@ -285,13 +291,13 @@ function handleMessage(msg) {
             send({ type: 'start' });
             startCountdown(() => {
                 gameActive = true;
-                tickInterval = setInterval(gameTick, TICK_MS);
+                lastTickTime = performance.now();
             });
             break;
         case 'start':
             startCountdown(() => {
                 gameActive = true;
-                tickInterval = setInterval(gameTick, TICK_MS);
+                lastTickTime = performance.now();
             });
             break;
         case 'dir':
@@ -324,8 +330,8 @@ function handleMessage(msg) {
 
 export function cleanup() {
     if (abortController) { abortController.abort(); abortController = null; }
-    if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+    lastTickTime = 0;
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
     if (mqttClient) { mqttClient.end(); mqttClient = null; }
     if (game) { game.free(); game = null; }
@@ -372,7 +378,7 @@ export async function run() {
         animFrameId = requestAnimationFrame(render);
         startCountdown(() => {
             gameActive = true;
-            tickInterval = setInterval(gameTick, TICK_MS);
+            lastTickTime = performance.now();
         });
     }, { signal });
 
