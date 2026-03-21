@@ -44,8 +44,8 @@ let playerNumber = 0;
 let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
-let room = null;
-let sendMsg = null;
+let peer = null;
+let conn = null;
 
 // === Helpers ===
 
@@ -76,8 +76,8 @@ function generateCode() {
 }
 
 function send(msg) {
-    if (sendMsg) {
-        try { sendMsg(msg); } catch (e) { /* connection may have closed */ }
+    if (conn && conn.open) {
+        try { conn.send(msg); } catch (e) { /* connection may have closed */ }
     }
 }
 
@@ -256,7 +256,17 @@ function render() {
     }
 }
 
-// === Networking (trystero) ===
+// === Networking (PeerJS) ===
+
+function loadPeerJS() {
+    return new Promise((resolve) => {
+        if (window.Peer) return resolve();
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js';
+        script.onload = resolve;
+        document.head.appendChild(script);
+    });
+}
 
 function initOnlineGame() {
     showGame();
@@ -265,17 +275,35 @@ function initOnlineGame() {
     game = TronGame.new(GRID_W, GRID_H);
     setupInput();
     animFrameId = requestAnimationFrame(render);
-    startCountdown(() => {
-        gameActive = true;
-        tickInterval = setInterval(gameTick, TICK_MS);
+}
+
+function setupConnection(c) {
+    conn = c;
+    conn.on('data', (msg) => {
+        handleMessage(msg);
+    });
+    conn.on('close', () => {
+        setStatus('Opponent disconnected');
+        gameActive = false;
+        if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     });
 }
 
 function handleMessage(msg) {
     if (!msg || !msg.type) return;
     switch (msg.type) {
+        case 'ready':
+            send({ type: 'start' });
+            startCountdown(() => {
+                gameActive = true;
+                tickInterval = setInterval(gameTick, TICK_MS);
+            });
+            break;
         case 'start':
-            initOnlineGame();
+            startCountdown(() => {
+                gameActive = true;
+                tickInterval = setInterval(gameTick, TICK_MS);
+            });
             break;
         case 'dir':
             if (game) {
@@ -303,34 +331,6 @@ function handleMessage(msg) {
     }
 }
 
-async function joinOnlineRoom(code, isHost) {
-    setStatus('Loading networking...');
-    const { joinRoom } = await import('https://esm.sh/trystero/torrent');
-
-    setStatus(isHost ? ('ROOM: ' + code + ' \u2014 Waiting for opponent...') : ('Joining room ' + code + '...'));
-
-    room = joinRoom({ appId: 'aahan-tron', rtcConfig: ICE_CONFIG }, code);
-    const [_sendMsg, getMsg] = room.makeAction('game');
-    sendMsg = _sendMsg;
-
-    getMsg((msg) => handleMessage(msg));
-
-    room.onPeerJoin(() => {
-        playerNumber = isHost ? 1 : 2;
-        mode = 'online';
-        if (isHost) {
-            send({ type: 'start' });
-            initOnlineGame();
-        }
-    });
-
-    room.onPeerLeave(() => {
-        setStatus('Opponent disconnected');
-        gameActive = false;
-        if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
-    });
-}
-
 // === Cleanup & Run ===
 
 export function cleanup() {
@@ -338,10 +338,9 @@ export function cleanup() {
     if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (room) { room.leave(); room = null; }
+    if (conn) { conn.close(); conn = null; }
+    if (peer) { peer.destroy(); peer = null; }
     if (game) { game.free(); game = null; }
-
-    sendMsg = null;
     canvas = null;
     ctx = null;
     memory = null;
@@ -389,8 +388,30 @@ export async function run() {
     // Create room (host)
     document.getElementById('btn-create')?.addEventListener('click', async () => {
         try {
+            setStatus('Loading...');
+            await loadPeerJS();
             const code = generateCode();
-            await joinOnlineRoom(code, true);
+            peer = new window.Peer(code, { debug: 0, config: ICE_CONFIG });
+
+            peer.on('open', () => {
+                setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
+            });
+
+            peer.on('connection', (c) => {
+                playerNumber = 1;
+                mode = 'online';
+                setupConnection(c);
+                initOnlineGame();
+                send({ type: 'start' });
+                startCountdown(() => {
+                    gameActive = true;
+                    tickInterval = setInterval(gameTick, TICK_MS);
+                });
+            });
+
+            peer.on('error', (err) => {
+                setStatus(err.type === 'unavailable-id' ? 'Room code taken. Try again.' : 'Error: ' + err.message);
+            });
         } catch (e) {
             setStatus('Failed to load networking: ' + e.message);
         }
@@ -405,7 +426,25 @@ export async function run() {
             return;
         }
         try {
-            await joinOnlineRoom(code, false);
+            setStatus('Connecting...');
+            await loadPeerJS();
+            peer = new window.Peer({ debug: 0, config: ICE_CONFIG });
+
+            peer.on('open', () => {
+                const c = peer.connect(code, { reliable: true });
+                c.on('open', () => {
+                    playerNumber = 2;
+                    mode = 'online';
+                    setupConnection(c);
+                    initOnlineGame();
+                    send({ type: 'ready' });
+                });
+                c.on('error', () => setStatus('Failed to connect'));
+            });
+
+            peer.on('error', (err) => {
+                setStatus('Error: ' + err.message);
+            });
         } catch (e) {
             setStatus('Failed to load networking: ' + e.message);
         }
