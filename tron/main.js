@@ -15,8 +15,22 @@ const CONNECT_TIMEOUT = 15000;
 const ICE_CONFIG = {
     iceServers: [
         { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' },
+        { urls: 'stun:global.stun.twilio.com:3478' },
+        {
+            urls: 'turn:openrelay.metered.ca:80',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+        },
+        {
+            urls: 'turn:openrelay.metered.ca:443',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+        },
+        {
+            urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+        }
     ]
 };
 
@@ -291,11 +305,11 @@ function handleMessage(msg) {
 
 async function joinOnlineRoom(code, isHost) {
     setStatus('Loading networking...');
-    const { joinRoom } = await import('https://esm.sh/trystero/nostr');
+    const { joinRoom } = await import('https://esm.sh/trystero/torrent');
 
     setStatus(isHost ? ('ROOM: ' + code + ' \u2014 Waiting for opponent...') : ('Joining room ' + code + '...'));
 
-    room = joinRoom({ appId: 'aahan-tron' }, code);
+    room = joinRoom({ appId: 'aahan-tron', rtcConfig: ICE_CONFIG }, code);
     const [_sendMsg, getMsg] = room.makeAction('game');
     sendMsg = _sendMsg;
 
