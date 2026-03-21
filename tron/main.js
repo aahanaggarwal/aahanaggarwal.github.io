@@ -269,7 +269,7 @@ function initOnlineGame() {
 function setupConnection(client) {
     mqttClient = client;
     mqttClient.on('message', (topic, payload) => {
-        if (topic === theirTopic) {
+        if (topic === myTopic) {
             try {
                 const msg = JSON.parse(payload.toString());
                 handleMessage(msg);
@@ -398,7 +398,7 @@ export async function run() {
                 myTopic = `aahan-tron-${code}-host`;
                 theirTopic = `aahan-tron-${code}-guest`;
                 
-                client.subscribe(theirTopic, (err) => {
+                client.subscribe(myTopic, (err) => {
                     if (err) {
                         setStatus('Error subscribing to room');
                         return;
@@ -437,7 +437,7 @@ export async function run() {
                 myTopic = `aahan-tron-${code}-guest`;
                 theirTopic = `aahan-tron-${code}-host`;
                 
-                client.subscribe(theirTopic, (err) => {
+                client.subscribe(myTopic, (err) => {
                     if (err) {
                         setStatus('Failed to join room');
                         return;
