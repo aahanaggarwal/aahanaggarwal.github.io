@@ -12,27 +12,7 @@ const HEARTBEAT_MS = 2000;
 const HEARTBEAT_TIMEOUT = 6000;
 const CONNECT_TIMEOUT = 15000;
 
-const ICE_CONFIG = {
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:global.stun.twilio.com:3478' },
-        {
-            urls: 'turn:openrelay.metered.ca:80',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
-        },
-        {
-            urls: 'turn:openrelay.metered.ca:443',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
-        },
-        {
-            urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
-        }
-    ]
-};
+
 
 // === Module state ===
 let game = null, memory = null;
@@ -44,8 +24,11 @@ let playerNumber = 0;
 let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
-let peer = null;
-let conn = null;
+let mqttClient = null;
+let myTopic = null;
+let theirTopic = null;
+let heartbeatInterval = null;
+let lastPeerActivity = Date.now();
 
 // === Helpers ===
 
@@ -76,8 +59,8 @@ function generateCode() {
 }
 
 function send(msg) {
-    if (conn && conn.open) {
-        try { conn.send(msg); } catch (e) { /* connection may have closed */ }
+    if (mqttClient && mqttClient.connected && theirTopic) {
+        try { mqttClient.publish(theirTopic, JSON.stringify(msg), { qos: 0 }); } catch (e) { }
     }
 }
 
@@ -91,7 +74,7 @@ function startHeartbeat() {
     stopHeartbeat();
     lastPeerActivity = Date.now();
     heartbeatInterval = setInterval(() => {
-        if (!conn) { stopHeartbeat(); return; }
+        if (!mqttClient || !theirTopic) { stopHeartbeat(); return; }
         send({ type: 'ping' });
         if (Date.now() - lastPeerActivity > HEARTBEAT_TIMEOUT) {
             stopHeartbeat();
@@ -256,13 +239,13 @@ function render() {
     }
 }
 
-// === Networking (PeerJS) ===
+// === Networking (MQTT) ===
 
-function loadPeerJS() {
+function loadMQTT() {
     return new Promise((resolve) => {
-        if (window.Peer) return resolve();
+        if (window.mqtt) return resolve();
         const script = document.createElement('script');
-        script.src = 'https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js';
+        script.src = 'https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js';
         script.onload = resolve;
         document.head.appendChild(script);
     });
@@ -277,22 +260,28 @@ function initOnlineGame() {
     animFrameId = requestAnimationFrame(render);
 }
 
-function setupConnection(c) {
-    conn = c;
-    conn.on('data', (msg) => {
-        handleMessage(msg);
-    });
-    conn.on('close', () => {
-        setStatus('Opponent disconnected');
-        gameActive = false;
-        if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+function setupConnection(client) {
+    mqttClient = client;
+    mqttClient.on('message', (topic, payload) => {
+        if (topic === theirTopic) {
+            try {
+                const msg = JSON.parse(payload.toString());
+                handleMessage(msg);
+            } catch (e) {}
+        }
     });
 }
 
 function handleMessage(msg) {
     if (!msg || !msg.type) return;
+    if (msg.type === 'ping') {
+        lastPeerActivity = Date.now();
+        return;
+    }
     switch (msg.type) {
         case 'ready':
+            initOnlineGame();
+            startHeartbeat();
             send({ type: 'start' });
             startCountdown(() => {
                 gameActive = true;
@@ -338,9 +327,9 @@ export function cleanup() {
     if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (conn) { conn.close(); conn = null; }
-    if (peer) { peer.destroy(); peer = null; }
+    if (mqttClient) { mqttClient.end(); mqttClient = null; }
     if (game) { game.free(); game = null; }
+    stopHeartbeat();
     canvas = null;
     ctx = null;
     memory = null;
@@ -349,6 +338,8 @@ export function cleanup() {
     p1Score = 0;
     p2Score = 0;
     gameActive = false;
+    myTopic = null;
+    theirTopic = null;
 }
 
 export async function run() {
@@ -389,29 +380,32 @@ export async function run() {
     document.getElementById('btn-create')?.addEventListener('click', async () => {
         try {
             setStatus('Loading...');
-            await loadPeerJS();
+            await loadMQTT();
             const code = generateCode();
-            peer = new window.Peer(code, { debug: 0, config: ICE_CONFIG });
-
-            peer.on('open', () => {
-                setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
-            });
-
-            peer.on('connection', (c) => {
+            
+            setStatus('Connecting to remote server...');
+            const client = window.mqtt.connect('wss://broker.emqx.io:8084/mqtt');
+            
+            client.on('connect', () => {
                 playerNumber = 1;
                 mode = 'online';
-                setupConnection(c);
-                initOnlineGame();
-                send({ type: 'start' });
-                startCountdown(() => {
-                    gameActive = true;
-                    tickInterval = setInterval(gameTick, TICK_MS);
+                myTopic = `aahan-tron-${code}-host`;
+                theirTopic = `aahan-tron-${code}-guest`;
+                
+                client.subscribe(theirTopic, (err) => {
+                    if (err) {
+                        setStatus('Error subscribing to room');
+                        return;
+                    }
+                    setStatus('ROOM: ' + code + ' \u2014 Waiting for opponent...');
+                    setupConnection(client);
                 });
             });
-
-            peer.on('error', (err) => {
-                setStatus(err.type === 'unavailable-id' ? 'Room code taken. Try again.' : 'Error: ' + err.message);
+            
+            client.on('error', (err) => {
+                setStatus('Failed to connect: ' + err.message);
             });
+            
         } catch (e) {
             setStatus('Failed to load networking: ' + e.message);
         }
@@ -427,23 +421,30 @@ export async function run() {
         }
         try {
             setStatus('Connecting...');
-            await loadPeerJS();
-            peer = new window.Peer({ debug: 0, config: ICE_CONFIG });
-
-            peer.on('open', () => {
-                const c = peer.connect(code, { reliable: true });
-                c.on('open', () => {
-                    playerNumber = 2;
-                    mode = 'online';
-                    setupConnection(c);
+            await loadMQTT();
+            
+            const client = window.mqtt.connect('wss://broker.emqx.io:8084/mqtt');
+            
+            client.on('connect', () => {
+                playerNumber = 2;
+                mode = 'online';
+                myTopic = `aahan-tron-${code}-guest`;
+                theirTopic = `aahan-tron-${code}-host`;
+                
+                client.subscribe(theirTopic, (err) => {
+                    if (err) {
+                        setStatus('Failed to join room');
+                        return;
+                    }
+                    setupConnection(client);
                     initOnlineGame();
+                    startHeartbeat();
                     send({ type: 'ready' });
                 });
-                c.on('error', () => setStatus('Failed to connect'));
             });
 
-            peer.on('error', (err) => {
-                setStatus('Error: ' + err.message);
+            client.on('error', (err) => {
+                setStatus('Failed to connect: ' + err.message);
             });
         } catch (e) {
             setStatus('Failed to load networking: ' + e.message);
