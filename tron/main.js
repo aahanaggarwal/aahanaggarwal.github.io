@@ -20,6 +20,7 @@ let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
 let lastTickTime = 0;
+let inputQueue = [];
 
 let mqttClient = null;
 let sharedTopic = null;
@@ -86,6 +87,7 @@ function newRound() {
     const overlay = document.getElementById('tron-overlay');
     overlay.classList.remove('visible');
     game.reset();
+    inputQueue = [];
     gameActive = false;
     startCountdown(() => {
         gameActive = true;
@@ -126,6 +128,17 @@ function handleGameOver() {
 
 function gameTick() {
     if (!gameActive || !game) return;
+    
+    // Execute buffered scheduled inputs BEFORE ticking
+    const currentTick = game.tick_count();
+    for (let i = inputQueue.length - 1; i >= 0; i--) {
+        const input = inputQueue[i];
+        if (currentTick >= input.tick) {
+            game.set_direction(input.player, input.dir);
+            inputQueue.splice(i, 1);
+        }
+    }
+
     game.tick();
     if (game.is_game_over()) {
         gameActive = false;
@@ -218,7 +231,7 @@ function handleMessage(msg) {
         case 'dir':
             if (game) {
                 const opponentIdx = playerNumber === 1 ? 1 : 0;
-                game.set_direction(opponentIdx, msg.dir);
+                inputQueue.push({ player: opponentIdx, dir: msg.dir, tick: msg.tick });
             }
             break;
         case 'checksum':
@@ -262,8 +275,10 @@ function handleKeyDown(e) {
     if (mode === 'local') {
         game.set_direction(e.key.startsWith('Arrow') ? 1 : 0, dir);
     } else if (mode === 'online') {
-        game.set_direction(playerNumber - 1, dir);
-        send({ type: 'dir', dir });
+        // Schedule turn 2 ticks (240ms) into the future to eliminate network collision lag!
+        const targetTick = game.tick_count() + 2;
+        inputQueue.push({ player: playerNumber - 1, dir: dir, tick: targetTick });
+        send({ type: 'dir', dir: dir, tick: targetTick });
     }
 }
 
@@ -276,6 +291,7 @@ export function cleanup() {
     window.removeEventListener('keydown', handleKeyDown);
     
     lastTickTime = 0;
+    inputQueue = [];
     canvas = null; ctx = null; memory = null;
     mode = null; playerNumber = 0; p1Score = 0; p2Score = 0;
     gameActive = false; sharedTopic = null;
