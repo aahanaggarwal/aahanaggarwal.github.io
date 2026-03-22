@@ -20,7 +20,10 @@ let p1Score = 0, p2Score = 0;
 let gameActive = false;
 let countdownTimer = null;
 let lastTickTime = 0;
-let inputQueue = [];
+
+let history = {};
+let localInputs = {};
+let remoteInputs = {};
 
 let mqttClient = null;
 let sharedTopic = null;
@@ -87,7 +90,10 @@ function newRound() {
     const overlay = document.getElementById('tron-overlay');
     overlay.classList.remove('visible');
     game.reset();
-    inputQueue = [];
+    
+    history = {};
+    localInputs = {};
+    remoteInputs = {};
     gameActive = false;
     startCountdown(() => {
         gameActive = true;
@@ -129,25 +135,22 @@ function handleGameOver() {
 function gameTick() {
     if (!gameActive || !game) return;
     
-    // Execute buffered scheduled inputs BEFORE ticking
     const currentTick = game.tick_count();
-    for (let i = inputQueue.length - 1; i >= 0; i--) {
-        const input = inputQueue[i];
-        if (currentTick >= input.tick) {
-            game.set_direction(input.player, input.dir);
-            inputQueue.splice(i, 1);
-        }
+    
+    if (remoteInputs[currentTick] !== undefined) {
+        const opponentIdx = playerNumber === 1 ? 1 : 0;
+        game.set_direction(opponentIdx, remoteInputs[currentTick]);
     }
-
+    
+    // Save state BEFORE ticking
+    history[currentTick] = new Uint8Array(game.serialize_state());
+    
     game.tick();
+    
     if (game.is_game_over()) {
         gameActive = false;
         handleGameOver();
         return;
-    }
-    
-    if (mode === 'online' && playerNumber === 1 && game.tick_count() % CHECKSUM_INTERVAL === 0) {
-        send({ type: 'checksum', tick: game.tick_count(), sum: game.checksum() });
     }
 }
 
@@ -229,21 +232,29 @@ function handleMessage(msg) {
             }
             break;
         case 'dir':
-            if (game) {
-                const opponentIdx = playerNumber === 1 ? 1 : 0;
-                inputQueue.push({ player: opponentIdx, dir: msg.dir, tick: msg.tick });
+            if (!gameActive || !game) return;
+            const currentTick = game.tick_count();
+            remoteInputs[msg.tick] = msg.dir;
+
+            if (msg.tick < currentTick) {
+                const rTick = msg.tick;
+                if (!history[rTick]) break;
+
+                // Restoring exact past reality
+                game.load_state(history[rTick]);
+                
+                // Fast forward simulation back to present
+                for (let t = rTick; t < currentTick; t++) {
+                    if (localInputs[t] !== undefined) {
+                        game.set_direction(playerNumber - 1, localInputs[t]);
+                    }
+                    if (remoteInputs[t] !== undefined) {
+                        game.set_direction(playerNumber === 1 ? 1 : 0, remoteInputs[t]);
+                    }
+                    game.tick();
+                    history[t + 1] = new Uint8Array(game.serialize_state());
+                }
             }
-            break;
-        case 'checksum':
-            if (game && playerNumber === 2) {
-                if (game.checksum() !== msg.sum) send({ type: 'desync', tick: msg.tick });
-            }
-            break;
-        case 'sync':
-            if (game) game.load_state(new Uint8Array(msg.data));
-            break;
-        case 'desync':
-            if (game && playerNumber === 1) send({ type: 'sync', data: Array.from(game.serialize_state()) });
             break;
         case 'rematch':
             newRound();
@@ -275,10 +286,10 @@ function handleKeyDown(e) {
     if (mode === 'local') {
         game.set_direction(e.key.startsWith('Arrow') ? 1 : 0, dir);
     } else if (mode === 'online') {
-        // Schedule turn 2 ticks (240ms) into the future to eliminate network collision lag!
-        const targetTick = game.tick_count() + 2;
-        inputQueue.push({ player: playerNumber - 1, dir: dir, tick: targetTick });
-        send({ type: 'dir', dir: dir, tick: targetTick });
+        const tick = game.tick_count();
+        localInputs[tick] = dir;
+        game.set_direction(playerNumber - 1, dir);
+        send({ type: 'dir', dir: dir, tick: tick });
     }
 }
 
@@ -291,7 +302,10 @@ export function cleanup() {
     window.removeEventListener('keydown', handleKeyDown);
     
     lastTickTime = 0;
-    inputQueue = [];
+    history = {};
+    localInputs = {};
+    remoteInputs = {};
+    
     canvas = null; ctx = null; memory = null;
     mode = null; playerNumber = 0; p1Score = 0; p2Score = 0;
     gameActive = false; sharedTopic = null;
