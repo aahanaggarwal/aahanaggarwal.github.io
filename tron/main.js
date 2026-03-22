@@ -160,7 +160,12 @@ function render(timestamp) {
     
     if (gameActive && game) {
         if (!lastTickTime) lastTickTime = timestamp;
-        if (timestamp - lastTickTime >= TICK_MS) {
+        
+        // Dynamic Difficulty Curve: starts at 120ms per tick, drops by 2ms every 10 ticks.
+        // Reaches maximum speed (40ms per tick) after ~45 seconds of survival.
+        const currentTickMs = Math.max(40, 120 - Math.floor(game.tick_count() / 10) * 2);
+        
+        if (timestamp - lastTickTime >= currentTickMs) {
             gameTick();
             lastTickTime = timestamp;
         }
