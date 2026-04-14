@@ -171,7 +171,7 @@ function escapeHtml(str) {
 }
 
 const startTime = Date.now();
-const targetDate = new Date("2026-04-02T12:00:00Z").getTime();
+const targetDate = new Date("2026-05-16T19:30:00Z").getTime();
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
