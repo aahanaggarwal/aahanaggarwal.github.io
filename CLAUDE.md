@@ -50,6 +50,6 @@ The optimizer (`tools/optimizer/`) uses `oxc_minifier` (JS), `lightningcss` (CSS
 Retro CRT aesthetic: green glow, Fira Code monospace, circuit board particle background on canvas, decrypt/scramble text animations, custom cursor tracking. The circuit background and HUD (coordinates, session timer) live in the root `index.html` shell.
 
 ## Deployment
-- GitHub Pages at `aahan.dev` (CNAME configured)
-- Triggered on push to `master` or manual dispatch
-- Serves from `/dist` (optimizer output)
+- **Live host: Cloudflare Pages** (project `aahan-dev`) at `aahan.dev` — DNS is a proxied CNAME to `aahan-dev.pages.dev`; `www` 301s to apex
+- GitHub Action on push to `master` (or manual dispatch): build wasm → optimizer → deploy `/dist` to **both** GH Pages (legacy backup, no traffic) and Cloudflare Pages (`cloudflare/wrangler-action`, secrets `CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID`)
+- GH Pages deploy can be removed once the Cloudflare setup has proven stable; also delete the `CNAME` file then
