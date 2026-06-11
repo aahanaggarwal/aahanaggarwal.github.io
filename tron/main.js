@@ -25,8 +25,8 @@ let history = {};
 let localInputs = {};
 let remoteInputs = {};
 
-let mqttClient = null;
-let sharedTopic = null;
+const RELAY_URL = 'wss://tron-rooms.aahan-aggarwal99.workers.dev';
+let ws = null;
 
 // === Helpers ===
 function setStatus(text) {
@@ -56,9 +56,8 @@ function generateCode() {
 }
 
 function send(msg) {
-    if (mqttClient && mqttClient.connected && sharedTopic) {
-        msg.sender = playerNumber; // Inject the sender ID globally!
-        try { mqttClient.publish(sharedTopic, JSON.stringify(msg), { qos: 0 }); } catch(e) {}
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        try { ws.send(JSON.stringify(msg)); } catch(e) {}
     }
 }
 
@@ -206,24 +205,40 @@ function render(timestamp) {
     ctx.shadowBlur = 0;
 }
 
-// === Networking (MQTT SINGLE-TOPIC) ===
-function loadMQTT() {
-    return new Promise(resolve => {
-        if (window.mqtt) return resolve();
-        const s = document.createElement('script');
-        s.src = 'https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js';
-        s.onload = resolve;
-        document.head.appendChild(s);
+// === Networking (Durable Object room relay) ===
+// The relay only forwards to the *other* player, so no self-message filtering needed.
+function connectRoom(code, role, onOpen) {
+    if (ws) ws.close();
+    ws = new WebSocket(`${RELAY_URL}/room/${code}?role=${role}`);
+    ws.addEventListener('open', onOpen);
+    ws.addEventListener('message', (e) => {
+        try { handleMessage(JSON.parse(e.data)); } catch(err) {}
     });
+    ws.addEventListener('close', (e) => {
+        if (mode === 'online' && gameActive) {
+            gameActive = false;
+            setStatus('Connection lost');
+        }
+    });
+    ws.addEventListener('error', () => setStatus('Connection error — try again'));
 }
 
 function handleMessage(msg) {
     if (!msg || !msg.type) return;
-    
-    // IMPORTANT: Ignore our own messages reflected by the broker!
-    if (msg.sender === playerNumber) return;
 
     switch (msg.type) {
+        case 'error':
+            setStatus(msg.message);
+            if (ws) { ws.close(); ws = null; }
+            return;
+        case 'peer-left':
+            if (mode === 'online') {
+                gameActive = false;
+                const overlay = document.getElementById('tron-overlay');
+                overlay.textContent = 'OPPONENT LEFT';
+                overlay.classList.add('visible');
+            }
+            return;
         case 'ready':
             if (playerNumber === 1) {
                 initGameSession();
@@ -302,7 +317,7 @@ export function cleanup() {
     if (abortController) { abortController.abort(); abortController = null; }
     if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (mqttClient) { mqttClient.end(); mqttClient = null; }
+    if (ws) { ws.close(); ws = null; }
     if (game) { game.free(); game = null; }
     window.removeEventListener('keydown', handleKeyDown);
     
@@ -313,7 +328,7 @@ export function cleanup() {
     
     canvas = null; ctx = null; memory = null;
     mode = null; playerNumber = 0; p1Score = 0; p2Score = 0;
-    gameActive = false; sharedTopic = null;
+    gameActive = false;
 }
 
 export async function run() {
@@ -337,66 +352,27 @@ export async function run() {
         startCountdown(() => { gameActive = true; lastTickTime = performance.now(); });
     }, { signal: abortController.signal });
 
-    document.getElementById('btn-create')?.addEventListener('click', async () => {
-        try {
-            setStatus('Loading...');
-            await loadMQTT();
-            const code = generateCode();
-            setStatus('Connecting to remote server...');
-            
-            if (mqttClient) mqttClient.end();
-            mqttClient = window.mqtt.connect('wss://broker.emqx.io:8084/mqtt');
-            
-            mqttClient.on('connect', () => {
-                playerNumber = 1;
-                mode = 'online';
-                sharedTopic = `aahan-tron-${code}`;
-                mqttClient.subscribe(sharedTopic, (err) => {
-                    if (err) return setStatus('Error subscribing to room');
-                    setStatus(`ROOM: ${code} — Waiting for opponent...`);
-                });
-            });
-            
-            mqttClient.on('message', (t, p) => {
-                if (t === sharedTopic) {
-                    try { handleMessage(JSON.parse(p.toString())); } catch(e){}
-                }
-            });
-            
-            mqttClient.on('error', (err) => setStatus('Connection error: ' + err.message));
-        } catch (e) { setStatus('Failed to load networking: ' + e.message); }
+    document.getElementById('btn-create')?.addEventListener('click', () => {
+        const code = generateCode();
+        setStatus('Connecting...');
+        connectRoom(code, 'create', () => {
+            playerNumber = 1;
+            mode = 'online';
+            setStatus(`ROOM: ${code} — Waiting for opponent...`);
+        });
     }, { signal: abortController.signal });
 
-    document.getElementById('btn-join')?.addEventListener('click', async () => {
+    document.getElementById('btn-join')?.addEventListener('click', () => {
         const code = document.getElementById('room-input')?.value?.toUpperCase()?.trim();
         if (!code || code.length < 4) return setStatus('Enter a 4-letter room code');
-        
-        try {
-            setStatus('Connecting...');
-            await loadMQTT();
-            
-            if (mqttClient) mqttClient.end();
-            mqttClient = window.mqtt.connect('wss://broker.emqx.io:8084/mqtt');
-            
-            mqttClient.on('connect', () => {
-                playerNumber = 2;
-                mode = 'online';
-                sharedTopic = `aahan-tron-${code}`;
-                mqttClient.subscribe(sharedTopic, (err) => {
-                    if (err) return setStatus('Failed to join room');
-                    initGameSession();
-                    send({ type: 'ready' });
-                });
-            });
-            
-            mqttClient.on('message', (t, p) => {
-                if (t === sharedTopic) {
-                    try { handleMessage(JSON.parse(p.toString())); } catch(e){}
-                }
-            });
-            
-            mqttClient.on('error', (err) => setStatus('Connection error: ' + err.message));
-        } catch (e) { setStatus('Failed to load networking: ' + e.message); }
+
+        setStatus('Connecting...');
+        connectRoom(code, 'join', () => {
+            playerNumber = 2;
+            mode = 'online';
+            initGameSession();
+            send({ type: 'ready' });
+        });
     }, { signal: abortController.signal });
 }
 
