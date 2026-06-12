@@ -191,8 +191,9 @@ export async function run() {
         ctx.shadowBlur = 10;
         ctx.shadowColor = textColor;
 
-        ctx.fillRect(10, game.paddle_left_y(), 10, 100);
-        ctx.fillRect(width - 20, game.paddle_right_y(), 10, 100);
+        // Physics (Rust) places the paddles at x 0..10 and width-10..width
+        ctx.fillRect(0, game.paddle_left_y(), 10, 100);
+        ctx.fillRect(width - 10, game.paddle_right_y(), 10, 100);
 
         ctx.fillRect(game.ball_x(), game.ball_y(), 10, 10);
         let currentStreak = game.streak();
