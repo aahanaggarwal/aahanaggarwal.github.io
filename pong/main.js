@@ -10,12 +10,13 @@ const EVT_NEAR_MISS = 32;
 const EVT_NEW_MOD = 64;
 const EVT_SHIELD_SAVE = 128;
 const EVT_TELEPORT = 256;
+const EVT_BALL_LOST = 512;
 
 const MOD_BLACKOUT = 1024;
 const MOD_PHANTOM = 8;
 
 const MOD_INFO = {
-    1: ['SPLIT', 'TWO BALLS. LOSE EITHER, LOSE ALL.'],
+    1: ['SPLIT', 'TWO BALLS. EACH ONE IS A LIFE.'],
     2: ['SHRINK', 'YOUR PADDLE CONTRACTS.'],
     4: ['GRAVITY', 'THE BALL FALLS.'],
     8: ['PHANTOM', 'NOW YOU SEE IT.'],
@@ -376,6 +377,12 @@ export async function run() {
         }
         if (events & EVT_TELEPORT) {
             blip(1200, 0.04, 'sine', 0.05);
+        }
+        if (events & EVT_BALL_LOST) {
+            showBanner('BALL DOWN', 'ONE LEFT.');
+            noiseBurst(0.2, 0.1);
+            shake();
+            slowmo(0.4, 500, timestamp);
         }
         if (events & EVT_DEATH) {
             noiseBurst();

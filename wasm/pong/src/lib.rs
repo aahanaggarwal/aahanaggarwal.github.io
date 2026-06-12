@@ -53,6 +53,7 @@ pub const EVT_NEAR_MISS: u32 = 32;
 pub const EVT_NEW_MOD: u32 = 64;
 pub const EVT_SHIELD_SAVE: u32 = 128;
 pub const EVT_TELEPORT: u32 = 256;
+pub const EVT_BALL_LOST: u32 = 512;
 
 #[derive(Clone)]
 struct Ball {
@@ -205,13 +206,18 @@ impl PongGame {
             self.shield_charges = if pick == MOD_SHIELD { 1 } else { 0 };
             self.recompute_paddles();
             if pick == MOD_SPLIT {
-                // split immediately: clone the surviving ball, mirrored
+                // split: clone the ball, mirrored and slower so the two
+                // desync instead of arriving at your paddle simultaneously
                 if let Some(b) = self.balls.first().cloned() {
                     let mut twin = b;
-                    twin.dy = -twin.dy;
+                    twin.dy = -twin.dy * 0.8;
+                    twin.dx *= 0.8;
                     twin.spin = -twin.spin;
                     self.balls.push(twin);
                 }
+            } else {
+                // leaving SPLIT: back to a single ball
+                self.balls.truncate(1);
             }
         }
         events
@@ -296,6 +302,7 @@ impl PongGame {
         let teleport_on = self.mods & MOD_TELEPORT != 0;
         let mut scored = 0u32;
         let mut died = false;
+        let mut lost_balls: Vec<usize> = Vec::new();
 
         for bi in 0..self.balls.len() {
             let mut b = self.balls[bi].clone();
@@ -425,7 +432,7 @@ impl PongGame {
                 events |= EVT_PADDLE_RIGHT;
             }
 
-            // scoring / shield save
+            // scoring / shield save / spare-ball loss
             if b.x < -self.ball_size {
                 if self.shield_charges > 0 {
                     self.shield_charges -= 1;
@@ -433,7 +440,11 @@ impl PongGame {
                     b.dx = b.dx.abs().max(4.0);
                     events |= EVT_SHIELD_SAVE;
                 } else {
-                    died = true;
+                    // under SPLIT each ball is a life: only losing the
+                    // last one ends the run
+                    lost_balls.push(bi);
+                    self.balls[bi] = b;
+                    continue;
                 }
             } else if b.x > self.width {
                 scored += 1;
@@ -445,20 +456,23 @@ impl PongGame {
             self.balls[bi] = b;
         }
 
+        if !lost_balls.is_empty() {
+            if lost_balls.len() >= self.balls.len() {
+                died = true;
+            } else {
+                for &bi in lost_balls.iter().rev() {
+                    self.balls.remove(bi);
+                }
+                events |= EVT_BALL_LOST;
+            }
+        }
+
         if died {
             events |= EVT_DEATH;
             self.on_player_died();
         } else {
             for _ in 0..scored {
                 events |= self.on_player_scored();
-            }
-            // keep ball count in sync with SPLIT (e.g. just activated)
-            while self.balls.len() < self.desired_ball_count() {
-                let b = self.new_ball();
-                self.balls.push(b);
-            }
-            while self.balls.len() > self.desired_ball_count() {
-                self.balls.pop();
             }
         }
 
