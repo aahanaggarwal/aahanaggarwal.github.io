@@ -93,7 +93,7 @@ impl Mat {
             Mat::Ember => 600.0,
             Mat::Lava => 1100.0,
             Mat::Ice => -25.0,
-            Mat::Steam => 130.0,
+            Mat::Steam => 160.0,
             Mat::Smoke => 120.0,
             _ => 20.0,
         }
@@ -105,7 +105,10 @@ impl Mat {
             Mat::Metal => 0.45,
             Mat::Water | Mat::SaltWater | Mat::Acid => 0.18,
             Mat::Lava => 0.10,
-            Mat::Steam | Mat::Smoke | Mat::Fire => 0.20,
+            // steam barely exchanges heat in bulk, so it can rise a long
+            // way before condensing instead of raining out immediately
+            Mat::Steam => 0.03,
+            Mat::Smoke | Mat::Fire => 0.20,
             Mat::Sand | Mat::Salt | Mat::Ash | Mat::Gunpowder => 0.08,
             Mat::Stone | Mat::Obsidian | Mat::Glass => 0.05,
             Mat::Ice => 0.12,
@@ -411,12 +414,6 @@ impl Universe {
                         self.temp_back[i] = 1100.0;
                         continue;
                     }
-                    Mat::Ice => {
-                        // ice resists warming but isn't a perfect sink
-                        let t = self.temp[i];
-                        self.temp_back[i] = t + (-25.0 - t) * 0.5;
-                        continue;
-                    }
                     _ => {}
                 }
 
@@ -444,6 +441,11 @@ impl Universe {
                 let mut nt = t + (avg - t) * k;
                 // slow ambient decay so the world doesn't stay hot forever
                 nt += (AMBIENT - nt) * 0.004;
+                // ice generates cold but can still be overwhelmed by real
+                // heat (fire/lava nearby), unlike a hard-pinned temperature
+                if m == Mat::Ice {
+                    nt += (-25.0 - nt) * 0.25;
+                }
                 self.temp_back[i] = nt;
             }
         }
@@ -509,7 +511,9 @@ impl Universe {
                 }
             }
             Mat::Steam => {
-                if t < 95.0 && self.chance(10) {
+                // mid-air condensation only when genuinely cold; otherwise
+                // steam condenses on cool surfaces (see neighbor rules)
+                if t < 45.0 && self.chance(10) {
                     self.convert(i, Mat::Water);
                     return true;
                 }
@@ -518,6 +522,13 @@ impl Universe {
                 if t > 0.0 && self.chance(8) {
                     self.place(i, Mat::Water);
                     self.temp[i] = 5.0;
+                    return true;
+                }
+            }
+            Mat::Acid => {
+                // boils into corrosive fumes
+                if t > 120.0 && self.chance(8) {
+                    self.convert(i, Mat::Smoke);
                     return true;
                 }
             }
@@ -628,6 +639,55 @@ impl Universe {
             let nm = Mat::from_u8(self.mat[ni]);
 
             match (m, nm) {
+                // --- direct-contact ignition (conduction alone is too weak
+                //     for a single flame to reach ignition temperatures) ---
+                (Mat::Oil, Mat::Fire) | (Mat::Oil, Mat::Ember) | (Mat::Oil, Mat::Lava) => {
+                    if self.chance(2) {
+                        self.convert(i, Mat::Fire);
+                        return true;
+                    }
+                }
+                (Mat::Wood, Mat::Fire) | (Mat::Wood, Mat::Ember) | (Mat::Wood, Mat::Lava) => {
+                    if self.chance(10) {
+                        self.place(i, Mat::Ember);
+                        return true;
+                    }
+                }
+                (Mat::Plant, Mat::Fire) | (Mat::Plant, Mat::Ember) | (Mat::Plant, Mat::Lava) => {
+                    if self.chance(4) {
+                        self.place(i, Mat::Ember);
+                        self.life[i] = 25 + (self.rand() % 40) as u8;
+                        return true;
+                    }
+                }
+                (Mat::Gunpowder, Mat::Fire) | (Mat::Gunpowder, Mat::Ember) | (Mat::Gunpowder, Mat::Lava) => {
+                    self.explode(x, y, 7);
+                    return true;
+                }
+
+                // --- water fights fire ---
+                (Mat::Fire, Mat::Water) | (Mat::Fire, Mat::SaltWater) => {
+                    self.convert(i, Mat::Smoke);
+                    if self.chance(3) {
+                        self.convert(ni, Mat::Steam);
+                    }
+                    return true;
+                }
+                (Mat::Water, Mat::Fire) | (Mat::SaltWater, Mat::Fire) => {
+                    self.convert(ni, Mat::Smoke);
+                    if self.chance(3) {
+                        self.convert(i, Mat::Steam);
+                        return true;
+                    }
+                }
+                (Mat::Ember, Mat::Water) | (Mat::Ember, Mat::SaltWater) => {
+                    // douse: dying ember, burst of steam
+                    self.place(i, Mat::Smoke);
+                    self.convert(ni, Mat::Steam);
+                    return true;
+                }
+
+                // --- lava ---
                 (Mat::Lava, Mat::Water) | (Mat::Lava, Mat::SaltWater) => {
                     self.place(i, Mat::Obsidian);
                     self.convert(ni, Mat::Steam);
@@ -638,6 +698,8 @@ impl Universe {
                     self.place(ni, Mat::Obsidian);
                     return true;
                 }
+
+                // --- salt (emergent only) ---
                 (Mat::Salt, Mat::Water) => {
                     self.convert(ni, Mat::SaltWater);
                     self.mat[i] = 0;
@@ -649,22 +711,51 @@ impl Universe {
                         self.temp[ni] = 2.0;
                     }
                 }
+
+                // --- life ---
                 (Mat::Water, Mat::Plant) => {
                     if self.chance(30) {
                         self.place(i, Mat::Plant);
                         return true;
                     }
                 }
+
+                // --- condensation on cool surfaces ---
+                (Mat::Steam, _) if nm.is_static() && self.temp[ni] < 60.0 => {
+                    if self.chance(8) {
+                        self.convert(i, Mat::Water);
+                        self.temp[i] = 40.0;
+                        return true;
+                    }
+                }
+
+                // --- cold ---
                 (Mat::Ice, Mat::Water) => {
                     // creeping freeze
-                    if self.temp[i] < -15.0 && self.chance(20) {
+                    if self.temp[i] < -5.0 && self.chance(20) {
                         self.place(ni, Mat::Ice);
                     }
+                }
+
+                // --- acid ---
+                (Mat::Acid, Mat::Water) | (Mat::Acid, Mat::SaltWater) => {
+                    // dilution: water neutralizes acid
+                    if self.chance(6) {
+                        self.convert(i, Mat::Water);
+                        return true;
+                    }
+                }
+                (Mat::Acid, Mat::Lava) => {
+                    // violent: acid flashes to toxic vapor
+                    self.convert(i, Mat::Smoke);
+                    self.temp[i] = 300.0;
+                    return true;
                 }
                 (Mat::Acid, _) if nm.is_solid() && nm != Mat::Glass && nm != Mat::Obsidian => {
                     if self.chance(8) {
                         self.mat[ni] = 0;
                         self.temp[ni] = 60.0;
+                        // corrosion releases fumes and spends the acid
                         if self.chance(3) {
                             self.convert(i, Mat::Smoke);
                             return true;
