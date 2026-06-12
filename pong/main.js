@@ -1,16 +1,33 @@
 import init, { PongGame } from './pkg/pong.js';
 
+// Event bits (mirror Rust)
+const EVT_PADDLE_LEFT = 1;
+const EVT_PADDLE_RIGHT = 2;
+const EVT_WALL = 4;
+const EVT_SCORE = 8;
+const EVT_DEATH = 16;
+const EVT_NEAR_MISS = 32;
+const EVT_NEW_MOD = 64;
+
+const MOD_NAMES = {
+    1: 'SPLIT',
+    2: 'SHRINK',
+    4: 'GRAVITY',
+    8: 'PHANTOM',
+    16: 'TURBO',
+};
+
 let animFrameId = null;
 let game = null;
 let pauseOverlay = null;
 let handleKeyDown = null;
 let handleKeyUp = null;
 let handleVisibilityChange = null;
-let handleMouseMove = null;
-let handleClick = null;
 let canvas = null;
 let handleTouch = null;
 let stopTouch = null;
+let audioCtx = null;
+let unlockAudio = null;
 
 export function cleanup() {
     if (animFrameId) {
@@ -20,8 +37,11 @@ export function cleanup() {
     if (handleKeyDown) window.removeEventListener('keydown', handleKeyDown);
     if (handleKeyUp) window.removeEventListener('keyup', handleKeyUp);
     if (handleVisibilityChange) document.removeEventListener('visibilitychange', handleVisibilityChange);
-    if (handleMouseMove) document.removeEventListener('mousemove', handleMouseMove);
-    if (handleClick) document.removeEventListener('click', handleClick);
+    if (unlockAudio) {
+        window.removeEventListener('keydown', unlockAudio);
+        window.removeEventListener('mousedown', unlockAudio);
+        window.removeEventListener('touchstart', unlockAudio);
+    }
     if (canvas) {
         if (handleTouch) {
             canvas.removeEventListener('touchstart', handleTouch);
@@ -33,6 +53,10 @@ export function cleanup() {
         pauseOverlay.remove();
         pauseOverlay = null;
     }
+    if (audioCtx) {
+        audioCtx.close().catch(() => {});
+        audioCtx = null;
+    }
     if (game) {
         game.free();
         game = null;
@@ -40,11 +64,62 @@ export function cleanup() {
     handleKeyDown = null;
     handleKeyUp = null;
     handleVisibilityChange = null;
-    handleMouseMove = null;
-    handleClick = null;
     handleTouch = null;
     stopTouch = null;
+    unlockAudio = null;
     canvas = null;
+}
+
+// === Procedural audio ===
+function ensureAudio() {
+    if (!audioCtx) {
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            audioCtx = null;
+        }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function blip(freq, dur = 0.06, type = 'square', gain = 0.08) {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    const t = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(gain, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(g).connect(audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + dur);
+}
+
+function noiseBurst(dur = 0.35, gain = 0.18) {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    const t = audioCtx.currentTime;
+    const len = Math.floor(audioCtx.sampleRate * dur);
+    const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) {
+        data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    }
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(gain, t);
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(900, t);
+    src.connect(filter).connect(g).connect(audioCtx.destination);
+    src.start(t);
+}
+
+function powerupArpeggio() {
+    [440, 554, 659, 880].forEach((f, i) => {
+        setTimeout(() => blip(f, 0.09, 'sawtooth', 0.06), i * 70);
+    });
 }
 
 export async function run() {
@@ -80,30 +155,29 @@ export async function run() {
         (pongContainer || document.body).appendChild(pauseOverlay);
     }
 
-    const cursor = document.getElementById("cursor");
-    if (!window.HAS_SPA_ROUTER) {
-        handleMouseMove = (e) => {
-            if (cursor) {
-                cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-            }
-        };
-        handleClick = () => {
-            if (cursor) {
-                cursor.classList.add("expand");
-                setTimeout(() => cursor.classList.remove("expand"), 200);
-            }
-        };
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("click", handleClick);
+    // modifier banner + active list
+    let modBanner = document.getElementById('mod-banner');
+    if (!modBanner && pongContainer) {
+        modBanner = document.createElement('div');
+        modBanner.id = 'mod-banner';
+        pongContainer.appendChild(modBanner);
     }
+    let modList = document.getElementById('mod-list');
+    if (!modList && pongContainer) {
+        modList = document.createElement('div');
+        modList.id = 'mod-list';
+        pongContainer.appendChild(modList);
+    }
+
+    // audio unlocks on first interaction (autoplay policy)
+    unlockAudio = () => ensureAudio();
+    window.addEventListener('keydown', unlockAudio);
+    window.addEventListener('mousedown', unlockAudio);
+    window.addEventListener('touchstart', unlockAudio);
 
     const togglePause = () => {
         isPaused = !isPaused;
-        if (isPaused) {
-            if (pauseOverlay) pauseOverlay.classList.add('visible');
-        } else {
-            if (pauseOverlay) pauseOverlay.classList.remove('visible');
-        }
+        if (pauseOverlay) pauseOverlay.classList.toggle('visible', isPaused);
     };
 
     handleKeyDown = (e) => {
@@ -120,9 +194,7 @@ export async function run() {
     };
 
     handleKeyUp = (e) => {
-        if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
-            game.set_player_movement(0);
-        } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
+        if (['w', 'W', 'ArrowUp', 's', 'S', 'ArrowDown'].includes(e.key)) {
             game.set_player_movement(0);
         }
     };
@@ -131,9 +203,7 @@ export async function run() {
     window.addEventListener('keyup', handleKeyUp);
 
     handleVisibilityChange = () => {
-        if (document.hidden) {
-            if (!isPaused) togglePause();
-        }
+        if (document.hidden && !isPaused) togglePause();
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
@@ -142,11 +212,7 @@ export async function run() {
         const touch = e.touches[0];
         const rect = canvas.getBoundingClientRect();
         const relativeY = touch.clientY - rect.top;
-        if (relativeY < rect.height / 2) {
-            game.set_player_movement(-1);
-        } else {
-            game.set_player_movement(1);
-        }
+        game.set_player_movement(relativeY < rect.height / 2 ? -1 : 1);
     };
 
     stopTouch = (e) => {
@@ -161,7 +227,59 @@ export async function run() {
     const textColor = getComputedStyle(document.documentElement)
         .getPropertyValue('--primary-color').trim() || '#33ff00';
 
+    // === Juice state ===
+    const particles = [];
+    const trails = []; // per ball: array of {x, y}
+    let timeScale = 1;
+    let timeScaleTarget = 1;
+    let slowmoRelease = 0;
+    let flashAlpha = 0;
     let lastTime = 0;
+    let prevBallCount = 1;
+
+    function spawnBurst(x, y, color, n, power) {
+        for (let i = 0; i < n; i++) {
+            const a = Math.random() * Math.PI * 2;
+            const v = (0.5 + Math.random()) * power;
+            particles.push({
+                x, y,
+                vx: Math.cos(a) * v,
+                vy: Math.sin(a) * v,
+                life: 1,
+                color,
+            });
+        }
+    }
+
+    function slowmo(factor, durationMs, timestamp) {
+        timeScaleTarget = factor;
+        slowmoRelease = timestamp + durationMs;
+    }
+
+    function shake() {
+        if (pongContainer) {
+            pongContainer.classList.remove('shake');
+            void pongContainer.offsetWidth;
+            pongContainer.classList.add('shake');
+        }
+    }
+
+    function showBanner(text) {
+        if (!modBanner) return;
+        modBanner.textContent = text;
+        modBanner.classList.remove('show');
+        void modBanner.offsetWidth;
+        modBanner.classList.add('show');
+    }
+
+    function updateModList() {
+        if (!modList) return;
+        const mods = game.active_mods();
+        const names = Object.entries(MOD_NAMES)
+            .filter(([bit]) => mods & bit)
+            .map(([, name]) => name);
+        modList.textContent = names.length ? 'PROTOCOLS: ' + names.join(' + ') : '';
+    }
 
     function render(timestamp) {
         if (!document.body.contains(canvas)) {
@@ -180,32 +298,134 @@ export async function run() {
         const elapsed = timestamp - lastTime;
         lastTime = timestamp;
 
-        const targetFrameMs = 1000 / 60;
-        const dt = Math.min(elapsed / targetFrameMs, 3);
-        game.tick_with_dt(dt);
+        // slow-mo easing
+        if (timestamp > slowmoRelease) timeScaleTarget = 1;
+        timeScale += (timeScaleTarget - timeScale) * 0.12;
 
+        const targetFrameMs = 1000 / 60;
+        const dt = Math.min(elapsed / targetFrameMs, 3) * timeScale;
+        const events = game.tick_with_dt(dt);
+
+        const balls = game.balls_data();
+        const ballCount = balls.length / 3;
+        const playerH = game.player_paddle_height();
+        const aiH = game.ai_paddle_height();
+        const leftY = game.paddle_left_y();
+        const rightY = game.paddle_right_y();
+        const phantom = (game.active_mods() & 8) !== 0;
+
+        // --- event-driven juice ---
+        if (events & EVT_PADDLE_LEFT) {
+            blip(220 + game.streak() * 18, 0.06, 'square', 0.09);
+            spawnBurst(14, balls[1] + 5, textColor, 10, 4);
+        }
+        if (events & EVT_PADDLE_RIGHT) {
+            blip(180, 0.05, 'square', 0.05);
+            spawnBurst(width - 14, balls[1] + 5, '#ff4444', 8, 3);
+        }
+        if (events & EVT_WALL) {
+            blip(140, 0.03, 'triangle', 0.04);
+        }
+        if (events & EVT_SCORE) {
+            blip(660, 0.1, 'sawtooth', 0.07);
+            shake();
+        }
+        if (events & EVT_NEAR_MISS) {
+            slowmo(0.35, 450, timestamp);
+            blip(90, 0.2, 'sine', 0.1);
+        }
+        if (events & EVT_NEW_MOD) {
+            const name = MOD_NAMES[game.last_new_mod()] || '???';
+            showBanner('PROTOCOL: ' + name);
+            powerupArpeggio();
+            slowmo(0.45, 700, timestamp);
+            updateModList();
+        }
+        if (events & EVT_DEATH) {
+            noiseBurst();
+            shake();
+            slowmo(0.2, 800, timestamp);
+            flashAlpha = 0.5;
+            spawnBurst(20, height / 2, '#ff3333', 40, 7);
+            updateModList();
+        }
+
+        // --- draw ---
         ctx.clearRect(0, 0, width, height);
 
         ctx.fillStyle = textColor;
-
         ctx.shadowBlur = 10;
         ctx.shadowColor = textColor;
 
-        // Physics (Rust) places the paddles at x 0..10 and width-10..width
-        ctx.fillRect(0, game.paddle_left_y(), 10, 100);
-        ctx.fillRect(width - 10, game.paddle_right_y(), 10, 100);
+        ctx.fillRect(0, leftY, 10, playerH);
+        ctx.fillRect(width - 10, rightY, 10, aiH);
 
-        ctx.fillRect(game.ball_x(), game.ball_y(), 10, 10);
-        let currentStreak = game.streak();
+        // trails
+        if (ballCount !== prevBallCount) {
+            trails.length = 0;
+            prevBallCount = ballCount;
+        }
+        while (trails.length < ballCount) trails.push([]);
 
-        if (streakEl && streakEl.innerText !== currentStreak.toString()) {
-            if (pongContainer) {
-                pongContainer.classList.remove('shake');
-                void pongContainer.offsetWidth;
-                pongContainer.classList.add('shake');
+        ctx.shadowBlur = 0;
+        for (let b = 0; b < ballCount; b++) {
+            const bx = balls[b * 3];
+            const by = balls[b * 3 + 1];
+            const trail = trails[b];
+            trail.push({ x: bx, y: by });
+            if (trail.length > 14) trail.shift();
+            for (let i = 0; i < trail.length; i++) {
+                const f = i / trail.length;
+                ctx.globalAlpha = f * 0.35;
+                const s = 4 + f * 6;
+                ctx.fillRect(trail[i].x + 5 - s / 2, trail[i].y + 5 - s / 2, s, s);
             }
         }
+        ctx.globalAlpha = 1;
 
+        // balls
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = textColor;
+        for (let b = 0; b < ballCount; b++) {
+            const bx = balls[b * 3];
+            const by = balls[b * 3 + 1];
+            const phase = balls[b * 3 + 2];
+            if (phantom) {
+                // blink: solid half the cycle, ghost-faint the other half
+                ctx.globalAlpha = Math.sin(phase) > 0 ? 1 : 0.12;
+            }
+            ctx.fillRect(bx, by, 10, 10);
+            ctx.globalAlpha = 1;
+        }
+        ctx.shadowBlur = 0;
+
+        // particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.vx *= 0.92;
+            p.vy *= 0.92;
+            p.life -= 0.03 * dt;
+            if (p.life <= 0) {
+                particles.splice(i, 1);
+                continue;
+            }
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, 3, 3);
+        }
+        ctx.globalAlpha = 1;
+
+        // death flash
+        if (flashAlpha > 0.01) {
+            ctx.fillStyle = `rgba(255, 40, 40, ${flashAlpha})`;
+            ctx.fillRect(0, 0, width, height);
+            flashAlpha *= 0.88;
+        }
+
+        // --- HUD ---
+        const currentStreak = game.streak();
         if (streakEl) streakEl.innerText = currentStreak;
 
         if (currentStreak > highScore) {
@@ -216,9 +436,8 @@ export async function run() {
 
         if (speedIndicator && speedValue) {
             const speed = game.get_ball_speed();
-            const normalizedSpeed = speed / 8.0;
             speedIndicator.style.display = 'block';
-            speedValue.innerText = normalizedSpeed.toFixed(1);
+            speedValue.innerText = (speed / 8.0).toFixed(1);
         }
     }
 

@@ -256,10 +256,6 @@ impl Universe {
                     continue;
                 }
                 let i = self.idx(x, y);
-                // Don't paint over existing cells (except eraser / static building)
-                if m != Mat::Empty && !m.is_static() && self.mat[i] != 0 {
-                    continue;
-                }
                 self.place(i, m);
             }
         }
