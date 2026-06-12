@@ -743,14 +743,33 @@ impl Universe {
                     }
                 }
                 (Mat::Lava, Mat::Water) | (Mat::Lava, Mat::SaltWater) => {
-                    self.place(i, Mat::Obsidian);
+                    // water flashes to steam; the lava survives a few such
+                    // hits before finally quenching to obsidian
                     self.convert(ni, Mat::Steam);
+                    if self.chance(4) {
+                        self.place(i, Mat::Obsidian);
+                        return true;
+                    }
+                }
+                // lava melts through ice; it only quenches to obsidian when
+                // it meets the accumulated meltwater (rule above), so an
+                // obsidian crust doesn't instantly shield the ice
+                (Mat::Ice, Mat::Lava) => {
+                    if self.chance(3) {
+                        self.convert(i, Mat::Steam);
+                    } else {
+                        self.place(i, Mat::Water);
+                        self.temp[i] = 10.0;
+                    }
                     return true;
                 }
-                (Mat::Ice, Mat::Lava) => {
-                    self.convert(i, Mat::Steam);
-                    self.place(ni, Mat::Obsidian);
-                    return true;
+                (Mat::Lava, Mat::Ice) => {
+                    if self.chance(3) {
+                        self.convert(ni, Mat::Steam);
+                    } else {
+                        self.place(ni, Mat::Water);
+                        self.temp[ni] = 10.0;
+                    }
                 }
 
                 // --- salt (emergent only) ---

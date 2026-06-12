@@ -268,3 +268,29 @@ fn vines_climb_wood() {
     }
     assert!(highest >= 6, "vines only reached height {}", highest);
 }
+
+#[test]
+fn lava_melts_through_ice() {
+    let mut u = Universe::new(W as u32, H as u32);
+    for x in 16..48 {
+        for dy in 1..8 {
+            u.paint(H - dy, x, 11, 0); // thick ice slab
+        }
+    }
+    let ice_before = count(&u, 11);
+    for x in 28..36 {
+        u.paint(H - 10, x, 9, 0); // lava poured on top
+    }
+    let mut min_ice = ice_before;
+    for _ in 0..800 {
+        u.tick();
+        min_ice = min_ice.min(count(&u, 11));
+    }
+    // lava should carve out a real chunk, not just scratch the surface
+    assert!(
+        min_ice < ice_before * 3 / 4,
+        "lava barely dented the ice ({} -> min {})",
+        ice_before,
+        min_ice
+    );
+}
