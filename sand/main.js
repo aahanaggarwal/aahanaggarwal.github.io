@@ -90,7 +90,13 @@ export async function run() {
     setupControls();
     setupKeyboard(signal);
 
-    const renderLoop = () => {
+    // Fixed-timestep simulation (60 ticks/s) decoupled from display refresh
+    // rate, so 120/144Hz monitors don't run the physics faster.
+    const TICK_MS = 1000 / 60;
+    let lastTime = 0;
+    let accumulator = 0;
+
+    const renderLoop = (timestamp) => {
         if (!document.body.contains(canvas)) {
             cancelAnimationFrame(animationId);
             return;
@@ -100,13 +106,19 @@ export async function run() {
             paintStroke();
         }
 
-        if (!isPaused) {
-            universe.tick();
+        if (!lastTime) lastTime = timestamp;
+        accumulator = Math.min(accumulator + (timestamp - lastTime), 100);
+        lastTime = timestamp;
+
+        while (accumulator >= TICK_MS) {
+            if (!isPaused) universe.tick();
+            accumulator -= TICK_MS;
         }
+
         draw(ctx);
         animationId = requestAnimationFrame(renderLoop);
     };
-    renderLoop();
+    animationId = requestAnimationFrame(renderLoop);
 
     setupInteractions(canvas, signal);
 }

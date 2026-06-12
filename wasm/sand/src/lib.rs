@@ -160,8 +160,8 @@ enum MoveResult {
     NoStep,
 }
 
-const GRAVITY: f32 = 0.30;
-const MAX_FALL: f32 = 7.0;
+const GRAVITY: f32 = 0.18;
+const MAX_FALL: f32 = 4.0;
 const AMBIENT: f32 = 20.0;
 
 #[wasm_bindgen]
@@ -728,7 +728,7 @@ impl Universe {
         // hit something: splash sideways with energy from the fall
         let impact = self.vy[i];
         if impact > 1.5 {
-            self.vx[i] += (self.frand() - 0.5) * impact * 1.4;
+            self.vx[i] += (self.frand() - 0.5) * impact * 1.0;
         }
         self.vy[i] = 0.0;
 
@@ -758,9 +758,9 @@ impl Universe {
 
         // horizontal dispersion: march up to N cells toward dir, fall into gaps
         let disp = match m {
-            Mat::Lava => 2,
-            Mat::Oil => 4,
-            _ => 6,
+            Mat::Lava => 1,
+            Mat::Oil => 3,
+            _ => 4,
         };
         let mut cur = i;
         let mut cx = x;
@@ -798,12 +798,12 @@ impl Universe {
     fn update_gas(&mut self, x: i32, y: i32, i: usize, m: Mat) {
         // buoyancy + lateral wander
         let rise = match m {
-            Mat::Fire => 0.55,
-            Mat::Steam => 0.4,
-            _ => 0.3,
+            Mat::Fire => 0.4,
+            Mat::Steam => 0.3,
+            _ => 0.22,
         };
-        self.vy[i] = (self.vy[i] - rise).max(-2.5);
-        self.vx[i] = (self.vx[i] + (self.frand() - 0.5) * 0.8).clamp(-2.0, 2.0);
+        self.vy[i] = (self.vy[i] - rise).max(-1.6);
+        self.vx[i] = (self.vx[i] + (self.frand() - 0.5) * 0.6).clamp(-1.5, 1.5);
 
         if self.try_velocity_move(x, y, i, m) == MoveResult::Moved {
             return;
@@ -948,15 +948,24 @@ fn lerp_u8(a: u8, b: u8, t: f32) -> u8 {
     (a as f32 + (b as f32 - a as f32) * t.clamp(0.0, 1.0)) as u8
 }
 
-// Thermal camera palette: deep blue (cold) -> teal -> orange -> white (hot)
+// Thermal camera palette: bright icy cyan (cold) -> dark (ambient) ->
+// red/orange -> white (hot). Ambient ~20C sits near black so both cold
+// and hot regions pop.
 fn heat_color(t: f32) -> (u8, u8, u8) {
-    let v = ((t + 30.0) / 1200.0).clamp(0.0, 1.0);
-    let r = (v * 2.0).min(1.0);
-    let g = ((v - 0.25) * 1.8).clamp(0.0, 1.0);
-    let b = if v < 0.3 {
-        0.35 + v
+    if t < 15.0 {
+        // 15C..-30C ramps dark -> bright icy blue
+        let cold = ((15.0 - t) / 45.0).clamp(0.0, 1.0);
+        (
+            (40.0 * cold) as u8,
+            (40.0 + 160.0 * cold) as u8,
+            (70.0 + 185.0 * cold) as u8,
+        )
     } else {
-        (1.0 - (v - 0.3) * 2.0).clamp(0.0, 1.0) * 0.5
-    };
-    ((r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8)
+        // 15C..1200C ramps dark -> red -> orange -> white
+        let v = ((t - 15.0) / 1185.0).clamp(0.0, 1.0);
+        let r = (v * 2.5).min(1.0);
+        let g = ((v - 0.35) * 1.6).clamp(0.0, 1.0);
+        let b = ((v - 0.75) * 3.0).clamp(0.0, 1.0);
+        ((r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8)
+    }
 }
