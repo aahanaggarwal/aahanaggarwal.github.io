@@ -8,12 +8,39 @@ extern "C" {
 }
 
 // Modifier bits ("protocols") that stack as the streak climbs.
-pub const MOD_SPLIT: u32 = 1;
-pub const MOD_SHRINK: u32 = 2;
-pub const MOD_GRAVITY: u32 = 4;
-pub const MOD_PHANTOM: u32 = 8;
-pub const MOD_TURBO: u32 = 16;
-const ALL_MODS: [u32; 5] = [MOD_SPLIT, MOD_SHRINK, MOD_GRAVITY, MOD_PHANTOM, MOD_TURBO];
+pub const MOD_SPLIT: u32 = 1; // second ball
+pub const MOD_SHRINK: u32 = 2; // smaller player paddle
+pub const MOD_GRAVITY: u32 = 4; // ball arcs downward
+pub const MOD_PHANTOM: u32 = 8; // ball blinks in and out
+pub const MOD_TURBO: u32 = 16; // faster serves, higher cap
+pub const MOD_MIRROR: u32 = 32; // controls inverted
+pub const MOD_WRAP: u32 = 64; // top/bottom wrap around
+pub const MOD_DRUNK: u32 = 128; // ball wobbles
+pub const MOD_SNIPER: u32 = 256; // AI aims perfectly
+pub const MOD_JUGGERNAUT: u32 = 512; // AI paddle grows
+pub const MOD_BLACKOUT: u32 = 1024; // darkness outside ball light
+pub const MOD_CURVE: u32 = 2048; // AI returns carry heavy spin
+pub const MOD_TELEPORT: u32 = 4096; // ball randomly blinks vertically
+pub const MOD_SHIELD: u32 = 8192; // one-time save wall (a mercy!)
+pub const MOD_GIANT: u32 = 16384; // your paddle grows (also a mercy)
+
+const ALL_MODS: [u32; 15] = [
+    MOD_SPLIT,
+    MOD_SHRINK,
+    MOD_GRAVITY,
+    MOD_PHANTOM,
+    MOD_TURBO,
+    MOD_MIRROR,
+    MOD_WRAP,
+    MOD_DRUNK,
+    MOD_SNIPER,
+    MOD_JUGGERNAUT,
+    MOD_BLACKOUT,
+    MOD_CURVE,
+    MOD_TELEPORT,
+    MOD_SHIELD,
+    MOD_GIANT,
+];
 
 // Event bits returned from tick_with_dt so the frontend can do juice
 // (particles, sound, shake, slow-mo) without polling game state.
@@ -24,6 +51,8 @@ pub const EVT_SCORE: u32 = 8;
 pub const EVT_DEATH: u32 = 16;
 pub const EVT_NEAR_MISS: u32 = 32;
 pub const EVT_NEW_MOD: u32 = 64;
+pub const EVT_SHIELD_SAVE: u32 = 128;
+pub const EVT_TELEPORT: u32 = 256;
 
 #[derive(Clone)]
 struct Ball {
@@ -32,7 +61,7 @@ struct Ball {
     dx: f64,
     dy: f64,
     spin: f64,
-    phase: f64, // drives PHANTOM blinking
+    phase: f64, // drives PHANTOM blinking / DRUNK wobble
 }
 
 #[wasm_bindgen]
@@ -52,6 +81,7 @@ pub struct PongGame {
     serve_right: bool,
     mods: u32,
     last_new_mod: u32,
+    shield_charges: u32,
 
     // -1: Up, 0: Stop, 1: Down
     player_move: i32,
@@ -79,6 +109,7 @@ impl PongGame {
             serve_right: random() > 0.5,
             mods: 0,
             last_new_mod: 0,
+            shield_charges: 0,
 
             player_move: 0,
 
@@ -91,7 +122,7 @@ impl PongGame {
 
     fn serve_speed(&self) -> f64 {
         if self.mods & MOD_TURBO != 0 {
-            10.0
+            9.5
         } else {
             8.0
         }
@@ -99,10 +130,30 @@ impl PongGame {
 
     fn max_speed(&self) -> f64 {
         if self.mods & MOD_TURBO != 0 {
-            30.0
-        } else {
             24.0
+        } else {
+            18.0
         }
+    }
+
+    fn recompute_paddles(&mut self) {
+        let mut p = 100.0;
+        if self.mods & MOD_SHRINK != 0 {
+            p *= 0.7;
+        }
+        if self.mods & MOD_GIANT != 0 {
+            p *= 1.45;
+        }
+        self.player_height = p;
+        self.ai_height = if self.mods & MOD_JUGGERNAUT != 0 {
+            145.0
+        } else {
+            100.0
+        };
+        self.paddle_left_y = self
+            .paddle_left_y
+            .clamp(0.0, self.height - self.player_height);
+        self.paddle_right_y = self.paddle_right_y.clamp(0.0, self.height - self.ai_height);
     }
 
     fn new_ball(&mut self) -> Ball {
@@ -141,28 +192,25 @@ impl PongGame {
         let mut events = EVT_SCORE;
         self.streak += 1;
         if self.streak % 3 == 0 {
-            // stack a new random protocol
-            let inactive: Vec<u32> = ALL_MODS
+            // swap to a different random protocol (one active at a time)
+            let options: Vec<u32> = ALL_MODS
                 .iter()
                 .copied()
-                .filter(|m| self.mods & m == 0)
+                .filter(|m| *m != self.mods)
                 .collect();
-            if !inactive.is_empty() {
-                let pick = inactive[(random() * inactive.len() as f64) as usize % inactive.len()];
-                self.mods |= pick;
-                self.last_new_mod = pick;
-                events |= EVT_NEW_MOD;
-                if pick == MOD_SHRINK {
-                    self.player_height = 70.0;
-                }
-                if pick == MOD_SPLIT {
-                    // split immediately: clone the surviving ball, mirrored
-                    if let Some(b) = self.balls.first().cloned() {
-                        let mut twin = b;
-                        twin.dy = -twin.dy;
-                        twin.spin = -twin.spin;
-                        self.balls.push(twin);
-                    }
+            let pick = options[(random() * options.len() as f64) as usize % options.len()];
+            self.mods = pick;
+            self.last_new_mod = pick;
+            events |= EVT_NEW_MOD;
+            self.shield_charges = if pick == MOD_SHIELD { 1 } else { 0 };
+            self.recompute_paddles();
+            if pick == MOD_SPLIT {
+                // split immediately: clone the surviving ball, mirrored
+                if let Some(b) = self.balls.first().cloned() {
+                    let mut twin = b;
+                    twin.dy = -twin.dy;
+                    twin.spin = -twin.spin;
+                    self.balls.push(twin);
                 }
             }
         }
@@ -172,7 +220,8 @@ impl PongGame {
     fn on_player_died(&mut self) {
         self.streak = 0;
         self.mods = 0;
-        self.player_height = 100.0;
+        self.shield_charges = 0;
+        self.recompute_paddles();
         self.reset_balls();
     }
 
@@ -183,11 +232,16 @@ impl PongGame {
     pub fn tick_with_dt(&mut self, dt: f64) -> u32 {
         let mut events: u32 = 0;
 
-        // --- player paddle ---
+        // --- player paddle (MIRROR inverts controls) ---
+        let effective_move = if self.mods & MOD_MIRROR != 0 {
+            -self.player_move
+        } else {
+            self.player_move
+        };
         let speed = 6.0 * dt;
-        if self.player_move == -1 {
+        if effective_move == -1 {
             self.paddle_left_y -= speed;
-        } else if self.player_move == 1 {
+        } else if effective_move == 1 {
             self.paddle_left_y += speed;
         }
         self.paddle_left_y = self
@@ -208,7 +262,11 @@ impl PongGame {
                 self.ai_reaction_timer = 0.0;
                 let perfect_target = tb.y - self.ai_height / 2.0;
                 let dist_ratio = (self.width - tb.x).max(0.0) / self.width;
-                let error_mag = 60.0 * dist_ratio + 5.0;
+                let error_mag = if self.mods & MOD_SNIPER != 0 {
+                    2.0
+                } else {
+                    60.0 * dist_ratio + 5.0
+                };
                 let error = (random() - 0.5) * 2.0 * error_mag;
                 self.ai_target_y = perfect_target + error;
             }
@@ -233,6 +291,9 @@ impl PongGame {
         // --- balls ---
         let max_speed = self.max_speed();
         let gravity_on = self.mods & MOD_GRAVITY != 0;
+        let wrap_on = self.mods & MOD_WRAP != 0;
+        let drunk_on = self.mods & MOD_DRUNK != 0;
+        let teleport_on = self.mods & MOD_TELEPORT != 0;
         let mut scored = 0u32;
         let mut died = false;
 
@@ -242,7 +303,7 @@ impl PongGame {
 
             let current_speed = (b.dx.powi(2) + b.dy.powi(2)).sqrt();
 
-            // spin curves the ball, then renormalize to conserve speed
+            // spin curves the ball; renormalize so spin doesn't change speed
             b.dy += b.spin * dt;
             b.spin *= (0.96_f64).powf(dt);
             let sp_sq = b.dx.powi(2) + b.dy.powi(2);
@@ -252,23 +313,46 @@ impl PongGame {
                 b.dy = (b.dy / sp) * current_speed;
             }
 
-            // gravity protocol: ball genuinely arcs (speed not conserved)
+            // protocols that bend the trajectory (capped below, so they
+            // can't pump energy into the ball forever)
             if gravity_on {
-                b.dy += 0.10 * dt;
+                b.dy += 0.08 * dt;
+            }
+            if drunk_on {
+                b.dy += (b.phase * 4.0).sin() * 0.35 * dt;
+            }
+            let sp_sq = b.dx.powi(2) + b.dy.powi(2);
+            if sp_sq > max_speed * max_speed {
+                let sp = sp_sq.sqrt();
+                b.dx = (b.dx / sp) * max_speed;
+                b.dy = (b.dy / sp) * max_speed;
             }
 
-            if b.dy.abs() < 0.5 {
+            if b.dy.abs() < 0.5 && !gravity_on {
                 let sign = if b.dy >= 0.0 { 1.0 } else { -1.0 };
                 b.dy = sign * 0.5;
                 b.dx = b.dx.signum() * (current_speed * current_speed - 0.25).max(0.0).sqrt();
+            }
+
+            // TELEPORT: the ball blinks to a different height mid-flight
+            if teleport_on && random() < 0.006 * dt {
+                let jump = (random() - 0.5) * 220.0;
+                b.y = (b.y + jump).clamp(0.0, self.height - self.ball_size);
+                events |= EVT_TELEPORT;
             }
 
             let prev_x = b.x;
             b.x += b.dx * dt;
             b.y += b.dy * dt;
 
-            // walls
-            if b.y <= 0.0 {
+            // walls (or wrap-around)
+            if wrap_on {
+                if b.y < -self.ball_size {
+                    b.y += self.height + self.ball_size;
+                } else if b.y > self.height {
+                    b.y -= self.height + self.ball_size;
+                }
+            } else if b.y <= 0.0 {
                 b.y = 0.0;
                 b.dy = b.dy.abs();
                 b.spin *= 0.5;
@@ -295,7 +379,7 @@ impl PongGame {
                 let bounce_angle = relative * (PI / 2.5);
 
                 let sp = (b.dx.powi(2) + b.dy.powi(2)).sqrt();
-                let new_speed = (sp * 1.05).min(max_speed);
+                let new_speed = (sp * 1.03).min(max_speed);
                 b.dx = new_speed * bounce_angle.cos();
                 b.dy = new_speed * bounce_angle.sin();
                 b.x = self.paddle_width;
@@ -329,17 +413,28 @@ impl PongGame {
                 let bounce_angle = relative * (PI / 2.5);
 
                 let sp = (b.dx.powi(2) + b.dy.powi(2)).sqrt();
-                let new_speed = (sp * 1.05).min(max_speed);
+                let new_speed = (sp * 1.03).min(max_speed);
                 b.dx = -1.0 * new_speed * bounce_angle.cos();
                 b.dy = new_speed * bounce_angle.sin();
                 b.x = self.width - self.paddle_width - self.ball_size;
-                b.spin = 0.0;
+                b.spin = if self.mods & MOD_CURVE != 0 {
+                    (random() - 0.5) * 0.8
+                } else {
+                    0.0
+                };
                 events |= EVT_PADDLE_RIGHT;
             }
 
-            // scoring
+            // scoring / shield save
             if b.x < -self.ball_size {
-                died = true;
+                if self.shield_charges > 0 {
+                    self.shield_charges -= 1;
+                    b.x = 0.0;
+                    b.dx = b.dx.abs().max(4.0);
+                    events |= EVT_SHIELD_SAVE;
+                } else {
+                    died = true;
+                }
             } else if b.x > self.width {
                 scored += 1;
                 let nb = self.new_ball();
@@ -391,6 +486,10 @@ impl PongGame {
 
     pub fn last_new_mod(&self) -> u32 {
         self.last_new_mod
+    }
+
+    pub fn shield_charges(&self) -> u32 {
+        self.shield_charges
     }
 
     pub fn paddle_left_y(&self) -> f64 {

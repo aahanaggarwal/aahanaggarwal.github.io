@@ -8,13 +8,28 @@ const EVT_SCORE = 8;
 const EVT_DEATH = 16;
 const EVT_NEAR_MISS = 32;
 const EVT_NEW_MOD = 64;
+const EVT_SHIELD_SAVE = 128;
+const EVT_TELEPORT = 256;
 
-const MOD_NAMES = {
-    1: 'SPLIT',
-    2: 'SHRINK',
-    4: 'GRAVITY',
-    8: 'PHANTOM',
-    16: 'TURBO',
+const MOD_BLACKOUT = 1024;
+const MOD_PHANTOM = 8;
+
+const MOD_INFO = {
+    1: ['SPLIT', 'TWO BALLS. LOSE EITHER, LOSE ALL.'],
+    2: ['SHRINK', 'YOUR PADDLE CONTRACTS.'],
+    4: ['GRAVITY', 'THE BALL FALLS.'],
+    8: ['PHANTOM', 'NOW YOU SEE IT.'],
+    16: ['TURBO', 'EVERYTHING FASTER.'],
+    32: ['MIRROR', 'UP IS DOWN.'],
+    64: ['WRAP', 'NO WALLS. NO MERCY.'],
+    128: ['DRUNK', 'THE BALL HAD A FEW.'],
+    256: ['SNIPER', 'THE AI STOPS MISSING.'],
+    512: ['JUGGERNAUT', 'THE AI GROWS.'],
+    1024: ['BLACKOUT', 'LIGHTS OUT.'],
+    2048: ['CURVE', 'EVERY RETURN BENDS.'],
+    4096: ['TELEPORT', 'THE BALL CHEATS.'],
+    8192: ['SHIELD', 'ONE FREE SAVE. USE IT WELL.'],
+    16384: ['GIANT', 'YOUR PADDLE GROWS.'],
 };
 
 let animFrameId = null;
@@ -236,6 +251,8 @@ export async function run() {
     let flashAlpha = 0;
     let lastTime = 0;
     let prevBallCount = 1;
+    let blackoutCanvas = null;
+    let blackoutCtx = null;
 
     function spawnBurst(x, y, color, n, power) {
         for (let i = 0; i < n; i++) {
@@ -264,9 +281,18 @@ export async function run() {
         }
     }
 
-    function showBanner(text) {
+    function showBanner(title, subtitle) {
         if (!modBanner) return;
-        modBanner.textContent = text;
+        modBanner.innerHTML = '';
+        const t = document.createElement('div');
+        t.textContent = title;
+        modBanner.appendChild(t);
+        if (subtitle) {
+            const s = document.createElement('div');
+            s.className = 'mod-banner-sub';
+            s.textContent = subtitle;
+            modBanner.appendChild(s);
+        }
         modBanner.classList.remove('show');
         void modBanner.offsetWidth;
         modBanner.classList.add('show');
@@ -275,10 +301,10 @@ export async function run() {
     function updateModList() {
         if (!modList) return;
         const mods = game.active_mods();
-        const names = Object.entries(MOD_NAMES)
+        const names = Object.entries(MOD_INFO)
             .filter(([bit]) => mods & bit)
-            .map(([, name]) => name);
-        modList.textContent = names.length ? 'PROTOCOLS: ' + names.join(' + ') : '';
+            .map(([, [name]]) => name);
+        modList.textContent = names.length ? 'ACTIVE PROTOCOL: ' + names.join(' + ') : '';
     }
 
     function render(timestamp) {
@@ -312,7 +338,8 @@ export async function run() {
         const aiH = game.ai_paddle_height();
         const leftY = game.paddle_left_y();
         const rightY = game.paddle_right_y();
-        const phantom = (game.active_mods() & 8) !== 0;
+        const mods = game.active_mods();
+        const phantom = (mods & MOD_PHANTOM) !== 0;
 
         // --- event-driven juice ---
         if (events & EVT_PADDLE_LEFT) {
@@ -335,11 +362,20 @@ export async function run() {
             blip(90, 0.2, 'sine', 0.1);
         }
         if (events & EVT_NEW_MOD) {
-            const name = MOD_NAMES[game.last_new_mod()] || '???';
-            showBanner('PROTOCOL: ' + name);
+            const [name, desc] = MOD_INFO[game.last_new_mod()] || ['???', ''];
+            showBanner('PROTOCOL: ' + name, desc);
             powerupArpeggio();
             slowmo(0.45, 700, timestamp);
             updateModList();
+        }
+        if (events & EVT_SHIELD_SAVE) {
+            showBanner('SHIELD SPENT', '');
+            blip(880, 0.15, 'sine', 0.12);
+            spawnBurst(6, balls[1] + 5, '#44ffff', 25, 6);
+            shake();
+        }
+        if (events & EVT_TELEPORT) {
+            blip(1200, 0.04, 'sine', 0.05);
         }
         if (events & EVT_DEATH) {
             noiseBurst();
@@ -359,6 +395,18 @@ export async function run() {
 
         ctx.fillRect(0, leftY, 10, playerH);
         ctx.fillRect(width - 10, rightY, 10, aiH);
+
+        // shield: glowing safety line behind the player
+        if (game.shield_charges() > 0) {
+            ctx.shadowColor = '#44ffff';
+            ctx.shadowBlur = 14;
+            ctx.fillStyle = '#44ffff';
+            ctx.globalAlpha = 0.5 + Math.sin(timestamp / 200) * 0.2;
+            ctx.fillRect(1, 0, 3, height);
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = textColor;
+            ctx.shadowColor = textColor;
+        }
 
         // trails
         if (ballCount !== prevBallCount) {
@@ -416,6 +464,37 @@ export async function run() {
             ctx.fillRect(p.x, p.y, 3, 3);
         }
         ctx.globalAlpha = 1;
+
+        // BLACKOUT: darkness everywhere except a light around each ball
+        // (and a faint glow at your paddle so you're not totally lost)
+        if (mods & MOD_BLACKOUT) {
+            if (!blackoutCanvas) {
+                blackoutCanvas = document.createElement('canvas');
+                blackoutCanvas.width = width;
+                blackoutCanvas.height = height;
+                blackoutCtx = blackoutCanvas.getContext('2d');
+            }
+            const b = blackoutCtx;
+            b.globalCompositeOperation = 'source-over';
+            b.clearRect(0, 0, width, height);
+            b.fillStyle = 'rgba(0, 0, 0, 0.93)';
+            b.fillRect(0, 0, width, height);
+            b.globalCompositeOperation = 'destination-out';
+            const punch = (x, y, r) => {
+                const g = b.createRadialGradient(x, y, 0, x, y, r);
+                g.addColorStop(0, 'rgba(0,0,0,1)');
+                g.addColorStop(1, 'rgba(0,0,0,0)');
+                b.fillStyle = g;
+                b.beginPath();
+                b.arc(x, y, r, 0, Math.PI * 2);
+                b.fill();
+            };
+            for (let bb = 0; bb < ballCount; bb++) {
+                punch(balls[bb * 3] + 5, balls[bb * 3 + 1] + 5, 130);
+            }
+            punch(5, leftY + playerH / 2, 70);
+            ctx.drawImage(blackoutCanvas, 0, 0);
+        }
 
         // death flash
         if (flashAlpha > 0.01) {
