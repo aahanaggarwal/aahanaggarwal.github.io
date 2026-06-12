@@ -93,7 +93,7 @@ impl Mat {
             Mat::Ember => 600.0,
             Mat::Lava => 1100.0,
             Mat::Ice => -25.0,
-            Mat::Steam => 130.0,
+            Mat::Steam => 160.0,
             Mat::Smoke => 120.0,
             _ => 20.0,
         }
@@ -105,7 +105,10 @@ impl Mat {
             Mat::Metal => 0.45,
             Mat::Water | Mat::SaltWater | Mat::Acid => 0.18,
             Mat::Lava => 0.10,
-            Mat::Steam | Mat::Smoke | Mat::Fire => 0.20,
+            // steam barely exchanges heat in bulk, so it can rise a long
+            // way before condensing instead of raining out immediately
+            Mat::Steam => 0.03,
+            Mat::Smoke | Mat::Fire => 0.20,
             Mat::Sand | Mat::Salt | Mat::Ash | Mat::Gunpowder => 0.08,
             Mat::Stone | Mat::Obsidian | Mat::Glass => 0.05,
             Mat::Ice => 0.12,
@@ -160,8 +163,8 @@ enum MoveResult {
     NoStep,
 }
 
-const GRAVITY: f32 = 0.30;
-const MAX_FALL: f32 = 7.0;
+const GRAVITY: f32 = 0.18;
+const MAX_FALL: f32 = 4.0;
 const AMBIENT: f32 = 20.0;
 
 #[wasm_bindgen]
@@ -411,12 +414,6 @@ impl Universe {
                         self.temp_back[i] = 1100.0;
                         continue;
                     }
-                    Mat::Ice => {
-                        // ice resists warming but isn't a perfect sink
-                        let t = self.temp[i];
-                        self.temp_back[i] = t + (-25.0 - t) * 0.5;
-                        continue;
-                    }
                     _ => {}
                 }
 
@@ -444,6 +441,11 @@ impl Universe {
                 let mut nt = t + (avg - t) * k;
                 // slow ambient decay so the world doesn't stay hot forever
                 nt += (AMBIENT - nt) * 0.004;
+                // ice generates cold but can still be overwhelmed by real
+                // heat (fire/lava nearby), unlike a hard-pinned temperature
+                if m == Mat::Ice {
+                    nt += (-25.0 - nt) * 0.25;
+                }
                 self.temp_back[i] = nt;
             }
         }
@@ -509,7 +511,9 @@ impl Universe {
                 }
             }
             Mat::Steam => {
-                if t < 95.0 && self.chance(10) {
+                // mid-air condensation only when genuinely cold; otherwise
+                // steam condenses on cool surfaces (see neighbor rules)
+                if t < 45.0 && self.chance(10) {
                     self.convert(i, Mat::Water);
                     return true;
                 }
@@ -518,6 +522,13 @@ impl Universe {
                 if t > 0.0 && self.chance(8) {
                     self.place(i, Mat::Water);
                     self.temp[i] = 5.0;
+                    return true;
+                }
+            }
+            Mat::Acid => {
+                // boils into corrosive fumes
+                if t > 120.0 && self.chance(8) {
+                    self.convert(i, Mat::Smoke);
                     return true;
                 }
             }
@@ -628,6 +639,55 @@ impl Universe {
             let nm = Mat::from_u8(self.mat[ni]);
 
             match (m, nm) {
+                // --- direct-contact ignition (conduction alone is too weak
+                //     for a single flame to reach ignition temperatures) ---
+                (Mat::Oil, Mat::Fire) | (Mat::Oil, Mat::Ember) | (Mat::Oil, Mat::Lava) => {
+                    if self.chance(2) {
+                        self.convert(i, Mat::Fire);
+                        return true;
+                    }
+                }
+                (Mat::Wood, Mat::Fire) | (Mat::Wood, Mat::Ember) | (Mat::Wood, Mat::Lava) => {
+                    if self.chance(10) {
+                        self.place(i, Mat::Ember);
+                        return true;
+                    }
+                }
+                (Mat::Plant, Mat::Fire) | (Mat::Plant, Mat::Ember) | (Mat::Plant, Mat::Lava) => {
+                    if self.chance(4) {
+                        self.place(i, Mat::Ember);
+                        self.life[i] = 25 + (self.rand() % 40) as u8;
+                        return true;
+                    }
+                }
+                (Mat::Gunpowder, Mat::Fire) | (Mat::Gunpowder, Mat::Ember) | (Mat::Gunpowder, Mat::Lava) => {
+                    self.explode(x, y, 7);
+                    return true;
+                }
+
+                // --- water fights fire ---
+                (Mat::Fire, Mat::Water) | (Mat::Fire, Mat::SaltWater) => {
+                    self.convert(i, Mat::Smoke);
+                    if self.chance(3) {
+                        self.convert(ni, Mat::Steam);
+                    }
+                    return true;
+                }
+                (Mat::Water, Mat::Fire) | (Mat::SaltWater, Mat::Fire) => {
+                    self.convert(ni, Mat::Smoke);
+                    if self.chance(3) {
+                        self.convert(i, Mat::Steam);
+                        return true;
+                    }
+                }
+                (Mat::Ember, Mat::Water) | (Mat::Ember, Mat::SaltWater) => {
+                    // douse: dying ember, burst of steam
+                    self.place(i, Mat::Smoke);
+                    self.convert(ni, Mat::Steam);
+                    return true;
+                }
+
+                // --- lava ---
                 (Mat::Lava, Mat::Water) | (Mat::Lava, Mat::SaltWater) => {
                     self.place(i, Mat::Obsidian);
                     self.convert(ni, Mat::Steam);
@@ -638,6 +698,8 @@ impl Universe {
                     self.place(ni, Mat::Obsidian);
                     return true;
                 }
+
+                // --- salt (emergent only) ---
                 (Mat::Salt, Mat::Water) => {
                     self.convert(ni, Mat::SaltWater);
                     self.mat[i] = 0;
@@ -649,22 +711,51 @@ impl Universe {
                         self.temp[ni] = 2.0;
                     }
                 }
+
+                // --- life ---
                 (Mat::Water, Mat::Plant) => {
                     if self.chance(30) {
                         self.place(i, Mat::Plant);
                         return true;
                     }
                 }
+
+                // --- condensation on cool surfaces ---
+                (Mat::Steam, _) if nm.is_static() && self.temp[ni] < 60.0 => {
+                    if self.chance(8) {
+                        self.convert(i, Mat::Water);
+                        self.temp[i] = 40.0;
+                        return true;
+                    }
+                }
+
+                // --- cold ---
                 (Mat::Ice, Mat::Water) => {
                     // creeping freeze
-                    if self.temp[i] < -15.0 && self.chance(20) {
+                    if self.temp[i] < -5.0 && self.chance(20) {
                         self.place(ni, Mat::Ice);
                     }
+                }
+
+                // --- acid ---
+                (Mat::Acid, Mat::Water) | (Mat::Acid, Mat::SaltWater) => {
+                    // dilution: water neutralizes acid
+                    if self.chance(6) {
+                        self.convert(i, Mat::Water);
+                        return true;
+                    }
+                }
+                (Mat::Acid, Mat::Lava) => {
+                    // violent: acid flashes to toxic vapor
+                    self.convert(i, Mat::Smoke);
+                    self.temp[i] = 300.0;
+                    return true;
                 }
                 (Mat::Acid, _) if nm.is_solid() && nm != Mat::Glass && nm != Mat::Obsidian => {
                     if self.chance(8) {
                         self.mat[ni] = 0;
                         self.temp[ni] = 60.0;
+                        // corrosion releases fumes and spends the acid
                         if self.chance(3) {
                             self.convert(i, Mat::Smoke);
                             return true;
@@ -728,7 +819,7 @@ impl Universe {
         // hit something: splash sideways with energy from the fall
         let impact = self.vy[i];
         if impact > 1.5 {
-            self.vx[i] += (self.frand() - 0.5) * impact * 1.4;
+            self.vx[i] += (self.frand() - 0.5) * impact * 1.0;
         }
         self.vy[i] = 0.0;
 
@@ -758,9 +849,9 @@ impl Universe {
 
         // horizontal dispersion: march up to N cells toward dir, fall into gaps
         let disp = match m {
-            Mat::Lava => 2,
-            Mat::Oil => 4,
-            _ => 6,
+            Mat::Lava => 1,
+            Mat::Oil => 3,
+            _ => 4,
         };
         let mut cur = i;
         let mut cx = x;
@@ -798,12 +889,12 @@ impl Universe {
     fn update_gas(&mut self, x: i32, y: i32, i: usize, m: Mat) {
         // buoyancy + lateral wander
         let rise = match m {
-            Mat::Fire => 0.55,
-            Mat::Steam => 0.4,
-            _ => 0.3,
+            Mat::Fire => 0.4,
+            Mat::Steam => 0.3,
+            _ => 0.22,
         };
-        self.vy[i] = (self.vy[i] - rise).max(-2.5);
-        self.vx[i] = (self.vx[i] + (self.frand() - 0.5) * 0.8).clamp(-2.0, 2.0);
+        self.vy[i] = (self.vy[i] - rise).max(-1.6);
+        self.vx[i] = (self.vx[i] + (self.frand() - 0.5) * 0.6).clamp(-1.5, 1.5);
 
         if self.try_velocity_move(x, y, i, m) == MoveResult::Moved {
             return;
@@ -948,15 +1039,24 @@ fn lerp_u8(a: u8, b: u8, t: f32) -> u8 {
     (a as f32 + (b as f32 - a as f32) * t.clamp(0.0, 1.0)) as u8
 }
 
-// Thermal camera palette: deep blue (cold) -> teal -> orange -> white (hot)
+// Thermal camera palette: bright icy cyan (cold) -> dark (ambient) ->
+// red/orange -> white (hot). Ambient ~20C sits near black so both cold
+// and hot regions pop.
 fn heat_color(t: f32) -> (u8, u8, u8) {
-    let v = ((t + 30.0) / 1200.0).clamp(0.0, 1.0);
-    let r = (v * 2.0).min(1.0);
-    let g = ((v - 0.25) * 1.8).clamp(0.0, 1.0);
-    let b = if v < 0.3 {
-        0.35 + v
+    if t < 15.0 {
+        // 15C..-30C ramps dark -> bright icy blue
+        let cold = ((15.0 - t) / 45.0).clamp(0.0, 1.0);
+        (
+            (40.0 * cold) as u8,
+            (40.0 + 160.0 * cold) as u8,
+            (70.0 + 185.0 * cold) as u8,
+        )
     } else {
-        (1.0 - (v - 0.3) * 2.0).clamp(0.0, 1.0) * 0.5
-    };
-    ((r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8)
+        // 15C..1200C ramps dark -> red -> orange -> white
+        let v = ((t - 15.0) / 1185.0).clamp(0.0, 1.0);
+        let r = (v * 2.5).min(1.0);
+        let g = ((v - 0.35) * 1.6).clamp(0.0, 1.0);
+        let b = ((v - 0.75) * 3.0).clamp(0.0, 1.0);
+        ((r * 255.0) as u8, (g * 255.0) as u8, (b * 255.0) as u8)
+    }
 }
