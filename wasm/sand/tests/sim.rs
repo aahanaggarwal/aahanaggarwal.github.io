@@ -201,3 +201,70 @@ fn steam_rises_high() {
     // steam should climb most of a 64-cell tall world
     assert!(max_height > 48, "steam only reached height {} of {}", max_height, H);
 }
+
+#[test]
+fn lava_glazes_sand_surface() {
+    let mut u = Universe::new(W as u32, H as u32);
+    for x in 10..54 {
+        for dy in 1..5 {
+            u.paint(H - dy, x, 1, 0); // sand bed
+        }
+    }
+    for x in 28..36 {
+        u.paint(H - 7, x, 9, 0); // lava poured on top
+    }
+    for _ in 0..400 {
+        u.tick();
+    }
+    assert!(count(&u, 13) > 0, "lava never glazed sand into glass");
+}
+
+#[test]
+fn steam_forms_clouds_at_top() {
+    let mut u = Universe::new(W as u32, H as u32);
+    for x in 24..40 {
+        u.paint(H - 1, x, 9, 0); // lava floor
+        u.paint(H - 3, x, 2, 0); // water above
+    }
+    let mut cloud_seen = false;
+    for _ in 0..800 {
+        u.tick();
+        for y in 0..6 {
+            for x in 0..W {
+                if u.mat_at(x, y) == 6 {
+                    cloud_seen = true;
+                }
+            }
+        }
+    }
+    assert!(cloud_seen, "steam never reached the top rows to form clouds");
+}
+
+#[test]
+fn vines_climb_wood() {
+    let mut u = Universe::new(W as u32, H as u32);
+    for x in 0..W {
+        u.paint(H - 1, x, 3, 0); // stone floor
+    }
+    for dy in 2..20 {
+        u.paint(H - dy, 32, 4, 0); // wood pillar
+    }
+    u.paint(H - 2, 31, 10, 0); // plant seed at the base
+    // drip water onto the plant to keep it hydrated
+    for t in 0..1500 {
+        if t % 12 == 0 {
+            u.paint(H - 8, 30, 2, 0);
+        }
+        u.tick();
+    }
+    // some plant should have climbed well above the seed
+    let mut highest = 0;
+    for y in 0..H {
+        for x in 0..W {
+            if u.mat_at(x, y) == 10 {
+                highest = highest.max(H - 1 - y);
+            }
+        }
+    }
+    assert!(highest >= 6, "vines only reached height {}", highest);
+}

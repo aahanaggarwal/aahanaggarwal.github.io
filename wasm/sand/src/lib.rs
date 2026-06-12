@@ -109,8 +109,9 @@ impl Mat {
             // way before condensing instead of raining out immediately
             Mat::Steam => 0.03,
             Mat::Smoke | Mat::Fire => 0.20,
+            Mat::Stone => 0.15,
             Mat::Sand | Mat::Salt | Mat::Ash | Mat::Gunpowder => 0.08,
-            Mat::Stone | Mat::Obsidian | Mat::Glass => 0.05,
+            Mat::Obsidian | Mat::Glass => 0.05,
             Mat::Ice => 0.12,
             Mat::Wood | Mat::Plant | Mat::Ember => 0.06,
             Mat::Oil => 0.10,
@@ -467,6 +468,11 @@ impl Universe {
             return;
         }
 
+        // molten glass flows like sluggish lava; "freezes" again by cooling
+        if m == Mat::Glass && self.temp[i] > 900.0 {
+            self.update_liquid(x, y, i, m);
+            return;
+        }
         if m.is_static() {
             return;
         }
@@ -511,11 +517,20 @@ impl Universe {
                 }
             }
             Mat::Steam => {
-                // mid-air condensation only when genuinely cold; otherwise
-                // steam condenses on cool surfaces (see neighbor rules)
-                if t < 45.0 && self.chance(10) {
+                // freezes out quickly only near real cold (ice)
+                if t < 5.0 && self.chance(10) {
                     self.convert(i, Mat::Water);
                     return true;
+                }
+                // otherwise steam drifts for a long time (forming clouds at
+                // the top of the world) and eventually rains out by age,
+                // not by bulk cooling -- or condenses on cool surfaces
+                if self.chance(8) {
+                    if self.life[i] == 0 {
+                        self.convert(i, Mat::Water);
+                        return true;
+                    }
+                    self.life[i] -= 1;
                 }
             }
             Mat::Ice => {
@@ -530,6 +545,19 @@ impl Universe {
                 if t > 120.0 && self.chance(8) {
                     self.convert(i, Mat::Smoke);
                     return true;
+                }
+            }
+            Mat::Plant => {
+                // scorched (hot but not burning) -> withers to dust
+                if t > 120.0 && self.chance(10) {
+                    self.place(i, Mat::Ash);
+                    self.temp[i] = t;
+                    return true;
+                }
+                // hydrated plants grow: upward normally, sideways along
+                // wood (vines climbing a trellis). life = hydration.
+                if self.life[i] > 30 && self.chance(10) {
+                    self.try_plant_growth(x, y, i);
                 }
             }
             Mat::Lava => {
@@ -588,8 +616,19 @@ impl Universe {
                     let above = (x, y - 1);
                     if self.in_bounds(above.0, above.1) {
                         let ai = self.idx(above.0, above.1);
-                        if self.mat[ai] == 0 {
-                            self.place(ai, Mat::Fire);
+                        match Mat::from_u8(self.mat[ai]) {
+                            Mat::Empty => self.place(ai, Mat::Fire),
+                            // fire climbs: burning spreads upward fastest
+                            Mat::Wood => {
+                                if self.chance(2) {
+                                    self.place(ai, Mat::Ember);
+                                }
+                            }
+                            Mat::Plant => {
+                                self.place(ai, Mat::Ember);
+                                self.life[ai] = 25 + (self.rand() % 40) as u8;
+                            }
+                            _ => {}
                         }
                     }
                 }
@@ -688,6 +727,21 @@ impl Universe {
                 }
 
                 // --- lava ---
+                // contact vitrification: lava flowing over sand leaves a
+                // glass crust (no full submersion needed)
+                (Mat::Sand, Mat::Lava) => {
+                    if self.chance(6) {
+                        self.place(i, Mat::Glass);
+                        self.temp[i] = 850.0;
+                        return true;
+                    }
+                }
+                (Mat::Lava, Mat::Sand) => {
+                    if self.chance(6) {
+                        self.place(ni, Mat::Glass);
+                        self.temp[ni] = 850.0;
+                    }
+                }
                 (Mat::Lava, Mat::Water) | (Mat::Lava, Mat::SaltWater) => {
                     self.place(i, Mat::Obsidian);
                     self.convert(ni, Mat::Steam);
@@ -714,8 +768,12 @@ impl Universe {
 
                 // --- life ---
                 (Mat::Water, Mat::Plant) => {
-                    if self.chance(30) {
+                    // water hydrates the plant, fueling growth
+                    self.life[ni] = 220;
+                    if self.chance(20) {
+                        // absorbed into new growth
                         self.place(i, Mat::Plant);
+                        self.life[i] = 180;
                         return true;
                     }
                 }
@@ -753,8 +811,13 @@ impl Universe {
                 }
                 (Mat::Acid, _) if nm.is_solid() && nm != Mat::Glass && nm != Mat::Obsidian => {
                     if self.chance(8) {
-                        self.mat[ni] = 0;
-                        self.temp[ni] = 60.0;
+                        // dissolving rock leaves mineral salts behind
+                        if nm == Mat::Stone && self.chance(3) {
+                            self.place(ni, Mat::Salt);
+                        } else {
+                            self.mat[ni] = 0;
+                            self.temp[ni] = 60.0;
+                        }
                         // corrosion releases fumes and spends the acid
                         if self.chance(3) {
                             self.convert(i, Mat::Smoke);
@@ -849,7 +912,7 @@ impl Universe {
 
         // horizontal dispersion: march up to N cells toward dir, fall into gaps
         let disp = match m {
-            Mat::Lava => 1,
+            Mat::Lava | Mat::Glass => 1,
             Mat::Oil => 3,
             _ => 4,
         };
@@ -887,6 +950,29 @@ impl Universe {
 
     // === Movement: gases ===
     fn update_gas(&mut self, x: i32, y: i32, i: usize, m: Mat) {
+        // confined hot steam builds pressure: it rattles around and shoves
+        // movable material out of the way (sealed boilers erupt)
+        if m == Mat::Steam && self.temp[i] > 110.0 && self.chance(3) {
+            let dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+            let confined = dirs.iter().all(|&(dx, dy)| {
+                !self.in_bounds(x + dx, y + dy) || self.mat[self.idx(x + dx, y + dy)] != 0
+            });
+            if confined {
+                self.vx[i] += (self.frand() - 0.5) * 5.0;
+                self.vy[i] += (self.frand() - 0.5) * 5.0;
+                let (dx, dy) = dirs[(self.rand() as usize) & 3];
+                if self.in_bounds(x + dx, y + dy) {
+                    let ni = self.idx(x + dx, y + dy);
+                    let nm = Mat::from_u8(self.mat[ni]);
+                    if nm != Mat::Empty && !nm.is_static() {
+                        self.vx[ni] += dx as f32 * 3.0;
+                        self.vy[ni] += dy as f32 * 3.0;
+                    }
+                }
+            }
+        }
+
+
         // buoyancy + lateral wander
         let rise = match m {
             Mat::Fire => 0.4,
@@ -970,6 +1056,39 @@ impl Universe {
             }
         }
         if moved { MoveResult::Moved } else { MoveResult::NoStep }
+    }
+
+    fn touches_wood(&self, x: i32, y: i32) -> bool {
+        let dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)];
+        dirs.iter().any(|&(dx, dy)| {
+            self.in_bounds(x + dx, y + dy)
+                && Mat::from_u8(self.mat[self.idx(x + dx, y + dy)]) == Mat::Wood
+        })
+    }
+
+    // Plants grow up into open air; alongside wood they can also grow
+    // sideways, so vines climb wooden structures.
+    fn try_plant_growth(&mut self, x: i32, y: i32, i: usize) {
+        const CANDIDATES: [(i32, i32); 5] = [(0, -1), (-1, -1), (1, -1), (-1, 0), (1, 0)];
+        let (dx, dy) = CANDIDATES[(self.rand() as usize) % 5];
+        let nx = x + dx;
+        let ny = y + dy;
+        if !self.in_bounds(nx, ny) {
+            return;
+        }
+        let ni = self.idx(nx, ny);
+        if self.mat[ni] != 0 {
+            return;
+        }
+        // sideways growth needs a wood trellis to cling to
+        if dy == 0 && !self.touches_wood(nx, ny) {
+            return;
+        }
+        let hydration = self.life[i];
+        self.place(ni, Mat::Plant);
+        self.life[ni] = hydration.saturating_sub(40);
+        self.life[i] = hydration.saturating_sub(50);
+        self.updated[ni] = self.gen;
     }
 
     // Is the cell resting on something it can't fall through?
