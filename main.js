@@ -19,6 +19,11 @@ function initRouter() {
     if (!link) return;
 
     const href = link.getAttribute("href");
+    if (!href) return;
+    // Let the browser handle open-in-new-tab/window clicks
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    if (link.hasAttribute("download")) return;
+
     const url = new URL(link.href);
 
     if (url.origin !== window.location.origin || href.startsWith("#")) {
@@ -41,7 +46,7 @@ function initRouter() {
     handleLocation();
   });
 
-  window.addEventListener("popstate", handleLocation);
+  window.addEventListener("popstate", () => handleLocation());
 
   handleLocation(true);
 }
@@ -255,13 +260,12 @@ function initGlobalListeners() {
   startCountdown();
   initDecryptEffect();
 
-  const title = document.querySelector(".glitch");
-  if (title) {
-    setInterval(() => {
-      title.classList.add("active");
-      setTimeout(() => title.classList.remove("active"), 1000);
-    }, 4000);
-  }
+  setInterval(() => {
+    const title = document.querySelector(".glitch");
+    if (!title) return;
+    title.classList.add("active");
+    setTimeout(() => title.classList.remove("active"), 1000);
+  }, 4000);
 }
 
 function initNodes() {
@@ -753,12 +757,12 @@ function parseMarkdown(text) {
   text = text.replace(/<p><\/p>/gim, '');
 
   codeBlocks.forEach((block, i) => {
-    const html = block.replace(/```([\s\S]*?)```/, '<pre><code>$1</code></pre>');
-    text = text.replace(`%%CODEBLOCK_${i}%%`, html);
+    const html = block.replace(/```([\s\S]*?)```/, (m, code) => `<pre><code>${escapeHtml(code)}</code></pre>`);
+    text = text.replace(`%%CODEBLOCK_${i}%%`, () => html);
   });
   inlineCodes.forEach((code, i) => {
-    const html = code.replace(/`([^`]+)`/, '<code>$1</code>');
-    text = text.replace(`%%INLINECODE_${i}%%`, html);
+    const html = code.replace(/`([^`]+)`/, (m, c) => `<code>${escapeHtml(c)}</code>`);
+    text = text.replace(`%%INLINECODE_${i}%%`, () => html);
   });
 
   return text.trim();
