@@ -1,63 +1,58 @@
 import init, { Universe } from './pkg/sand.js';
 
-const CELL_SIZE = 4;
-const GRID_WIDTH = 128;
-const GRID_HEIGHT = 128;
+const CELL_SIZE = 2;
+const GRID_WIDTH = 256;
+const GRID_HEIGHT = 256;
 
-const COLORS = [
-    [0, 0, 0, 0],             // Empty
-    [237, 201, 175, 255],     // Sand
-    [0, 119, 190, 255],       // Water
-    [128, 128, 128, 255],     // Stone
-    [139, 69, 19, 255],       // Wood
-    [255, 69, 0, 255],        // Fire
-    [220, 220, 220, 255],     // Steam
-    [50, 50, 50, 255],        // Oil
-    [173, 255, 47, 255],      // Acid
-    [207, 16, 32, 255],       // Lava
-    [34, 139, 34, 255],       // Plant
-    [173, 216, 230, 255],     // Ice
-    // Hidden Elements
-    [50, 50, 50, 150],        // Smoke (Semi-transparent)
-    [200, 220, 255, 180],     // Glass (Semi-transparent Blueish)
-    [40, 0, 60, 255],         // Obsidian (Dark Purple)
-    [64, 64, 64, 255],        // Gunpowder (Dark Grey)
-];
-
-const ELEMENT_NAMES = [
-    "Empty", "Sand", "Water", "Stone", "Wood", "Fire",
-    "Steam", "Oil", "Acid", "Lava", "Plant", "Ice",
-    "Smoke", "Glass", "Obsidian", "Gunpowder"
-];
-
-const ELEMENT_KEYS = {
-    '1': 1,  // Sand
-    '2': 2,  // Water
-    '3': 3,  // Stone
-    '4': 4,  // Wood
-    '5': 7,  // Oil
-    '6': 8,  // Acid
-    '7': 9,  // Lava
-    '8': 10, // Plant
-    '9': 11, // Ice
-    '0': 15, // Gunpowder
+// Swatch colors for the toolbar (must match base_color() in Rust)
+const COLORS = {
+    1: [225, 191, 138],   // Sand
+    2: [24, 96, 175],     // Water
+    3: [118, 118, 118],   // Stone
+    4: [102, 70, 40],     // Wood
+    7: [58, 48, 38],      // Oil
+    8: [130, 230, 40],    // Acid
+    9: [215, 75, 18],     // Lava
+    10: [42, 160, 52],    // Plant
+    11: [160, 205, 240],  // Ice
+    15: [78, 78, 88],     // Gunpowder
 };
+
+// Same placeable palette as before; everything else (fire, steam, smoke,
+// embers, ash, glass, obsidian) only emerges from the simulation.
+const TOOLBAR = [
+    { id: 1, name: 'Sand', key: '1' },
+    { id: 2, name: 'Water', key: '2' },
+    { id: 3, name: 'Stone', key: '3' },
+    { id: 4, name: 'Wood', key: '4' },
+    { id: 7, name: 'Oil', key: '5' },
+    { id: 8, name: 'Acid', key: '6' },
+    { id: 9, name: 'Lava', key: '7' },
+    { id: 10, name: 'Plant', key: '8' },
+    { id: 11, name: 'Ice', key: '9' },
+    { id: 15, name: 'Gunpowder', key: '0' },
+];
 
 let universe;
 let memory;
 let selectedColor = 1;
 let isDrawing = false;
+let isErasing = false;
 let isPaused = false;
+let heatView = false;
 let animationId;
 let mouseX = -1;
 let mouseY = -1;
-const radius = 1;
+let lastPaintX = -1;
+let lastPaintY = -1;
+let brushRadius = 3;
+let mouseCanvasX = -1;
+let mouseCanvasY = -1;
 
 let abortController = null;
 
 let offscreenCanvas = null;
 let offscreenCtx = null;
-let offscreenData = null;
 
 export async function run() {
     // Clean up previous run
@@ -68,12 +63,15 @@ export async function run() {
     const signal = abortController.signal;
 
     isDrawing = false;
+    isErasing = false;
     isPaused = false;
+    heatView = false;
     mouseX = -1;
     mouseY = -1;
+    lastPaintX = -1;
+    lastPaintY = -1;
     offscreenCanvas = null;
     offscreenCtx = null;
-    offscreenData = null;
 
     document.body.style.overflow = 'hidden';
 
@@ -99,7 +97,7 @@ export async function run() {
         }
 
         if (isDrawing) {
-            paint();
+            paintStroke();
         }
 
         if (!isPaused) {
@@ -113,42 +111,34 @@ export async function run() {
     setupInteractions(canvas, signal);
 }
 
-let U32_COLORS = null;
-
 function draw(ctx) {
-    const cellsPtr = universe.cells();
+    universe.render();
+    const ptr = universe.pixels();
     const width = universe.width();
     const height = universe.height();
-    const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+    const pixels = new Uint8ClampedArray(memory.buffer, ptr, width * height * 4);
 
     if (!offscreenCanvas) {
         offscreenCanvas = document.createElement('canvas');
         offscreenCanvas.width = width;
         offscreenCanvas.height = height;
         offscreenCtx = offscreenCanvas.getContext('2d');
-        offscreenData = offscreenCtx.createImageData(width, height);
     }
 
-    const imgData = offscreenData;
-    const buf32 = new Uint32Array(imgData.data.buffer);
-
-    if (!U32_COLORS) {
-        U32_COLORS = new Uint32Array(COLORS.length);
-        for (let i = 0; i < COLORS.length; i++) {
-            const [r, g, b, a] = COLORS[i];
-            U32_COLORS[i] = ((a << 24) | (b << 16) | (g << 8) | r) >>> 0;
-        }
-    }
-
-    for (let i = 0; i < cells.length; i++) {
-        buf32[i] = U32_COLORS[cells[i]];
-    }
-
+    const imgData = new ImageData(pixels, width, height);
     offscreenCtx.putImageData(imgData, 0, 0);
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(offscreenCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    // brush preview ring
+    if (mouseCanvasX >= 0) {
+        ctx.strokeStyle = isErasing ? 'rgba(255,80,80,0.7)' : 'rgba(255,255,255,0.5)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(mouseCanvasX, mouseCanvasY, (brushRadius + 0.5) * CELL_SIZE, 0, Math.PI * 2);
+        ctx.stroke();
+    }
 }
 
 function setupControls() {
@@ -171,29 +161,20 @@ function setupControls() {
         document.body.appendChild(tooltip);
     }
 
-    ELEMENT_NAMES.forEach((name, idx) => {
-        if (idx === 0) return;
-        if (name === "Fire") return;
-        if (["Smoke", "Glass", "Obsidian"].includes(name)) return;
-
+    TOOLBAR.forEach(({ id, name, key }) => {
         const btn = document.createElement('div');
         btn.className = 'color-btn';
-        btn.dataset.idx = idx;
-        const rgba = COLORS[idx];
-        btn.style.backgroundColor = `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3] / 255})`;
+        btn.dataset.idx = id;
+        const rgb = COLORS[id];
+        btn.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+        btn.setAttribute('data-key', key);
 
-        const keyLabel = Object.entries(ELEMENT_KEYS).find(([, v]) => v === idx);
-        if (keyLabel) {
-            btn.setAttribute('data-key', keyLabel[0]);
-        }
+        if (id === selectedColor) btn.classList.add('active');
 
-        if (idx === selectedColor) btn.classList.add('active');
-
-        btn.onclick = () => selectElement(idx);
+        btn.onclick = () => selectElement(id);
 
         btn.onmouseenter = () => {
-            const keyHint = keyLabel ? ` [${keyLabel[0]}]` : '';
-            tooltip.innerText = name + keyHint;
+            tooltip.innerText = `${name} [${key}]`;
             tooltip.style.display = 'block';
         };
         btn.onmousemove = (e) => {
@@ -207,16 +188,15 @@ function setupControls() {
         container.appendChild(btn);
     });
 
-    document.getElementById('reset-btn').onclick = () => {
-        universe.clear();
-    };
+    const resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) resetBtn.onclick = () => universe.clear();
 }
 
 function selectElement(idx) {
     selectedColor = idx;
     const container = document.getElementById('controls');
     if (!container) return;
-    container.querySelectorAll('.color-btn').forEach((b, i) => {
+    container.querySelectorAll('.color-btn').forEach((b) => {
         b.classList.toggle('active', b.dataset.idx === String(idx));
     });
 }
@@ -226,10 +206,23 @@ function setupKeyboard(signal) {
         if (e.code === 'Space') {
             isPaused = !isPaused;
             e.preventDefault();
+            return;
         }
-        if (ELEMENT_KEYS[e.key] !== undefined) {
-            selectElement(ELEMENT_KEYS[e.key]);
+        if (e.key === 'h' || e.key === 'H') {
+            heatView = !heatView;
+            universe.set_heat_view(heatView);
+            return;
         }
+        if (e.key === '[' || e.key === '-') {
+            brushRadius = Math.max(1, brushRadius - 1);
+            return;
+        }
+        if (e.key === ']' || e.key === '=') {
+            brushRadius = Math.min(20, brushRadius + 1);
+            return;
+        }
+        const entry = TOOLBAR.find(t => t.key === e.key.toLowerCase());
+        if (entry) selectElement(entry.id);
     }, { signal });
 }
 
@@ -246,18 +239,37 @@ function getCoords(e, canvas) {
         clientY = e.touches[0].clientY;
     }
 
-    const x = (clientX - rect.left) * scaleX;
-    const y = (clientY - rect.top) * scaleY;
+    const cx = (clientX - rect.left) * scaleX;
+    const cy = (clientY - rect.top) * scaleY;
 
     return {
-        x: Math.floor(x / CELL_SIZE),
-        y: Math.floor(y / CELL_SIZE)
+        x: Math.floor(cx / CELL_SIZE),
+        y: Math.floor(cy / CELL_SIZE),
+        canvasX: cx,
+        canvasY: cy,
     };
 }
 
-function paint() {
+// Paint a connected stroke from the last position to the current one so fast
+// mouse movement doesn't leave gaps.
+function paintStroke() {
     if (mouseX === -1 || mouseY === -1) return;
-    universe.paint(mouseY, mouseX, selectedColor, radius);
+    const mat = isErasing ? 0 : selectedColor;
+
+    if (lastPaintX === -1) {
+        universe.paint(mouseY, mouseX, mat, brushRadius);
+    } else {
+        const dx = mouseX - lastPaintX;
+        const dy = mouseY - lastPaintY;
+        const steps = Math.max(Math.abs(dx), Math.abs(dy), 1);
+        for (let s = 1; s <= steps; s++) {
+            const px = Math.round(lastPaintX + (dx * s) / steps);
+            const py = Math.round(lastPaintY + (dy * s) / steps);
+            universe.paint(py, px, mat, brushRadius);
+        }
+    }
+    lastPaintX = mouseX;
+    lastPaintY = mouseY;
 }
 
 function setupInteractions(canvas, signal) {
@@ -265,33 +277,52 @@ function setupInteractions(canvas, signal) {
         const coords = getCoords(e, canvas);
         mouseX = coords.x;
         mouseY = coords.y;
+        mouseCanvasX = coords.canvasX;
+        mouseCanvasY = coords.canvasY;
     };
 
     canvas.addEventListener('mousedown', (e) => {
         isDrawing = true;
+        isErasing = e.button === 2;
         updateMouse(e);
-        universe.paint(mouseY, mouseX, selectedColor, radius);
+        lastPaintX = -1;
+        lastPaintY = -1;
+        paintStroke();
     }, { signal });
+
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault(), { signal });
 
     canvas.addEventListener('mousemove', (e) => {
         updateMouse(e);
     }, { signal });
 
+    canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        brushRadius = Math.min(20, Math.max(1, brushRadius + (e.deltaY < 0 ? 1 : -1)));
+    }, { passive: false, signal });
+
     window.addEventListener('mouseup', () => {
         isDrawing = false;
-        mouseX = -1;
-        mouseY = -1;
+        isErasing = false;
+        lastPaintX = -1;
+        lastPaintY = -1;
     }, { signal });
 
     canvas.addEventListener('mouseleave', () => {
         mouseX = -1;
         mouseY = -1;
+        mouseCanvasX = -1;
+        mouseCanvasY = -1;
+        lastPaintX = -1;
+        lastPaintY = -1;
     }, { signal });
 
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         isDrawing = true;
         updateMouse(e);
+        lastPaintX = -1;
+        lastPaintY = -1;
     }, { passive: false, signal });
 
     canvas.addEventListener('touchmove', (e) => {
@@ -303,6 +334,8 @@ function setupInteractions(canvas, signal) {
         isDrawing = false;
         mouseX = -1;
         mouseY = -1;
+        lastPaintX = -1;
+        lastPaintY = -1;
     }, { signal });
 }
 
@@ -327,9 +360,8 @@ export function cleanup() {
     memory = null;
     offscreenCanvas = null;
     offscreenCtx = null;
-    offscreenData = null;
-    U32_COLORS = null;
     isDrawing = false;
+    isErasing = false;
     isPaused = false;
     mouseX = -1;
     mouseY = -1;
