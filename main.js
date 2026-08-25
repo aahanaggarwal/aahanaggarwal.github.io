@@ -502,9 +502,9 @@ async function loadPics() {
           }
         }
 
-        img.src = src;
+        img.src = transform(src, "f_auto,q_auto,c_fill,w_800,h_800");
         img.alt = file;
-        img.addEventListener("click", () => openModal(img.src));
+        img.addEventListener("click", () => openModal(transform(src, "f_auto,q_auto,w_2400")));
         imagesDiv.appendChild(img);
         attachAsciiEffect(img);
       });
@@ -515,6 +515,11 @@ async function loadPics() {
     p.textContent = "Failed to load pictures.";
     if (gallery) gallery.appendChild(p);
   }
+}
+
+function transform(src, params) {
+  if (!src.includes("/image/upload/")) return src;
+  return src.replace("/image/upload/", `/image/upload/${params}/`);
 }
 
 function extractYear(name) {
