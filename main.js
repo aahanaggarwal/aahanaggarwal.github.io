@@ -176,7 +176,8 @@ function escapeHtml(str) {
 }
 
 const startTime = Date.now();
-const targetDate = new Date("2026-05-16T19:30:00Z").getTime();
+// October 30, 2026 at 12:30 a.m. in New York (EDT).
+const targetDate = new Date("2026-10-30T00:30:00-04:00").getTime();
 const circuitCanvas = document.getElementById("circuit");
 const circuitCtx = circuitCanvas.getContext("2d");
 let primary = getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
