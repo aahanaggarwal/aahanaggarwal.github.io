@@ -1,379 +1,221 @@
 import wasmInit, { TronGame } from './pkg/tron.js';
 
-// === Constants ===
-const GRID_W = 80, GRID_H = 60, CELL_PX = 10;
-const TICK_MS = 120;
-const CHECKSUM_INTERVAL = 30;
-const P1_COLOR = '#00ffff';
-const P2_COLOR = '#ff6600';
-const P1_HEAD = '#ffffff';
-const P2_HEAD = '#ffffff';
-
-// === Module state ===
-let game = null, memory = null;
-let canvas = null, ctx = null;
-let animFrameId = null;
-let abortController = null;
-let mode = null; // 'local' | 'online'
-let playerNumber = 0; // 1 for host, 2 for guest
-let p1Score = 0, p2Score = 0;
-let gameActive = false;
-let countdownTimer = null;
-let lastTickTime = 0;
-
-let history = {};
-let localInputs = {};
-let remoteInputs = {};
-
 const RELAY_URL = 'wss://tron-rooms.aahan-aggarwal99.workers.dev';
-let ws = null;
+const COLORS = ['#00ffff', '#ff6600'];
+let game, memory, canvas, ctx, abortController, ws;
+let animFrameId = null, countdownTimer = null, heartbeatTimer = null, connectionTimer = null;
+let mode = null, playerNumber = 0, gameActive = false, lastTickTime = 0;
+let scores = [0, 0], onlineState = null, generation = 0;
 
-// === Helpers ===
-function setStatus(text) {
-    const el = document.getElementById('tron-status');
-    if (el) el.textContent = text;
-}
-
-function updateScores() {
-    const p1El = document.getElementById('p1-score');
-    const p2El = document.getElementById('p2-score');
-    if (p1El) p1El.textContent = 'P1: ' + p1Score;
-    if (p2El) p2El.textContent = 'P2: ' + p2Score;
-}
-
-function showGame() {
-    const lobby = document.getElementById('tron-lobby');
-    const gameEl = document.getElementById('tron-game');
-    if (lobby) lobby.style.display = 'none';
-    if (gameEl) gameEl.style.display = 'flex';
-}
-
-function generateCode() {
-    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ';
-    let code = '';
-    for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
-    return code;
-}
-
-function send(msg) {
-    if (ws && ws.readyState === WebSocket.OPEN) {
-        try { ws.send(JSON.stringify(msg)); } catch(e) {}
+function setStatus(text) { document.getElementById('tron-status').textContent = text; }
+function overlay(text = '') {
+    const el = document.getElementById('tron-overlay');
+    const [title, hint] = text.split('\n');
+    el.textContent = title;
+    if (hint) {
+        const sub = document.createElement('div');
+        sub.style.cssText = 'font-size:0.3em;margin-top:0.5em';
+        sub.textContent = hint;
+        el.appendChild(sub);
     }
+    el.classList.toggle('visible', Boolean(text));
 }
-
-// === Flow ===
-function startCountdown(onDone) {
-    if (countdownTimer) clearInterval(countdownTimer);
-    const overlay = document.getElementById('tron-overlay');
-    overlay.classList.add('visible');
+function updateScores() {
+    document.getElementById('p1-score').textContent = `P1: ${scores[0]}`;
+    document.getElementById('p2-score').textContent = `P2: ${scores[1]}`;
+}
+function busy(value) {
+    for (const id of ['btn-create', 'btn-join', 'btn-local']) document.getElementById(id).disabled = value;
+}
+function showGame() {
+    if (document.activeElement instanceof HTMLInputElement) document.activeElement.blur();
+    document.getElementById('tron-lobby').style.display = 'none';
+    document.getElementById('tron-game').style.display = 'flex';
+    document.getElementById('btn-leave').hidden = false;
+    document.getElementById('tron-controls').textContent = mode === 'local'
+        ? 'P1: WASD  |  P2: ARROWS  |  SPACE: rematch'
+        : `YOU ARE ${playerNumber === 1 ? 'CYAN' : 'ORANGE'}  |  WASD or ARROWS  |  SPACE: rematch`;
+    if (!animFrameId) animFrameId = requestAnimationFrame(render);
+}
+function stopTimers() {
+    clearInterval(countdownTimer); countdownTimer = null;
+    clearInterval(heartbeatTimer); heartbeatTimer = null;
+    clearTimeout(connectionTimer); connectionTimer = null;
+}
+function disconnect() {
+    stopTimers();
+    const previous = ws;
+    ws = null;
+    if (previous) previous.close();
+}
+function lobby(message = '') {
+    disconnect();
+    mode = null; gameActive = false; onlineState = null;
+    scores = [0, 0]; updateScores();
+    document.getElementById('tron-lobby').style.display = '';
+    document.getElementById('tron-game').style.display = 'none';
+    document.getElementById('btn-leave').hidden = true;
+    overlay(); busy(false); setStatus(message);
+}
+function send(message) {
+    if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify(message));
+}
+function localRound() {
+    clearInterval(countdownTimer);
+    game.reset(); gameActive = false; lastTickTime = 0;
     let count = 3;
-    overlay.textContent = count;
+    overlay(String(count));
     countdownTimer = setInterval(() => {
         count--;
-        if (count > 0) {
-            overlay.textContent = count;
-        } else if (count === 0) {
-            overlay.textContent = 'GO!';
-        } else {
-            clearInterval(countdownTimer);
-            countdownTimer = null;
-            overlay.classList.remove('visible');
-            overlay.textContent = '';
-            onDone();
+        if (count >= 0) overlay(count ? String(count) : 'GO!');
+        else {
+            clearInterval(countdownTimer); countdownTimer = null;
+            overlay(); gameActive = true; lastTickTime = performance.now();
         }
     }, 800);
 }
+function winnerText(winner) { return `${winner ? `P${winner} WINS` : 'DRAW'}\nSPACE to rematch`; }
 
-function newRound() {
-    if (countdownTimer) clearInterval(countdownTimer);
-    const overlay = document.getElementById('tron-overlay');
-    overlay.classList.remove('visible');
-    game.reset();
-    
-    history = {};
-    localInputs = {};
-    remoteInputs = {};
-    gameActive = false;
-    startCountdown(() => {
-        gameActive = true;
-        lastTickTime = performance.now();
+function connectRoom(code, role) {
+    disconnect();
+    busy(true); setStatus('Connecting...');
+    const socket = new WebSocket(`${RELAY_URL}/room/${code}?role=${role}&v=2`);
+    ws = socket;
+    connectionTimer = setTimeout(() => { if (ws === socket) lobby('Connection timed out. Try again.'); }, 10000);
+    socket.addEventListener('open', () => {
+        if (ws !== socket) return;
+        heartbeatTimer = setInterval(() => {
+            if (socket.readyState === WebSocket.OPEN) socket.send('ping');
+        }, 30000);
     });
+    socket.addEventListener('message', e => {
+        if (ws !== socket || e.data === 'pong') return;
+        let msg;
+        try { msg = JSON.parse(e.data); } catch { return; }
+        if (msg.type === 'error' || msg.type === 'ended') return lobby(msg.message);
+        if (msg.type === 'welcome') {
+            clearTimeout(connectionTimer); connectionTimer = null;
+            mode = 'online'; playerNumber = msg.player;
+            document.getElementById('btn-leave').hidden = false;
+            setStatus(`ROOM: ${code} — Waiting for opponent...`);
+        }
+        if (msg.type === 'state') {
+            if (onlineState && msg.round < onlineState.round) return;
+            const newRound = !onlineState || msg.round !== onlineState.round;
+            if (newRound && !msg.grid) return;
+            const grid = msg.grid ? Uint8Array.from(msg.grid) : onlineState.grid;
+            for (const [index, value] of msg.trail) grid[index] = value;
+            onlineState = { ...msg, grid, startLocal: performance.now() + Math.max(0, msg.startAt - msg.serverNow) };
+            scores = msg.scores; updateScores();
+            gameActive = msg.phase === 'playing';
+            document.getElementById('tron-round').textContent = `ROUND ${msg.round}`;
+            showGame();
+            if (msg.phase === 'over') overlay(winnerText(msg.winner));
+            else if (msg.phase !== 'countdown') overlay();
+        }
+    });
+    socket.addEventListener('close', () => { if (ws === socket) lobby('Connection lost. Create or join a new room.'); });
+    socket.addEventListener('error', () => { if (ws === socket) lobby('Could not connect to the game server. Try again.'); });
 }
-
-function requestRematch() {
-    if (mode === 'online') send({ type: 'rematch' });
-    newRound();
-}
-
-function initGameSession() {
-    showGame();
-    const ctrl = document.getElementById('tron-controls');
-    if (mode === 'local') {
-        if (ctrl) ctrl.textContent = 'P1: WASD  |  P2: ARROWS  |  SPACE: rematch';
-    } else {
-        if (ctrl) ctrl.textContent = (playerNumber === 1 ? 'YOU ARE CYAN' : 'YOU ARE ORANGE') + '  |  WASD or ARROWS';
-    }
-    
-    if (!game) game = TronGame.new(GRID_W, GRID_H);
-    else game.reset();
-    
-    if (!animFrameId) animFrameId = requestAnimationFrame(render);
-}
-
-function handleGameOver() {
-    const w = game.winner();
-    if (w === 1) p1Score++;
-    else if (w === 2) p2Score++;
-    updateScores();
-    const overlay = document.getElementById('tron-overlay');
-    overlay.innerHTML = (w===1 ? '<span class="tron-p1">P1 WINS</span>' : w===2 ? '<span class="tron-p2">P2 WINS</span>' : 'DRAW') + 
-                        '<div style="font-size:0.3em;margin-top:0.5em">SPACE to rematch</div>';
-    overlay.classList.add('visible');
-}
-
-function gameTick() {
-    if (!gameActive || !game) return;
-    
-    const currentTick = game.tick_count();
-    
-    if (remoteInputs[currentTick] !== undefined) {
-        const opponentIdx = playerNumber === 1 ? 1 : 0;
-        game.set_direction(opponentIdx, remoteInputs[currentTick]);
-    }
-    
-    // Save state BEFORE ticking
-    history[currentTick] = new Uint8Array(game.serialize_state());
-    
-    game.tick();
-    
-    if (game.is_game_over()) {
-        gameActive = false;
-        handleGameOver();
+function handleKeyDown(e) {
+    if (e.target instanceof HTMLInputElement) return;
+    if (e.key === ' ' || e.key === 'Spacebar') {
+        if (!mode) return;
+        e.preventDefault();
+        if (e.repeat) return;
+        if (mode === 'online' && onlineState?.phase === 'over') send({ type: 'rematch', round: onlineState.round });
+        if (mode === 'local' && game.is_game_over()) localRound();
         return;
     }
+    const dir = ({ w: 0, ArrowUp: 0, d: 1, ArrowRight: 1, s: 2, ArrowDown: 2, a: 3, ArrowLeft: 3 })[e.key.length === 1 ? e.key.toLowerCase() : e.key];
+    if (dir === undefined || !gameActive) return;
+    e.preventDefault();
+    if (e.repeat) return;
+    if (mode === 'online') send({ type: 'dir', dir, round: onlineState.round });
+    else game.set_direction(e.key.startsWith('Arrow') ? 1 : 0, dir);
 }
-
 function render(timestamp) {
     if (!canvas || !document.body.contains(canvas)) { cleanup(); return; }
     animFrameId = requestAnimationFrame(render);
-    
-    if (gameActive && game) {
-        if (!lastTickTime) lastTickTime = timestamp;
-        
-        // Dynamic Difficulty Curve: starts at 120ms per tick, drops by 2ms every 10 ticks.
-        // Reaches maximum speed (40ms per tick) after ~45 seconds of survival.
-        const currentTickMs = Math.max(40, 120 - Math.floor(game.tick_count() / 10) * 2);
-        
-        if (timestamp - lastTickTime >= currentTickMs) {
-            gameTick();
-            lastTickTime = timestamp;
+    if (mode === 'local' && gameActive) {
+        const tickMs = Math.max(40, 120 - Math.floor(game.tick_count() / 10) * 2);
+        if (timestamp - lastTickTime >= tickMs) {
+            game.tick(); lastTickTime = timestamp;
+            if (game.is_game_over()) {
+                gameActive = false;
+                const winner = game.winner();
+                if (winner) scores[winner - 1]++;
+                updateScores(); overlay(winnerText(winner));
+            }
         }
     }
-
-    if (!game || !memory) return;
-    const gridPtr = game.grid_ptr();
-    const cells = new Uint8Array(memory.buffer, gridPtr, GRID_W * GRID_H);
-
-    ctx.fillStyle = '#0a0a0a';
-    ctx.fillRect(0, 0, 800, 600);
-
-    ctx.strokeStyle = 'rgba(0, 255, 65, 0.04)';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x <= 800; x += CELL_PX) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 600); ctx.stroke();
+    if (mode === 'online' && onlineState?.phase === 'countdown') {
+        const remaining = onlineState.startLocal - timestamp;
+        overlay(remaining > 800 ? String(Math.ceil((remaining - 800) / 800)) : 'GO!');
     }
-    for (let y = 0; y <= 600; y += CELL_PX) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke();
-    }
-
+    let cells, players;
+    if (mode === 'online' && onlineState) {
+        cells = onlineState.grid; players = onlineState.players;
+    } else if (mode === 'local' && game) {
+        cells = new Uint8Array(memory.buffer, game.grid_ptr(), 80 * 60);
+        players = [{ x: game.p1_x(), y: game.p1_y(), alive: game.p1_alive() }, { x: game.p2_x(), y: game.p2_y(), alive: game.p2_alive() }];
+    } else return;
+    ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0, 0, 800, 600);
+    ctx.strokeStyle = 'rgba(0, 255, 65, 0.04)'; ctx.lineWidth = 0.5;
+    for (let x = 0; x <= 800; x += 10) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 600); ctx.stroke(); }
+    for (let y = 0; y <= 600; y += 10) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke(); }
     ctx.shadowBlur = 0;
     for (let i = 0; i < cells.length; i++) {
-        if (cells[i] === 0) continue;
-        const x = (i % GRID_W) * CELL_PX, y = Math.floor(i / GRID_W) * CELL_PX;
-        ctx.fillStyle = cells[i] === 1 ? P1_COLOR : P2_COLOR;
-        ctx.fillRect(x + 1, y + 1, CELL_PX - 2, CELL_PX - 2);
+        if (!cells[i]) continue;
+        ctx.fillStyle = COLORS[cells[i] - 1];
+        ctx.fillRect((i % 80) * 10 + 1, Math.floor(i / 80) * 10 + 1, 8, 8);
     }
-
-    if (game.p1_alive()) {
-        ctx.shadowColor = P1_COLOR; ctx.shadowBlur = 15;
-        ctx.fillStyle = P1_HEAD; ctx.fillRect(game.p1_x() * CELL_PX, game.p1_y() * CELL_PX, CELL_PX, CELL_PX);
-    }
-    if (game.p2_alive()) {
-        ctx.shadowColor = P2_COLOR; ctx.shadowBlur = 15;
-        ctx.fillStyle = P2_HEAD; ctx.fillRect(game.p2_x() * CELL_PX, game.p2_y() * CELL_PX, CELL_PX, CELL_PX);
-    }
+    players.forEach((p, i) => {
+        if (!p.alive) return;
+        ctx.shadowColor = COLORS[i]; ctx.shadowBlur = 15; ctx.fillStyle = '#fff';
+        ctx.fillRect(p.x * 10, p.y * 10, 10, 10);
+    });
     ctx.shadowBlur = 0;
 }
-
-// === Networking (Durable Object room relay) ===
-// The relay only forwards to the *other* player, so no self-message filtering needed.
-function connectRoom(code, role, onOpen) {
-    if (ws) ws.close();
-    ws = new WebSocket(`${RELAY_URL}/room/${code}?role=${role}`);
-    ws.addEventListener('open', onOpen);
-    ws.addEventListener('message', (e) => {
-        try { handleMessage(JSON.parse(e.data)); } catch(err) {}
-    });
-    ws.addEventListener('close', (e) => {
-        if (mode === 'online' && gameActive) {
-            gameActive = false;
-            setStatus('Connection lost');
-        }
-    });
-    ws.addEventListener('error', () => setStatus('Connection error — try again'));
-}
-
-function handleMessage(msg) {
-    if (!msg || !msg.type) return;
-
-    switch (msg.type) {
-        case 'error':
-            setStatus(msg.message);
-            if (ws) { ws.close(); ws = null; }
-            return;
-        case 'peer-left':
-            if (mode === 'online') {
-                gameActive = false;
-                const overlay = document.getElementById('tron-overlay');
-                overlay.textContent = 'OPPONENT LEFT';
-                overlay.classList.add('visible');
-            }
-            return;
-        case 'ready':
-            if (playerNumber === 1) {
-                initGameSession();
-                send({ type: 'start' });
-                startCountdown(() => { gameActive = true; lastTickTime = performance.now(); });
-            }
-            break;
-        case 'start':
-            if (playerNumber === 2) {
-                startCountdown(() => { gameActive = true; lastTickTime = performance.now(); });
-            }
-            break;
-        case 'dir':
-            if (!gameActive || !game) return;
-            const currentTick = game.tick_count();
-            remoteInputs[msg.tick] = msg.dir;
-
-            if (msg.tick < currentTick) {
-                const rTick = msg.tick;
-                if (!history[rTick]) break;
-
-                // Restoring exact past reality
-                game.load_state(history[rTick]);
-                
-                // Fast forward simulation back to present
-                for (let t = rTick; t < currentTick; t++) {
-                    if (localInputs[t] !== undefined) {
-                        game.set_direction(playerNumber - 1, localInputs[t]);
-                    }
-                    if (remoteInputs[t] !== undefined) {
-                        game.set_direction(playerNumber === 1 ? 1 : 0, remoteInputs[t]);
-                    }
-                    game.tick();
-                    history[t + 1] = new Uint8Array(game.serialize_state());
-                }
-            }
-            break;
-        case 'rematch':
-            newRound();
-            break;
-    }
-}
-
-// === Global Input Listener ===
-function keyToDir(k) {
-    switch (k) {
-        case 'w': case 'W': case 'ArrowUp': return 0;
-        case 'd': case 'D': case 'ArrowRight': return 1;
-        case 's': case 'S': case 'ArrowDown': return 2;
-        case 'a': case 'A': case 'ArrowLeft': return 3;
-        default: return null;
-    }
-}
-
-function handleKeyDown(e) {
-    if (e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault();
-        if (!gameActive && game && game.is_game_over()) requestRematch();
-        return;
-    }
-    const dir = keyToDir(e.key);
-    if (dir === null || !game || !gameActive) return;
-    
-    e.preventDefault();
-    if (mode === 'local') {
-        game.set_direction(e.key.startsWith('Arrow') ? 1 : 0, dir);
-    } else if (mode === 'online') {
-        const tick = game.tick_count();
-        localInputs[tick] = dir;
-        game.set_direction(playerNumber - 1, dir);
-        send({ type: 'dir', dir: dir, tick: tick });
-    }
-}
-
 export function cleanup() {
-    if (abortController) { abortController.abort(); abortController = null; }
-    if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
-    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    if (ws) { ws.close(); ws = null; }
-    if (game) { game.free(); game = null; }
-    window.removeEventListener('keydown', handleKeyDown);
-    
-    lastTickTime = 0;
-    history = {};
-    localInputs = {};
-    remoteInputs = {};
-    
+    generation++;
+    abortController?.abort(); abortController = null;
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    animFrameId = null;
+    disconnect();
+    game?.free(); game = null;
     canvas = null; ctx = null; memory = null;
-    mode = null; playerNumber = 0; p1Score = 0; p2Score = 0;
-    gameActive = false;
+    mode = null; onlineState = null; gameActive = false; playerNumber = 0; scores = [0, 0]; lastTickTime = 0;
 }
-
 export async function run() {
     cleanup();
+    const currentGeneration = generation;
     const wasm = await wasmInit();
-    memory = wasm.memory;
-    
+    if (generation !== currentGeneration) return;
     canvas = document.getElementById('tron-canvas');
     if (!canvas) return;
-    ctx = canvas.getContext('2d');
-    
+    ctx = canvas.getContext('2d'); memory = wasm.memory;
+    game = TronGame.new(80, 60);
     abortController = new AbortController();
-    window.addEventListener('keydown', handleKeyDown, { signal: abortController.signal });
-
-    document.getElementById('tron-lobby').style.display = '';
-    document.getElementById('tron-game').style.display = 'none';
-
-    document.getElementById('btn-local')?.addEventListener('click', () => {
-        mode = 'local';
-        initGameSession();
-        startCountdown(() => { gameActive = true; lastTickTime = performance.now(); });
-    }, { signal: abortController.signal });
-
-    document.getElementById('btn-create')?.addEventListener('click', () => {
-        const code = generateCode();
-        setStatus('Connecting...');
-        connectRoom(code, 'create', () => {
-            playerNumber = 1;
-            mode = 'online';
-            setStatus(`ROOM: ${code} — Waiting for opponent...`);
-        });
-    }, { signal: abortController.signal });
-
-    document.getElementById('btn-join')?.addEventListener('click', () => {
-        const code = document.getElementById('room-input')?.value?.toUpperCase()?.trim();
-        if (!code || code.length < 4) return setStatus('Enter a 4-letter room code');
-
-        setStatus('Connecting...');
-        connectRoom(code, 'join', () => {
-            playerNumber = 2;
-            mode = 'online';
-            initGameSession();
-            send({ type: 'ready' });
-        });
-    }, { signal: abortController.signal });
+    const options = { signal: abortController.signal };
+    window.addEventListener('keydown', handleKeyDown, options);
+    document.getElementById('btn-local').addEventListener('click', () => {
+        disconnect(); mode = 'local'; scores = [0, 0]; updateScores();
+        document.getElementById('tron-round').textContent = '';
+        showGame(); localRound();
+    }, options);
+    document.getElementById('btn-create').addEventListener('click', () => {
+        const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ';
+        const bytes = crypto.getRandomValues(new Uint8Array(4));
+        const code = Array.from(bytes, b => chars[b % chars.length]).join('');
+        connectRoom(code, 'create');
+    }, options);
+    document.getElementById('btn-join').addEventListener('click', () => {
+        const code = document.getElementById('room-input').value.toUpperCase().trim();
+        if (!/^[A-Z]{4}$/.test(code)) return setStatus('Enter a 4-letter room code');
+        connectRoom(code, 'join');
+    }, options);
+    document.getElementById('btn-leave').addEventListener('click', () => lobby(), options);
+    lobby();
 }
-
 if (!window.HAS_SPA_ROUTER) run().catch(console.error);

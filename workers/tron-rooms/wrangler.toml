@@ -1,8 +1,9 @@
-# Tron multiplayer room relay: one Durable Object per room code,
-# holds both players' WebSockets and relays messages between them.
+# Authoritative Tron multiplayer: one Durable Object per two-player room.
 # Deploy: cd workers/tron-rooms && npx wrangler deploy
 name = "tron-rooms"
+account_id = "838cc322036d2930c3c20a0ed99fadd4"
 main = "src/index.js"
+workers_dev = true
 compatibility_date = "2026-06-01"
 
 [[durable_objects.bindings]]

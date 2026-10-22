@@ -22,6 +22,7 @@ const IGNORE_DIRS: &[&str] = &[
     "node_modules",
     "dist",
     "wasm",
+    "workers",
 ];
 const IGNORE_FILES: &[&str] = &[
     "server.py",
