@@ -5,7 +5,7 @@
 pub(crate) unsafe extern "C" fn l_Sand2_delapsedMilliseconds(x_1: Obj) -> Obj {
     let x_2: Obj = rt::nat::lean_usize_to_nat(1000);
     let x_3: Obj = l_Nat_dmul(x_1, x_2);
-    let x_4: Obj = rt::nat::lean_usize_to_nat(60);
+    let x_4: Obj = rt::nat::lean_usize_to_nat(600);
     let x_5: Obj = l_Nat_ddiv(x_3, x_4);
     rt::lean_dec(x_3);
     return x_5;
@@ -51,7 +51,7 @@ pub(crate) unsafe fn l_Sand2_dgravityKick_d__closed__0() -> Obj {
 // Source: lean/Sand2/Mechanics.lean:16:1
 static C_l_Sand2_dgravityKick_d__closed__1: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dgravityKick_d__closed__1__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(60);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(600);
     let x_2: Obj = l_Int_dofNat(x_1);
     return x_2;
 }
@@ -107,12 +107,9 @@ pub(crate) unsafe extern "C" fn l_Sand2_dgravityVelocity_d__boxed(x_1: Obj) -> O
 pub(crate) unsafe extern "C" fn l_Sand2_dstepDisplacement(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_Int_dadd(x_1, x_2);
     let x_4: Obj = l_Sand2_dstepDisplacement_d__closed__0();
-    let x_5: Obj = l_Int_dmul(x_3, x_4);
+    let x_5: Obj = l_Int_dediv(x_3, x_4);
     rt::lean_dec(x_3);
-    let x_6: Obj = l_Sand2_dstepDisplacement_d__closed__1();
-    let x_7: Obj = l_Int_dediv(x_5, x_6);
-    rt::lean_dec(x_5);
-    return x_7;
+    return x_5;
 }
 
 // Lean: Sand2.stepDisplacement._boxed
@@ -130,27 +127,13 @@ pub(crate) unsafe extern "C" fn l_Sand2_dstepDisplacement_d__boxed(x_1: Obj, x_2
 // Source: lean/Sand2/Mechanics.lean:22:1
 static C_l_Sand2_dstepDisplacement_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dstepDisplacement_d__closed__0__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(5);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(12);
     let x_2: Obj = l_Int_dofNat(x_1);
     return x_2;
 }
 #[inline]
 pub(crate) unsafe fn l_Sand2_dstepDisplacement_d__closed__0() -> Obj {
     C_l_Sand2_dstepDisplacement_d__closed__0.get(l_Sand2_dstepDisplacement_d__closed__0__init)
-}
-
-// Lean: Sand2.stepDisplacement._closed_1
-// Compiled from: Sand2.stepDisplacement
-// Source: lean/Sand2/Mechanics.lean:22:1
-static C_l_Sand2_dstepDisplacement_d__closed__1: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dstepDisplacement_d__closed__1__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(6);
-    let x_2: Obj = l_Int_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dstepDisplacement_d__closed__1() -> Obj {
-    C_l_Sand2_dstepDisplacement_d__closed__1.get(l_Sand2_dstepDisplacement_d__closed__1__init)
 }
 
 // Lean: Sand2.terminalSpeed
@@ -183,7 +166,7 @@ pub(crate) unsafe fn l_Sand2_dterminalSpeed_d__closed__0() -> Obj {
 // Source: lean/Sand2/Mechanics.lean:5:1
 static C_l_Sand2_dticksPerSecond: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dticksPerSecond__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(60);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(600);
     return x_1;
 }
 #[inline]

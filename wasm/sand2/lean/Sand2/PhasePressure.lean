@@ -2,6 +2,7 @@ import Sand2.LiquidField
 import Sand2.Bracketing
 
 namespace Sand2
+open Chemistry
 
 /-- Fixed-inventory, fixed-energy and fixed-volume phase closure. The trial
     water partial pressure sets a fine saturation point; the EOS determines the
@@ -9,7 +10,7 @@ namespace Sand2
 def predictedFlashPartialPressure (p : Particle) (h : Int) (candidate : Nat) : Nat :=
   let q := atPressure p candidate
   let vapor := vaporWaterFromEnthalpy q h
-  let gas := q.matter.oxygen+q.matter.nitrogen+q.matter.carbonDioxide+q.matter.hydrogen+vapor
+  let gas := dryGasMoles q.matter+vapor
   mechanicalPressureFromInternalEnergy q h*vapor/max 1 gas
 
 def flashPressureSearch (p : Particle) (h : Int) : Nat :=
@@ -45,7 +46,7 @@ theorem reapplying_current_phase_pressure_changes_nothing (p : Particle) :
   simp_all [atPressure]
 
 @[noinline] def flashEquilibriumPressure (p : Particle) (h : Int) : Nat :=
-  let dryGas := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen
+  let dryGas := dryGasMoles p.matter
   let reference := referenceLiquidVolume (liquidMatterFromInternalEnergy p h)
   let base := max p.mechanicalPressure (liquidReferencePressure reference)
   if dryGas == 0 && reference+1000 >= cellVolume && h < (waterDiagram (atPressure p base)).boilStart then base
@@ -89,7 +90,7 @@ def equilibriumParticleFromInternalEnergy (p : Particle) (h : Int) : Particle :=
   let target := if p.matter.water == 0 then p.phasePressure else flashEquilibriumPressure p h
   let q := if p.matter.water == 0 then p else atPressure p target
   let vapor := vaporWaterFromEnthalpy q h
-  let gas := q.matter.oxygen+q.matter.nitrogen+q.matter.carbonDioxide+q.matter.hydrogen+vapor
+  let gas := dryGasMoles q.matter+vapor
   let reference := referenceLiquidVolume (liquidMatterFromInternalEnergy q h)
   let pressure := if gas == 0 then quantizedLiquidPressure reference p.mechanicalPressure
     else mechanicalPressureFromInternalEnergy q h

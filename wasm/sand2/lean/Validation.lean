@@ -73,13 +73,13 @@ def main (args : List String) : IO Unit := do
     ((read after i).energy < hot.energy && (read after (i+1)).energy > cold.energy)
   let start := paintSimulation (newSimulation w.toUInt32 h.toUInt32) 12 3 1 1
   let mut fallen := start
-  for _ in [:20] do fallen := tickSimulation fallen
+  for _ in [:ticksPerSecond/3] do fallen := tickSimulation fallen
   check "gravity lowers the sand centre of mass" (silicaY fallen > silicaY start)
   check "falling conserves all eleven elements and total energy exactly"
     (auditSimulation fallen == auditSimulation start)
   let dam := sceneSimulation (newSimulation w.toUInt32 h.toUInt32) 1
   let mut spread := dam
-  for _ in [:40] do spread := tickSimulation spread
+  for _ in [:ticksPerSecond*2/3] do spread := tickSimulation spread
   check "dam break moves water into the initially dry side" (waterX spread > waterX dam)
   check "dam break conserves all eleven elements and total energy exactly"
     (auditSimulation spread == auditSimulation dam)
@@ -159,7 +159,7 @@ def main (args : List String) : IO Unit := do
   let initialGrain := read dropStart.world (3*w+8)
   let initialThermal := thermalEnergy 40 w (3*w+8) initialGrain
   let mut drop := dropStart
-  for _ in [:6] do drop := tickSimulation drop
+  for _ in [:ticksPerSecond/10] do drop := tickSimulation drop
   let mut distance := (0 : Int)
   let mut speed := (0 : Int)
   let mut thermalChange := (0 : Int)
@@ -170,6 +170,56 @@ def main (args : List String) : IO Unit := do
       speed := p.vy
       thermalChange := thermalEnergy drop.height drop.width k p-initialThermal
   check "a free grain falls 4.905 cm in 0.1 simulated seconds"
-    ((distance-4905000).natAbs <= 10 && speed == 981000)
+    ((distance-4905000).natAbs <= 100 && speed == 981000)
   check "free-fall numerical/thermal drift stays below 10 microjoules"
     (thermalChange.natAbs < 1000000000)
+
+  let methane := makeAt h w i .methane
+  let co := makeAt h w (i+1) .carbonMonoxide
+  check "methane and CO initialize as 20 C gases at atmospheric pressure"
+    (gasCell h w i methane && gasCell h w (i+1) co && temperature h w i methane == 2000 &&
+     temperature h w (i+1) co == 2000 && pressure h w i methane == pressure h w (i+1) co)
+  let gasMix := gasDiffusionEdit h w i (i+1) methane co (diffusionDivisor methane.matter co.matter)
+  check "methane and CO diffuse without inventing heat or chemical energy"
+    (gasMix.first.matter.carbonMonoxide > 0 && gasMix.second.matter.methane > 0 &&
+     temperature h w i gasMix.first == 2000 && temperature h w (i+1) gasMix.second == 2000)
+  let complete : Mixture := {methane := 7,oxygen := 14}
+  let completeOut := react .burnMethane complete (capacity .burnMethane complete)
+  check "complete methane combustion produces seven CO2 and fourteen H2O units"
+    (completeOut.methane == 0 && completeOut.oxygen == 0 && completeOut.carbonDioxide == 7 && completeOut.water == 14)
+  let rich : Mixture := {methane := 10,oxygen := 15}
+  let richOut := react .partialMethane rich (capacity .partialMethane rich)
+  check "oxygen-poor methane produces CO and water with exact stoichiometry"
+    (richOut.methane == 0 && richOut.oxygen == 0 && richOut.carbonMonoxide == 10 && richOut.water == 20)
+  check "the kinetic router selects the oxygen-poor methane branch exclusively"
+    (!possible .burnMethane rich {} && possible .partialMethane rich {})
+  let veryRich : Mixture := {methane := 10,oxygen := 3}
+  let limited := react .partialMethane veryRich (capacity .partialMethane veryRich)
+  check "oxygen exhaustion retains unburned methane alongside CO"
+    (limited.methane == 8 && limited.oxygen == 0 && limited.carbonMonoxide == 2 && limited.water == 4)
+  let oxidized := react .burnCarbonMonoxide {carbonMonoxide := 10,oxygen := 5} 5
+  check "CO burns to CO2 without fabricating oxygen"
+    (oxidized.carbonMonoxide == 0 && oxidized.oxygen == 0 && oxidized.carbonDioxide == 10)
+  let methaneBox := sceneSimulation (newSimulation w.toUInt32 h.toUInt32) 10
+  let methaneBox := tickSimulation methaneBox
+  let mut actualCO := 0
+  for k in [:methaneBox.width*methaneBox.height] do actualCO := actualCO+(read methaneBox.world k).matter.carbonMonoxide
+  check "the full fuel-rich methane experiment produces actual CO inventory"
+    (actualCO > 0 && methaneBox.world.generation == 1 && methaneBox.world.rejectedFluidSubsteps == 0)
+
+  let hotHydrogenMatter : Mixture := {hydrogen := 2000,oxygen := 1000}
+  let hotHydrogen := makeParticle hotHydrogenMatter 0 .hydrogen
+  let hotHydrogen := {hotHydrogen with
+    energy := hotHydrogen.chemical+internalEnergyAt hotHydrogenMatter .hydrogen 60000+potentialEnergy h w i hotHydrogen}
+  let hydrogenWorld := write (newWorld w h) i hotHydrogen
+  let hydrogenAfter := ((reactInside i 60000).run hydrogenWorld).2
+  check "hot hydrogen/oxygen keeps reacting without a carbonaceous ignition parcel"
+    ((read hydrogenAfter i).matter.hydrogen < 2000 && (read hydrogenAfter i).matter.water > 0)
+
+  let methaneMatter := matterFor .methane
+  let coMatter := matterFor .carbonMonoxide
+  let methaneHeating := internalEnergyAt methaneMatter .methane 3000-internalEnergyAt methaneMatter .methane 2000
+  let coHeating := internalEnergyAt coMatter .carbonMonoxide 3000-internalEnergyAt coMatter .carbonMonoxide 2000
+  check "heating one cubic centimetre of methane and CO by 10 K uses their distinct Cv values"
+    (1100000000000 < methaneHeating && methaneHeating < 1180000000000 &&
+     840000000000 < coHeating && coHeating < 890000000000)

@@ -34,7 +34,7 @@
       </div>
       <div class="s2-controls">
         <button id="s2-play" type="button" title="Pause / play (Space)"><span id="s2-play-icon">Ⅱ</span> <span id="s2-play-label">Pause</span></button>
-        <button id="s2-step" type="button" title="Advance one timestep (.)">Step</button>
+        <button id="s2-step" type="button" title="Advance 1.67 milliseconds in the simulation (.)">Step</button>
         <button id="s2-speed" type="button" aria-label="Simulation playback: fast speed">Fast</button>
         <label>BRUSH <input id="s2-brush" type="range" min="1" max="16" value="3"><output id="s2-brush-value" for="s2-brush">3</output></label>
         <button id="s2-undo" type="button" disabled title="Undo drawing (Z)">Undo</button>
@@ -42,10 +42,10 @@
         <button id="s2-snapshot" type="button">Save image</button>
       </div>
       <div class="s2-controls">
-        <label>EXPERIMENT <select id="s2-scene"><option value="1">Dam break</option><option value="2">Heat and phase</option><option value="3">Combustion</option><option value="4">Density separation</option><option value="5">Acid and limestone</option><option value="6">Gas mixing</option><option value="7">Gunpowder</option><option value="8">Molten iron</option><option value="9">Communicating vessels</option><option value="0">Empty</option></select></label>
+        <label>EXPERIMENT <select id="s2-scene"><option value="1">Dam break</option><option value="2">Heat and phase</option><option value="3">Combustion</option><option value="4">Density separation</option><option value="5">Acid and limestone</option><option value="6">Gas mixing</option><option value="7">Gunpowder</option><option value="8">Molten iron</option><option value="9">Communicating vessels</option><option value="10">Fuel-rich methane</option><option value="0">Empty</option></select></label>
         <label title="Changing vessel size starts a new experiment. Each cell is one centimetre across.">VESSEL <select id="s2-size"><option value="36">36 × 24 cm</option><option value="48" selected>48 × 32 cm</option><option value="72">72 × 48 cm</option><option value="96">96 × 64 cm</option></select></label>
         <label>VIEW <select id="s2-view"><option value="0">Materials</option><option value="1">Temperature</option><option value="2">Pressure</option></select></label>
-        <span id="s2-state">LOADING</span><span id="s2-time" title="Time in the simulation, read from the physics model">0.00 s</span><span><span id="s2-count">0</span> CELLS</span><span id="s2-fps">— FPS</span>
+        <span id="s2-state">LOADING</span><span id="s2-time" title="Time in the simulation, read from the physics model">0.000 s</span><span><span id="s2-count">0</span> CELLS</span><span id="s2-fps">— FPS</span>
       </div>
       <div id="s2-materials" aria-label="Materials"></div>
       <button id="s2-eraser" type="button" aria-pressed="false">Eraser [E]</button>

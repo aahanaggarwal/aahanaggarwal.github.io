@@ -41,9 +41,8 @@ def liquidViscosity (m : Mixture) : Float :=
 
 def gasGamma (height width i : Nat) (p : Particle) : Float :=
   let vapor := vaporWaterMoles height width i p
-  let n := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
-  let cv := 21062*p.matter.oxygen+20806*p.matter.nitrogen+28822*p.matter.carbonDioxide+
-    20286*p.matter.hydrogen+27686*vapor
+  let n := dryGasMoles p.matter+vapor
+  let cv := gasCv p.matter+27686*vapor
   1+8314*floatNat n/floatNat (max 1 cv)
 
 /-- Exact liquid density equation of state. The volume and pressure units give
@@ -92,7 +91,7 @@ def mechanicalEOSPressure (reference gasMoles : Nat) (t : Int) : Nat :=
 
 def mechanicalPressureFromInternalEnergy (p : Particle) (h : Int) : Nat :=
   let vapor := vaporWaterFromEnthalpy p h
-  let gas := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
+  let gas := dryGasMoles p.matter+vapor
   mechanicalEOSPressure (referenceLiquidVolume (liquidMatterFromInternalEnergy p h)) gas (temperatureFromEnthalpy p h)
 
 structure FluidGeometry where

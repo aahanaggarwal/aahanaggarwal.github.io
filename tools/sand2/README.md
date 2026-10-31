@@ -17,14 +17,15 @@ There is no second Rust or JavaScript physics model or material catalogue.
 One grid cell represents 1 cm³ in a 2D cross-section. Molecular inventories count
 nanomoles; mass is in nanograms, temperature in centidegrees Celsius, pressure in
 millipascals, velocity in micrometres/second and energy in 10⁻¹⁴ J. The timestep
-is 1/60 s. The box begins with finite oxygen/nitrogen at approximately 1 atm and
+is 1/600 s. The box begins with finite oxygen/nitrogen at approximately 1 atm and
 20 °C, surrounded by fixed iron boundary parcels. Boundaries exchange heat with
 their finite iron mass and have no external ambient-temperature thermostat.
 
 A parcel's energy is its complete chemical + thermal + kinetic + gravitational
 budget. Molecular mass, formation energy and heat capacity are cached with Lean
 proofs tying them to the composition. Losing kinetic energy increases the
-remaining thermal budget. Heating changes enthalpy; phase changes do not replace
+remaining thermal budget. Heating moves a parcel along its energy/temperature
+curve; phase changes do not replace
 matter with unrelated substances or reset temperature. Fire is a luminous state
 of finite hot fuel/product mixtures; extinguishing it never deletes its atoms.
 
@@ -65,7 +66,7 @@ removals of matter/energy; the closed-system theorem applies between edits.
 ## Chemical scope
 
 The inventory tracks H₂O, O₂, N₂, CO₂, CH₂O biomass, CH₂ hydrocarbon, C, SiO₂, NaCl,
-HCl, CaCO₃, CaCl₂, Fe, Fe₂O₃, FeCl₂, H₂, KNO₃, S and K₂S. Biomass/hydrocarbon are
+HCl, CaCO₃, CaCl₂, Fe, Fe₂O₃, FeCl₂, H₂, KNO₃, S, K₂S, CH₄ and CO. Biomass/hydrocarbon are
 surrogates rather than a complete organic chemistry model. Integer atomic
 weights and rounded formation enthalpies are used consistently throughout.
 
@@ -79,6 +80,9 @@ The complete declared reaction family is:
 - CaCO₃ + 2 HCl → CaCl₂ + H₂O + CO₂
 - Fe + 2 HCl → FeCl₂ + H₂
 - 2 KNO₃ + S + 3 C → K₂S + N₂ + 3 CO₂
+- CH₄ + 2 O₂ → CO₂ + 2 H₂O
+- 2 CH₄ + 3 O₂ → 2 CO + 4 H₂O
+- 2 CO + O₂ → 2 CO₂
 
 Hydrochloric acid therefore does not dissolve quartz, wood or ice by arbitrary
 contact rules. There is no water-to-plant growth rule. Biology is outside scope.
@@ -128,12 +132,12 @@ local toolchains and caches are ignored under `.tools/`.
 latent plateaus, oxygen exhaustion, selective chemistry, heat direction, sand
 centre of mass and water spreading. `FluidValidation.lean` adds independent
 analytic Poisson and pressure-obstacle solutions, 18 mixed-phase volume-closure
-cases, evaporative cooling, hydrostatic head, resting-water centroid stability
+cases, evaporative cooling, hydrostatic head, resting-water centroid stability,
 a liquid-filled connection between separate gas chambers, and hydrogen-bubble rise. These numerical checks complement universal
 proofs; a conserved but static or incorrectly scaled simulation must still fail.
 
-Lean’s independent native C compiler evaluates the same definitions and produces 50 complete-world reference digests and
-budgets across ten scenes and multiple timesteps. Generated native Rust and the
+Lean’s independent native C compiler evaluates the same definitions and produces 66 complete-world reference digests and
+budgets across eleven scenes and multiple timesteps. Generated native Rust and the
 packaged browser Wasm must agree on all of them. The digest includes every
 molecular field, energy, momentum, position fraction, morphology, update stamp, mechanical and phase pressures, and numerical diagnostics.
 Native/browser checks also exercise exact checkpoints, read-only rendering,
@@ -333,9 +337,9 @@ vessels and stiff hot scenes advance much more slowly than wall time. Page FPS,
 completed model Hz and simulated time remain separate measurements.
 
 Current validation and artifact counts are recorded in `sand2/build.json`.
-The complete build must pass the kernel axiom audit, 49 physical benchmark
-families, 2,001 independent IAPWS comparisons, native integration checks, 50
-Lean/native/Wasm complete-world states, and all 32 palette conservation/accuracy
+The complete build must pass the kernel axiom audit, 59 physical benchmark
+families, 2,001 independent IAPWS comparisons, native integration checks, 66
+Lean/native/Wasm complete-world states, and all 34 palette conservation/accuracy
 checks before a milestone is committed. The floating-point pressure algorithm's accuracy is
 validated numerically; universal convergence of arbitrary matrices is not claimed.
 
@@ -361,3 +365,63 @@ The full-size 96 × 64 dam-break benchmark averages 12.4 seconds per 1/60-second
 model tick over its first ten ticks on this host. Stiff default-size hot scenes
 are also slow. Smaller physical timesteps and lower input latency are the next
 performance task; this checkpoint does not claim real-time simulation.
+
+
+## Finer time integration and independently specified chemistry (2026-10-31 UTC)
+
+The physical timestep is now 1/600 second. Gravity, displacement, Fourier heat
+flux, molecular diffusion, reaction-rate divisors, drag and luminous lifetimes
+use the same Lean clock. Quiet fluid states need one pressure step, removing the
+previous unconditional two-solve minimum. Smaller committed steps let the worker
+return input/render progress more frequently; they do not claim faster physical
+time. Benchmarks retain their original simulated durations: the communicating
+vessels test now covers 1,200 ticks over two seconds, and free fall covers 60
+steps over 0.1 seconds. Lean proves the resulting displacement and clock rounding.
+
+The palette adds methane and carbon monoxide, for 34 materials and 21 molecular
+inventories. Gas count and Cv are shared authoritative Lean functions, so every
+pressure, transport and phase calculation includes the same species. Rounded
+room-temperature Cp values from NIST give Cv(CH4)=27.376 and Cv(CO)=20.835
+J/(mol K), using R=8.314. Formation references add the methane/CO thermochemistry
+to the existing declared energy convention. Constant gas properties and
+phenomenological ignition/rate parameters remain approximations. Cryogenic
+condensation of permanent gases and detailed flame chemistry are outside scope.
+
+Methane uses exclusive oxygen-rich and oxygen-poor kinetic routes. The latter
+can leave CO and unburned methane; hot CO can subsequently oxidize with oxygen.
+The new fuel-rich experiment executes these rules in the complete world solver.
+General theorems prove each route's molar change and chemical-energy release.
+
+Stoichiometry.lean specifies outputs by independent per-species balance
+equations. For every inventory and extent, soundness, completeness, uniqueness
+and totality relate those equations to the executing aggregate/contact reactions.
+The stoichiometric tables separately balance all elements. The actual update
+schedule contains every declared reaction exactly once, and the chemistry fast
+filter cannot skip an eligible family. That last theorem exposed and fixed a
+missing hydrogen case; a hot hydrogen/oxygen regression covers it.
+
+Additional universal theorems order the water/iron/silica latent intervals and
+prove monotonicity of the actual microdegree saturation cache. The whole-world
+conservation, absolute-temperature and atomic rollback guarantees extend to all
+new materials. The expanded pipeline requires 59 physical benchmark families,
+66 independent Lean/native/Wasm states, 34-material conservation/accuracy checks
+and all eleven default-size experiments.
+
+Property references: [NIST methane](https://webbook.nist.gov/cgi/cbook.cgi?ID=C74828&Mask=1),
+[NIST carbon monoxide](https://webbook.nist.gov/cgi/cbook.cgi?ID=C630080&Mask=1).
+
+
+Final checks for this extension pass 195 handwritten proofs in a 1,097-theorem
+namespace audit, all 59 physical benchmark families, 2,001 IAPWS samples, native
+integration checks, 66 complete-world Lean/native/Wasm comparisons, all 34
+materials and all eleven default-size experiments. The repeated-world memory
+regression holds at 1,572,864 bytes after 65 ticks. Production desktop/mobile QA
+checks the 0.010-second clock after six manual steps, methane/CO painting, exact
+undo, vessel resize, the new experiment, no horizontal overflow at 390 px and
+worker termination on site navigation.
+
+On this host the 96 × 64 dam-break benchmark now averages 988.67 ms per
+1/600-second tick over its first ten ticks. This is lower latency per committed
+step than the preceding checkpoint, while simulated time still advances much
+more slowly than wall time. The finer clock must not be interpreted as a
+600 Hz real-time performance claim.

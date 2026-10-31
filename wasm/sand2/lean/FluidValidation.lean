@@ -81,7 +81,7 @@ def main (args : List String) : IO Unit := do
   let budget := auditSimulation initial
   let initialY := waterMomentY initial
   let mut pond := initial
-  for _ in [:20] do pond := tickSimulation pond
+  for _ in [:ticksPerSecond/3] do pond := tickSimulation pond
   let above := read pond.world (11*width+width/2)
   let below := read pond.world (16*width+width/2)
   let head := (below.mechanicalPressure : Int)-(above.mechanicalPressure : Int)
@@ -105,7 +105,7 @@ def main (args : List String) : IO Unit := do
   sealed := fillRect sealed 1 1 (width/2) 12 .hydrogen
   sealed := fillRect sealed (width/2+1) 1 (width-1) 12 .oxygen
   let sealedBudget := auditSimulation sealed
-  for _ in [:20] do sealed := tickSimulation sealed
+  for _ in [:ticksPerSecond/3] do sealed := tickSimulation sealed
   let mut crossed := 0
   for y in [1:height-1] do
     for x in [width/2+1:width-1] do crossed := crossed+(read sealed.world (y*width+x)).matter.hydrogen
@@ -117,7 +117,7 @@ def main (args : List String) : IO Unit := do
   let gasBudget := auditSimulation gasBox
   let initialMoment := hydrogenMomentY gasBox
   let mut bubble := gasBox
-  for _ in [:20] do bubble := tickSimulation bubble
+  for _ in [:ticksPerSecond/3] do bubble := tickSimulation bubble
   physicalCheck "a hydrogen bubble rises through oxygen under the actual coupled solver"
     (hydrogenMomentY bubble < initialMoment && auditSimulation bubble == gasBudget &&
-      bubble.world.rejectedFluidSubsteps == 0 && bubble.world.generation == 20)
+      bubble.world.rejectedFluidSubsteps == 0 && bubble.world.generation == ticksPerSecond/3)

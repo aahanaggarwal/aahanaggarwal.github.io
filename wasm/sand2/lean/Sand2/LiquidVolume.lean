@@ -91,10 +91,12 @@ theorem liquid_advection_excludes_noncondensing_gases (p : Particle) :
     (liquidMatter height width i p).oxygen = 0 ∧
     (liquidMatter height width i p).nitrogen = 0 ∧
     (liquidMatter height width i p).carbonDioxide = 0 ∧
-    (liquidMatter height width i p).hydrogen = 0 := by
+    (liquidMatter height width i p).hydrogen = 0 ∧
+    (liquidMatter height width i p).methane = 0 ∧
+    (liquidMatter height width i p).carbonMonoxide = 0 := by
   unfold liquidMatter
   rw [pure_gas_fastpath_matches_complete_phase_selection]
-  exact ⟨rfl,rfl,rfl,rfl⟩
+  exact ⟨rfl,rfl,rfl,rfl,rfl,rfl⟩
 
 def liquidVolume (height width i : Nat) (p : Particle) : Nat :=
   referenceLiquidVolume (liquidMatter height width i p)

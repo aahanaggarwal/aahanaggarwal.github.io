@@ -1,6 +1,7 @@
 import Sand2.PhasePressure
 import Sand2.Transport
 import Sand2.EditSafety
+import Sand2.Mechanics
 
 namespace Sand2
 open Chemistry
@@ -17,14 +18,17 @@ def mixtureRequest (m : Mixture) (fraction : Nat) : Mixture :=
    carbonate := m.carbonate*q/cellVolume,calciumChloride := m.calciumChloride*q/cellVolume,
    iron := m.iron*q/cellVolume,rust := m.rust*q/cellVolume,ironChloride := m.ironChloride*q/cellVolume,
    hydrogen := m.hydrogen*q/cellVolume,nitrate := m.nitrate*q/cellVolume,
-   sulfur := m.sulfur*q/cellVolume,sulfide := m.sulfide*q/cellVolume}
+   sulfur := m.sulfur*q/cellVolume,sulfide := m.sulfide*q/cellVolume,
+   methane := m.methane*q/cellVolume,carbonMonoxide := m.carbonMonoxide*q/cellVolume}
 
 theorem fluid_transport_does_not_invent_absent_gases (m : Mixture) (fraction : Nat)
     (oxygen : m.oxygen = 0) (nitrogen : m.nitrogen = 0)
-    (co2 : m.carbonDioxide = 0) (hydrogen : m.hydrogen = 0) :
+    (co2 : m.carbonDioxide = 0) (hydrogen : m.hydrogen = 0)
+    (methane : m.methane = 0) (carbonMonoxide : m.carbonMonoxide = 0) :
     (mixtureRequest m fraction).oxygen = 0 ∧ (mixtureRequest m fraction).nitrogen = 0 ∧
-    (mixtureRequest m fraction).carbonDioxide = 0 ∧ (mixtureRequest m fraction).hydrogen = 0 := by
-  simp [mixtureRequest,oxygen,nitrogen,co2,hydrogen]
+    (mixtureRequest m fraction).carbonDioxide = 0 ∧ (mixtureRequest m fraction).hydrogen = 0 ∧
+    (mixtureRequest m fraction).methane = 0 ∧ (mixtureRequest m fraction).carbonMonoxide = 0 := by
+  simp [mixtureRequest,oxygen,nitrogen,co2,hydrogen,methane,carbonMonoxide]
 
 /-- Internal energy is advected with the local mixture. Pressure work crosses
     the same physical face for both gas and liquid, including air displaced by
@@ -186,8 +190,9 @@ def adaptiveFluid : Nat → Float → Physics width height Unit
     let p := read w i
     if !fluidObstacle height width i p then
       speed := floatMax speed (floatAbs (floatInt p.vx/1000000)+floatAbs (floatInt p.vy/1000000))
-  let substeps := min 32 (max 1 ((speed+0.1635)*4.166666667).toUInt64.toNat+1)
-  let dt := 1/(60*floatNat substeps)
+  let rate := floatNat ticksPerSecond
+  let substeps := min 32 (max 1 (((speed+9.81/rate)/(rate*0.004)).toUInt64.toNat+1))
+  let dt := 1/(rate*floatNat substeps)
   for _ in [:substeps] do adaptiveFluid 6 dt
 
 theorem fluid_solver_preserves_every_element_and_energy (w : World width height) :

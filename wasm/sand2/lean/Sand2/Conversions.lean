@@ -72,6 +72,8 @@ def labelAt (height width i : Nat) (p : Particle) : Material :=
   else if p.matter.calciumChloride*110 > p.mass/2 then .calciumChloride
   else if p.matter.sulfur*32 > p.mass/2 then .sulfur
   else if p.matter.carbon*12 > p.mass/2 then if p.label == .ash then .ash else .charcoal
+  else if p.matter.methane > p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+p.matter.carbonMonoxide then .methane
+  else if p.matter.carbonMonoxide > p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+p.matter.methane then .carbonMonoxide
   else if p.matter.carbonDioxide > p.matter.oxygen+p.matter.nitrogen+p.matter.hydrogen then .carbonDioxide
   else if p.matter.hydrogen > p.matter.oxygen+p.matter.nitrogen then .hydrogen
   else if p.matter.oxygen > p.matter.nitrogen then .oxygen

@@ -122,6 +122,26 @@ theorem fine_curve_temperature_upper_bound (curve : SaturationCurve p₀ t₀) (
         exact Nat.le_trans (interpolation_within_endpoints p₀ (t₀*10000) p₁ (t₁*10000) p (Nat.mul_le_mul_right 10000 (Nat.le_of_lt ht))).2 lastBound
       · simpa only [curveTemperatureFine,lastTemperature,lo,hi,↓reduceIte] using ih p
 
+theorem fine_curve_temperature_monotone (curve : SaturationCurve p₀ t₀) (p q : Nat) (ordered : p <= q) :
+    curveTemperatureFine curve p <= curveTemperatureFine curve q := by
+  induction curve generalizing p q with
+  | stop => simp [curveTemperatureFine]
+  | @next p₀ t₀ p₁ t₁ hp ht tail ih =>
+    by_cases plo : p <= p₀
+    · simpa only [curveTemperatureFine,plo,↓reduceIte] using fine_curve_temperature_lower_bound (.next p₁ t₁ hp ht tail) q
+    · have qlo : ¬q <= p₀ := by omega
+      simp only [curveTemperatureFine,plo,qlo,↓reduceIte]
+      by_cases pi : p < p₁
+      · by_cases qi : q < p₁
+        · simp only [pi,qi,↓reduceIte]
+          exact interpolation_monotone _ _ _ _ _ _ ordered
+        · simp only [pi,qi,↓reduceIte]
+          exact Nat.le_trans (interpolation_within_endpoints p₀ (t₀*10000) p₁ (t₁*10000) p
+            (Nat.mul_le_mul_right 10000 (Nat.le_of_lt ht))).2 (fine_curve_temperature_lower_bound tail q)
+      · have qi : ¬q < p₁ := by omega
+        simp only [pi,qi,↓reduceIte]
+        exact ih p q ordered
+
 /-- Rounded millipascal knots computed from the IAPWS SR1-86(1992) vapor-pressure
     equation, every 5 C from 0 to 200 C. The integer interpolation is the declared
     simulation approximation; it is not a verified real-arithmetic IAPWS solver.
@@ -187,5 +207,9 @@ theorem higher_pressure_cannot_lower_boiling_point (p q : Nat) (ordered : p <= q
 
 theorem fine_saturation_temperature_bounded (p : Nat) : saturationTemperatureFine p <= 200000000 :=
   fine_curve_temperature_upper_bound waterSaturation p
+
+theorem higher_pressure_cannot_lower_fine_boiling_point (p q : Nat) (ordered : p <= q) :
+    saturationTemperatureFine p <= saturationTemperatureFine q :=
+  fine_curve_temperature_monotone waterSaturation p q ordered
 
 end Sand2

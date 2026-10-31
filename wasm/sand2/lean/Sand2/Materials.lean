@@ -8,13 +8,13 @@ inductive Material where
   | empty | sand | water | stone | wood | fire | steam | oil | acid | lava
   | plant | ice | smoke | glass | obsidian | gunpowder | salt | saltWater
   | ember | ash | metal
-  | limestone | oxygen | nitrogen | carbonDioxide | hydrogen | charcoal | rust | nitrate | sulfur | calciumChloride | ironChloride | moltenIron
+  | limestone | oxygen | nitrogen | carbonDioxide | hydrogen | charcoal | rust | nitrate | sulfur | calciumChloride | ironChloride | moltenIron | methane | carbonMonoxide
   deriving DecidableEq, BEq, ReflBEq, LawfulBEq, Repr, Inhabited
 open Material
 
 def materials : List Material := [.empty,.sand,.water,.stone,.wood,.fire,.steam,
   .oil,.acid,.lava,.plant,.ice,.smoke,.glass,.obsidian,.gunpowder,.salt,.saltWater,
-  .ember,.ash,.metal,.limestone,.oxygen,.nitrogen,.carbonDioxide,.hydrogen,.charcoal,.rust,.nitrate,.sulfur,.calciumChloride,.ironChloride,.moltenIron]
+  .ember,.ash,.metal,.limestone,.oxygen,.nitrogen,.carbonDioxide,.hydrogen,.charcoal,.rust,.nitrate,.sulfur,.calciumChloride,.ironChloride,.moltenIron,.methane,.carbonMonoxide]
 
 def materialCode : Material → UInt32
   | .empty => 0 | .sand => 1 | .water => 2 | .stone => 3 | .wood => 4
@@ -34,6 +34,8 @@ def materialCode : Material → UInt32
   | .calciumChloride => 30
   | .ironChloride => 31
   | .moltenIron => 32
+  | .methane => 33
+  | .carbonMonoxide => 34
 
 def decodeMaterial (n : UInt32) : Material := match n.toNat with
   | 1 => .sand | 2 => .water | 3 => .stone | 4 => .wood | 5 => .fire
@@ -52,6 +54,8 @@ def decodeMaterial (n : UInt32) : Material := match n.toNat with
   | 30 => .calciumChloride
   | 31 => .ironChloride
   | 32 => .moltenIron
+  | 33 => .methane
+  | 34 => .carbonMonoxide
   | _ => .empty
 
 def materialName : Material → String
@@ -73,6 +77,8 @@ def materialName : Material → String
   | .calciumChloride => "Calcium chloride"
   | .ironChloride => "Iron chloride"
   | .moltenIron => "Molten iron"
+  | .methane => "Methane"
+  | .carbonMonoxide => "Carbon monoxide"
 
 def isPowder : Material → Bool
   | .sand | .gunpowder | .salt | .ash | .charcoal | .rust | .nitrate | .sulfur | .calciumChloride | .ironChloride => true | _ => false
@@ -81,7 +87,7 @@ def isLiquid : Material → Bool
   | .water | .oil | .acid | .lava | .saltWater | .moltenIron => true | _ => false
 
 def isGas : Material → Bool
-  | .fire | .steam | .smoke | .oxygen | .nitrogen | .carbonDioxide | .hydrogen => true | _ => false
+  | .fire | .steam | .smoke | .oxygen | .nitrogen | .carbonDioxide | .hydrogen | .methane | .carbonMonoxide => true | _ => false
 
 def isFixed : Material → Bool
   | .stone | .wood | .plant | .ice | .glass | .obsidian | .ember | .metal | .limestone => true
@@ -113,6 +119,8 @@ def materialColor : Material → UInt32
   | .calciumChloride => 0xc8d2be
   | .ironChloride => 0xa5b275
   | .moltenIron => 0xf1b45a
+  | .methane => 0x9cb681
+  | .carbonMonoxide => 0x9d7f70
 
 def materialKind (m : Material) : String :=
   if m == .plant then "BIOMASS" else if isPowder m then "POWDER"
@@ -121,7 +129,7 @@ def materialKind (m : Material) : String :=
 theorem decode_encode (m : Material) : decodeMaterial (materialCode m) = m := by
   cases m <;> decide
 
-theorem material_codes_bounded (m : Material) : (materialCode m).toNat < 33 := by
+theorem material_codes_bounded (m : Material) : (materialCode m).toNat < 35 := by
   cases m <;> decide
 
 theorem nonempty_materials_complete (m : Material) : m ∈ materials := by

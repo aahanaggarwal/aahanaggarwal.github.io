@@ -24,6 +24,8 @@ structure Mixture where
   nitrate : Nat := 0
   sulfur : Nat := 0
   sulfide : Nat := 0
+  methane : Nat := 0
+  carbonMonoxide : Nat := 0
   deriving Repr, BEq, Inhabited
 
 structure Atoms where
@@ -55,9 +57,9 @@ theorem Atoms.ext {a b : Atoms}
     : a = b := by cases a; cases b; simp_all
 
 def atoms (m : Mixture) : Atoms := {
-  h := 2*m.water + 2*m.biomass + 2*m.oil + m.acid + 2*m.hydrogen
-  o := m.water + 2*m.oxygen + 2*m.carbonDioxide + m.biomass + 2*m.silica + 3*m.carbonate + 3*m.rust + 3*m.nitrate
-  c := m.carbonDioxide + m.biomass + m.oil + m.carbon + m.carbonate
+  h := 2*m.water + 2*m.biomass + 2*m.oil + m.acid + 2*m.hydrogen + 4*m.methane
+  o := m.water + 2*m.oxygen + 2*m.carbonDioxide + m.biomass + 2*m.silica + 3*m.carbonate + 3*m.rust + 3*m.nitrate + m.carbonMonoxide
+  c := m.carbonDioxide + m.biomass + m.oil + m.carbon + m.carbonate + m.methane + m.carbonMonoxide
   si := m.silica
   na := m.salt
   cl := m.salt + m.acid + 2*m.calciumChloride + 2*m.ironChloride
@@ -73,7 +75,7 @@ def mass (m : Mixture) : Nat :=
   a.h+16*a.o+12*a.c+28*a.si+23*a.na+35*a.cl+40*a.ca+56*a.fe+39*a.k+14*a.n+32*a.s
 
 inductive Reaction where
-  | burnBiomass | burnOil | burnCarbon | burnHydrogen | rustIron | dissolveCarbonate | dissolveIron | gunpowder
+  | burnBiomass | burnOil | burnCarbon | burnHydrogen | rustIron | dissolveCarbonate | dissolveIron | gunpowder | burnMethane | burnCarbonMonoxide | partialMethane
   deriving DecidableEq, BEq, Repr
 
 def permitted (r : Reaction) (m : Mixture) (q : Nat) : Prop := match r with
@@ -85,6 +87,10 @@ def permitted (r : Reaction) (m : Mixture) (q : Nat) : Prop := match r with
   | .dissolveCarbonate => 1*q ≤ m.carbonate ∧ 2*q ≤ m.acid
   | .dissolveIron => 1*q ≤ m.iron ∧ 2*q ≤ m.acid
   | .gunpowder => 2*q ≤ m.nitrate ∧ 1*q ≤ m.sulfur ∧ 3*q ≤ m.carbon
+
+  | .burnMethane => q ≤ m.methane ∧ 2*q ≤ m.oxygen
+  | .burnCarbonMonoxide => 2*q ≤ m.carbonMonoxide ∧ q ≤ m.oxygen
+  | .partialMethane => 2*q ≤ m.methane ∧ 3*q ≤ m.oxygen
 
 instance (r : Reaction) (m : Mixture) (q : Nat) : Decidable (permitted r m q) := by cases r <;> unfold permitted <;> infer_instance
 
@@ -98,6 +104,10 @@ def capacity (r : Reaction) (m : Mixture) : Nat := match r with
   | .dissolveIron => min (m.iron/1) ((m.acid/2))
   | .gunpowder => min (m.nitrate/2) (min (m.sulfur/1) ((m.carbon/3)))
 
+  | .burnMethane => min m.methane (m.oxygen/2)
+  | .burnCarbonMonoxide => min (m.carbonMonoxide/2) m.oxygen
+  | .partialMethane => min (m.methane/2) (m.oxygen/3)
+
 /-- Stoichiometric products; evaluated only when reactants are available. -/
 def products (r : Reaction) (m : Mixture) (q : Nat) : Mixture := match r with
   | .burnBiomass => {m with biomass := m.biomass-1*q, oxygen := m.oxygen-1*q, carbonDioxide := m.carbonDioxide+1*q, water := m.water+1*q}
@@ -108,6 +118,10 @@ def products (r : Reaction) (m : Mixture) (q : Nat) : Mixture := match r with
   | .dissolveCarbonate => {m with carbonate := m.carbonate-1*q, acid := m.acid-2*q, calciumChloride := m.calciumChloride+1*q, water := m.water+1*q, carbonDioxide := m.carbonDioxide+1*q}
   | .dissolveIron => {m with iron := m.iron-1*q, acid := m.acid-2*q, ironChloride := m.ironChloride+1*q, hydrogen := m.hydrogen+1*q}
   | .gunpowder => {m with nitrate := m.nitrate-2*q, sulfur := m.sulfur-1*q, carbon := m.carbon-3*q, sulfide := m.sulfide+1*q, nitrogen := m.nitrogen+1*q, carbonDioxide := m.carbonDioxide+3*q}
+
+  | .burnMethane => {m with methane := m.methane-q,oxygen := m.oxygen-2*q,carbonDioxide := m.carbonDioxide+q,water := m.water+2*q}
+  | .burnCarbonMonoxide => {m with carbonMonoxide := m.carbonMonoxide-2*q,oxygen := m.oxygen-q,carbonDioxide := m.carbonDioxide+2*q}
+  | .partialMethane => {m with methane := m.methane-2*q,oxygen := m.oxygen-3*q,carbonMonoxide := m.carbonMonoxide+2*q,water := m.water+4*q}
 
 def react (r : Reaction) (m : Mixture) (q : Nat) : Mixture :=
   if permitted r m q then products r m q else m
@@ -145,23 +159,5 @@ theorem excess_extent_rejected (r : Reaction) (m : Mixture) (q : Nat)
 
 theorem zero_extent_unchanged (r : Reaction) (m : Mixture) : react r m 0 = m := by
   cases r <;> simp [react,permitted,products]
-
-inductive ReactionSpec (r : Reaction) (before : Mixture) (q : Nat) : Mixture → Prop
-  | occurs (available : permitted r before q) : ReactionSpec r before q (products r before q)
-  | blocked (unavailable : ¬permitted r before q) : ReactionSpec r before q before
-
-theorem reaction_sound (r : Reaction) (m : Mixture) (q : Nat) : ReactionSpec r m q (react r m q) := by
-  unfold react
-  split
-  · exact .occurs (by assumption)
-  · exact .blocked (by assumption)
-
-theorem reaction_complete (r : Reaction) (m out : Mixture) (q : Nat)
-    (spec : ReactionSpec r m q out) : react r m q = out := by
-  cases spec <;> simp_all [react]
-
-theorem reaction_unique (r : Reaction) (m a b : Mixture) (q : Nat)
-    (ha : ReactionSpec r m q a) (hb : ReactionSpec r m q b) : a = b := by
-  rw [← reaction_complete r m a q ha, ← reaction_complete r m b q hb]
 
 end Sand2.Chemistry

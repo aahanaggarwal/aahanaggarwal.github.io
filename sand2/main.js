@@ -230,7 +230,7 @@ export async function run() {
           el('state').textContent = 'ACCURACY LIMIT';
           el('inspect').textContent = 'Physics paused because this scene exceeded the model’s accuracy limit. Undo, edit or clear the scene, then press Play to try again.';
         } else if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
-        el('time').textContent = `${(Number(api.world_time_ms()) / 1000).toFixed(2)} s`;
+        el('time').textContent = `${(Number(api.world_time_ms()) / 1000).toFixed(3)} s`;
         el('count').textContent = count.toLocaleString();
         el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS · ${api.simulation_hz()} Hz`;
         frames = 0; statsTime = time;

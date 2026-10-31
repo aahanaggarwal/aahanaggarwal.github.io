@@ -1,6 +1,6 @@
 import Sand2.State
 import Sand2.Conservation
-import Sand2.PairChemistry
+import Sand2.Stoichiometry
 
 namespace Sand2
 open Chemistry Conservation

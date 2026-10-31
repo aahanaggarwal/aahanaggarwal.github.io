@@ -10,7 +10,7 @@ const api = await loadEngine();
 const decoder = new TextDecoder();
 const text = pointer => decoder.decode(new Uint8Array(api.memory.buffer, pointer, api.world_text_length()));
 const reference = (await readFile(process.argv[2], 'utf8')).trim().split('\n');
-assert.equal(reference.length, 50);
+assert.equal(reference.length, 66);
 api.world_new(24, 20);
 // Exercise repeated lifecycles, including large Nat literals in the fluid
 // kernels. Memory should be reused after warmup, not grow with tick count.
@@ -30,7 +30,7 @@ for (const line of reference) {
   assert.equal(text(api.world_oracle(Number(scene), Number(ticks))), expected.join(';'), `Lean/Wasm mismatch: ${line}`);
 }
 const catalogue = JSON.parse(text(api.world_catalogue()));
-assert.ok(catalogue.length >= 32);
+assert.ok(catalogue.length >= 34);
 for (const {id} of catalogue) {
   api.world_scene(0); api.world_paint(12, 6, 2, id);
   const before = text(api.world_audit());
@@ -40,13 +40,13 @@ for (const {id} of catalogue) {
 }
 api.world_free();
 api.world_new(48, 32);
-for (let scene = 0; scene < 10; scene++) {
+for (let scene = 0; scene < 11; scene++) {
   api.world_scene(scene);
   const budget = text(api.world_audit());
   for (let i = 0; i < 3; i++) api.world_tick();
   assert.equal(text(api.world_audit()), budget, `Default-size scene ${scene} budget drift`);
   assert.equal(api.world_solver_failures(), 0n, `Default-size scene ${scene} accuracy limit`);
-  assert.equal(api.world_time_ms(), 50n, `Default-size scene ${scene} rejected a tick`);
+  assert.equal(api.world_time_ms(), 5n, `Default-size scene ${scene} rejected a tick`);
 }
 api.world_free();
 api.world_new(24, 20);

@@ -83,7 +83,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatterFromInternalEnergy_d__boxed
 static C_l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(0);
-    let x_2: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    let x_2: Obj = rt::lean_alloc_ctor(0, 21, 0);
     rt::lean_ctor_set(x_2, 0, x_1);
     rt::lean_ctor_set(x_2, 1, x_1);
     rt::lean_ctor_set(x_2, 2, x_1);
@@ -103,6 +103,8 @@ unsafe fn l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0__init() -> Obj {
     rt::lean_ctor_set(x_2, 16, x_1);
     rt::lean_ctor_set(x_2, 17, x_1);
     rt::lean_ctor_set(x_2, 18, x_1);
+    rt::lean_ctor_set(x_2, 19, x_1);
+    rt::lean_ctor_set(x_2, 20, x_1);
     return x_2;
 }
 #[inline]
@@ -111,39 +113,39 @@ pub(crate) unsafe fn l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0() -> O
 }
 
 // Lean: Sand2.liquidRequest
-// Source: lean/Sand2/LiquidVolume.lean:102:1
+// Source: lean/Sand2/LiquidVolume.lean:104:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Obj {
     let mut x_4: Obj;
     let mut x_5: Obj;
     'b3: {
-        let x_53: Obj = rt::nat::lean_usize_to_nat(1);
-        let x_54: Obj = l_Sand2_dreferenceLiquidVolume(x_1);
-        let mut x_56: Obj;
-        'b55: {
-            let x_58: u8 = l_Nat_ddecLe(x_53, x_54);
-            match x_58 {
+        let x_55: Obj = rt::nat::lean_usize_to_nat(1);
+        let x_56: Obj = l_Sand2_dreferenceLiquidVolume(x_1);
+        let mut x_58: Obj;
+        'b57: {
+            let x_60: u8 = l_Nat_ddecLe(x_55, x_56);
+            match x_60 {
                 0 => {
-                    x_56 = x_53;
-                    break 'b55;
+                    x_58 = x_55;
+                    break 'b57;
                 }
                 _ => {
-                    rt::lean_inc(x_54);
-                    x_56 = x_54;
-                    break 'b55;
+                    rt::lean_inc(x_56);
+                    x_58 = x_56;
+                    break 'b57;
                 }
             }
         }
-        let x_57: u8 = l_Nat_ddecLe(x_2, x_54);
-        match x_57 {
+        let x_59: u8 = l_Nat_ddecLe(x_2, x_56);
+        match x_59 {
             0 => {
                 rt::lean_dec(x_2);
-                x_4 = x_56;
-                x_5 = x_54;
+                x_4 = x_58;
+                x_5 = x_56;
                 break 'b3;
             }
             _ => {
-                rt::lean_dec(x_54);
-                x_4 = x_56;
+                rt::lean_dec(x_56);
+                x_4 = x_58;
                 x_5 = x_2;
                 break 'b3;
             }
@@ -165,24 +167,28 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
         let x_43: u8 = (!rt::lean_is_exclusive(x_1)) as u8;
         match x_43 {
             0 => {
-                let x_44: Obj = rt::lean_ctor_get(x_1, 17);
+                let x_44: Obj = rt::lean_ctor_get(x_1, 20);
                 rt::lean_dec(x_44);
-                let x_45: Obj = rt::lean_ctor_get(x_1, 15);
+                let x_45: Obj = rt::lean_ctor_get(x_1, 19);
                 rt::lean_dec(x_45);
-                let x_46: Obj = rt::lean_ctor_get(x_1, 13);
+                let x_46: Obj = rt::lean_ctor_get(x_1, 17);
                 rt::lean_dec(x_46);
-                let x_47: Obj = rt::lean_ctor_get(x_1, 10);
+                let x_47: Obj = rt::lean_ctor_get(x_1, 15);
                 rt::lean_dec(x_47);
-                let x_48: Obj = rt::lean_ctor_get(x_1, 6);
+                let x_48: Obj = rt::lean_ctor_get(x_1, 13);
                 rt::lean_dec(x_48);
-                let x_49: Obj = rt::lean_ctor_get(x_1, 4);
+                let x_49: Obj = rt::lean_ctor_get(x_1, 10);
                 rt::lean_dec(x_49);
-                let x_50: Obj = rt::lean_ctor_get(x_1, 3);
+                let x_50: Obj = rt::lean_ctor_get(x_1, 6);
                 rt::lean_dec(x_50);
-                let x_51: Obj = rt::lean_ctor_get(x_1, 2);
+                let x_51: Obj = rt::lean_ctor_get(x_1, 4);
                 rt::lean_dec(x_51);
-                let x_52: Obj = rt::lean_ctor_get(x_1, 1);
+                let x_52: Obj = rt::lean_ctor_get(x_1, 3);
                 rt::lean_dec(x_52);
+                let x_53: Obj = rt::lean_ctor_get(x_1, 2);
+                rt::lean_dec(x_53);
+                let x_54: Obj = rt::lean_ctor_get(x_1, 1);
+                rt::lean_dec(x_54);
                 x_17 = x_1;
                 x_18 = x_43;
                 break 'b16;
@@ -252,6 +258,8 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
     'b40: {
         match x_18 {
             0 => {
+                rt::lean_ctor_set(x_17, 20, x_21);
+                rt::lean_ctor_set(x_17, 19, x_21);
                 rt::lean_ctor_set(x_17, 18, x_39);
                 rt::lean_ctor_set(x_17, 17, x_21);
                 rt::lean_ctor_set(x_17, 16, x_37);
@@ -275,7 +283,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
                 break 'b40;
             }
             _ => {
-                let x_42: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                let x_42: Obj = rt::lean_alloc_ctor(0, 21, 0);
                 rt::lean_ctor_set(x_42, 0, x_20);
                 rt::lean_ctor_set(x_42, 1, x_21);
                 rt::lean_ctor_set(x_42, 2, x_21);
@@ -295,6 +303,8 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
                 rt::lean_ctor_set(x_42, 16, x_37);
                 rt::lean_ctor_set(x_42, 17, x_21);
                 rt::lean_ctor_set(x_42, 18, x_39);
+                rt::lean_ctor_set(x_42, 19, x_21);
+                rt::lean_ctor_set(x_42, 20, x_21);
                 x_41 = x_42;
                 break 'b40;
             }
@@ -304,7 +314,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
 }
 
 // Lean: Sand2.liquidVolume
-// Source: lean/Sand2/LiquidVolume.lean:99:1
+// Source: lean/Sand2/LiquidVolume.lean:101:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dliquidMatter(x_1, x_2, x_3, x_4);
     let x_6: Obj = l_Sand2_dreferenceLiquidVolume(x_5);
@@ -314,7 +324,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume(x_1: Obj, x_2: Obj, x_3: O
 
 // Lean: Sand2.liquidVolume._boxed
 // Compiled from: Sand2.liquidVolume
-// Source: lean/Sand2/LiquidVolume.lean:99:1
+// Source: lean/Sand2/LiquidVolume.lean:101:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dliquidVolume(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_3);
@@ -414,26 +424,30 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
         let x_53: u8 = (!rt::lean_is_exclusive(x_3)) as u8;
         match x_53 {
             0 => {
-                let x_54: Obj = rt::lean_ctor_get(x_3, 17);
+                let x_54: Obj = rt::lean_ctor_get(x_3, 20);
                 rt::lean_dec(x_54);
-                let x_55: Obj = rt::lean_ctor_get(x_3, 15);
+                let x_55: Obj = rt::lean_ctor_get(x_3, 19);
                 rt::lean_dec(x_55);
-                let x_56: Obj = rt::lean_ctor_get(x_3, 13);
+                let x_56: Obj = rt::lean_ctor_get(x_3, 17);
                 rt::lean_dec(x_56);
-                let x_57: Obj = rt::lean_ctor_get(x_3, 10);
+                let x_57: Obj = rt::lean_ctor_get(x_3, 15);
                 rt::lean_dec(x_57);
-                let x_58: Obj = rt::lean_ctor_get(x_3, 6);
+                let x_58: Obj = rt::lean_ctor_get(x_3, 13);
                 rt::lean_dec(x_58);
-                let x_59: Obj = rt::lean_ctor_get(x_3, 4);
+                let x_59: Obj = rt::lean_ctor_get(x_3, 10);
                 rt::lean_dec(x_59);
-                let x_60: Obj = rt::lean_ctor_get(x_3, 3);
+                let x_60: Obj = rt::lean_ctor_get(x_3, 6);
                 rt::lean_dec(x_60);
-                let x_61: Obj = rt::lean_ctor_get(x_3, 2);
+                let x_61: Obj = rt::lean_ctor_get(x_3, 4);
                 rt::lean_dec(x_61);
-                let x_62: Obj = rt::lean_ctor_get(x_3, 1);
+                let x_62: Obj = rt::lean_ctor_get(x_3, 3);
                 rt::lean_dec(x_62);
-                let x_63: Obj = rt::lean_ctor_get(x_3, 0);
+                let x_63: Obj = rt::lean_ctor_get(x_3, 2);
                 rt::lean_dec(x_63);
+                let x_64: Obj = rt::lean_ctor_get(x_3, 1);
+                rt::lean_dec(x_64);
+                let x_65: Obj = rt::lean_ctor_get(x_3, 0);
+                rt::lean_dec(x_65);
                 x_14 = x_3;
                 x_15 = x_53;
                 break 'b13;
@@ -528,14 +542,14 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                 match x_26 {
                     0 => {
                         rt::lean_dec(x_8);
-                        x_45 = x_49;
-                        x_46 = x_50;
+                        x_45 = x_50;
+                        x_46 = x_49;
                         x_47 = x_25;
                         break 'b44;
                     }
                     _ => {
-                        x_45 = x_49;
-                        x_46 = x_50;
+                        x_45 = x_50;
+                        x_46 = x_49;
                         x_47 = x_8;
                         break 'b44;
                     }
@@ -562,18 +576,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
         match x_26 {
             0 => {
                 rt::lean_dec(x_11);
-                x_28 = x_43;
-                x_29 = x_40;
-                x_30 = x_41;
-                x_31 = x_42;
+                x_28 = x_40;
+                x_29 = x_41;
+                x_30 = x_42;
+                x_31 = x_43;
                 x_32 = x_25;
                 break 'b27;
             }
             _ => {
-                x_28 = x_43;
-                x_29 = x_40;
-                x_30 = x_41;
-                x_31 = x_42;
+                x_28 = x_40;
+                x_29 = x_41;
+                x_30 = x_42;
+                x_31 = x_43;
                 x_32 = x_11;
                 break 'b27;
             }
@@ -586,16 +600,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
             'b33: {
                 match x_15 {
                     0 => {
+                        rt::lean_ctor_set(x_14, 20, x_25);
+                        rt::lean_ctor_set(x_14, 19, x_25);
                         rt::lean_ctor_set(x_14, 18, x_25);
                         rt::lean_ctor_set(x_14, 17, x_25);
                         rt::lean_ctor_set(x_14, 16, x_32);
                         rt::lean_ctor_set(x_14, 15, x_25);
-                        rt::lean_ctor_set(x_14, 14, x_28);
+                        rt::lean_ctor_set(x_14, 14, x_31);
                         rt::lean_ctor_set(x_14, 13, x_25);
                         rt::lean_ctor_set(x_14, 12, x_24);
-                        rt::lean_ctor_set(x_14, 11, x_31);
+                        rt::lean_ctor_set(x_14, 11, x_30);
                         rt::lean_ctor_set(x_14, 10, x_25);
-                        rt::lean_ctor_set(x_14, 9, x_30);
+                        rt::lean_ctor_set(x_14, 9, x_28);
                         rt::lean_ctor_set(x_14, 8, x_29);
                         rt::lean_ctor_set(x_14, 7, x_23);
                         rt::lean_ctor_set(x_14, 6, x_25);
@@ -608,7 +624,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                         break 'b33;
                     }
                     _ => {
-                        let x_35: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                        let x_35: Obj = rt::lean_alloc_ctor(0, 21, 0);
                         rt::lean_ctor_set(x_35, 0, x_22);
                         rt::lean_ctor_set(x_35, 1, x_25);
                         rt::lean_ctor_set(x_35, 2, x_25);
@@ -618,16 +634,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                         rt::lean_ctor_set(x_35, 6, x_25);
                         rt::lean_ctor_set(x_35, 7, x_23);
                         rt::lean_ctor_set(x_35, 8, x_29);
-                        rt::lean_ctor_set(x_35, 9, x_30);
+                        rt::lean_ctor_set(x_35, 9, x_28);
                         rt::lean_ctor_set(x_35, 10, x_25);
-                        rt::lean_ctor_set(x_35, 11, x_31);
+                        rt::lean_ctor_set(x_35, 11, x_30);
                         rt::lean_ctor_set(x_35, 12, x_24);
                         rt::lean_ctor_set(x_35, 13, x_25);
-                        rt::lean_ctor_set(x_35, 14, x_28);
+                        rt::lean_ctor_set(x_35, 14, x_31);
                         rt::lean_ctor_set(x_35, 15, x_25);
                         rt::lean_ctor_set(x_35, 16, x_32);
                         rt::lean_ctor_set(x_35, 17, x_25);
                         rt::lean_ctor_set(x_35, 18, x_25);
+                        rt::lean_ctor_set(x_35, 19, x_25);
+                        rt::lean_ctor_set(x_35, 20, x_25);
                         x_34 = x_35;
                         break 'b33;
                     }
@@ -640,15 +658,17 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
             'b36: {
                 match x_15 {
                     0 => {
+                        rt::lean_ctor_set(x_14, 20, x_25);
+                        rt::lean_ctor_set(x_14, 19, x_25);
                         rt::lean_ctor_set(x_14, 17, x_25);
                         rt::lean_ctor_set(x_14, 16, x_32);
                         rt::lean_ctor_set(x_14, 15, x_25);
-                        rt::lean_ctor_set(x_14, 14, x_28);
+                        rt::lean_ctor_set(x_14, 14, x_31);
                         rt::lean_ctor_set(x_14, 13, x_25);
                         rt::lean_ctor_set(x_14, 12, x_24);
-                        rt::lean_ctor_set(x_14, 11, x_31);
+                        rt::lean_ctor_set(x_14, 11, x_30);
                         rt::lean_ctor_set(x_14, 10, x_25);
-                        rt::lean_ctor_set(x_14, 9, x_30);
+                        rt::lean_ctor_set(x_14, 9, x_28);
                         rt::lean_ctor_set(x_14, 8, x_29);
                         rt::lean_ctor_set(x_14, 7, x_23);
                         rt::lean_ctor_set(x_14, 6, x_25);
@@ -661,7 +681,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                         break 'b36;
                     }
                     _ => {
-                        let x_38: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                        let x_38: Obj = rt::lean_alloc_ctor(0, 21, 0);
                         rt::lean_ctor_set(x_38, 0, x_22);
                         rt::lean_ctor_set(x_38, 1, x_25);
                         rt::lean_ctor_set(x_38, 2, x_25);
@@ -671,16 +691,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                         rt::lean_ctor_set(x_38, 6, x_25);
                         rt::lean_ctor_set(x_38, 7, x_23);
                         rt::lean_ctor_set(x_38, 8, x_29);
-                        rt::lean_ctor_set(x_38, 9, x_30);
+                        rt::lean_ctor_set(x_38, 9, x_28);
                         rt::lean_ctor_set(x_38, 10, x_25);
-                        rt::lean_ctor_set(x_38, 11, x_31);
+                        rt::lean_ctor_set(x_38, 11, x_30);
                         rt::lean_ctor_set(x_38, 12, x_24);
                         rt::lean_ctor_set(x_38, 13, x_25);
-                        rt::lean_ctor_set(x_38, 14, x_28);
+                        rt::lean_ctor_set(x_38, 14, x_31);
                         rt::lean_ctor_set(x_38, 15, x_25);
                         rt::lean_ctor_set(x_38, 16, x_32);
                         rt::lean_ctor_set(x_38, 17, x_25);
                         rt::lean_ctor_set(x_38, 18, x_12);
+                        rt::lean_ctor_set(x_38, 19, x_25);
+                        rt::lean_ctor_set(x_38, 20, x_25);
                         x_37 = x_38;
                         break 'b36;
                     }

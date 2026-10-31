@@ -8,7 +8,7 @@ namespace Sand2
 open Chemistry
 
 /-- Constitutive parameters are SI approximations, with one cell = 1 cm and
-    one tick = 1/60 s. Closed boundaries are adiabatic: no ambient heat source. -/
+    one tick = 1/600 s. Closed boundaries are adiabatic: no ambient heat source. -/
 
 
 def mobile (height width i : Nat) (p : Particle) : Bool :=
@@ -36,7 +36,7 @@ def sensibleCapacity (p : Particle) : Int := max 1 (p.capacity+(p.matter.water :
 /-- The executed Fourier flux has the sign of the temperature difference and
     is bounded by one quarter of the smaller sensible capacity. -/
 def conductionFlux (ta tb ca cb k : Int) : Int :=
-  let amount := min ((ta-tb).natAbs*k.toNat*166667)
+  let amount := min (10000000*((ta-tb).natAbs*k.toNat)/ticksPerSecond)
     ((ta-tb).natAbs*(min ca cb).toNat/4)
   if ta >= tb then (amount : Int) else -(amount : Int)
 
@@ -48,8 +48,8 @@ theorem conduction_cannot_heat_the_hotter_cell (ta tb ca cb k : Int) (hot : ta >
 theorem conduction_cannot_cool_the_colder_cell (ta tb ca cb k : Int) (cold : ta < tb) :
     conductionFlux ta tb ca cb k <= 0 := by
   simp only [conductionFlux,show ¬ta >= tb by omega,↓reduceIte]
-  have nonneg := Int.natCast_nonneg (min ((ta-tb).natAbs*k.toNat*166667) ((ta-tb).natAbs*(min ca cb).toNat/4))
-  omega
+  have nonneg := Int.natCast_nonneg (min (10000000*((ta-tb).natAbs*k.toNat)/ticksPerSecond) ((ta-tb).natAbs*(min ca cb).toNat/4))
+  exact Int.neg_nonpos_of_nonneg nonneg
 
 theorem isothermal_cells_exchange_no_heat (t ca cb k : Int) : conductionFlux t t ca cb k = 0 := by
   simp [conductionFlux]
@@ -73,12 +73,16 @@ theorem conduction_flux_bounded (ta tb ca cb k : Int) :
     coarse kinetic model, not instantaneous contact transmutation. -/
 def activation : Reaction → Int
   | .burnBiomass => 28000 | .burnOil => 23000 | .burnCarbon => 50000
-  | .burnHydrogen => 56000 | .gunpowder => 17000
+  | .burnHydrogen => 56000
+  | .burnMethane | .partialMethane => 55000
+  | .burnCarbonMonoxide => 60000 | .gunpowder => 17000
   | .rustIron | .dissolveCarbonate | .dissolveIron => -10000
 
-def rateDivisor : Reaction → Nat
+def baseRateDivisor : Reaction → Nat
   | .rustIron => 100000 | .dissolveCarbonate | .dissolveIron => 200
   | .gunpowder => 6 | _ => 16
+
+def rateDivisor (r : Reaction) : Nat := baseRateDivisor r*ticksPerSecond/60
 
 def reactionExtent (r : Reaction) (m : Mixture) (t : Int) : Nat :=
   if t < activation r then 0 else if capacity r m = 0 then 0 else max 1 (capacity r m / rateDivisor r)
@@ -97,7 +101,12 @@ theorem kinetics_cannot_exceed_reactants (r : Reaction) (m : Mixture) (t : Int) 
       omega
 
 def reactions : List Reaction := [.burnBiomass,.burnOil,.burnCarbon,.burnHydrogen,
-  .rustIron,.dissolveCarbonate,.dissolveIron,.gunpowder]
+  .rustIron,.dissolveCarbonate,.dissolveIron,.gunpowder,.burnMethane,.partialMethane,.burnCarbonMonoxide]
+
+theorem reaction_schedule_is_complete (r : Reaction) : r ∈ reactions := by
+  cases r <;> simp [reactions]
+
+theorem reaction_schedule_has_no_duplicate_families : reactions.Nodup := by decide
 
 def possible (r : Reaction) (a b : Mixture) : Bool := match r with
   | .burnBiomass => a.biomass+b.biomass > 0 && a.oxygen+b.oxygen > 0
@@ -108,9 +117,37 @@ def possible (r : Reaction) (a b : Mixture) : Bool := match r with
   | .dissolveCarbonate => a.carbonate+b.carbonate > 0 && a.acid+b.acid > 0
   | .dissolveIron => a.iron+b.iron > 0 && a.acid+b.acid > 0
   | .gunpowder => a.nitrate+b.nitrate > 0 && a.sulfur+b.sulfur > 0 && a.carbon+b.carbon > 0
+  | .burnMethane => a.methane+b.methane > 0 && a.oxygen+b.oxygen >= 2*(a.methane+b.methane)
+  | .partialMethane => a.methane+b.methane > 0 && a.oxygen+b.oxygen > 0 && a.oxygen+b.oxygen < 2*(a.methane+b.methane)
+  | .burnCarbonMonoxide => a.carbonMonoxide+b.carbonMonoxide > 0 && a.oxygen+b.oxygen > 0
+
+theorem methane_routes_are_exclusive (a b : Mixture) :
+    ¬(possible .burnMethane a b = true ∧ possible .partialMethane a b = true) := by
+  simp only [possible,Bool.and_eq_true,decide_eq_true_eq]
+  omega
+
+theorem methane_routes_cover_all_fuel_oxygen_mixtures (a b : Mixture) :
+    (possible .burnMethane a b || possible .partialMethane a b) =
+      decide (a.methane+b.methane > 0 ∧ a.oxygen+b.oxygen > 0) := by
+  by_cases fuel : a.methane+b.methane > 0
+  · by_cases oxygen : a.oxygen+b.oxygen > 0
+    · by_cases abundant : a.oxygen+b.oxygen >= 2*(a.methane+b.methane)
+      · simp [possible,fuel,oxygen,abundant]
+      · have rich : a.oxygen+b.oxygen < 2*(a.methane+b.methane) := by omega
+        simp [possible,fuel,oxygen,abundant,rich]
+    · have unavailable : ¬a.oxygen+b.oxygen >= 2*(a.methane+b.methane) := by omega
+      simp [possible,fuel,oxygen,unavailable]
+  · simp [possible,fuel]
 
 def reactive (m : Mixture) : Bool :=
-  m.biomass > 0 || m.oil > 0 || m.carbon > 0 || m.iron > 0 || m.acid > 0 || m.nitrate > 0
+  m.biomass > 0 || m.oil > 0 || m.carbon > 0 || m.iron > 0 || m.acid > 0 || m.nitrate > 0 || m.hydrogen > 0 || m.methane > 0 || m.carbonMonoxide > 0
+
+/-- The cheap chemistry filter may never discard an eligible reaction family.
+    This includes hydrogen-only fuel mixtures, not only carbonaceous fuels. -/
+theorem eligible_reaction_passes_fast_filter (r : Reaction) (a b : Mixture)
+    (eligible : possible r a b = true) : reactive a || reactive b = true := by
+  cases r <;> simp only [possible,Bool.and_eq_true,decide_eq_true_eq] at eligible <;>
+    simp only [reactive,Bool.or_eq_true,decide_eq_true_eq] <;> omega
 
 @[noinline] def reactInside (i : Nat) (t : Int) : Physics width height Unit := do
   unless reactive (← Physics.getParticle i).matter do return
@@ -122,7 +159,7 @@ def reactive (m : Mixture) : Bool :=
       if q > 0 then
         Physics.single i fun p =>
           let e := reactionEdit p r q
-          let e : SingleEdit p := ⟨{e.after with luminous := if activation r > 0 then 12 else p.luminous},e.atoms_eq,e.energy_eq⟩
+          let e : SingleEdit p := ⟨{e.after with luminous := if activation r > 0 then ticksPerSecond/5 else p.luminous},e.atoms_eq,e.energy_eq⟩
           safeSingle height width i p e
 
 @[noinline] def reactContact (i j : Nat) (t : Int) : Physics width height Unit := do
@@ -139,7 +176,7 @@ def reactive (m : Mixture) : Bool :=
       if q > 0 then
         Physics.pair i j fun a b =>
           let e := contactEdit a b r q
-          let e : PairEdit a b := ⟨e.first,{e.second with luminous := if activation r > 0 then 12 else b.luminous},e.atoms_eq,e.energy_eq⟩
+          let e : PairEdit a b := ⟨e.first,{e.second with luminous := if activation r > 0 then ticksPerSecond/5 else b.luminous},e.atoms_eq,e.energy_eq⟩
           safePair height width i j a b e
 
 structure ThermalSample where
@@ -231,7 +268,7 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
   if p.stamp == w.generation || !mobile height width start p || gasCell height width start p ||
       liquidVolume height width start p > cellVolume/1000000 then return
   Physics.single start fun p =>
-    let vx := p.vx*995/1000
+    let vx := p.vx*(10*(ticksPerSecond : Int)-3)/(10*(ticksPerSecond : Int))
     let vy := gravityVelocity p.vy
     let px := (p.mass : Int)*vx
     let py := (p.mass : Int)*vy

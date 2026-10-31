@@ -1,6 +1,7 @@
 import Sand2.Mixture
 import Sand2.Fusion
 import Sand2.Saturation
+import Sand2.Mechanics
 
 namespace Sand2
 open Chemistry
@@ -11,7 +12,7 @@ open Chemistry
 def air : Mixture := {oxygen := 8730, nitrogen := 32845}
 
 def dryCapacity (m : Mixture) : Int :=
-  (21062 : Int)*m.oxygen+20806*m.nitrogen+28822*m.carbonDioxide+20286*m.hydrogen +
+  (gasCv m : Int) +
   1700*(30*m.biomass) + 2000*(14*m.oil) + 710*(12*m.carbon) +
   730*(60*m.silica) + 850*(58*m.salt) + 3500*(36*m.acid) +
   840*(100*m.carbonate) + 850*(110*m.calciumChloride) +
@@ -81,6 +82,11 @@ theorem increasing_phase_pressure_cannot_lower_boiling (p : Particle) (pressure 
   rw [p.boiling_eq]
   exact higher_pressure_cannot_lower_boiling_point _ _ higher
 
+theorem increasing_phase_pressure_cannot_lower_fine_boiling (p : Particle) (pressure : Nat)
+    (higher : p.phasePressure <= pressure) : p.boilingFine <= (atPressure p pressure).boilingFine := by
+  rw [p.boilingFine_eq]
+  exact higher_pressure_cannot_lower_fine_boiling_point _ _ higher
+
 def Particle.vx (p : Particle) : Int := p.px / max 1 p.mass
  def Particle.vy (p : Particle) : Int := p.py / max 1 p.mass
 
@@ -132,6 +138,29 @@ def silicaDiagram (p : Particle) : FusionDiagram :=
   let finish := start+silicaFusion p
   ⟨start,finish,by omega⟩
 
+
+theorem iron_fusion_precedes_silica_fusion (p : Particle) :
+    (ironDiagram p).meltEnd <= (silicaDiagram p).meltStart := by
+  have ordered := Nat.mul_le_mul_left (vaporCapacity p) (show 153800 <= 170000 by decide)
+  dsimp [ironDiagram,silicaDiagram]
+  omega
+
+theorem water_vaporization_precedes_mineral_fusion (p : Particle) :
+    (waterDiagram p).boilEnd <= (ironDiagram p).meltStart := by
+  have temperatureBound := fine_boiling_cache_bounded p
+  have liquidProduct := Nat.mul_le_mul_left (liquidCapacity p) temperatureBound
+  have vaporProduct := Nat.mul_le_mul_left (vaporCapacity p) temperatureBound
+  have liquidBound : liquidCapacity p*p.boilingFine/10000 <= 20000*liquidCapacity p := by omega
+  have vaporBound : vaporCapacity p*p.boilingFine/10000 <= 20000*vaporCapacity p := by omega
+  have first : waterFusion p+liquidCapacity p*p.boilingFine/10000 <= vaporReference p+vaporCapacity p*153800 := by
+    dsimp [waterFusion,liquidCapacity,vaporReference,vaporCapacity] at *
+    simp only [Nat.add_mul,Nat.mul_add,Nat.mul_assoc] at *
+    omega
+  have second : vaporReference p+vaporCapacity p*p.boilingFine/10000 <= vaporReference p+vaporCapacity p*153800 := by omega
+  dsimp [waterDiagram,ironDiagram]
+  omega
+
+
 def solidDiagram (p : Particle) : FusionDiagram :=
   if p.matter.iron*56 > p.mass/2 then ironDiagram p else silicaDiagram p
 
@@ -175,7 +204,7 @@ def vaporWaterMoles (height width i : Nat) (p : Particle) : Nat :=
   vaporWaterFromEnthalpy p (thermalEnergy height width i p)
 
 def gasCount (height width i : Nat) (p : Particle) : Nat :=
-  p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vaporWaterMoles height width i p
+  dryGasMoles p.matter+vaporWaterMoles height width i p
 
 theorem vapor_molecules_cannot_exceed_water (p : Particle) :
     vaporWaterMoles height width i p <= p.matter.water := by
@@ -185,7 +214,7 @@ theorem vapor_molecules_cannot_exceed_water (p : Particle) :
   · exact phase_fraction_bounded _ _ _ _
 
 def gasMolecularMass (height width i : Nat) (p : Particle) : Nat :=
-  32*p.matter.oxygen+28*p.matter.nitrogen+44*p.matter.carbonDioxide+2*p.matter.hydrogen+
+  32*p.matter.oxygen+28*p.matter.nitrogen+44*p.matter.carbonDioxide+2*p.matter.hydrogen+16*p.matter.methane+28*p.matter.carbonMonoxide+
   18*vaporWaterMoles height width i p
 
 def condensedMass (height width i : Nat) (p : Particle) : Nat :=
@@ -245,6 +274,8 @@ def matterFor : Material → Mixture
   | .nitrogen => {nitrogen := 41575}
   | .carbonDioxide => {carbonDioxide := 41575}
   | .hydrogen => {hydrogen := 41575}
+  | .methane => {methane := 41575}
+  | .carbonMonoxide => {carbonMonoxide := 41575}
   | .charcoal => {carbon := 25000000}
   | .rust => {rust := 32750000}
   | .nitrate => {nitrate := 20881188}
@@ -266,7 +297,7 @@ def makeAt (height width i : Nat) (m : Material) (anchored : Bool := false) : Pa
   let p := makeParticle matter 0 m anchored
   let p : Particle := {p with
     energy := p.chemical+internalEnergyAt matter m t+potentialEnergy height width i p
-    luminous := (if m == Material.fire || m == Material.ember then 16 else 0)}
+    luminous := (if m == Material.fire || m == Material.ember then 4*ticksPerSecond/15 else 0)}
   {p with mechanicalPressure := if gasCell height width i p then (pressure height width i p).toNat else 101325000}
 
 /-- Fixed dimensions and exact grid shape are carried by the Lean state. -/

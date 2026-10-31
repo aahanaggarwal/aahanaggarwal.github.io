@@ -1,4 +1,5 @@
 import Sand2.Portions
+import Sand2.Mechanics
 
 namespace Sand2
 open Chemistry
@@ -14,7 +15,7 @@ def gasPacket (height width i j : Nat) (source : Particle) (matter : Mixture) : 
   let p := makeParticle matter 0
   let p := {p with px := source.vx*(dm : Int),py := source.vy*(dm : Int)}
   let sensible := internalEnergyAt matter .steam (temperature height width i source)
-  let moles := matter.oxygen+matter.nitrogen+matter.carbonDioxide+matter.hydrogen+matter.water
+  let moles := dryGasMoles matter+matter.water
   let flowWork := (moles : Int)*8314*(temperature height width i source+27315)
   let energy := p.chemical+sensible+flowWork+kineticEnergy p+facePotential height width i j p
   {p with energy}
@@ -47,9 +48,9 @@ theorem identical_gas_mixtures_are_stationary (m : Mixture) (d : Nat) (v : Bool)
     exchangePortions m m (gasPortion m d v) (gasPortion m d v) = (m,m) := by
   simp only [exchangePortions,gasPortion,gas_partition_recombines]
 
-/-- 1/300 exchange per 1/60 s tick at 1 cm spacing corresponds to the rounded
-    ordinary-gas diffusivity 0.2 cm²/s. Hydrogen uses a faster 1/100 exchange. -/
-def diffusionDivisor (a b : Mixture) : Nat := if a.hydrogen+b.hydrogen > 0 then 100 else 300
+/-- 1/3000 exchange per 1/600 s tick at 1 cm spacing corresponds to the rounded
+    ordinary-gas diffusivity 0.2 cm²/s. Hydrogen uses a faster 1/1000 exchange. -/
+def diffusionDivisor (a b : Mixture) : Nat := if a.hydrogen+b.hydrogen > 0 then ticksPerSecond*5/3 else ticksPerSecond*5
 
 theorem diffusion_divisor_positive (a b : Mixture) : diffusionDivisor a b > 0 := by
   unfold diffusionDivisor; split <;> decide

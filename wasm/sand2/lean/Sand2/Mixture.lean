@@ -22,6 +22,8 @@ theorem Mixture.ext {a b : Mixture}
     (h_nitrate : a.nitrate = b.nitrate)
     (h_sulfur : a.sulfur = b.sulfur)
     (h_sulfide : a.sulfide = b.sulfide)
+    (h_methane : a.methane = b.methane)
+    (h_carbonMonoxide : a.carbonMonoxide = b.carbonMonoxide)
     : a = b := by cases a; cases b; simp_all
 
 def add (a b : Mixture) : Mixture := {
@@ -44,6 +46,8 @@ def add (a b : Mixture) : Mixture := {
   nitrate := a.nitrate+b.nitrate
   sulfur := a.sulfur+b.sulfur
   sulfide := a.sulfide+b.sulfide
+  methane := a.methane+b.methane
+  carbonMonoxide := a.carbonMonoxide+b.carbonMonoxide
 }
 
 def sub (a b : Mixture) : Mixture := {
@@ -66,6 +70,8 @@ def sub (a b : Mixture) : Mixture := {
   nitrate := a.nitrate-b.nitrate
   sulfur := a.sulfur-b.sulfur
   sulfide := a.sulfide-b.sulfide
+  methane := a.methane-b.methane
+  carbonMonoxide := a.carbonMonoxide-b.carbonMonoxide
 }
 
 def part (m : Mixture) (divisor : Nat) : Mixture := {
@@ -88,6 +94,8 @@ def part (m : Mixture) (divisor : Nat) : Mixture := {
   nitrate := m.nitrate/(max 1 divisor)
   sulfur := m.sulfur/(max 1 divisor)
   sulfide := m.sulfide/(max 1 divisor)
+  methane := m.methane/(max 1 divisor)
+  carbonMonoxide := m.carbonMonoxide/(max 1 divisor)
 }
 
 def gasPart (m : Mixture) (divisor : Nat) (vapor : Bool) : Mixture := {
@@ -110,6 +118,8 @@ def gasPart (m : Mixture) (divisor : Nat) (vapor : Bool) : Mixture := {
   nitrate := 0
   sulfur := 0
   sulfide := 0
+  methane := m.methane/(max 1 divisor)
+  carbonMonoxide := m.carbonMonoxide/(max 1 divisor)
 }
 
 def atomAdd (a b : Atoms) : Atoms := {
@@ -154,6 +164,8 @@ theorem partition_recombines (m : Mixture) (d : Nat) : add (sub m (part m d)) (p
   · simp only [add,sub,part]; have h := Nat.div_le_self m.nitrate (max 1 d); omega
   · simp only [add,sub,part]; have h := Nat.div_le_self m.sulfur (max 1 d); omega
   · simp only [add,sub,part]; have h := Nat.div_le_self m.sulfide (max 1 d); omega
+  · simp only [add,sub,part]; have h := Nat.div_le_self m.methane (max 1 d); omega
+  · simp only [add,sub,part]; have h := Nat.div_le_self m.carbonMonoxide (max 1 d); omega
 
 def transferGas (a b : Mixture) (d : Nat) (vapor : Bool) : Mixture × Mixture :=
   let q := gasPart a d vapor
@@ -200,6 +212,8 @@ theorem gas_transfer_conserves_molecules (a b : Mixture) (d : Nat) (v : Bool) :
     omega
   · simp only [add,sub,gasPart,transferGas]; have h := Nat.div_le_self a.sulfide (max 1 d)
     omega
+  · simp only [add,sub,gasPart,transferGas]; have h := Nat.div_le_self a.methane (max 1 d); omega
+  · simp only [add,sub,gasPart,transferGas]; have h := Nat.div_le_self a.carbonMonoxide (max 1 d); omega
 
 theorem gas_transfer_conserves_every_element (a b : Mixture) (d : Nat) (v : Bool) :
     atoms (add (transferGas a b d v).1 (transferGas a b d v).2) = atoms (add a b) := by
@@ -209,6 +223,14 @@ theorem gas_transfer_conserves_mass (a b : Mixture) (d : Nat) (v : Bool) :
     mass (transferGas a b d v).1+mass (transferGas a b d v).2 = mass a+mass b := by
   rw [← mixture_add_mass,gas_transfer_conserves_molecules,mixture_add_mass]
 
+/-- All permanent gases share these authoritative count and Cv definitions. -/
+def dryGasMoles (m : Mixture) : Nat :=
+  m.oxygen+m.nitrogen+m.carbonDioxide+m.hydrogen+m.methane+m.carbonMonoxide
+
+def gasCv (m : Mixture) : Nat :=
+  21062*m.oxygen+20806*m.nitrogen+28822*m.carbonDioxide+20286*m.hydrogen+
+  27376*m.methane+20835*m.carbonMonoxide
+
 /-- Rounded formation reference energies (J/mol), with water referred to ice
     at 0 C. Permanent gases include -R*T0 so their cell energy is internal
     energy; phase/sensible energy is added separately. -/
@@ -216,10 +238,10 @@ def chemicalEnergy (m : Mixture) : Int :=
   (-291830*(m.water : Int) -393510*m.carbonDioxide -115900*m.biomass -20000*m.oil
    -910900*m.silica -411120*m.salt -167160*m.acid -1206900*m.carbonate
    -877000*m.calciumChloride -824200*m.rust -341800*m.ironChloride
-   -494600*m.nitrate -414000*m.sulfide)*100000 -
-   8314*27315*((m.oxygen : Int)+m.nitrogen+m.carbonDioxide+m.hydrogen)
+   -494600*m.nitrate -414000*m.sulfide -74870*m.methane -110530*m.carbonMonoxide)*100000 -
+   8314*27315*(dryGasMoles m : Int)
 
 def gasMoles (m : Mixture) (vapor : Bool) : Nat :=
-  m.oxygen+m.nitrogen+m.carbonDioxide+m.hydrogen+(if vapor then m.water else 0)
+  dryGasMoles m+(if vapor then m.water else 0)
 
 end Sand2.Chemistry

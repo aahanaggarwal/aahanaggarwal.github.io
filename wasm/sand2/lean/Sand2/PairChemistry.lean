@@ -22,6 +22,8 @@ def takeFrom (a needed : Mixture) : Mixture := {
   nitrate := min a.nitrate needed.nitrate
   sulfur := min a.sulfur needed.sulfur
   sulfide := min a.sulfide needed.sulfide
+  methane := min a.methane needed.methane
+  carbonMonoxide := min a.carbonMonoxide needed.carbonMonoxide
 }
 
 def reactantInventory (r : Reaction) (q : Nat) : Mixture := match r with
@@ -33,6 +35,9 @@ def reactantInventory (r : Reaction) (q : Nat) : Mixture := match r with
   | .dissolveCarbonate => {carbonate := 1*q, acid := 2*q}
   | .dissolveIron => {iron := 1*q, acid := 2*q}
   | .gunpowder => {nitrate := 2*q, sulfur := 1*q, carbon := 3*q}
+  | .burnMethane => {methane := q,oxygen := 2*q}
+  | .burnCarbonMonoxide => {carbonMonoxide := 2*q,oxygen := q}
+  | .partialMethane => {methane := 2*q,oxygen := 3*q}
 
 def productInventory (r : Reaction) (q : Nat) : Mixture := match r with
   | .burnBiomass => {carbonDioxide := 1*q, water := 1*q}
@@ -43,6 +48,10 @@ def productInventory (r : Reaction) (q : Nat) : Mixture := match r with
   | .dissolveCarbonate => {calciumChloride := 1*q, water := 1*q, carbonDioxide := 1*q}
   | .dissolveIron => {ironChloride := 1*q, hydrogen := 1*q}
   | .gunpowder => {sulfide := 1*q, nitrogen := 1*q, carbonDioxide := 3*q}
+
+  | .burnMethane => {carbonDioxide := q,water := 2*q}
+  | .burnCarbonMonoxide => {carbonDioxide := 2*q}
+  | .partialMethane => {carbonMonoxide := 2*q,water := 4*q}
 
 /-- A contact reaction consumes only the required molecules from each side.
     Unreacted material stays in place. Products appear at the contact side b;
@@ -60,39 +69,8 @@ theorem pair_reaction_matches_stoichiometry (r : Reaction) (a b : Mixture) (q : 
   unfold reactPair react
   by_cases available : permitted r (add a b) q
   · simp only [available,↓reduceIte]
-    cases r with
-    | burnBiomass =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | burnOil =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | burnCarbon =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | burnHydrogen =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | rustIron =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | dissolveCarbonate =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | dissolveIron =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
-    | gunpowder =>
-      simp only [permitted,add] at available
-      apply Mixture.ext <;>
-        dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
+    cases r <;> simp only [permitted,add] at available <;>
+      apply Mixture.ext <;> dsimp [add,sub,takeFrom,reactantInventory,productInventory,products] <;> omega
   · simp only [available,↓reduceIte]
 
 theorem pair_reaction_conserves_every_element (r : Reaction) (a b : Mixture) (q : Nat) :

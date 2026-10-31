@@ -3,8 +3,8 @@ import Std
 namespace Sand2
 
 /-- Each cell is 10,000 micrometres, position uses one million subcell units,
-    velocity is micrometres/second and a timestep is exactly 1/60 second. -/
-def ticksPerSecond : Nat := 60
+    velocity is micrometres/second and a timestep is exactly 1/600 second. -/
+def ticksPerSecond : Nat := 600
 
 def elapsedMilliseconds (steps : Nat) : Nat := steps*1000/ticksPerSecond
 
@@ -21,7 +21,7 @@ def gravityVelocity (v : Int) : Int := min terminalSpeed (v+gravityKick)
 
 /-- Trapezoidal/velocity-Verlet displacement for the old and new velocities.
     Using only the new velocity adds numerical gravitational heating. -/
-def stepDisplacement (before after : Int) : Int := (before+after)*5/6
+def stepDisplacement (before after : Int) : Int := (before+after)/12
 
 theorem displacement_matches_si_units (before after : Int) :
     stepDisplacement before after = (before+after)*1000000/(2*(ticksPerSecond : Int)*10000) := by
@@ -29,8 +29,8 @@ theorem displacement_matches_si_units (before after : Int) :
   omega
 
 theorem displacement_rounding_bounded (before after : Int) :
-    6*stepDisplacement before after <= 5*(before+after) ∧
-    5*(before+after) < 6*(stepDisplacement before after+1) := by
+    12*stepDisplacement before after <= before+after ∧
+    before+after < 12*(stepDisplacement before after+1) := by
   dsimp [stepDisplacement]
   omega
 
@@ -52,7 +52,7 @@ def uniformFall : Nat → Int × Int
     let next := v+gravityKick
     (next,y+stepDisplacement v next)
 
-theorem uniform_fall_velocity (n : Nat) : (uniformFall n).1 = (n : Int)*163500 := by
+theorem uniform_fall_velocity (n : Nat) : (uniformFall n).1 = (n : Int)*16350 := by
   induction n with
   | zero => rfl
   | succ n ih =>
@@ -61,17 +61,24 @@ theorem uniform_fall_velocity (n : Nat) : (uniformFall n).1 = (n : Int)*163500 :
     dsimp [gravityKick,ticksPerSecond]
     omega
 
-theorem uniform_fall_distance (n : Nat) : (uniformFall n).2 = 136250*(n : Int)*(n : Int) := by
+theorem uniform_fall_distance (n : Nat) :
+    2*(uniformFall n).2 = 2725*(n : Int)*(n : Int)-(n : Int) := by
   induction n with
   | zero => rfl
   | succ n ih =>
-    change (uniformFall n).2+stepDisplacement (uniformFall n).1 ((uniformFall n).1+gravityKick) = _
-    rw [ih,uniform_fall_velocity]
-    have displacement : stepDisplacement ((n : Int)*163500) ((n : Int)*163500+gravityKick) = 272500*(n : Int)+136250 := by
+    change 2*((uniformFall n).2+stepDisplacement (uniformFall n).1 ((uniformFall n).1+gravityKick)) = _
+    rw [uniform_fall_velocity]
+    have displacement : stepDisplacement ((n : Int)*16350) ((n : Int)*16350+gravityKick) = 2725*(n : Int)+1362 := by
       dsimp [stepDisplacement,gravityKick,ticksPerSecond]
       omega
     rw [displacement]
-    simp only [Int.natCast_add,Int.natCast_one,Int.mul_add,Int.add_mul,Int.mul_one,Int.mul_assoc]
+    simp only [Int.natCast_add,Int.natCast_one,Int.mul_add,Int.add_mul,Int.mul_one,Int.mul_assoc] at *
     omega
+
+theorem elapsed_milliseconds_rounding_bounded (steps : Nat) :
+    ticksPerSecond*elapsedMilliseconds steps <= steps*1000 ∧
+    steps*1000 < ticksPerSecond*(elapsedMilliseconds steps+1) := by
+  dsimp [elapsedMilliseconds,ticksPerSecond]
+  omega
 
 end Sand2

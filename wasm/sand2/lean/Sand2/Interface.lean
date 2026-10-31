@@ -76,6 +76,10 @@ open Chemistry
   | 9 => -- Communicating vessels: pressure must raise the initially empty arm.
     s := fillRect s (w/2) (h/6) (w/2+1) (h*4/5) .stone
     s := fillRect s 2 (h/6) (w/2) (h-1) .water
+  | 10 => -- Oxygen-poor methane: CO forms, then oxidizes when oxygen arrives.
+    s := fillRect s 1 1 (w-1) (h-1) .methane
+    s := fillRect s (w*2/3) 1 (w-1) (h-1) .oxygen
+    s := fillRect s (w*2/3-1) (h*2/3) (w*2/3+1) (h*2/3+2) .fire
   | _ => pure ()
   return s
 
@@ -104,6 +108,8 @@ def description : Material → String
   | .nitrogen => "N2 at room temperature and atmospheric pressure. Inert within the declared chemistry."
   | .carbonDioxide => "CO2 at room temperature and atmospheric pressure. Diffuses without disappearing."
   | .hydrogen => "H2 at room temperature and atmospheric pressure. Combusts with oxygen when ignited."
+  | .methane => "CH4 gas. Complete combustion forms CO2 and water; oxygen-poor burning can form carbon monoxide."
+  | .carbonMonoxide => "CO gas. An oxygen-poor combustion product that can oxidize to CO2 when heated with oxygen."
   | .charcoal => "Porous carbon grains. Oxidize to CO2 when hot and supplied with oxygen."
   | .rust => "Fe2O3 grains, also produced by oxidation of iron. All iron and oxygen remain accounted for."
   | .nitrate => "KNO3 grains. React with sulfur and carbon in the declared gunpowder reaction."
@@ -191,7 +197,7 @@ def mixHash (h : UInt64) (n : Int) : UInt64 := (h ^^^ (n % 18446744073709551616)
     let m := p.matter
     for v in [m.water,m.oxygen,m.nitrogen,m.carbonDioxide,m.biomass,m.oil,m.carbon,
       m.silica,m.salt,m.acid,m.carbonate,m.calciumChloride,m.iron,m.rust,
-      m.ironChloride,m.hydrogen,m.nitrate,m.sulfur,m.sulfide] do
+      m.ironChloride,m.hydrogen,m.nitrate,m.sulfur,m.sulfide,m.methane,m.carbonMonoxide] do
       h := mixHash h v
     for v in [p.energy,p.px,p.py,p.rx,p.ry,p.luminous,p.stamp,p.mechanicalPressure,p.phasePressure,p.boiling,p.boilingFine,(materialCode p.label).toNat,
       if p.anchored then 1 else 0,if p.fractured then 1 else 0] do
@@ -227,20 +233,20 @@ def solverFailuresSimulation (s : Simulation) : UInt64 := s.world.rejectedFluidS
       hash := (hash ^^^ (floatAt g.pressure i).toBits)*1099511628211
     return hash
   if stage == 1 || stage == 2 then
-    let system := viscositySystem g (1/120) (stage == 2)
+    let system := viscositySystem g (1/floatNat ticksPerSecond) (stage == 2)
     let solved := pressureSolve system 128 0.00000001
     for i in [:s.width*s.height] do
       hash := (hash ^^^ (floatAt solved.values i).toBits)*1099511628211
     return hash
   if stage == 3 || stage == 7 then
-    let velocity := projectFluid g (1/120)
+    let velocity := projectFluid g (1/floatNat ticksPerSecond)
     if stage == 7 then return velocity.iterations.toUInt64
     for i in [:s.width*s.height] do
       hash := (hash ^^^ (floatAt velocity.u i).toBits)*1099511628211
       hash := (hash ^^^ (floatAt velocity.v i).toBits)*1099511628211
       hash := (hash ^^^ (floatAt velocity.pressure i).toBits)*1099511628211
     return hash
-  return digestSimulation {s with world := ((fluidCandidate (1/120)).run s.world).2}
+  return digestSimulation {s with world := ((fluidCandidate (1/floatNat ticksPerSecond)).run s.world).2}
 
 def stepCountSimulation (s : Simulation) : UInt32 := s.world.generation.toUInt32
 

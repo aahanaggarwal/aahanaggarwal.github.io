@@ -343,7 +343,7 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
 }
 
 // Lean: Sand2.fieldBool
-// Source: lean/Sand2/LiquidField.lean:110:1
+// Source: lean/Sand2/LiquidField.lean:109:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfieldBool(x_1: Obj, x_2: Obj) -> u8 {
     let x_3: Obj = l_Array_dsize(rt::lean_box(0), x_1);
     let x_4: u8 = l_Nat_ddecLt(x_2, x_3);
@@ -361,7 +361,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfieldBool(x_1: Obj, x_2: Obj) -> u8 {
 
 // Lean: Sand2.fieldBool._boxed
 // Compiled from: Sand2.fieldBool
-// Source: lean/Sand2/LiquidField.lean:110:1
+// Source: lean/Sand2/LiquidField.lean:109:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfieldBool_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: u8 = l_Sand2_dfieldBool(x_1, x_2);
     rt::lean_dec(x_2);
@@ -371,7 +371,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfieldBool_d__boxed(x_1: Obj, x_2: Obj) 
 }
 
 // Lean: Sand2.fluidFace
-// Source: lean/Sand2/LiquidField.lean:175:1
+// Source: lean/Sand2/LiquidField.lean:174:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace(x_1: Obj, x_2: Obj, x_3: Obj) -> f64 {
     'b4: {
         let x_6: Obj = rt::lean_ctor_get(x_1, 2);
@@ -472,7 +472,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace(x_1: Obj, x_2: Obj, x_3: Obj)
 
 // Lean: Sand2.fluidFace._boxed
 // Compiled from: Sand2.fluidFace
-// Source: lean/Sand2/LiquidField.lean:175:1
+// Source: lean/Sand2/LiquidField.lean:174:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: f64 = l_Sand2_dfluidFace(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -483,7 +483,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace_d__boxed(x_1: Obj, x_2: Obj, 
 }
 
 // Lean: Sand2.fluidGeometry
-// Source: lean/Sand2/LiquidField.lean:112:1
+// Source: lean/Sand2/LiquidField.lean:111:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidGeometry(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Nat_dmul(x_1, x_2);
     let x_5: u8 = 0u8;
@@ -577,7 +577,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidGeometry(x_1: Obj, x_2: Obj, x_3: 
 
 // Lean: Sand2.fluidGeometry._boxed
 // Compiled from: Sand2.fluidGeometry
-// Source: lean/Sand2/LiquidField.lean:112:1
+// Source: lean/Sand2/LiquidField.lean:111:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidGeometry_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Sand2_dfluidGeometry(x_1, x_2, x_3);
     rt::lean_dec_ref(x_3);
@@ -586,7 +586,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidGeometry_d__boxed(x_1: Obj, x_2: O
 
 // Lean: Sand2.fluidGeometry._closed_0
 // Compiled from: Sand2.fluidGeometry
-// Source: lean/Sand2/LiquidField.lean:112:1
+// Source: lean/Sand2/LiquidField.lean:111:1
 static C_l_Sand2_dfluidGeometry_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dfluidGeometry_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(6);
@@ -738,77 +738,47 @@ pub(crate) unsafe extern "C" fn l_Sand2_dgasFreeVolume_d__boxed(x_1: Obj, x_2: O
 // Source: lean/Sand2/LiquidField.lean:42:1
 pub(crate) unsafe extern "C" fn l_Sand2_dgasGamma(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> f64 {
     let x_5: Obj = rt::lean_ctor_get(x_4, 0);
-    let x_6: Obj = rt::lean_ctor_get(x_5, 1);
-    rt::lean_inc(x_6);
-    let x_7: Obj = rt::lean_ctor_get(x_5, 2);
-    rt::lean_inc(x_7);
-    let x_8: Obj = rt::lean_ctor_get(x_5, 3);
-    rt::lean_inc(x_8);
-    let x_9: Obj = rt::lean_ctor_get(x_5, 15);
-    rt::lean_inc(x_9);
-    let x_10: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_4);
-    let x_11: Obj = l_Nat_dadd(x_6, x_7);
-    let x_12: Obj = l_Nat_dadd(x_11, x_8);
-    rt::lean_dec(x_11);
-    let x_13: Obj = l_Nat_dadd(x_12, x_9);
-    rt::lean_dec(x_12);
-    let x_14: Obj = l_Nat_dadd(x_13, x_10);
-    rt::lean_dec(x_13);
-    let x_15: Obj = rt::nat::lean_usize_to_nat(21062);
-    let x_16: Obj = l_Nat_dmul(x_15, x_6);
-    rt::lean_dec(x_6);
-    let x_17: Obj = rt::nat::lean_usize_to_nat(20806);
-    let x_18: Obj = l_Nat_dmul(x_17, x_7);
+    rt::lean_inc_ref(x_5);
+    let x_6: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_4);
+    let x_7: Obj = l_Sand2_dChemistry_ddryGasMoles(x_5);
+    let x_8: Obj = l_Nat_dadd(x_7, x_6);
     rt::lean_dec(x_7);
-    let x_19: Obj = l_Nat_dadd(x_16, x_18);
-    rt::lean_dec(x_18);
-    rt::lean_dec(x_16);
-    let x_20: Obj = rt::nat::lean_usize_to_nat(28822);
-    let x_21: Obj = l_Nat_dmul(x_20, x_8);
-    rt::lean_dec(x_8);
-    let x_22: Obj = l_Nat_dadd(x_19, x_21);
-    rt::lean_dec(x_21);
-    rt::lean_dec(x_19);
-    let x_23: Obj = rt::nat::lean_usize_to_nat(20286);
-    let x_24: Obj = l_Nat_dmul(x_23, x_9);
+    let x_9: Obj = l_Sand2_dChemistry_dgasCv(x_5);
+    rt::lean_dec_ref(x_5);
+    let x_10: Obj = rt::nat::lean_usize_to_nat(27686);
+    let x_11: Obj = l_Nat_dmul(x_10, x_6);
+    rt::lean_dec(x_6);
+    let x_12: Obj = l_Nat_dadd(x_9, x_11);
+    rt::lean_dec(x_11);
     rt::lean_dec(x_9);
-    let x_25: Obj = l_Nat_dadd(x_22, x_24);
-    rt::lean_dec(x_24);
-    rt::lean_dec(x_22);
-    let x_26: Obj = rt::nat::lean_usize_to_nat(27686);
-    let x_27: Obj = l_Nat_dmul(x_26, x_10);
-    rt::lean_dec(x_10);
-    let x_28: Obj = l_Nat_dadd(x_25, x_27);
-    rt::lean_dec(x_27);
-    rt::lean_dec(x_25);
-    let x_29: Obj = rt::nat::lean_usize_to_nat(1);
-    let x_30: f64 = l_Sand2_dgasGamma_d__closed__0();
-    let x_31: f64 = l_Sand2_dgasGamma_d__closed__1();
-    let x_32: u64 = l_UInt64_dofNat(x_14);
-    rt::lean_dec(x_14);
-    let x_33: f64 = l_UInt64_dtoFloat(x_32);
-    let x_34: f64 = l_Float_dmul(x_31, x_33);
-    let mut x_36: Obj;
-    'b35: {
-        let x_41: u8 = l_Nat_ddecLe(x_29, x_28);
-        match x_41 {
+    let x_13: Obj = rt::nat::lean_usize_to_nat(1);
+    let x_14: f64 = l_Sand2_dgasGamma_d__closed__0();
+    let x_15: f64 = l_Sand2_dgasGamma_d__closed__1();
+    let x_16: u64 = l_UInt64_dofNat(x_8);
+    rt::lean_dec(x_8);
+    let x_17: f64 = l_UInt64_dtoFloat(x_16);
+    let x_18: f64 = l_Float_dmul(x_15, x_17);
+    let mut x_20: Obj;
+    'b19: {
+        let x_25: u8 = l_Nat_ddecLe(x_13, x_12);
+        match x_25 {
             0 => {
-                rt::lean_dec(x_28);
-                x_36 = x_29;
-                break 'b35;
+                rt::lean_dec(x_12);
+                x_20 = x_13;
+                break 'b19;
             }
             _ => {
-                x_36 = x_28;
-                break 'b35;
+                x_20 = x_12;
+                break 'b19;
             }
         }
     }
-    let x_37: u64 = l_UInt64_dofNat(x_36);
-    rt::lean_dec(x_36);
-    let x_38: f64 = l_UInt64_dtoFloat(x_37);
-    let x_39: f64 = l_Float_ddiv(x_34, x_38);
-    let x_40: f64 = l_Float_dadd(x_30, x_39);
-    return x_40;
+    let x_21: u64 = l_UInt64_dofNat(x_20);
+    rt::lean_dec(x_20);
+    let x_22: f64 = l_UInt64_dtoFloat(x_21);
+    let x_23: f64 = l_Float_ddiv(x_18, x_22);
+    let x_24: f64 = l_Float_dadd(x_14, x_23);
+    return x_24;
 }
 
 // Lean: Sand2.gasGamma._boxed
@@ -852,7 +822,7 @@ pub(crate) unsafe fn l_Sand2_dgasGamma_d__closed__1() -> f64 {
 }
 
 // Lean: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:147:1
+// Source: lean/Sand2/LiquidField.lean:146:1
 pub(crate) unsafe extern "C" fn l_Sand2_dharmonic(x_1: f64, x_2: f64) -> f64 {
     let x_3: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
     let x_4: f64 = l_Float_dmul(x_3, x_1);
@@ -874,7 +844,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dharmonic(x_1: f64, x_2: f64) -> f64 {
 
 // Lean: Sand2.harmonic._boxed
 // Compiled from: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:147:1
+// Source: lean/Sand2/LiquidField.lean:146:1
 pub(crate) unsafe extern "C" fn l_Sand2_dharmonic_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: f64 = rt::lean_unbox_float(x_1);
     rt::lean_dec_ref(x_1);
@@ -887,7 +857,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dharmonic_d__boxed(x_1: Obj, x_2: Obj) -
 
 // Lean: Sand2.harmonic._closed_0
 // Compiled from: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:147:1
+// Source: lean/Sand2/LiquidField.lean:146:1
 static C_l_Sand2_dharmonic_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dharmonic_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(12);
@@ -914,7 +884,7 @@ pub(crate) unsafe fn l_Sand2_dliquidBulkModulus() -> Obj {
 }
 
 // Lean: Sand2.liquidReferencePressure
-// Source: lean/Sand2/LiquidField.lean:49:1
+// Source: lean/Sand2/LiquidField.lean:48:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidReferencePressure(x_1: Obj) -> Obj {
     let x_2: Obj = rt::nat::lean_usize_to_nat(220);
     let x_3: Obj = l_Nat_dmul(x_1, x_2);
@@ -929,7 +899,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidReferencePressure(x_1: Obj) -> Ob
 
 // Lean: Sand2.liquidReferencePressure._boxed
 // Compiled from: Sand2.liquidReferencePressure
-// Source: lean/Sand2/LiquidField.lean:49:1
+// Source: lean/Sand2/LiquidField.lean:48:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidReferencePressure_d__boxed(x_1: Obj) -> Obj {
     let x_2: Obj = l_Sand2_dliquidReferencePressure(x_1);
     rt::lean_dec(x_1);
@@ -1020,7 +990,7 @@ pub(crate) unsafe fn l_Sand2_dliquidViscosity_d__closed__1() -> f64 {
 }
 
 // Lean: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let mut x_5: f64;
     let mut x_6: f64;
@@ -1097,18 +1067,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure(x_1: Obj, x_2: Ob
                 match x_34 {
                     0 => {
                         let x_35: u8 = l_Float_disInf(x_33);
-                        x_16 = x_28;
+                        x_16 = x_27;
                         x_17 = x_25;
-                        x_18 = x_33;
-                        x_19 = x_27;
+                        x_18 = x_28;
+                        x_19 = x_33;
                         x_20 = x_35;
                         break 'b15;
                     }
                     _ => {
-                        x_16 = x_28;
+                        x_16 = x_27;
                         x_17 = x_25;
-                        x_18 = x_33;
-                        x_19 = x_27;
+                        x_18 = x_28;
+                        x_19 = x_33;
                         x_20 = x_34;
                         break 'b15;
                     }
@@ -1116,38 +1086,38 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure(x_1: Obj, x_2: Ob
             }
             match x_20 {
                 0 => {
-                    let x_21: u8 = l_Float_ddecLt(x_16, x_18);
+                    let x_21: u8 = l_Float_ddecLt(x_18, x_19);
                     match x_21 {
                         0 => {
-                            x_11 = x_17;
-                            x_12 = x_19;
-                            x_13 = x_18;
+                            x_11 = x_16;
+                            x_12 = x_17;
+                            x_13 = x_19;
                             break 'b10;
                         }
                         _ => {
-                            x_11 = x_17;
-                            x_12 = x_19;
-                            x_13 = x_16;
+                            x_11 = x_16;
+                            x_12 = x_17;
+                            x_13 = x_18;
                             break 'b10;
                         }
                     }
                 }
                 _ => {
                     x_5 = x_17;
-                    x_6 = x_19;
+                    x_6 = x_16;
                     break 'b4;
                 }
             }
         }
-        let x_14: u8 = l_Float_ddecLt(x_12, x_13);
+        let x_14: u8 = l_Float_ddecLt(x_11, x_13);
         match x_14 {
             0 => {
-                x_5 = x_11;
-                x_6 = x_12;
+                x_5 = x_12;
+                x_6 = x_11;
                 break 'b4;
             }
             _ => {
-                x_5 = x_11;
+                x_5 = x_12;
                 x_6 = x_13;
                 break 'b4;
             }
@@ -1161,7 +1131,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure(x_1: Obj, x_2: Ob
 
 // Lean: Sand2.mechanicalEOSPressure._boxed
 // Compiled from: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Sand2_dmechanicalEOSPressure(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -1171,7 +1141,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalEOSPressure_d__boxed(x_1: Obj
 
 // Lean: Sand2.mechanicalEOSPressure._closed_0
 // Compiled from: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 static C_l_Sand2_dmechanicalEOSPressure_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(1000);
@@ -1185,7 +1155,7 @@ pub(crate) unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__0() -> f64 {
 
 // Lean: Sand2.mechanicalEOSPressure._closed_1
 // Compiled from: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 static C_l_Sand2_dmechanicalEOSPressure_d__closed__1: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__1__init() -> f64 {
     let x_1: Obj = __sand2_nat_literal_53616e64322d4c69717569644669656c642e7273_1000000000000();
@@ -1199,7 +1169,7 @@ pub(crate) unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__1() -> f64 {
 
 // Lean: Sand2.mechanicalEOSPressure._closed_2
 // Compiled from: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 static C_l_Sand2_dmechanicalEOSPressure_d__closed__2: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__2__init() -> f64 {
     let x_1: u64 = 10000000000u64;
@@ -1213,7 +1183,7 @@ pub(crate) unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__2() -> f64 {
 
 // Lean: Sand2.mechanicalEOSPressure._closed_3
 // Compiled from: Sand2.mechanicalEOSPressure
-// Source: lean/Sand2/LiquidField.lean:84:1
+// Source: lean/Sand2/LiquidField.lean:83:1
 static C_l_Sand2_dmechanicalEOSPressure_d__closed__3: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__3__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(0);
@@ -1226,36 +1196,28 @@ pub(crate) unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__3() -> Obj {
 }
 
 // Lean: Sand2.mechanicalPressureFromInternalEnergy
-// Source: lean/Sand2/LiquidField.lean:93:1
+// Source: lean/Sand2/LiquidField.lean:92:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalPressureFromInternalEnergy(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
-    let x_4: Obj = rt::lean_ctor_get(x_3, 1);
-    let x_5: Obj = rt::lean_ctor_get(x_3, 2);
-    let x_6: Obj = rt::lean_ctor_get(x_3, 3);
-    let x_7: Obj = rt::lean_ctor_get(x_3, 15);
-    let x_8: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_1, x_2);
-    let x_9: Obj = l_Nat_dadd(x_4, x_5);
-    let x_10: Obj = l_Nat_dadd(x_9, x_6);
-    rt::lean_dec(x_9);
-    let x_11: Obj = l_Nat_dadd(x_10, x_7);
-    rt::lean_dec(x_10);
-    let x_12: Obj = l_Nat_dadd(x_11, x_8);
-    rt::lean_dec(x_8);
-    rt::lean_dec(x_11);
+    let x_4: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_1, x_2);
+    let x_5: Obj = l_Sand2_dChemistry_ddryGasMoles(x_3);
+    let x_6: Obj = l_Nat_dadd(x_5, x_4);
+    rt::lean_dec(x_4);
+    rt::lean_dec(x_5);
     rt::lean_inc_ref(x_1);
-    let x_13: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_1, x_2);
-    let x_14: Obj = l_Sand2_dreferenceLiquidVolume(x_13);
-    rt::lean_dec_ref(x_13);
-    let x_15: Obj = l_Sand2_dtemperatureFromEnthalpy(x_1, x_2);
-    let x_16: Obj = l_Sand2_dmechanicalEOSPressure(x_14, x_12, x_15);
-    rt::lean_dec(x_15);
-    rt::lean_dec(x_14);
-    return x_16;
+    let x_7: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_1, x_2);
+    let x_8: Obj = l_Sand2_dreferenceLiquidVolume(x_7);
+    rt::lean_dec_ref(x_7);
+    let x_9: Obj = l_Sand2_dtemperatureFromEnthalpy(x_1, x_2);
+    let x_10: Obj = l_Sand2_dmechanicalEOSPressure(x_8, x_6, x_9);
+    rt::lean_dec(x_9);
+    rt::lean_dec(x_8);
+    return x_10;
 }
 
 // Lean: Sand2.mechanicalPressureFromInternalEnergy._boxed
 // Compiled from: Sand2.mechanicalPressureFromInternalEnergy
-// Source: lean/Sand2/LiquidField.lean:93:1
+// Source: lean/Sand2/LiquidField.lean:92:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalPressureFromInternalEnergy_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_Sand2_dmechanicalPressureFromInternalEnergy(x_1, x_2);
     rt::lean_dec(x_2);
@@ -1263,7 +1225,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalPressureFromInternalEnergy_d_
 }
 
 // Lean: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmixtureEOSPressure(x_1: f64, x_2: f64) -> f64 {
     let x_3: f64 = l_Sand2_dmixtureEOSPressure_d__closed__0();
     let x_4: f64 = l_Sand2_dmixtureEOSPressure_d__closed__2();
@@ -1309,7 +1271,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmixtureEOSPressure(x_1: f64, x_2: f64) 
 
 // Lean: Sand2.mixtureEOSPressure._boxed
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmixtureEOSPressure_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: f64 = rt::lean_unbox_float(x_1);
     rt::lean_dec_ref(x_1);
@@ -1322,7 +1284,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmixtureEOSPressure_d__boxed(x_1: Obj, x
 
 // Lean: Sand2.mixtureEOSPressure._closed_0
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(2200000000);
@@ -1336,7 +1298,7 @@ pub(crate) unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__0() -> f64 {
 
 // Lean: Sand2.mixtureEOSPressure._closed_1
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__1: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__1__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(101325);
@@ -1350,7 +1312,7 @@ pub(crate) unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__1() -> f64 {
 
 // Lean: Sand2.mixtureEOSPressure._closed_2
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__2: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__2__init() -> f64 {
     let x_1: f64 = l_Sand2_dmixtureEOSPressure_d__closed__1();
@@ -1365,7 +1327,7 @@ pub(crate) unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__2() -> f64 {
 
 // Lean: Sand2.mixtureEOSPressure._closed_3
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__3: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__3__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(4);
@@ -1379,7 +1341,7 @@ pub(crate) unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__3() -> f64 {
 
 // Lean: Sand2.mixtureEOSPressure._closed_4
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__4: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__4__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(0);
@@ -1393,7 +1355,7 @@ pub(crate) unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__4() -> f64 {
 
 // Lean: Sand2.mixtureEOSPressure._closed_5
 // Compiled from: Sand2.mixtureEOSPressure
-// Source: lean/Sand2/LiquidField.lean:53:1
+// Source: lean/Sand2/LiquidField.lean:52:1
 static C_l_Sand2_dmixtureEOSPressure_d__closed__5: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dmixtureEOSPressure_d__closed__5__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(2);
@@ -1437,7 +1399,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_doccupiedLiquidVolume_d__boxed(x_1: Obj,
 }
 
 // Lean: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:191:1
+// Source: lean/Sand2/LiquidField.lean:190:1
 pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
     rt::lean_inc(x_3);
@@ -1677,7 +1639,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj
 
 // Lean: Sand2.projectFluid._boxed
 // Compiled from: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:191:1
+// Source: lean/Sand2/LiquidField.lean:190:1
 pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: f64 = rt::lean_unbox_float(x_2);
     rt::lean_dec_ref(x_2);
@@ -1687,7 +1649,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid_d__boxed(x_1: Obj, x_2: Ob
 
 // Lean: Sand2.projectFluid._closed_0
 // Compiled from: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:191:1
+// Source: lean/Sand2/LiquidField.lean:190:1
 static C_l_Sand2_dprojectFluid_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dprojectFluid_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(8);
@@ -1702,7 +1664,7 @@ pub(crate) unsafe fn l_Sand2_dprojectFluid_d__closed__0() -> f64 {
 }
 
 // Lean: Sand2.quantizedLiquidPressure
-// Source: lean/Sand2/LiquidField.lean:63:1
+// Source: lean/Sand2/LiquidField.lean:62:1
 pub(crate) unsafe extern "C" fn l_Sand2_dquantizedLiquidPressure(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_Sand2_dliquidReferencePressure(x_1);
     let x_4: Obj = rt::nat::lean_usize_to_nat(40000);
@@ -1733,7 +1695,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dquantizedLiquidPressure(x_1: Obj, x_2: 
 
 // Lean: Sand2.quantizedLiquidPressure._boxed
 // Compiled from: Sand2.quantizedLiquidPressure
-// Source: lean/Sand2/LiquidField.lean:63:1
+// Source: lean/Sand2/LiquidField.lean:62:1
 pub(crate) unsafe extern "C" fn l_Sand2_dquantizedLiquidPressure_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_Sand2_dquantizedLiquidPressure(x_1, x_2);
     rt::lean_dec(x_2);
@@ -1742,7 +1704,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dquantizedLiquidPressure_d__boxed(x_1: O
 }
 
 // Lean: Sand2.viscositySystem
-// Source: lean/Sand2/LiquidField.lean:149:1
+// Source: lean/Sand2/LiquidField.lean:148:1
 pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem(x_1: Obj, x_2: f64, x_3: u8) -> Obj {
     let x_4: Obj = rt::lean_ctor_get(x_1, 0);
     rt::lean_inc_n(x_4, 2);
@@ -1803,7 +1765,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem(x_1: Obj, x_2: f64, x_3
 
 // Lean: Sand2.viscositySystem._boxed
 // Compiled from: Sand2.viscositySystem
-// Source: lean/Sand2/LiquidField.lean:149:1
+// Source: lean/Sand2/LiquidField.lean:148:1
 pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: f64 = rt::lean_unbox_float(x_2);
     rt::lean_dec_ref(x_2);
@@ -2089,48 +2051,48 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             let x_58: Obj = rt::lean_box(x_13 as usize);
                             let x_59: Obj = l_Array_dset_x21_(rt::lean_box(0), x_20, x_6, x_58);
                             let mut x_61: Obj;
-                            let mut x_62: Obj;
-                            let mut x_63: f64;
+                            let mut x_62: f64;
+                            let mut x_63: Obj;
                             let mut x_64: Obj;
                             let mut x_65: Obj;
-                            let mut x_66: f64;
+                            let mut x_66: Obj;
                             let mut x_67: Obj;
-                            let mut x_68: Obj;
+                            let mut x_68: f64;
                             let mut x_69: f64;
                             let mut x_70: f64;
                             'b60: {
                                 let mut x_97: Obj;
-                                let mut x_98: f64;
+                                let mut x_98: Obj;
                                 let mut x_99: Obj;
                                 let mut x_100: f64;
-                                let mut x_101: f64;
-                                let mut x_102: Obj;
-                                let mut x_103: Obj;
+                                let mut x_101: Obj;
+                                let mut x_102: f64;
+                                let mut x_103: f64;
                                 let mut x_104: f64;
                                 let mut x_105: f64;
                                 let mut x_106: f64;
                                 'b96: {
-                                    let mut x_113: f64;
+                                    let mut x_113: Obj;
                                     let mut x_114: Obj;
                                     let mut x_115: f64;
                                     let mut x_116: Obj;
-                                    let mut x_117: f64;
-                                    let mut x_118: Obj;
+                                    let mut x_117: Obj;
+                                    let mut x_118: f64;
                                     let mut x_119: f64;
-                                    let mut x_120: Obj;
+                                    let mut x_120: f64;
                                     let mut x_121: f64;
                                     let mut x_122: f64;
                                     let mut x_123: f64;
                                     'b112: {
-                                        let mut x_126: Obj;
-                                        let mut x_127: f64;
+                                        let mut x_126: f64;
+                                        let mut x_127: Obj;
                                         let mut x_128: f64;
                                         let mut x_129: Obj;
-                                        let mut x_130: f64;
+                                        let mut x_130: Obj;
                                         let mut x_131: f64;
-                                        let mut x_132: f64;
-                                        let mut x_133: Obj;
-                                        let mut x_134: Obj;
+                                        let mut x_132: Obj;
+                                        let mut x_133: f64;
+                                        let mut x_134: f64;
                                         let mut x_135: f64;
                                         let mut x_136: f64;
                                         let mut x_137: f64;
@@ -2138,26 +2100,26 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         'b125: {
                                             let mut x_141: f64;
                                             let mut x_142: Obj;
-                                            let mut x_143: f64;
+                                            let mut x_143: Obj;
                                             let mut x_144: f64;
                                             let mut x_145: Obj;
-                                            let mut x_146: f64;
-                                            let mut x_147: Obj;
+                                            let mut x_146: Obj;
+                                            let mut x_147: f64;
                                             let mut x_148: f64;
-                                            let mut x_149: Obj;
+                                            let mut x_149: f64;
                                             let mut x_150: f64;
                                             let mut x_151: f64;
                                             let mut x_152: f64;
                                             let mut x_153: f64;
                                             'b140: {
                                                 let mut x_158: f64;
-                                                let mut x_159: f64;
+                                                let mut x_159: Obj;
                                                 let mut x_160: f64;
                                                 let mut x_161: Obj;
-                                                let mut x_162: f64;
-                                                let mut x_163: Obj;
+                                                let mut x_162: Obj;
+                                                let mut x_163: f64;
                                                 let mut x_164: f64;
-                                                let mut x_165: Obj;
+                                                let mut x_165: f64;
                                                 let mut x_166: f64;
                                                 let mut x_167: f64;
                                                 let mut x_168: f64;
@@ -2166,10 +2128,10 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     let mut x_182: f64;
                                                     let mut x_183: Obj;
                                                     let mut x_184: f64;
-                                                    let mut x_185: f64;
+                                                    let mut x_185: Obj;
                                                     let mut x_186: f64;
                                                     let mut x_187: Obj;
-                                                    let mut x_188: Obj;
+                                                    let mut x_188: f64;
                                                     let mut x_189: f64;
                                                     let mut x_190: f64;
                                                     let mut x_191: f64;
@@ -2177,26 +2139,26 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     let mut x_193: f64;
                                                     'b181: {
                                                         let mut x_196: f64;
-                                                        let mut x_197: f64;
-                                                        let mut x_198: Obj;
-                                                        let mut x_199: f64;
-                                                        let mut x_200: f64;
-                                                        let mut x_201: Obj;
+                                                        let mut x_197: Obj;
+                                                        let mut x_198: f64;
+                                                        let mut x_199: Obj;
+                                                        let mut x_200: Obj;
+                                                        let mut x_201: f64;
                                                         let mut x_202: f64;
                                                         let mut x_203: f64;
-                                                        let mut x_204: Obj;
+                                                        let mut x_204: f64;
                                                         let mut x_205: f64;
                                                         let mut x_206: f64;
                                                         let mut x_207: f64;
                                                         let mut x_208: u8;
                                                         'b195: {
                                                             let mut x_211: f64;
-                                                            let mut x_212: f64;
-                                                            let mut x_213: Obj;
-                                                            let mut x_214: f64;
+                                                            let mut x_212: Obj;
+                                                            let mut x_213: f64;
+                                                            let mut x_214: Obj;
                                                             let mut x_215: f64;
                                                             let mut x_216: Obj;
-                                                            let mut x_217: Obj;
+                                                            let mut x_217: f64;
                                                             let mut x_218: f64;
                                                             let mut x_219: f64;
                                                             let mut x_220: f64;
@@ -2205,31 +2167,31 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             'b210: {
                                                                 rt::lean_inc_ref_n(x_49, 2);
                                                                 let x_226: Obj = l_Sand2_dliquidMatter(x_2, x_1, x_6, x_49);
-                                                                let mut x_228: f64;
-                                                                let mut x_229: f64;
+                                                                let mut x_228: Obj;
+                                                                let mut x_229: Obj;
                                                                 let mut x_230: f64;
-                                                                let mut x_231: Obj;
-                                                                let mut x_232: Obj;
+                                                                let mut x_231: f64;
+                                                                let mut x_232: f64;
                                                                 let mut x_233: f64;
                                                                 let mut x_234: f64;
                                                                 let mut x_235: f64;
                                                                 'b227: {
-                                                                    let mut x_256: f64;
+                                                                    let mut x_256: Obj;
                                                                     let mut x_257: f64;
-                                                                    let mut x_258: f64;
+                                                                    let mut x_258: Obj;
                                                                     let mut x_259: f64;
-                                                                    let mut x_260: Obj;
-                                                                    let mut x_261: Obj;
+                                                                    let mut x_260: f64;
+                                                                    let mut x_261: f64;
                                                                     let mut x_262: f64;
                                                                     let mut x_263: f64;
                                                                     let mut x_264: f64;
                                                                     'b255: {
-                                                                        let mut x_267: f64;
+                                                                        let mut x_267: Obj;
                                                                         let mut x_268: f64;
-                                                                        let mut x_269: f64;
+                                                                        let mut x_269: Obj;
                                                                         let mut x_270: f64;
-                                                                        let mut x_271: Obj;
-                                                                        let mut x_272: Obj;
+                                                                        let mut x_271: f64;
+                                                                        let mut x_272: f64;
                                                                         let mut x_273: f64;
                                                                         let mut x_274: f64;
                                                                         let mut x_275: f64;
@@ -2301,14 +2263,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                                     match x_338 {
                                                                                                         0 => {
                                                                                                             let x_339: u8 = l_Float_disInf(x_337);
-                                                                                                            x_327 = x_333;
-                                                                                                            x_328 = x_337;
+                                                                                                            x_327 = x_337;
+                                                                                                            x_328 = x_333;
                                                                                                             x_329 = x_339;
                                                                                                             break 'b326;
                                                                                                         }
                                                                                                         _ => {
-                                                                                                            x_327 = x_333;
-                                                                                                            x_328 = x_337;
+                                                                                                            x_327 = x_337;
+                                                                                                            x_328 = x_333;
                                                                                                             x_329 = x_338;
                                                                                                             break 'b326;
                                                                                                         }
@@ -2316,14 +2278,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                                 }
                                                                                                 match x_329 {
                                                                                                     0 => {
-                                                                                                        let x_330: u8 = l_Float_ddecLt(x_327, x_328);
+                                                                                                        let x_330: u8 = l_Float_ddecLt(x_328, x_327);
                                                                                                         match x_330 {
                                                                                                             0 => {
-                                                                                                                x_324 = x_328;
+                                                                                                                x_324 = x_327;
                                                                                                                 break 'b323;
                                                                                                             }
                                                                                                             _ => {
-                                                                                                                x_324 = x_327;
+                                                                                                                x_324 = x_328;
                                                                                                                 break 'b323;
                                                                                                             }
                                                                                                         }
@@ -2356,17 +2318,17 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                         match x_321 {
                                                                                             0 => {
                                                                                                 let x_322: u8 = l_Float_disInf(x_320);
-                                                                                                x_302 = x_314;
+                                                                                                x_302 = x_320;
                                                                                                 x_303 = x_318;
-                                                                                                x_304 = x_320;
+                                                                                                x_304 = x_314;
                                                                                                 x_305 = x_315;
                                                                                                 x_306 = x_322;
                                                                                                 break 'b301;
                                                                                             }
                                                                                             _ => {
-                                                                                                x_302 = x_314;
+                                                                                                x_302 = x_320;
                                                                                                 x_303 = x_318;
-                                                                                                x_304 = x_320;
+                                                                                                x_304 = x_314;
                                                                                                 x_305 = x_315;
                                                                                                 x_306 = x_321;
                                                                                                 break 'b301;
@@ -2375,27 +2337,27 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                     }
                                                                                     match x_306 {
                                                                                         0 => {
-                                                                                            let x_307: u8 = l_Float_ddecLt(x_52, x_304);
+                                                                                            let x_307: u8 = l_Float_ddecLt(x_52, x_302);
                                                                                             match x_307 {
                                                                                                 0 => {
-                                                                                                    x_296 = x_302;
-                                                                                                    x_297 = x_303;
-                                                                                                    x_298 = x_305;
-                                                                                                    x_299 = x_304;
+                                                                                                    x_296 = x_303;
+                                                                                                    x_297 = x_305;
+                                                                                                    x_298 = x_304;
+                                                                                                    x_299 = x_302;
                                                                                                     break 'b295;
                                                                                                 }
                                                                                                 _ => {
-                                                                                                    x_296 = x_302;
-                                                                                                    x_297 = x_303;
-                                                                                                    x_298 = x_305;
+                                                                                                    x_296 = x_303;
+                                                                                                    x_297 = x_305;
+                                                                                                    x_298 = x_304;
                                                                                                     x_299 = x_52;
                                                                                                     break 'b295;
                                                                                                 }
                                                                                             }
                                                                                         }
                                                                                         _ => {
-                                                                                            x_280 = x_302;
-                                                                                            x_281 = x_303;
+                                                                                            x_280 = x_303;
+                                                                                            x_281 = x_304;
                                                                                             x_282 = x_305;
                                                                                             x_283 = x_57;
                                                                                             break 'b279;
@@ -2406,15 +2368,15 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                 match x_300 {
                                                                                     0 => {
                                                                                         x_280 = x_296;
-                                                                                        x_281 = x_297;
-                                                                                        x_282 = x_298;
+                                                                                        x_281 = x_298;
+                                                                                        x_282 = x_297;
                                                                                         x_283 = x_57;
                                                                                         break 'b279;
                                                                                     }
                                                                                     _ => {
                                                                                         x_280 = x_296;
-                                                                                        x_281 = x_297;
-                                                                                        x_282 = x_298;
+                                                                                        x_281 = x_298;
+                                                                                        x_282 = x_297;
                                                                                         x_283 = x_299;
                                                                                         break 'b279;
                                                                                     }
@@ -2435,13 +2397,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                             match x_293 {
                                                                                 0 => {
                                                                                     let x_294: u8 = l_Float_disInf(x_292);
-                                                                                    x_267 = x_280;
+                                                                                    x_267 = x_286;
                                                                                     x_268 = x_287;
-                                                                                    x_269 = x_283;
-                                                                                    x_270 = x_281;
-                                                                                    x_271 = x_285;
-                                                                                    x_272 = x_286;
-                                                                                    x_273 = x_282;
+                                                                                    x_269 = x_285;
+                                                                                    x_270 = x_280;
+                                                                                    x_271 = x_282;
+                                                                                    x_272 = x_281;
+                                                                                    x_273 = x_283;
                                                                                     x_274 = x_288;
                                                                                     x_275 = x_291;
                                                                                     x_276 = x_292;
@@ -2449,13 +2411,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                     break 'b266;
                                                                                 }
                                                                                 _ => {
-                                                                                    x_267 = x_280;
+                                                                                    x_267 = x_286;
                                                                                     x_268 = x_287;
-                                                                                    x_269 = x_283;
-                                                                                    x_270 = x_281;
-                                                                                    x_271 = x_285;
-                                                                                    x_272 = x_286;
-                                                                                    x_273 = x_282;
+                                                                                    x_269 = x_285;
+                                                                                    x_270 = x_280;
+                                                                                    x_271 = x_282;
+                                                                                    x_272 = x_281;
+                                                                                    x_273 = x_283;
                                                                                     x_274 = x_288;
                                                                                     x_275 = x_291;
                                                                                     x_276 = x_292;
@@ -2536,12 +2498,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 let x_236: Obj = l_FloatArray_dset_x21_(x_28, x_6, x_235);
                                                                 let x_237: f64 = l_Sand2_dliquidViscosity(x_226);
                                                                 rt::lean_dec_ref(x_226);
-                                                                let x_238: f64 = l_Float_dmul(x_229, x_237);
-                                                                let x_239: f64 = l_Float_dsub(x_52, x_229);
+                                                                let x_238: f64 = l_Float_dmul(x_233, x_237);
+                                                                let x_239: f64 = l_Float_dsub(x_52, x_233);
                                                                 let x_240: f64 = l_Float_dmul(x_239, x_55);
                                                                 let x_241: f64 = l_Float_dadd(x_238, x_240);
                                                                 let x_242: Obj = l_FloatArray_dset_x21_(x_32, x_6, x_241);
-                                                                let x_243: f64 = l_Float_dofNat(x_232);
+                                                                let x_243: f64 = l_Float_dofNat(x_228);
                                                                 let x_244: f64 = l_Float_dneg(x_243);
                                                                 rt::lean_inc_ref(x_49);
                                                                 let x_245: Obj = l_Sand2_dParticle_dvx(x_49);
@@ -2554,16 +2516,16 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         let x_249: u64 = l_UInt64_dofNat(x_248);
                                                                         rt::lean_dec(x_248);
                                                                         let x_250: f64 = l_UInt64_dtoFloat(x_249);
-                                                                        x_211 = x_228;
-                                                                        x_212 = x_243;
-                                                                        x_213 = x_236;
+                                                                        x_211 = x_243;
+                                                                        x_212 = x_242;
+                                                                        x_213 = x_244;
                                                                         x_214 = x_229;
                                                                         x_215 = x_230;
-                                                                        x_216 = x_231;
-                                                                        x_217 = x_242;
-                                                                        x_218 = x_233;
-                                                                        x_219 = x_239;
-                                                                        x_220 = x_244;
+                                                                        x_216 = x_236;
+                                                                        x_217 = x_231;
+                                                                        x_218 = x_232;
+                                                                        x_219 = x_233;
+                                                                        x_220 = x_239;
                                                                         x_221 = x_234;
                                                                         x_222 = x_250;
                                                                         break 'b210;
@@ -2575,16 +2537,16 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         rt::lean_dec(x_251);
                                                                         let x_253: f64 = l_UInt64_dtoFloat(x_252);
                                                                         let x_254: f64 = l_Float_dneg(x_253);
-                                                                        x_211 = x_228;
-                                                                        x_212 = x_243;
-                                                                        x_213 = x_236;
+                                                                        x_211 = x_243;
+                                                                        x_212 = x_242;
+                                                                        x_213 = x_244;
                                                                         x_214 = x_229;
                                                                         x_215 = x_230;
-                                                                        x_216 = x_231;
-                                                                        x_217 = x_242;
-                                                                        x_218 = x_233;
-                                                                        x_219 = x_239;
-                                                                        x_220 = x_244;
+                                                                        x_216 = x_236;
+                                                                        x_217 = x_231;
+                                                                        x_218 = x_232;
+                                                                        x_219 = x_233;
+                                                                        x_220 = x_239;
                                                                         x_221 = x_234;
                                                                         x_222 = x_254;
                                                                         break 'b210;
@@ -2597,11 +2559,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 0 => {
                                                                     let x_225: u8 = l_Float_disInf(x_223);
                                                                     x_196 = x_211;
-                                                                    x_197 = x_214;
+                                                                    x_197 = x_212;
                                                                     x_198 = x_213;
-                                                                    x_199 = x_212;
-                                                                    x_200 = x_215;
-                                                                    x_201 = x_216;
+                                                                    x_199 = x_214;
+                                                                    x_200 = x_216;
+                                                                    x_201 = x_215;
                                                                     x_202 = x_223;
                                                                     x_203 = x_218;
                                                                     x_204 = x_217;
@@ -2613,11 +2575,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 }
                                                                 _ => {
                                                                     x_196 = x_211;
-                                                                    x_197 = x_214;
+                                                                    x_197 = x_212;
                                                                     x_198 = x_213;
-                                                                    x_199 = x_212;
-                                                                    x_200 = x_215;
-                                                                    x_201 = x_216;
+                                                                    x_199 = x_214;
+                                                                    x_200 = x_216;
+                                                                    x_201 = x_215;
                                                                     x_202 = x_223;
                                                                     x_203 = x_218;
                                                                     x_204 = x_217;
@@ -2631,15 +2593,15 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         }
                                                         match x_208 {
                                                             0 => {
-                                                                let x_209: u8 = l_Float_ddecLt(x_199, x_202);
+                                                                let x_209: u8 = l_Float_ddecLt(x_196, x_202);
                                                                 match x_209 {
                                                                     0 => {
                                                                         x_182 = x_196;
-                                                                        x_183 = x_198;
-                                                                        x_184 = x_197;
+                                                                        x_183 = x_197;
+                                                                        x_184 = x_198;
                                                                         x_185 = x_199;
-                                                                        x_186 = x_200;
-                                                                        x_187 = x_201;
+                                                                        x_186 = x_201;
+                                                                        x_187 = x_200;
                                                                         x_188 = x_204;
                                                                         x_189 = x_203;
                                                                         x_190 = x_205;
@@ -2650,26 +2612,26 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                     }
                                                                     _ => {
                                                                         x_182 = x_196;
-                                                                        x_183 = x_198;
-                                                                        x_184 = x_197;
+                                                                        x_183 = x_197;
+                                                                        x_184 = x_198;
                                                                         x_185 = x_199;
-                                                                        x_186 = x_200;
-                                                                        x_187 = x_201;
+                                                                        x_186 = x_201;
+                                                                        x_187 = x_200;
                                                                         x_188 = x_204;
                                                                         x_189 = x_203;
                                                                         x_190 = x_205;
                                                                         x_191 = x_206;
                                                                         x_192 = x_207;
-                                                                        x_193 = x_199;
+                                                                        x_193 = x_196;
                                                                         break 'b181;
                                                                     }
                                                                 }
                                                             }
                                                             _ => {
                                                                 x_158 = x_196;
-                                                                x_159 = x_199;
-                                                                x_160 = x_197;
-                                                                x_161 = x_198;
+                                                                x_159 = x_197;
+                                                                x_160 = x_198;
+                                                                x_161 = x_199;
                                                                 x_162 = x_200;
                                                                 x_163 = x_201;
                                                                 x_164 = x_203;
@@ -2682,30 +2644,30 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             }
                                                         }
                                                     }
-                                                    let x_194: u8 = l_Float_ddecLt(x_191, x_193);
+                                                    let x_194: u8 = l_Float_ddecLt(x_184, x_193);
                                                     match x_194 {
                                                         0 => {
                                                             x_158 = x_182;
-                                                            x_159 = x_185;
+                                                            x_159 = x_183;
                                                             x_160 = x_184;
-                                                            x_161 = x_183;
-                                                            x_162 = x_186;
-                                                            x_163 = x_187;
+                                                            x_161 = x_185;
+                                                            x_162 = x_187;
+                                                            x_163 = x_186;
                                                             x_164 = x_189;
                                                             x_165 = x_188;
                                                             x_166 = x_190;
                                                             x_167 = x_191;
                                                             x_168 = x_192;
-                                                            x_169 = x_191;
+                                                            x_169 = x_184;
                                                             break 'b157;
                                                         }
                                                         _ => {
                                                             x_158 = x_182;
-                                                            x_159 = x_185;
+                                                            x_159 = x_183;
                                                             x_160 = x_184;
-                                                            x_161 = x_183;
-                                                            x_162 = x_186;
-                                                            x_163 = x_187;
+                                                            x_161 = x_185;
+                                                            x_162 = x_187;
+                                                            x_163 = x_186;
                                                             x_164 = x_189;
                                                             x_165 = x_188;
                                                             x_166 = x_190;
@@ -2729,8 +2691,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         rt::lean_dec(x_174);
                                                         let x_176: f64 = l_UInt64_dtoFloat(x_175);
                                                         x_141 = x_158;
-                                                        x_142 = x_170;
-                                                        x_143 = x_159;
+                                                        x_142 = x_159;
+                                                        x_143 = x_170;
                                                         x_144 = x_160;
                                                         x_145 = x_161;
                                                         x_146 = x_162;
@@ -2751,8 +2713,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         let x_179: f64 = l_UInt64_dtoFloat(x_178);
                                                         let x_180: f64 = l_Float_dneg(x_179);
                                                         x_141 = x_158;
-                                                        x_142 = x_170;
-                                                        x_143 = x_159;
+                                                        x_142 = x_159;
+                                                        x_143 = x_170;
                                                         x_144 = x_160;
                                                         x_145 = x_161;
                                                         x_146 = x_162;
@@ -2772,32 +2734,32 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             match x_155 {
                                                 0 => {
                                                     let x_156: u8 = l_Float_disInf(x_154);
-                                                    x_126 = x_142;
-                                                    x_127 = x_141;
-                                                    x_128 = x_154;
-                                                    x_129 = x_145;
-                                                    x_130 = x_144;
-                                                    x_131 = x_143;
+                                                    x_126 = x_141;
+                                                    x_127 = x_142;
+                                                    x_128 = x_144;
+                                                    x_129 = x_143;
+                                                    x_130 = x_145;
+                                                    x_131 = x_147;
                                                     x_132 = x_146;
-                                                    x_133 = x_147;
-                                                    x_134 = x_149;
-                                                    x_135 = x_148;
+                                                    x_133 = x_149;
+                                                    x_134 = x_148;
+                                                    x_135 = x_154;
                                                     x_136 = x_150;
                                                     x_137 = x_151;
                                                     x_138 = x_156;
                                                     break 'b125;
                                                 }
                                                 _ => {
-                                                    x_126 = x_142;
-                                                    x_127 = x_141;
-                                                    x_128 = x_154;
-                                                    x_129 = x_145;
-                                                    x_130 = x_144;
-                                                    x_131 = x_143;
+                                                    x_126 = x_141;
+                                                    x_127 = x_142;
+                                                    x_128 = x_144;
+                                                    x_129 = x_143;
+                                                    x_130 = x_145;
+                                                    x_131 = x_147;
                                                     x_132 = x_146;
-                                                    x_133 = x_147;
-                                                    x_134 = x_149;
-                                                    x_135 = x_148;
+                                                    x_133 = x_149;
+                                                    x_134 = x_148;
+                                                    x_135 = x_154;
                                                     x_136 = x_150;
                                                     x_137 = x_151;
                                                     x_138 = x_155;
@@ -2807,133 +2769,133 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         }
                                         match x_138 {
                                             0 => {
-                                                let x_139: u8 = l_Float_ddecLt(x_131, x_128);
+                                                let x_139: u8 = l_Float_ddecLt(x_126, x_135);
                                                 match x_139 {
                                                     0 => {
                                                         x_113 = x_127;
-                                                        x_114 = x_126;
-                                                        x_115 = x_130;
-                                                        x_116 = x_129;
+                                                        x_114 = x_129;
+                                                        x_115 = x_128;
+                                                        x_116 = x_130;
                                                         x_117 = x_132;
-                                                        x_118 = x_133;
-                                                        x_119 = x_135;
-                                                        x_120 = x_134;
+                                                        x_118 = x_131;
+                                                        x_119 = x_134;
+                                                        x_120 = x_133;
                                                         x_121 = x_136;
                                                         x_122 = x_137;
-                                                        x_123 = x_128;
+                                                        x_123 = x_135;
                                                         break 'b112;
                                                     }
                                                     _ => {
                                                         x_113 = x_127;
-                                                        x_114 = x_126;
-                                                        x_115 = x_130;
-                                                        x_116 = x_129;
+                                                        x_114 = x_129;
+                                                        x_115 = x_128;
+                                                        x_116 = x_130;
                                                         x_117 = x_132;
-                                                        x_118 = x_133;
-                                                        x_119 = x_135;
-                                                        x_120 = x_134;
+                                                        x_118 = x_131;
+                                                        x_119 = x_134;
+                                                        x_120 = x_133;
                                                         x_121 = x_136;
                                                         x_122 = x_137;
-                                                        x_123 = x_131;
+                                                        x_123 = x_126;
                                                         break 'b112;
                                                     }
                                                 }
                                             }
                                             _ => {
-                                                x_97 = x_126;
-                                                x_98 = x_127;
-                                                x_99 = x_129;
-                                                x_100 = x_130;
+                                                x_97 = x_127;
+                                                x_98 = x_129;
+                                                x_99 = x_130;
+                                                x_100 = x_131;
                                                 x_101 = x_132;
                                                 x_102 = x_133;
                                                 x_103 = x_134;
-                                                x_104 = x_135;
-                                                x_105 = x_136;
+                                                x_104 = x_136;
+                                                x_105 = x_137;
                                                 x_106 = x_57;
                                                 break 'b96;
                                             }
                                         }
                                     }
-                                    let x_124: u8 = l_Float_ddecLt(x_122, x_123);
+                                    let x_124: u8 = l_Float_ddecLt(x_115, x_123);
                                     match x_124 {
                                         0 => {
-                                            x_97 = x_114;
-                                            x_98 = x_113;
+                                            x_97 = x_113;
+                                            x_98 = x_114;
                                             x_99 = x_116;
-                                            x_100 = x_115;
+                                            x_100 = x_118;
                                             x_101 = x_117;
-                                            x_102 = x_118;
-                                            x_103 = x_120;
-                                            x_104 = x_119;
-                                            x_105 = x_121;
-                                            x_106 = x_122;
+                                            x_102 = x_120;
+                                            x_103 = x_119;
+                                            x_104 = x_121;
+                                            x_105 = x_122;
+                                            x_106 = x_115;
                                             break 'b96;
                                         }
                                         _ => {
-                                            x_97 = x_114;
-                                            x_98 = x_113;
+                                            x_97 = x_113;
+                                            x_98 = x_114;
                                             x_99 = x_116;
-                                            x_100 = x_115;
+                                            x_100 = x_118;
                                             x_101 = x_117;
-                                            x_102 = x_118;
-                                            x_103 = x_120;
-                                            x_104 = x_119;
-                                            x_105 = x_121;
+                                            x_102 = x_120;
+                                            x_103 = x_119;
+                                            x_104 = x_121;
+                                            x_105 = x_122;
                                             x_106 = x_123;
                                             break 'b96;
                                         }
                                     }
                                 }
                                 let x_107: Obj = l_FloatArray_dset_x21_(x_40, x_6, x_106);
-                                let x_108: Obj = l_FloatArray_dset_x21_(x_44, x_6, x_98);
-                                let x_109: f64 = l_Float_ddiv(x_100, x_104);
+                                let x_108: Obj = l_FloatArray_dset_x21_(x_44, x_6, x_103);
+                                let x_109: f64 = l_Float_ddiv(x_104, x_102);
                                 let x_110: f64 = l_Sand2_dgasGamma(x_2, x_1, x_6, x_49);
-                                let x_111: u8 = l_Float_ddecLt(x_101, x_98);
+                                let x_111: u8 = l_Float_ddecLt(x_100, x_103);
                                 match x_111 {
                                     0 => {
-                                        x_61 = x_97;
-                                        x_62 = x_107;
-                                        x_63 = x_110;
-                                        x_64 = x_99;
-                                        x_65 = x_102;
-                                        x_66 = x_109;
-                                        x_67 = x_103;
-                                        x_68 = x_108;
+                                        x_61 = x_107;
+                                        x_62 = x_110;
+                                        x_63 = x_97;
+                                        x_64 = x_98;
+                                        x_65 = x_99;
+                                        x_66 = x_108;
+                                        x_67 = x_101;
+                                        x_68 = x_109;
                                         x_69 = x_105;
-                                        x_70 = x_101;
+                                        x_70 = x_100;
                                         break 'b60;
                                     }
                                     _ => {
-                                        x_61 = x_97;
-                                        x_62 = x_107;
-                                        x_63 = x_110;
-                                        x_64 = x_99;
-                                        x_65 = x_102;
-                                        x_66 = x_109;
-                                        x_67 = x_103;
-                                        x_68 = x_108;
+                                        x_61 = x_107;
+                                        x_62 = x_110;
+                                        x_63 = x_97;
+                                        x_64 = x_98;
+                                        x_65 = x_99;
+                                        x_66 = x_108;
+                                        x_67 = x_101;
+                                        x_68 = x_109;
                                         x_69 = x_105;
-                                        x_70 = x_98;
+                                        x_70 = x_103;
                                         break 'b60;
                                     }
                                 }
                             }
-                            let x_71: f64 = l_Float_dmul(x_63, x_70);
+                            let x_71: f64 = l_Float_dmul(x_62, x_70);
                             let x_72: f64 = l_Float_ddiv(x_69, x_71);
-                            let x_73: f64 = l_Float_dadd(x_66, x_72);
+                            let x_73: f64 = l_Float_dadd(x_68, x_72);
                             let x_74: Obj = l_FloatArray_dset_x21_(x_45, x_6, x_73);
                             let mut x_76: Obj;
                             'b75: {
                                 match x_48 {
                                     0 => {
                                         rt::lean_ctor_set(x_47, 1, x_74);
-                                        rt::lean_ctor_set(x_47, 0, x_68);
+                                        rt::lean_ctor_set(x_47, 0, x_66);
                                         x_76 = x_47;
                                         break 'b75;
                                     }
                                     _ => {
                                         let x_95: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_95, 0, x_68);
+                                        rt::lean_ctor_set(x_95, 0, x_66);
                                         rt::lean_ctor_set(x_95, 1, x_74);
                                         x_76 = x_95;
                                         break 'b75;
@@ -2945,13 +2907,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 match x_43 {
                                     0 => {
                                         rt::lean_ctor_set(x_42, 1, x_76);
-                                        rt::lean_ctor_set(x_42, 0, x_62);
+                                        rt::lean_ctor_set(x_42, 0, x_61);
                                         x_78 = x_42;
                                         break 'b77;
                                     }
                                     _ => {
                                         let x_94: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_94, 0, x_62);
+                                        rt::lean_ctor_set(x_94, 0, x_61);
                                         rt::lean_ctor_set(x_94, 1, x_76);
                                         x_78 = x_94;
                                         break 'b77;
@@ -2963,13 +2925,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 match x_39 {
                                     0 => {
                                         rt::lean_ctor_set(x_38, 1, x_78);
-                                        rt::lean_ctor_set(x_38, 0, x_61);
+                                        rt::lean_ctor_set(x_38, 0, x_64);
                                         x_80 = x_38;
                                         break 'b79;
                                     }
                                     _ => {
                                         let x_93: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_93, 0, x_61);
+                                        rt::lean_ctor_set(x_93, 0, x_64);
                                         rt::lean_ctor_set(x_93, 1, x_78);
                                         x_80 = x_93;
                                         break 'b79;
@@ -2981,13 +2943,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 match x_35 {
                                     0 => {
                                         rt::lean_ctor_set(x_34, 1, x_80);
-                                        rt::lean_ctor_set(x_34, 0, x_67);
+                                        rt::lean_ctor_set(x_34, 0, x_63);
                                         x_82 = x_34;
                                         break 'b81;
                                     }
                                     _ => {
                                         let x_92: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_92, 0, x_67);
+                                        rt::lean_ctor_set(x_92, 0, x_63);
                                         rt::lean_ctor_set(x_92, 1, x_80);
                                         x_82 = x_92;
                                         break 'b81;
@@ -2999,13 +2961,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 match x_31 {
                                     0 => {
                                         rt::lean_ctor_set(x_30, 1, x_82);
-                                        rt::lean_ctor_set(x_30, 0, x_64);
+                                        rt::lean_ctor_set(x_30, 0, x_67);
                                         x_84 = x_30;
                                         break 'b83;
                                     }
                                     _ => {
                                         let x_91: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_91, 0, x_64);
+                                        rt::lean_ctor_set(x_91, 0, x_67);
                                         rt::lean_ctor_set(x_91, 1, x_82);
                                         x_84 = x_91;
                                         break 'b83;
@@ -3408,11 +3370,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_49: Obj;
                     let mut x_50: Obj;
                     let mut x_51: f64;
-                    let mut x_52: f64;
+                    let mut x_52: Obj;
                     let mut x_53: f64;
                     let mut x_54: Obj;
                     let mut x_55: Obj;
-                    let mut x_56: Obj;
+                    let mut x_56: f64;
                     let mut x_57: f64;
                     'b47: {
                         let x_80: Obj = rt::lean_ctor_get(x_3, 2);
@@ -3424,8 +3386,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         let mut x_87: Obj;
                         let mut x_88: Obj;
                         let mut x_89: f64;
-                        let mut x_90: f64;
-                        let mut x_91: Obj;
+                        let mut x_90: Obj;
+                        let mut x_91: f64;
                         let mut x_92: Obj;
                         let mut x_93: Obj;
                         let mut x_94: f64;
@@ -3433,39 +3395,39 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             let mut x_99: Obj;
                             let mut x_100: Obj;
                             let mut x_101: Obj;
-                            let mut x_102: Obj;
+                            let mut x_102: f64;
                             let mut x_103: Obj;
                             let mut x_104: Obj;
-                            let mut x_105: f64;
+                            let mut x_105: Obj;
                             let mut x_106: f64;
                             'b98: {
                                 let mut x_127: Obj;
                                 let mut x_128: Obj;
                                 let mut x_129: Obj;
-                                let mut x_130: Obj;
-                                let mut x_131: Obj;
-                                let mut x_132: f64;
-                                let mut x_133: f64;
+                                let mut x_130: f64;
+                                let mut x_131: f64;
+                                let mut x_132: Obj;
+                                let mut x_133: Obj;
                                 let mut x_134: Obj;
                                 let mut x_135: f64;
                                 'b126: {
                                     let mut x_140: Obj;
                                     let mut x_141: Obj;
                                     let mut x_142: Obj;
-                                    let mut x_143: Obj;
+                                    let mut x_143: f64;
                                     let mut x_144: Obj;
                                     let mut x_145: Obj;
-                                    let mut x_146: f64;
+                                    let mut x_146: Obj;
                                     let mut x_147: f64;
                                     'b139: {
                                         let mut x_152: Obj;
                                         let mut x_153: Obj;
                                         let mut x_154: Obj;
-                                        let mut x_155: Obj;
+                                        let mut x_155: f64;
                                         let mut x_156: Obj;
                                         let mut x_157: Obj;
                                         let mut x_158: Obj;
-                                        let mut x_159: f64;
+                                        let mut x_159: Obj;
                                         let mut x_160: u8;
                                         'b151: {
                                             let mut x_183: Obj;
@@ -3473,44 +3435,44 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             let mut x_185: Obj;
                                             let mut x_186: Obj;
                                             'b182: {
-                                                let mut x_205: f64;
-                                                let mut x_206: Obj;
+                                                let mut x_205: Obj;
+                                                let mut x_206: f64;
                                                 let mut x_207: Obj;
                                                 let mut x_208: f64;
-                                                let mut x_209: Obj;
-                                                let mut x_210: f64;
+                                                let mut x_209: f64;
+                                                let mut x_210: Obj;
                                                 let mut x_211: f64;
                                                 'b204: {
-                                                    let mut x_217: f64;
+                                                    let mut x_217: Obj;
                                                     let mut x_218: Obj;
-                                                    let mut x_219: Obj;
-                                                    let mut x_220: Obj;
+                                                    let mut x_219: f64;
+                                                    let mut x_220: f64;
                                                     let mut x_221: Obj;
-                                                    let mut x_222: f64;
+                                                    let mut x_222: Obj;
                                                     let mut x_223: f64;
                                                     'b216: {
-                                                        let mut x_228: f64;
+                                                        let mut x_228: Obj;
                                                         let mut x_229: Obj;
-                                                        let mut x_230: Obj;
+                                                        let mut x_230: f64;
                                                         let mut x_231: Obj;
                                                         let mut x_232: f64;
                                                         'b227: {
-                                                            let mut x_243: f64;
+                                                            let mut x_243: Obj;
                                                             let mut x_244: Obj;
-                                                            let mut x_245: Obj;
+                                                            let mut x_245: f64;
                                                             let mut x_246: f64;
                                                             let mut x_247: Obj;
                                                             let mut x_248: f64;
                                                             'b242: {
-                                                                let mut x_253: f64;
+                                                                let mut x_253: Obj;
                                                                 let mut x_254: Obj;
-                                                                let mut x_255: Obj;
+                                                                let mut x_255: f64;
                                                                 let mut x_256: Obj;
                                                                 let mut x_257: f64;
                                                                 'b252: {
-                                                                    let mut x_262: f64;
+                                                                    let mut x_262: Obj;
                                                                     let mut x_263: Obj;
-                                                                    let mut x_264: Obj;
+                                                                    let mut x_264: f64;
                                                                     let mut x_265: Obj;
                                                                     let mut x_266: Obj;
                                                                     let mut x_267: u8;
@@ -3588,22 +3550,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                 let x_293: u8 = l_Nat_ddecLt(x_9, x_292);
                                                                                 match x_293 {
                                                                                     0 => {
-                                                                                        x_262 = x_290;
+                                                                                        x_262 = x_291;
                                                                                         x_263 = x_288;
-                                                                                        x_264 = x_291;
-                                                                                        x_265 = x_284;
-                                                                                        x_266 = x_289;
+                                                                                        x_264 = x_290;
+                                                                                        x_265 = x_289;
+                                                                                        x_266 = x_284;
                                                                                         x_267 = x_293;
                                                                                         break 'b261;
                                                                                     }
                                                                                     _ => {
                                                                                         let x_294: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_80, x_9, rt::lean_box(0));
                                                                                         let x_295: u8 = rt::lean_unbox(x_294) as u8;
-                                                                                        x_262 = x_290;
+                                                                                        x_262 = x_291;
                                                                                         x_263 = x_288;
-                                                                                        x_264 = x_291;
-                                                                                        x_265 = x_284;
-                                                                                        x_266 = x_289;
+                                                                                        x_264 = x_290;
+                                                                                        x_265 = x_289;
+                                                                                        x_266 = x_284;
                                                                                         x_267 = x_295;
                                                                                         break 'b261;
                                                                                     }
@@ -3614,13 +3576,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                     match x_267 {
                                                                         0 => {
                                                                             let x_268: Obj = rt::lean_box(0);
-                                                                            let x_269: Obj = rt::lean_apply_1(x_266, x_268);
+                                                                            let x_269: Obj = rt::lean_apply_1(x_265, x_268);
                                                                             let x_270: u8 = rt::lean_unbox(x_269) as u8;
                                                                             match x_270 {
                                                                                 0 => {
                                                                                     rt::lean_dec(x_263);
-                                                                                    x_183 = x_265;
-                                                                                    x_184 = x_264;
+                                                                                    x_183 = x_266;
+                                                                                    x_184 = x_262;
                                                                                     x_185 = x_34;
                                                                                     x_186 = x_42;
                                                                                     break 'b182;
@@ -3633,7 +3595,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_228 = x_262;
                                                                                             x_229 = x_263;
                                                                                             x_230 = x_264;
-                                                                                            x_231 = x_265;
+                                                                                            x_231 = x_266;
                                                                                             x_232 = x_83;
                                                                                             break 'b227;
                                                                                         }
@@ -3642,7 +3604,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_228 = x_262;
                                                                                             x_229 = x_263;
                                                                                             x_230 = x_264;
-                                                                                            x_231 = x_265;
+                                                                                            x_231 = x_266;
                                                                                             x_232 = x_273;
                                                                                             break 'b227;
                                                                                         }
@@ -3652,7 +3614,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         }
                                                                         _ => {
                                                                             let x_274: Obj = rt::lean_box(0);
-                                                                            let x_275: Obj = rt::lean_apply_1(x_266, x_274);
+                                                                            let x_275: Obj = rt::lean_apply_1(x_265, x_274);
                                                                             let x_276: u8 = rt::lean_unbox(x_275) as u8;
                                                                             match x_276 {
                                                                                 0 => {
@@ -3663,7 +3625,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_228 = x_262;
                                                                                             x_229 = x_263;
                                                                                             x_230 = x_264;
-                                                                                            x_231 = x_265;
+                                                                                            x_231 = x_266;
                                                                                             x_232 = x_83;
                                                                                             break 'b227;
                                                                                         }
@@ -3672,7 +3634,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_228 = x_262;
                                                                                             x_229 = x_263;
                                                                                             x_230 = x_264;
-                                                                                            x_231 = x_265;
+                                                                                            x_231 = x_266;
                                                                                             x_232 = x_279;
                                                                                             break 'b227;
                                                                                         }
@@ -3686,7 +3648,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_253 = x_262;
                                                                                             x_254 = x_263;
                                                                                             x_255 = x_264;
-                                                                                            x_256 = x_265;
+                                                                                            x_256 = x_266;
                                                                                             x_257 = x_83;
                                                                                             break 'b252;
                                                                                         }
@@ -3695,7 +3657,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                             x_253 = x_262;
                                                                                             x_254 = x_263;
                                                                                             x_255 = x_264;
-                                                                                            x_256 = x_265;
+                                                                                            x_256 = x_266;
                                                                                             x_257 = x_282;
                                                                                             break 'b252;
                                                                                         }
@@ -3740,12 +3702,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             break 'b227;
                                                         }
                                                         let x_233: Obj = l_FloatArray_dset_x21_(x_34, x_9, x_232);
-                                                        let x_234: u8 = l_Float_ddecLt(x_83, x_228);
+                                                        let x_234: u8 = l_Float_ddecLt(x_83, x_230);
                                                         match x_234 {
                                                             0 => {
                                                                 rt::lean_dec(x_229);
                                                                 x_183 = x_231;
-                                                                x_184 = x_230;
+                                                                x_184 = x_228;
                                                                 x_185 = x_233;
                                                                 x_186 = x_42;
                                                                 break 'b182;
@@ -3754,19 +3716,19 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 let x_235: Obj = rt::nat::lean_usize_to_nat(2);
                                                                 let x_236: f64 = l_Float_dofScientific(x_82, x_16, x_235);
                                                                 let x_237: f64 = l_Float_ddiv(x_4, x_236);
-                                                                let x_238: f64 = l_Float_dmul(x_237, x_228);
+                                                                let x_238: f64 = l_Float_dmul(x_237, x_230);
                                                                 let x_239: Obj = l_FloatArray_dsize(x_81);
                                                                 let x_240: u8 = l_Nat_ddecLt(x_229, x_239);
                                                                 match x_240 {
                                                                     0 => {
                                                                         rt::lean_dec(x_229);
                                                                         rt::lean_inc_ref(x_81);
-                                                                        x_217 = x_232;
-                                                                        x_218 = x_230;
-                                                                        x_219 = x_233;
-                                                                        x_220 = x_81;
-                                                                        x_221 = x_231;
-                                                                        x_222 = x_238;
+                                                                        x_217 = x_228;
+                                                                        x_218 = x_233;
+                                                                        x_219 = x_238;
+                                                                        x_220 = x_232;
+                                                                        x_221 = x_81;
+                                                                        x_222 = x_231;
                                                                         x_223 = x_83;
                                                                         break 'b216;
                                                                     }
@@ -3774,12 +3736,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         let x_241: f64 = l_FloatArray_dget(x_81, x_229, rt::lean_box(0));
                                                                         rt::lean_dec(x_229);
                                                                         rt::lean_inc_ref(x_81);
-                                                                        x_217 = x_232;
-                                                                        x_218 = x_230;
-                                                                        x_219 = x_233;
-                                                                        x_220 = x_81;
-                                                                        x_221 = x_231;
-                                                                        x_222 = x_238;
+                                                                        x_217 = x_228;
+                                                                        x_218 = x_233;
+                                                                        x_219 = x_238;
+                                                                        x_220 = x_232;
+                                                                        x_221 = x_81;
+                                                                        x_222 = x_231;
                                                                         x_223 = x_241;
                                                                         break 'b216;
                                                                     }
@@ -3787,41 +3749,41 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             }
                                                         }
                                                     }
-                                                    let x_224: Obj = l_FloatArray_dsize(x_220);
+                                                    let x_224: Obj = l_FloatArray_dsize(x_221);
                                                     let x_225: u8 = l_Nat_ddecLt(x_9, x_224);
                                                     match x_225 {
                                                         0 => {
-                                                            rt::lean_dec_ref(x_220);
-                                                            x_205 = x_223;
-                                                            x_206 = x_219;
+                                                            rt::lean_dec_ref(x_221);
+                                                            x_205 = x_217;
+                                                            x_206 = x_223;
                                                             x_207 = x_218;
-                                                            x_208 = x_217;
-                                                            x_209 = x_221;
+                                                            x_208 = x_219;
+                                                            x_209 = x_220;
                                                             x_210 = x_222;
                                                             x_211 = x_83;
                                                             break 'b204;
                                                         }
                                                         _ => {
-                                                            let x_226: f64 = l_FloatArray_dget(x_220, x_9, rt::lean_box(0));
-                                                            rt::lean_dec_ref(x_220);
-                                                            x_205 = x_223;
-                                                            x_206 = x_219;
+                                                            let x_226: f64 = l_FloatArray_dget(x_221, x_9, rt::lean_box(0));
+                                                            rt::lean_dec_ref(x_221);
+                                                            x_205 = x_217;
+                                                            x_206 = x_223;
                                                             x_207 = x_218;
-                                                            x_208 = x_217;
-                                                            x_209 = x_221;
+                                                            x_208 = x_219;
+                                                            x_209 = x_220;
                                                             x_210 = x_222;
                                                             x_211 = x_226;
                                                             break 'b204;
                                                         }
                                                     }
                                                 }
-                                                let x_212: f64 = l_Float_dsub(x_205, x_211);
-                                                let x_213: f64 = l_Float_dmul(x_210, x_212);
-                                                let x_214: f64 = l_Float_dsub(x_208, x_213);
+                                                let x_212: f64 = l_Float_dsub(x_206, x_211);
+                                                let x_213: f64 = l_Float_dmul(x_208, x_212);
+                                                let x_214: f64 = l_Float_dsub(x_209, x_213);
                                                 let x_215: Obj = l_FloatArray_dset_x21_(x_42, x_9, x_214);
-                                                x_183 = x_209;
-                                                x_184 = x_207;
-                                                x_185 = x_206;
+                                                x_183 = x_210;
+                                                x_184 = x_205;
+                                                x_185 = x_207;
                                                 x_186 = x_215;
                                                 break 'b182;
                                             }
@@ -3872,28 +3834,28 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     let x_201: u8 = l_Nat_ddecLt(x_9, x_200);
                                                     match x_201 {
                                                         0 => {
-                                                            x_152 = x_199;
+                                                            x_152 = x_185;
                                                             x_153 = x_196;
-                                                            x_154 = x_185;
-                                                            x_155 = x_197;
-                                                            x_156 = x_183;
-                                                            x_157 = x_186;
-                                                            x_158 = x_184;
-                                                            x_159 = x_198;
+                                                            x_154 = x_186;
+                                                            x_155 = x_198;
+                                                            x_156 = x_199;
+                                                            x_157 = x_197;
+                                                            x_158 = x_183;
+                                                            x_159 = x_184;
                                                             x_160 = x_201;
                                                             break 'b151;
                                                         }
                                                         _ => {
                                                             let x_202: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_80, x_9, rt::lean_box(0));
                                                             let x_203: u8 = rt::lean_unbox(x_202) as u8;
-                                                            x_152 = x_199;
+                                                            x_152 = x_185;
                                                             x_153 = x_196;
-                                                            x_154 = x_185;
-                                                            x_155 = x_197;
-                                                            x_156 = x_183;
-                                                            x_157 = x_186;
-                                                            x_158 = x_184;
-                                                            x_159 = x_198;
+                                                            x_154 = x_186;
+                                                            x_155 = x_198;
+                                                            x_156 = x_199;
+                                                            x_157 = x_197;
+                                                            x_158 = x_183;
+                                                            x_159 = x_184;
                                                             x_160 = x_203;
                                                             break 'b151;
                                                         }
@@ -3904,7 +3866,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         match x_160 {
                                             0 => {
                                                 let x_161: Obj = rt::lean_box(0);
-                                                let x_162: Obj = rt::lean_apply_1(x_155, x_161);
+                                                let x_162: Obj = rt::lean_apply_1(x_157, x_161);
                                                 let x_163: u8 = rt::lean_unbox(x_162) as u8;
                                                 match x_163 {
                                                     0 => {
@@ -3916,22 +3878,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         rt::lean_del_object(x_28);
                                                         rt::lean_del_object(x_24);
                                                         let x_164: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_164, 0, x_157);
+                                                        rt::lean_ctor_set(x_164, 0, x_154);
                                                         rt::lean_ctor_set(x_164, 1, x_43);
                                                         let x_165: Obj = rt::lean_alloc_ctor(0, 2, 0);
                                                         rt::lean_ctor_set(x_165, 0, x_38);
                                                         rt::lean_ctor_set(x_165, 1, x_164);
                                                         let x_166: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_166, 0, x_154);
+                                                        rt::lean_ctor_set(x_166, 0, x_152);
                                                         rt::lean_ctor_set(x_166, 1, x_165);
                                                         let x_167: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_167, 0, x_152);
+                                                        rt::lean_ctor_set(x_167, 0, x_156);
                                                         rt::lean_ctor_set(x_167, 1, x_166);
                                                         let x_168: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_168, 0, x_158);
+                                                        rt::lean_ctor_set(x_168, 0, x_159);
                                                         rt::lean_ctor_set(x_168, 1, x_167);
                                                         let x_169: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_169, 0, x_156);
+                                                        rt::lean_ctor_set(x_169, 0, x_158);
                                                         rt::lean_ctor_set(x_169, 1, x_168);
                                                         x_13 = x_169;
                                                         break 'b12;
@@ -3944,8 +3906,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_99 = x_152;
                                                                 x_100 = x_153;
                                                                 x_101 = x_154;
-                                                                x_102 = x_156;
-                                                                x_103 = x_157;
+                                                                x_102 = x_155;
+                                                                x_103 = x_156;
                                                                 x_104 = x_158;
                                                                 x_105 = x_159;
                                                                 x_106 = x_83;
@@ -3956,8 +3918,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_99 = x_152;
                                                                 x_100 = x_153;
                                                                 x_101 = x_154;
-                                                                x_102 = x_156;
-                                                                x_103 = x_157;
+                                                                x_102 = x_155;
+                                                                x_103 = x_156;
                                                                 x_104 = x_158;
                                                                 x_105 = x_159;
                                                                 x_106 = x_172;
@@ -3969,7 +3931,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             }
                                             _ => {
                                                 let x_173: Obj = rt::lean_box(0);
-                                                let x_174: Obj = rt::lean_apply_1(x_155, x_173);
+                                                let x_174: Obj = rt::lean_apply_1(x_157, x_173);
                                                 let x_175: u8 = rt::lean_unbox(x_174) as u8;
                                                 match x_175 {
                                                     0 => {
@@ -3980,8 +3942,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_99 = x_152;
                                                                 x_100 = x_153;
                                                                 x_101 = x_154;
-                                                                x_102 = x_156;
-                                                                x_103 = x_157;
+                                                                x_102 = x_155;
+                                                                x_103 = x_156;
                                                                 x_104 = x_158;
                                                                 x_105 = x_159;
                                                                 x_106 = x_83;
@@ -3992,8 +3954,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_99 = x_152;
                                                                 x_100 = x_153;
                                                                 x_101 = x_154;
-                                                                x_102 = x_156;
-                                                                x_103 = x_157;
+                                                                x_102 = x_155;
+                                                                x_103 = x_156;
                                                                 x_104 = x_158;
                                                                 x_105 = x_159;
                                                                 x_106 = x_178;
@@ -4009,8 +3971,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_140 = x_152;
                                                                 x_141 = x_153;
                                                                 x_142 = x_154;
-                                                                x_143 = x_156;
-                                                                x_144 = x_157;
+                                                                x_143 = x_155;
+                                                                x_144 = x_156;
                                                                 x_145 = x_158;
                                                                 x_146 = x_159;
                                                                 x_147 = x_83;
@@ -4021,8 +3983,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 x_140 = x_152;
                                                                 x_141 = x_153;
                                                                 x_142 = x_154;
-                                                                x_143 = x_156;
-                                                                x_144 = x_157;
+                                                                x_143 = x_155;
+                                                                x_144 = x_156;
                                                                 x_145 = x_158;
                                                                 x_146 = x_159;
                                                                 x_147 = x_181;
@@ -4039,41 +4001,41 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     match x_149 {
                                         0 => {
                                             x_127 = x_140;
-                                            x_128 = x_141;
-                                            x_129 = x_142;
-                                            x_130 = x_143;
-                                            x_131 = x_144;
-                                            x_132 = x_147;
-                                            x_133 = x_146;
-                                            x_134 = x_145;
+                                            x_128 = x_142;
+                                            x_129 = x_141;
+                                            x_130 = x_147;
+                                            x_131 = x_143;
+                                            x_132 = x_144;
+                                            x_133 = x_145;
+                                            x_134 = x_146;
                                             x_135 = x_83;
                                             break 'b126;
                                         }
                                         _ => {
                                             let x_150: f64 = l_FloatArray_dget(x_5, x_141, rt::lean_box(0));
                                             x_127 = x_140;
-                                            x_128 = x_141;
-                                            x_129 = x_142;
-                                            x_130 = x_143;
-                                            x_131 = x_144;
-                                            x_132 = x_147;
-                                            x_133 = x_146;
-                                            x_134 = x_145;
+                                            x_128 = x_142;
+                                            x_129 = x_141;
+                                            x_130 = x_147;
+                                            x_131 = x_143;
+                                            x_132 = x_144;
+                                            x_133 = x_145;
+                                            x_134 = x_146;
                                             x_135 = x_150;
                                             break 'b126;
                                         }
                                     }
                                 }
-                                let x_136: f64 = l_Float_dadd(x_132, x_135);
+                                let x_136: f64 = l_Float_dadd(x_130, x_135);
                                 let x_137: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
                                 let x_138: f64 = l_Float_ddiv(x_136, x_137);
                                 x_99 = x_127;
-                                x_100 = x_128;
-                                x_101 = x_129;
-                                x_102 = x_130;
-                                x_103 = x_131;
-                                x_104 = x_134;
-                                x_105 = x_133;
+                                x_100 = x_129;
+                                x_101 = x_128;
+                                x_102 = x_131;
+                                x_103 = x_132;
+                                x_104 = x_133;
+                                x_105 = x_134;
                                 x_106 = x_138;
                                 break 'b98;
                             }
@@ -4083,7 +4045,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             let x_110: f64 = l_Float_dmul(x_109, x_4);
                             let x_111: f64 = l_Float_dadd(x_106, x_110);
                             let x_112: Obj = l_FloatArray_dset_x21_(x_38, x_9, x_111);
-                            let x_113: u8 = l_Float_ddecLt(x_83, x_105);
+                            let x_113: u8 = l_Float_ddecLt(x_83, x_102);
                             match x_113 {
                                 0 => {
                                     rt::lean_dec(x_100);
@@ -4094,22 +4056,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     rt::lean_del_object(x_28);
                                     rt::lean_del_object(x_24);
                                     let x_114: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_114, 0, x_103);
+                                    rt::lean_ctor_set(x_114, 0, x_101);
                                     rt::lean_ctor_set(x_114, 1, x_43);
                                     let x_115: Obj = rt::lean_alloc_ctor(0, 2, 0);
                                     rt::lean_ctor_set(x_115, 0, x_112);
                                     rt::lean_ctor_set(x_115, 1, x_114);
                                     let x_116: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_116, 0, x_101);
+                                    rt::lean_ctor_set(x_116, 0, x_99);
                                     rt::lean_ctor_set(x_116, 1, x_115);
                                     let x_117: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_117, 0, x_99);
+                                    rt::lean_ctor_set(x_117, 0, x_103);
                                     rt::lean_ctor_set(x_117, 1, x_116);
                                     let x_118: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_118, 0, x_104);
+                                    rt::lean_ctor_set(x_118, 0, x_105);
                                     rt::lean_ctor_set(x_118, 1, x_117);
                                     let x_119: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_119, 0, x_102);
+                                    rt::lean_ctor_set(x_119, 0, x_104);
                                     rt::lean_ctor_set(x_119, 1, x_118);
                                     x_13 = x_119;
                                     break 'b12;
@@ -4117,7 +4079,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 _ => {
                                     let x_120: f64 = l_Float_dofScientific(x_82, x_16, x_108);
                                     let x_121: f64 = l_Float_ddiv(x_4, x_120);
-                                    let x_122: f64 = l_Float_dmul(x_121, x_105);
+                                    let x_122: f64 = l_Float_dmul(x_121, x_102);
                                     let x_123: Obj = l_FloatArray_dsize(x_81);
                                     let x_124: u8 = l_Nat_ddecLt(x_100, x_123);
                                     match x_124 {
@@ -4125,14 +4087,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             rt::lean_dec(x_100);
                                             rt::lean_inc_ref(x_81);
                                             x_85 = x_99;
-                                            x_86 = x_81;
+                                            x_86 = x_101;
                                             x_87 = x_112;
-                                            x_88 = x_101;
-                                            x_89 = x_122;
-                                            x_90 = x_111;
-                                            x_91 = x_102;
-                                            x_92 = x_103;
-                                            x_93 = x_104;
+                                            x_88 = x_81;
+                                            x_89 = x_111;
+                                            x_90 = x_103;
+                                            x_91 = x_122;
+                                            x_92 = x_104;
+                                            x_93 = x_105;
                                             x_94 = x_83;
                                             break 'b84;
                                         }
@@ -4141,14 +4103,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             rt::lean_dec(x_100);
                                             rt::lean_inc_ref(x_81);
                                             x_85 = x_99;
-                                            x_86 = x_81;
+                                            x_86 = x_101;
                                             x_87 = x_112;
-                                            x_88 = x_101;
-                                            x_89 = x_122;
-                                            x_90 = x_111;
-                                            x_91 = x_102;
-                                            x_92 = x_103;
-                                            x_93 = x_104;
+                                            x_88 = x_81;
+                                            x_89 = x_111;
+                                            x_90 = x_103;
+                                            x_91 = x_122;
+                                            x_92 = x_104;
+                                            x_93 = x_105;
                                             x_94 = x_125;
                                             break 'b84;
                                         }
@@ -4156,56 +4118,56 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 }
                             }
                         }
-                        let x_95: Obj = l_FloatArray_dsize(x_86);
+                        let x_95: Obj = l_FloatArray_dsize(x_88);
                         let x_96: u8 = l_Nat_ddecLt(x_9, x_95);
                         match x_96 {
                             0 => {
-                                rt::lean_dec_ref(x_86);
+                                rt::lean_dec_ref(x_88);
                                 x_48 = x_85;
-                                x_49 = x_87;
-                                x_50 = x_88;
-                                x_51 = x_94;
-                                x_52 = x_89;
-                                x_53 = x_90;
-                                x_54 = x_91;
-                                x_55 = x_92;
-                                x_56 = x_93;
+                                x_49 = x_86;
+                                x_50 = x_87;
+                                x_51 = x_89;
+                                x_52 = x_90;
+                                x_53 = x_91;
+                                x_54 = x_92;
+                                x_55 = x_93;
+                                x_56 = x_94;
                                 x_57 = x_83;
                                 break 'b47;
                             }
                             _ => {
-                                let x_97: f64 = l_FloatArray_dget(x_86, x_9, rt::lean_box(0));
-                                rt::lean_dec_ref(x_86);
+                                let x_97: f64 = l_FloatArray_dget(x_88, x_9, rt::lean_box(0));
+                                rt::lean_dec_ref(x_88);
                                 x_48 = x_85;
-                                x_49 = x_87;
-                                x_50 = x_88;
-                                x_51 = x_94;
-                                x_52 = x_89;
-                                x_53 = x_90;
-                                x_54 = x_91;
-                                x_55 = x_92;
-                                x_56 = x_93;
+                                x_49 = x_86;
+                                x_50 = x_87;
+                                x_51 = x_89;
+                                x_52 = x_90;
+                                x_53 = x_91;
+                                x_54 = x_92;
+                                x_55 = x_93;
+                                x_56 = x_94;
                                 x_57 = x_97;
                                 break 'b47;
                             }
                         }
                     }
-                    let x_58: f64 = l_Float_dsub(x_51, x_57);
-                    let x_59: f64 = l_Float_dmul(x_52, x_58);
-                    let x_60: f64 = l_Float_dsub(x_53, x_59);
+                    let x_58: f64 = l_Float_dsub(x_56, x_57);
+                    let x_59: f64 = l_Float_dmul(x_53, x_58);
+                    let x_60: f64 = l_Float_dsub(x_51, x_59);
                     let x_61: Obj = l_FloatArray_dset_x21_(x_43, x_9, x_60);
                     let mut x_63: Obj;
                     'b62: {
                         match x_46 {
                             0 => {
                                 rt::lean_ctor_set(x_45, 1, x_61);
-                                rt::lean_ctor_set(x_45, 0, x_55);
+                                rt::lean_ctor_set(x_45, 0, x_49);
                                 x_63 = x_45;
                                 break 'b62;
                             }
                             _ => {
                                 let x_79: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_79, 0, x_55);
+                                rt::lean_ctor_set(x_79, 0, x_49);
                                 rt::lean_ctor_set(x_79, 1, x_61);
                                 x_63 = x_79;
                                 break 'b62;
@@ -4217,13 +4179,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_41 {
                             0 => {
                                 rt::lean_ctor_set(x_40, 1, x_63);
-                                rt::lean_ctor_set(x_40, 0, x_49);
+                                rt::lean_ctor_set(x_40, 0, x_50);
                                 x_65 = x_40;
                                 break 'b64;
                             }
                             _ => {
                                 let x_78: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_78, 0, x_49);
+                                rt::lean_ctor_set(x_78, 0, x_50);
                                 rt::lean_ctor_set(x_78, 1, x_63);
                                 x_65 = x_78;
                                 break 'b64;
@@ -4235,13 +4197,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_37 {
                             0 => {
                                 rt::lean_ctor_set(x_36, 1, x_65);
-                                rt::lean_ctor_set(x_36, 0, x_50);
+                                rt::lean_ctor_set(x_36, 0, x_48);
                                 x_67 = x_36;
                                 break 'b66;
                             }
                             _ => {
                                 let x_77: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_77, 0, x_50);
+                                rt::lean_ctor_set(x_77, 0, x_48);
                                 rt::lean_ctor_set(x_77, 1, x_65);
                                 x_67 = x_77;
                                 break 'b66;
@@ -4253,13 +4215,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_33 {
                             0 => {
                                 rt::lean_ctor_set(x_32, 1, x_67);
-                                rt::lean_ctor_set(x_32, 0, x_48);
+                                rt::lean_ctor_set(x_32, 0, x_52);
                                 x_69 = x_32;
                                 break 'b68;
                             }
                             _ => {
                                 let x_76: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_76, 0, x_48);
+                                rt::lean_ctor_set(x_76, 0, x_52);
                                 rt::lean_ctor_set(x_76, 1, x_67);
                                 x_69 = x_76;
                                 break 'b68;
@@ -4271,13 +4233,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_29 {
                             0 => {
                                 rt::lean_ctor_set(x_28, 1, x_69);
-                                rt::lean_ctor_set(x_28, 0, x_56);
+                                rt::lean_ctor_set(x_28, 0, x_55);
                                 x_71 = x_28;
                                 break 'b70;
                             }
                             _ => {
                                 let x_75: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_75, 0, x_56);
+                                rt::lean_ctor_set(x_75, 0, x_55);
                                 rt::lean_ctor_set(x_75, 1, x_69);
                                 x_71 = x_75;
                                 break 'b70;
@@ -4484,9 +4446,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         let mut x_88: f64;
                                                         let mut x_89: f64;
                                                         'b84: {
-                                                            let mut x_96: f64;
+                                                            let mut x_96: u8;
                                                             let mut x_97: f64;
-                                                            let mut x_98: u8;
+                                                            let mut x_98: f64;
                                                             let mut x_99: f64;
                                                             let mut x_100: f64;
                                                             'b95: {
@@ -4498,8 +4460,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 let mut x_110: f64;
                                                                 let mut x_111: f64;
                                                                 'b107: {
-                                                                    let mut x_117: f64;
-                                                                    let mut x_118: u8;
+                                                                    let mut x_117: u8;
+                                                                    let mut x_118: f64;
                                                                     let mut x_119: f64;
                                                                     'b116: {
                                                                         let mut x_124: f64;
@@ -4534,8 +4496,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         rt::lean_dec(x_125);
                                                                         match x_126 {
                                                                             0 => {
-                                                                                x_117 = x_124;
-                                                                                x_118 = x_126;
+                                                                                x_117 = x_126;
+                                                                                x_118 = x_124;
                                                                                 x_119 = x_55;
                                                                                 break 'b116;
                                                                             }
@@ -4546,16 +4508,16 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                 match x_129 {
                                                                                     0 => {
                                                                                         rt::lean_dec(x_127);
-                                                                                        x_117 = x_124;
-                                                                                        x_118 = x_126;
+                                                                                        x_117 = x_126;
+                                                                                        x_118 = x_124;
                                                                                         x_119 = x_55;
                                                                                         break 'b116;
                                                                                     }
                                                                                     _ => {
                                                                                         let x_130: f64 = l_FloatArray_dget(x_4, x_127, rt::lean_box(0));
                                                                                         rt::lean_dec(x_127);
-                                                                                        x_117 = x_124;
-                                                                                        x_118 = x_126;
+                                                                                        x_117 = x_126;
+                                                                                        x_118 = x_124;
                                                                                         x_119 = x_130;
                                                                                         break 'b116;
                                                                                     }
@@ -4567,16 +4529,16 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                     let x_121: u8 = l_Nat_ddecLt(x_10, x_120);
                                                                     match x_121 {
                                                                         0 => {
-                                                                            x_108 = x_118;
-                                                                            x_109 = x_117;
+                                                                            x_108 = x_117;
+                                                                            x_109 = x_118;
                                                                             x_110 = x_119;
                                                                             x_111 = x_55;
                                                                             break 'b107;
                                                                         }
                                                                         _ => {
                                                                             let x_122: f64 = l_FloatArray_dget(x_7, x_10, rt::lean_box(0));
-                                                                            x_108 = x_118;
-                                                                            x_109 = x_117;
+                                                                            x_108 = x_117;
+                                                                            x_109 = x_118;
                                                                             x_110 = x_119;
                                                                             x_111 = x_122;
                                                                             break 'b107;
@@ -4585,9 +4547,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 }
                                                                 match x_106 {
                                                                     0 => {
-                                                                        x_96 = x_111;
+                                                                        x_96 = x_108;
                                                                         x_97 = x_109;
-                                                                        x_98 = x_108;
+                                                                        x_98 = x_111;
                                                                         x_99 = x_110;
                                                                         x_100 = x_55;
                                                                         break 'b95;
@@ -4599,9 +4561,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         match x_114 {
                                                                             0 => {
                                                                                 rt::lean_dec(x_112);
-                                                                                x_96 = x_111;
+                                                                                x_96 = x_108;
                                                                                 x_97 = x_109;
-                                                                                x_98 = x_108;
+                                                                                x_98 = x_111;
                                                                                 x_99 = x_110;
                                                                                 x_100 = x_55;
                                                                                 break 'b95;
@@ -4609,9 +4571,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                             _ => {
                                                                                 let x_115: f64 = l_FloatArray_dget(x_7, x_112, rt::lean_box(0));
                                                                                 rt::lean_dec(x_112);
-                                                                                x_96 = x_111;
+                                                                                x_96 = x_108;
                                                                                 x_97 = x_109;
-                                                                                x_98 = x_108;
+                                                                                x_98 = x_111;
                                                                                 x_99 = x_110;
                                                                                 x_100 = x_115;
                                                                                 break 'b95;
@@ -4620,13 +4582,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                     }
                                                                 }
                                                             }
-                                                            let x_101: f64 = l_Float_dsub(x_96, x_100);
+                                                            let x_101: f64 = l_Float_dsub(x_98, x_100);
                                                             let x_102: Obj = l_FloatArray_dsize(x_6);
                                                             let x_103: u8 = l_Nat_ddecLt(x_10, x_102);
                                                             match x_103 {
                                                                 0 => {
                                                                     x_85 = x_101;
-                                                                    x_86 = x_98;
+                                                                    x_86 = x_96;
                                                                     x_87 = x_97;
                                                                     x_88 = x_99;
                                                                     x_89 = x_55;
@@ -4635,7 +4597,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 _ => {
                                                                     let x_104: f64 = l_FloatArray_dget(x_6, x_10, rt::lean_box(0));
                                                                     x_85 = x_101;
-                                                                    x_86 = x_98;
+                                                                    x_86 = x_96;
                                                                     x_87 = x_97;
                                                                     x_88 = x_99;
                                                                     x_89 = x_104;
@@ -4646,9 +4608,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         let x_90: f64 = l_Float_dadd(x_85, x_89);
                                                         match x_86 {
                                                             0 => {
-                                                                x_76 = x_87;
-                                                                x_77 = x_88;
-                                                                x_78 = x_90;
+                                                                x_76 = x_90;
+                                                                x_77 = x_87;
+                                                                x_78 = x_88;
                                                                 x_79 = x_55;
                                                                 break 'b75;
                                                             }
@@ -4659,18 +4621,18 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                 match x_93 {
                                                                     0 => {
                                                                         rt::lean_dec(x_91);
-                                                                        x_76 = x_87;
-                                                                        x_77 = x_88;
-                                                                        x_78 = x_90;
+                                                                        x_76 = x_90;
+                                                                        x_77 = x_87;
+                                                                        x_78 = x_88;
                                                                         x_79 = x_55;
                                                                         break 'b75;
                                                                     }
                                                                     _ => {
                                                                         let x_94: f64 = l_FloatArray_dget(x_6, x_91, rt::lean_box(0));
                                                                         rt::lean_dec(x_91);
-                                                                        x_76 = x_87;
-                                                                        x_77 = x_88;
-                                                                        x_78 = x_90;
+                                                                        x_76 = x_90;
+                                                                        x_77 = x_87;
+                                                                        x_78 = x_88;
                                                                         x_79 = x_94;
                                                                         break 'b75;
                                                                     }
@@ -4678,22 +4640,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             }
                                                         }
                                                     }
-                                                    let x_80: f64 = l_Float_dsub(x_78, x_79);
+                                                    let x_80: f64 = l_Float_dsub(x_76, x_79);
                                                     let x_81: Obj = l_FloatArray_dsize(x_5);
                                                     let x_82: u8 = l_Nat_ddecLt(x_10, x_81);
                                                     match x_82 {
                                                         0 => {
                                                             x_67 = x_80;
-                                                            x_68 = x_76;
-                                                            x_69 = x_77;
+                                                            x_68 = x_77;
+                                                            x_69 = x_78;
                                                             x_70 = x_55;
                                                             break 'b66;
                                                         }
                                                         _ => {
                                                             let x_83: f64 = l_FloatArray_dget(x_5, x_10, rt::lean_box(0));
                                                             x_67 = x_80;
-                                                            x_68 = x_76;
-                                                            x_69 = x_77;
+                                                            x_68 = x_77;
+                                                            x_69 = x_78;
                                                             x_70 = x_83;
                                                             break 'b66;
                                                         }
@@ -4704,36 +4666,36 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                 let x_73: u8 = l_Nat_ddecLt(x_10, x_72);
                                                 match x_73 {
                                                     0 => {
-                                                        x_57 = x_71;
-                                                        x_58 = x_67;
-                                                        x_59 = x_69;
+                                                        x_57 = x_67;
+                                                        x_58 = x_69;
+                                                        x_59 = x_71;
                                                         x_60 = x_55;
                                                         break 'b56;
                                                     }
                                                     _ => {
                                                         let x_74: f64 = l_FloatArray_dget(x_4, x_10, rt::lean_box(0));
-                                                        x_57 = x_71;
-                                                        x_58 = x_67;
-                                                        x_59 = x_69;
+                                                        x_57 = x_67;
+                                                        x_58 = x_69;
+                                                        x_59 = x_71;
                                                         x_60 = x_74;
                                                         break 'b56;
                                                     }
                                                 }
                                             }
-                                            let x_61: f64 = l_Float_dadd(x_57, x_60);
-                                            let x_62: f64 = l_Float_dadd(x_61, x_59);
+                                            let x_61: f64 = l_Float_dadd(x_59, x_60);
+                                            let x_62: f64 = l_Float_dadd(x_61, x_58);
                                             let x_63: Obj = l_FloatArray_dsize(x_28);
                                             let x_64: u8 = l_Nat_ddecLt(x_10, x_63);
                                             match x_64 {
                                                 0 => {
-                                                    x_36 = x_58;
+                                                    x_36 = x_57;
                                                     x_37 = x_62;
                                                     x_38 = x_55;
                                                     break 'b35;
                                                 }
                                                 _ => {
                                                     let x_65: f64 = l_FloatArray_dget(x_28, x_10, rt::lean_box(0));
-                                                    x_36 = x_58;
+                                                    x_36 = x_57;
                                                     x_37 = x_62;
                                                     x_38 = x_65;
                                                     break 'b35;
@@ -4997,8 +4959,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_31: Obj;
                     let mut x_32: f64;
                     'b29: {
-                        let mut x_41: f64;
-                        let mut x_42: Obj;
+                        let mut x_41: Obj;
+                        let mut x_42: f64;
                         let mut x_43: Obj;
                         let mut x_44: f64;
                         'b40: {
@@ -5007,33 +4969,33 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             'b46: {
                                 let x_51: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
                                 let mut x_53: f64;
-                                let mut x_54: f64;
-                                let mut x_55: Obj;
+                                let mut x_54: Obj;
+                                let mut x_55: f64;
                                 let mut x_56: f64;
                                 let mut x_57: Obj;
                                 let mut x_58: u8;
                                 'b52: {
                                     let mut x_61: f64;
                                     let mut x_62: f64;
-                                    let mut x_63: f64;
-                                    let mut x_64: Obj;
+                                    let mut x_63: Obj;
+                                    let mut x_64: f64;
                                     let mut x_65: f64;
                                     let mut x_66: Obj;
                                     let mut x_67: f64;
                                     let mut x_68: f64;
                                     'b60: {
                                         let mut x_75: f64;
-                                        let mut x_76: Obj;
-                                        let mut x_77: f64;
+                                        let mut x_76: f64;
+                                        let mut x_77: Obj;
                                         let mut x_78: f64;
-                                        let mut x_79: Obj;
+                                        let mut x_79: f64;
                                         let mut x_80: Obj;
-                                        let mut x_81: f64;
+                                        let mut x_81: Obj;
                                         let mut x_82: f64;
                                         'b74: {
                                             let mut x_87: f64;
-                                            let mut x_88: f64;
-                                            let mut x_89: Obj;
+                                            let mut x_88: Obj;
+                                            let mut x_89: f64;
                                             let mut x_90: f64;
                                             let mut x_91: Obj;
                                             let mut x_92: f64;
@@ -5056,14 +5018,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             let mut x_133: Obj;
                                                             let mut x_134: f64;
                                                             'b132: {
-                                                                let mut x_137: f64;
-                                                                let mut x_138: Obj;
+                                                                let mut x_137: Obj;
+                                                                let mut x_138: f64;
                                                                 let mut x_139: f64;
                                                                 'b136: {
                                                                     let mut x_142: f64;
-                                                                    let mut x_143: f64;
+                                                                    let mut x_143: Obj;
                                                                     let mut x_144: f64;
-                                                                    let mut x_145: Obj;
+                                                                    let mut x_145: f64;
                                                                     let mut x_146: u8;
                                                                     'b141: {
                                                                         let mut x_149: f64;
@@ -5074,9 +5036,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                         let mut x_154: f64;
                                                                         let mut x_155: f64;
                                                                         'b148: {
-                                                                            let mut x_162: Obj;
+                                                                            let mut x_162: f64;
                                                                             let mut x_163: f64;
-                                                                            let mut x_164: f64;
+                                                                            let mut x_164: Obj;
                                                                             let mut x_165: f64;
                                                                             let mut x_166: Obj;
                                                                             let mut x_167: f64;
@@ -5084,14 +5046,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                             'b161: {
                                                                                 let mut x_173: f64;
                                                                                 let mut x_174: f64;
-                                                                                let mut x_175: f64;
+                                                                                let mut x_175: Obj;
                                                                                 let mut x_176: f64;
-                                                                                let mut x_177: Obj;
+                                                                                let mut x_177: f64;
                                                                                 let mut x_178: f64;
                                                                                 'b172: {
-                                                                                    let mut x_186: f64;
+                                                                                    let mut x_186: Obj;
                                                                                     let mut x_187: f64;
-                                                                                    let mut x_188: Obj;
+                                                                                    let mut x_188: f64;
                                                                                     let mut x_189: f64;
                                                                                     'b185: {
                                                                                         let mut x_197: Obj;
@@ -5204,17 +5166,17 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                                 let x_203: u8 = l_Nat_ddecLt(x_11, x_202);
                                                                                                 match x_203 {
                                                                                                     0 => {
-                                                                                                        x_186 = x_201;
-                                                                                                        x_187 = x_200;
-                                                                                                        x_188 = x_197;
+                                                                                                        x_186 = x_197;
+                                                                                                        x_187 = x_201;
+                                                                                                        x_188 = x_200;
                                                                                                         x_189 = x_51;
                                                                                                         break 'b185;
                                                                                                     }
                                                                                                     _ => {
                                                                                                         let x_204: f64 = l_FloatArray_dget(x_20, x_11, rt::lean_box(0));
-                                                                                                        x_186 = x_201;
-                                                                                                        x_187 = x_200;
-                                                                                                        x_188 = x_197;
+                                                                                                        x_186 = x_197;
+                                                                                                        x_187 = x_201;
+                                                                                                        x_188 = x_200;
                                                                                                         x_189 = x_204;
                                                                                                         break 'b185;
                                                                                                     }
@@ -5229,20 +5191,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                     let x_194: u8 = l_Nat_ddecLt(x_11, x_193);
                                                                                     match x_194 {
                                                                                         0 => {
-                                                                                            x_173 = x_192;
-                                                                                            x_174 = x_186;
-                                                                                            x_175 = x_187;
-                                                                                            x_176 = x_189;
+                                                                                            x_173 = x_189;
+                                                                                            x_174 = x_192;
+                                                                                            x_175 = x_186;
+                                                                                            x_176 = x_187;
                                                                                             x_177 = x_188;
                                                                                             x_178 = x_51;
                                                                                             break 'b172;
                                                                                         }
                                                                                         _ => {
                                                                                             let x_195: f64 = l_FloatArray_dget(x_6, x_11, rt::lean_box(0));
-                                                                                            x_173 = x_192;
-                                                                                            x_174 = x_186;
-                                                                                            x_175 = x_187;
-                                                                                            x_176 = x_189;
+                                                                                            x_173 = x_189;
+                                                                                            x_174 = x_192;
+                                                                                            x_175 = x_186;
+                                                                                            x_176 = x_187;
                                                                                             x_177 = x_188;
                                                                                             x_178 = x_195;
                                                                                             break 'b172;
@@ -5250,81 +5212,81 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                                     }
                                                                                 }
                                                                                 let x_179: Obj = rt::lean_ctor_get(x_2, 0);
-                                                                                let x_180: f64 = l_Float_dmul(x_173, x_178);
+                                                                                let x_180: f64 = l_Float_dmul(x_174, x_178);
                                                                                 let x_181: Obj = l_Nat_dadd(x_11, x_100);
                                                                                 let x_182: Obj = l_FloatArray_dsize(x_179);
                                                                                 let x_183: u8 = l_Nat_ddecLt(x_181, x_182);
                                                                                 match x_183 {
                                                                                     0 => {
                                                                                         rt::lean_dec(x_181);
-                                                                                        x_162 = x_179;
-                                                                                        x_163 = x_174;
-                                                                                        x_164 = x_176;
-                                                                                        x_165 = x_175;
-                                                                                        x_166 = x_177;
-                                                                                        x_167 = x_180;
+                                                                                        x_162 = x_180;
+                                                                                        x_163 = x_173;
+                                                                                        x_164 = x_175;
+                                                                                        x_165 = x_176;
+                                                                                        x_166 = x_179;
+                                                                                        x_167 = x_177;
                                                                                         x_168 = x_51;
                                                                                         break 'b161;
                                                                                     }
                                                                                     _ => {
                                                                                         let x_184: f64 = l_FloatArray_dget(x_179, x_181, rt::lean_box(0));
                                                                                         rt::lean_dec(x_181);
-                                                                                        x_162 = x_179;
-                                                                                        x_163 = x_174;
-                                                                                        x_164 = x_176;
-                                                                                        x_165 = x_175;
-                                                                                        x_166 = x_177;
-                                                                                        x_167 = x_180;
+                                                                                        x_162 = x_180;
+                                                                                        x_163 = x_173;
+                                                                                        x_164 = x_175;
+                                                                                        x_165 = x_176;
+                                                                                        x_166 = x_179;
+                                                                                        x_167 = x_177;
                                                                                         x_168 = x_184;
                                                                                         break 'b161;
                                                                                     }
                                                                                 }
                                                                             }
-                                                                            let x_169: Obj = l_FloatArray_dsize(x_162);
+                                                                            let x_169: Obj = l_FloatArray_dsize(x_166);
                                                                             let x_170: u8 = l_Nat_ddecLt(x_11, x_169);
                                                                             match x_170 {
                                                                                 0 => {
-                                                                                    x_149 = x_163;
-                                                                                    x_150 = x_165;
-                                                                                    x_151 = x_164;
-                                                                                    x_152 = x_166;
-                                                                                    x_153 = x_167;
-                                                                                    x_154 = x_168;
+                                                                                    x_149 = x_162;
+                                                                                    x_150 = x_163;
+                                                                                    x_151 = x_168;
+                                                                                    x_152 = x_164;
+                                                                                    x_153 = x_165;
+                                                                                    x_154 = x_167;
                                                                                     x_155 = x_51;
                                                                                     break 'b148;
                                                                                 }
                                                                                 _ => {
-                                                                                    let x_171: f64 = l_FloatArray_dget(x_162, x_11, rt::lean_box(0));
-                                                                                    x_149 = x_163;
-                                                                                    x_150 = x_165;
-                                                                                    x_151 = x_164;
-                                                                                    x_152 = x_166;
-                                                                                    x_153 = x_167;
-                                                                                    x_154 = x_168;
+                                                                                    let x_171: f64 = l_FloatArray_dget(x_166, x_11, rt::lean_box(0));
+                                                                                    x_149 = x_162;
+                                                                                    x_150 = x_163;
+                                                                                    x_151 = x_168;
+                                                                                    x_152 = x_164;
+                                                                                    x_153 = x_165;
+                                                                                    x_154 = x_167;
                                                                                     x_155 = x_171;
                                                                                     break 'b148;
                                                                                 }
                                                                             }
                                                                         }
-                                                                        let x_156: f64 = l_Float_dsub(x_154, x_155);
-                                                                        let x_157: f64 = l_Float_dmul(x_153, x_156);
-                                                                        let x_158: f64 = l_Float_dsub(x_151, x_157);
+                                                                        let x_156: f64 = l_Float_dsub(x_151, x_155);
+                                                                        let x_157: f64 = l_Float_dmul(x_149, x_156);
+                                                                        let x_158: f64 = l_Float_dsub(x_150, x_157);
                                                                         let x_159: u8 = l_Float_disNaN(x_158);
                                                                         match x_159 {
                                                                             0 => {
                                                                                 let x_160: u8 = l_Float_disInf(x_158);
-                                                                                x_142 = x_149;
-                                                                                x_143 = x_150;
-                                                                                x_144 = x_158;
-                                                                                x_145 = x_152;
+                                                                                x_142 = x_158;
+                                                                                x_143 = x_152;
+                                                                                x_144 = x_153;
+                                                                                x_145 = x_154;
                                                                                 x_146 = x_160;
                                                                                 break 'b141;
                                                                             }
                                                                             _ => {
-                                                                                x_142 = x_149;
-                                                                                x_143 = x_150;
-                                                                                x_144 = x_158;
-                                                                                x_145 = x_152;
+                                                                                x_142 = x_158;
+                                                                                x_143 = x_152;
+                                                                                x_144 = x_153;
+                                                                                x_145 = x_154;
                                                                                 x_146 = x_159;
                                                                                 break 'b141;
                                                                             }
@@ -5332,38 +5294,38 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                                     }
                                                                     match x_146 {
                                                                         0 => {
-                                                                            let x_147: u8 = l_Float_ddecLt(x_143, x_144);
+                                                                            let x_147: u8 = l_Float_ddecLt(x_145, x_142);
                                                                             match x_147 {
                                                                                 0 => {
-                                                                                    x_137 = x_142;
-                                                                                    x_138 = x_145;
-                                                                                    x_139 = x_144;
+                                                                                    x_137 = x_143;
+                                                                                    x_138 = x_144;
+                                                                                    x_139 = x_142;
                                                                                     break 'b136;
                                                                                 }
                                                                                 _ => {
-                                                                                    x_137 = x_142;
-                                                                                    x_138 = x_145;
-                                                                                    x_139 = x_143;
+                                                                                    x_137 = x_143;
+                                                                                    x_138 = x_144;
+                                                                                    x_139 = x_145;
                                                                                     break 'b136;
                                                                                 }
                                                                             }
                                                                         }
                                                                         _ => {
-                                                                            x_133 = x_145;
+                                                                            x_133 = x_143;
                                                                             x_134 = x_51;
                                                                             break 'b132;
                                                                         }
                                                                     }
                                                                 }
-                                                                let x_140: u8 = l_Float_ddecLt(x_137, x_139);
+                                                                let x_140: u8 = l_Float_ddecLt(x_138, x_139);
                                                                 match x_140 {
                                                                     0 => {
-                                                                        x_133 = x_138;
-                                                                        x_134 = x_137;
+                                                                        x_133 = x_137;
+                                                                        x_134 = x_138;
                                                                         break 'b132;
                                                                     }
                                                                     _ => {
-                                                                        x_133 = x_138;
+                                                                        x_133 = x_137;
                                                                         x_134 = x_139;
                                                                         break 'b132;
                                                                     }
@@ -5424,18 +5386,18 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             let x_121: u8 = l_Nat_ddecLt(x_11, x_120);
                                                             match x_121 {
                                                                 0 => {
-                                                                    x_102 = x_119;
+                                                                    x_102 = x_118;
                                                                     x_103 = x_114;
-                                                                    x_104 = x_118;
+                                                                    x_104 = x_119;
                                                                     x_105 = x_115;
                                                                     x_106 = x_51;
                                                                     break 'b101;
                                                                 }
                                                                 _ => {
                                                                     let x_122: f64 = l_FloatArray_dget(x_24, x_11, rt::lean_box(0));
-                                                                    x_102 = x_119;
+                                                                    x_102 = x_118;
                                                                     x_103 = x_114;
-                                                                    x_104 = x_118;
+                                                                    x_104 = x_119;
                                                                     x_105 = x_115;
                                                                     x_106 = x_122;
                                                                     break 'b101;
@@ -5452,108 +5414,108 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                 match x_111 {
                                                     0 => {
                                                         x_87 = x_102;
-                                                        x_88 = x_104;
-                                                        x_89 = x_103;
-                                                        x_90 = x_106;
+                                                        x_88 = x_103;
+                                                        x_89 = x_104;
+                                                        x_90 = x_109;
                                                         x_91 = x_105;
-                                                        x_92 = x_109;
+                                                        x_92 = x_106;
                                                         x_93 = x_51;
                                                         break 'b86;
                                                     }
                                                     _ => {
                                                         let x_112: f64 = l_FloatArray_dget(x_4, x_11, rt::lean_box(0));
                                                         x_87 = x_102;
-                                                        x_88 = x_104;
-                                                        x_89 = x_103;
-                                                        x_90 = x_106;
+                                                        x_88 = x_103;
+                                                        x_89 = x_104;
+                                                        x_90 = x_109;
                                                         x_91 = x_105;
-                                                        x_92 = x_109;
+                                                        x_92 = x_106;
                                                         x_93 = x_112;
                                                         break 'b86;
                                                     }
                                                 }
                                             }
                                             let x_94: Obj = rt::lean_ctor_get(x_2, 0);
-                                            let x_95: f64 = l_Float_dmul(x_92, x_93);
+                                            let x_95: f64 = l_Float_dmul(x_90, x_93);
                                             let x_96: Obj = l_Nat_dadd(x_11, x_3);
                                             let x_97: Obj = l_FloatArray_dsize(x_94);
                                             let x_98: u8 = l_Nat_ddecLt(x_96, x_97);
                                             match x_98 {
                                                 0 => {
                                                     rt::lean_dec(x_96);
-                                                    x_75 = x_87;
-                                                    x_76 = x_89;
+                                                    x_75 = x_95;
+                                                    x_76 = x_87;
                                                     x_77 = x_88;
-                                                    x_78 = x_90;
-                                                    x_79 = x_94;
+                                                    x_78 = x_89;
+                                                    x_79 = x_92;
                                                     x_80 = x_91;
-                                                    x_81 = x_95;
+                                                    x_81 = x_94;
                                                     x_82 = x_51;
                                                     break 'b74;
                                                 }
                                                 _ => {
                                                     let x_99: f64 = l_FloatArray_dget(x_94, x_96, rt::lean_box(0));
                                                     rt::lean_dec(x_96);
-                                                    x_75 = x_87;
-                                                    x_76 = x_89;
+                                                    x_75 = x_95;
+                                                    x_76 = x_87;
                                                     x_77 = x_88;
-                                                    x_78 = x_90;
-                                                    x_79 = x_94;
+                                                    x_78 = x_89;
+                                                    x_79 = x_92;
                                                     x_80 = x_91;
-                                                    x_81 = x_95;
+                                                    x_81 = x_94;
                                                     x_82 = x_99;
                                                     break 'b74;
                                                 }
                                             }
                                         }
-                                        let x_83: Obj = l_FloatArray_dsize(x_79);
+                                        let x_83: Obj = l_FloatArray_dsize(x_81);
                                         let x_84: u8 = l_Nat_ddecLt(x_11, x_83);
                                         match x_84 {
                                             0 => {
-                                                x_61 = x_75;
-                                                x_62 = x_82;
+                                                x_61 = x_76;
+                                                x_62 = x_75;
                                                 x_63 = x_77;
-                                                x_64 = x_76;
+                                                x_64 = x_82;
                                                 x_65 = x_78;
                                                 x_66 = x_80;
-                                                x_67 = x_81;
+                                                x_67 = x_79;
                                                 x_68 = x_51;
                                                 break 'b60;
                                             }
                                             _ => {
-                                                let x_85: f64 = l_FloatArray_dget(x_79, x_11, rt::lean_box(0));
-                                                x_61 = x_75;
-                                                x_62 = x_82;
+                                                let x_85: f64 = l_FloatArray_dget(x_81, x_11, rt::lean_box(0));
+                                                x_61 = x_76;
+                                                x_62 = x_75;
                                                 x_63 = x_77;
-                                                x_64 = x_76;
+                                                x_64 = x_82;
                                                 x_65 = x_78;
                                                 x_66 = x_80;
-                                                x_67 = x_81;
+                                                x_67 = x_79;
                                                 x_68 = x_85;
                                                 break 'b60;
                                             }
                                         }
                                     }
-                                    let x_69: f64 = l_Float_dsub(x_62, x_68);
-                                    let x_70: f64 = l_Float_dmul(x_67, x_69);
-                                    let x_71: f64 = l_Float_dsub(x_65, x_70);
+                                    let x_69: f64 = l_Float_dsub(x_64, x_68);
+                                    let x_70: f64 = l_Float_dmul(x_62, x_69);
+                                    let x_71: f64 = l_Float_dsub(x_67, x_70);
                                     let x_72: u8 = l_Float_disNaN(x_71);
                                     match x_72 {
                                         0 => {
                                             let x_73: u8 = l_Float_disInf(x_71);
-                                            x_53 = x_71;
-                                            x_54 = x_61;
-                                            x_55 = x_64;
-                                            x_56 = x_63;
+                                            x_53 = x_61;
+                                            x_54 = x_63;
+                                            x_55 = x_65;
+                                            x_56 = x_71;
                                             x_57 = x_66;
                                             x_58 = x_73;
                                             break 'b52;
                                         }
                                         _ => {
-                                            x_53 = x_71;
-                                            x_54 = x_61;
-                                            x_55 = x_64;
-                                            x_56 = x_63;
+                                            x_53 = x_61;
+                                            x_54 = x_63;
+                                            x_55 = x_65;
+                                            x_56 = x_71;
                                             x_57 = x_66;
                                             x_58 = x_72;
                                             break 'b52;
@@ -5562,26 +5524,26 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 }
                                 match x_58 {
                                     0 => {
-                                        let x_59: u8 = l_Float_ddecLt(x_56, x_53);
+                                        let x_59: u8 = l_Float_ddecLt(x_53, x_56);
                                         match x_59 {
                                             0 => {
-                                                x_41 = x_54;
-                                                x_42 = x_55;
-                                                x_43 = x_57;
-                                                x_44 = x_53;
-                                                break 'b40;
-                                            }
-                                            _ => {
                                                 x_41 = x_54;
                                                 x_42 = x_55;
                                                 x_43 = x_57;
                                                 x_44 = x_56;
                                                 break 'b40;
                                             }
+                                            _ => {
+                                                x_41 = x_54;
+                                                x_42 = x_55;
+                                                x_43 = x_57;
+                                                x_44 = x_53;
+                                                break 'b40;
+                                            }
                                         }
                                     }
                                     _ => {
-                                        x_30 = x_55;
+                                        x_30 = x_54;
                                         x_31 = x_57;
                                         x_32 = x_51;
                                         break 'b29;
@@ -5597,16 +5559,16 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             x_15 = x_50;
                             break 'b14;
                         }
-                        let x_45: u8 = l_Float_ddecLt(x_41, x_44);
+                        let x_45: u8 = l_Float_ddecLt(x_42, x_44);
                         match x_45 {
                             0 => {
-                                x_30 = x_42;
+                                x_30 = x_41;
                                 x_31 = x_43;
-                                x_32 = x_41;
+                                x_32 = x_42;
                                 break 'b29;
                             }
                             _ => {
-                                x_30 = x_42;
+                                x_30 = x_41;
                                 x_31 = x_43;
                                 x_32 = x_44;
                                 break 'b29;
@@ -5840,9 +5802,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         }
                     }
                     let mut x_33: Obj;
-                    let mut x_34: f64;
+                    let mut x_34: Obj;
                     let mut x_35: Obj;
-                    let mut x_36: Obj;
+                    let mut x_36: f64;
                     let mut x_37: f64;
                     'b32: {
                         'b49: {
@@ -5875,26 +5837,26 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             let x_63: Obj = rt::nat::lean_usize_to_nat(0);
                                             let mut x_65: Obj;
                                             let mut x_66: Obj;
-                                            let mut x_67: Obj;
+                                            let mut x_67: f64;
                                             let mut x_68: f64;
-                                            let mut x_69: f64;
+                                            let mut x_69: Obj;
                                             let mut x_70: Obj;
                                             'b64: {
                                                 let mut x_96: Obj;
-                                                let mut x_97: Obj;
+                                                let mut x_97: f64;
                                                 let mut x_98: Obj;
                                                 let mut x_99: f64;
-                                                let mut x_100: f64;
+                                                let mut x_100: Obj;
                                                 let mut x_101: Obj;
                                                 'b95: {
-                                                    let mut x_105: Obj;
+                                                    let mut x_105: f64;
                                                     let mut x_106: f64;
-                                                    let mut x_107: f64;
+                                                    let mut x_107: Obj;
                                                     let mut x_108: Obj;
                                                     'b104: {
-                                                        let mut x_114: f64;
+                                                        let mut x_114: Obj;
                                                         let mut x_115: f64;
-                                                        let mut x_116: Obj;
+                                                        let mut x_116: f64;
                                                         let mut x_117: Obj;
                                                         'b113: {
                                                             let mut x_121: f64;
@@ -5941,38 +5903,38 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                             match x_125 {
                                                                 0 => {
                                                                     rt::lean_inc(x_4);
-                                                                    x_114 = x_122;
+                                                                    x_114 = x_123;
                                                                     x_115 = x_121;
-                                                                    x_116 = x_123;
+                                                                    x_116 = x_122;
                                                                     x_117 = x_4;
                                                                     break 'b113;
                                                                 }
                                                                 _ => {
                                                                     let x_126: Obj = l_Nat_dadd(x_9, x_62);
-                                                                    x_114 = x_122;
+                                                                    x_114 = x_123;
                                                                     x_115 = x_121;
-                                                                    x_116 = x_123;
+                                                                    x_116 = x_122;
                                                                     x_117 = x_126;
                                                                     break 'b113;
                                                                 }
                                                             }
                                                         }
-                                                        let x_118: u8 = l_Nat_ddecLt(x_63, x_116);
-                                                        rt::lean_dec(x_116);
+                                                        let x_118: u8 = l_Nat_ddecLt(x_63, x_114);
+                                                        rt::lean_dec(x_114);
                                                         match x_118 {
                                                             0 => {
                                                                 rt::lean_inc(x_4);
-                                                                x_105 = x_117;
-                                                                x_106 = x_114;
-                                                                x_107 = x_115;
+                                                                x_105 = x_115;
+                                                                x_106 = x_116;
+                                                                x_107 = x_117;
                                                                 x_108 = x_4;
                                                                 break 'b104;
                                                             }
                                                             _ => {
                                                                 let x_119: Obj = l_Nat_dsub(x_9, x_62);
-                                                                x_105 = x_117;
-                                                                x_106 = x_114;
-                                                                x_107 = x_115;
+                                                                x_105 = x_115;
+                                                                x_106 = x_116;
+                                                                x_107 = x_117;
                                                                 x_108 = x_119;
                                                                 break 'b104;
                                                             }
@@ -5985,9 +5947,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     match x_111 {
                                                         0 => {
                                                             rt::lean_inc(x_4);
-                                                            x_96 = x_109;
+                                                            x_96 = x_108;
                                                             x_97 = x_105;
-                                                            x_98 = x_108;
+                                                            x_98 = x_109;
                                                             x_99 = x_106;
                                                             x_100 = x_107;
                                                             x_101 = x_4;
@@ -5995,9 +5957,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         }
                                                         _ => {
                                                             let x_112: Obj = l_Nat_dadd(x_9, x_2);
-                                                            x_96 = x_109;
+                                                            x_96 = x_108;
                                                             x_97 = x_105;
-                                                            x_98 = x_108;
+                                                            x_98 = x_109;
                                                             x_99 = x_106;
                                                             x_100 = x_107;
                                                             x_101 = x_112;
@@ -6005,14 +5967,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                         }
                                                     }
                                                 }
-                                                let x_102: u8 = l_Nat_ddecLt(x_63, x_96);
-                                                rt::lean_dec(x_96);
+                                                let x_102: u8 = l_Nat_ddecLt(x_63, x_98);
+                                                rt::lean_dec(x_98);
                                                 match x_102 {
                                                     0 => {
                                                         rt::lean_inc(x_4);
-                                                        x_65 = x_101;
-                                                        x_66 = x_97;
-                                                        x_67 = x_98;
+                                                        x_65 = x_96;
+                                                        x_66 = x_101;
+                                                        x_67 = x_97;
                                                         x_68 = x_99;
                                                         x_69 = x_100;
                                                         x_70 = x_4;
@@ -6020,9 +5982,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     }
                                                     _ => {
                                                         let x_103: Obj = l_Nat_dsub(x_9, x_2);
-                                                        x_65 = x_101;
-                                                        x_66 = x_97;
-                                                        x_67 = x_98;
+                                                        x_65 = x_96;
+                                                        x_66 = x_101;
+                                                        x_67 = x_97;
                                                         x_68 = x_99;
                                                         x_69 = x_100;
                                                         x_70 = x_103;
@@ -6035,13 +5997,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             rt::lean_ctor_set(x_72, 0, x_70);
                                             rt::lean_ctor_set(x_72, 1, x_71);
                                             let x_73: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_73, 0, x_65);
+                                            rt::lean_ctor_set(x_73, 0, x_66);
                                             rt::lean_ctor_set(x_73, 1, x_72);
                                             let x_74: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_74, 0, x_67);
+                                            rt::lean_ctor_set(x_74, 0, x_65);
                                             rt::lean_ctor_set(x_74, 1, x_73);
                                             let x_75: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_75, 0, x_66);
+                                            rt::lean_ctor_set(x_75, 0, x_69);
                                             rt::lean_ctor_set(x_75, 1, x_74);
                                             let x_76: Obj = rt::lean_box_float(x_68);
                                             let x_77: Obj = rt::lean_alloc_ctor(0, 2, 0);
@@ -6051,7 +6013,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             rt::lean_ctor_set(x_78, 0, x_19);
                                             rt::lean_ctor_set(x_78, 1, x_77);
                                             let x_79: u8 = rt::lean_unbox(x_60) as u8;
-                                            let x_80: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_9, x_2, x_69, x_3, x_79, x_55, x_4, x_53, x_75, x_78);
+                                            let x_80: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_9, x_2, x_67, x_3, x_79, x_55, x_4, x_53, x_75, x_78);
                                             rt::lean_dec_ref(x_75);
                                             let x_81: Obj = rt::lean_ctor_get(x_80, 1);
                                             rt::lean_inc(x_81);
@@ -6073,19 +6035,19 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     match x_88 {
                                                         0 => {
                                                             let x_89: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                            x_33 = x_86;
-                                                            x_34 = x_68;
-                                                            x_35 = x_83;
-                                                            x_36 = x_82;
+                                                            x_33 = x_82;
+                                                            x_34 = x_83;
+                                                            x_35 = x_86;
+                                                            x_36 = x_68;
                                                             x_37 = x_89;
                                                             break 'b32;
                                                         }
                                                         _ => {
                                                             let x_90: f64 = l_FloatArray_dget(x_56, x_9, rt::lean_box(0));
-                                                            x_33 = x_86;
-                                                            x_34 = x_68;
-                                                            x_35 = x_83;
-                                                            x_36 = x_82;
+                                                            x_33 = x_82;
+                                                            x_34 = x_83;
+                                                            x_35 = x_86;
+                                                            x_36 = x_68;
                                                             x_37 = x_90;
                                                             break 'b32;
                                                         }
@@ -6097,19 +6059,19 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                     match x_92 {
                                                         0 => {
                                                             let x_93: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                            x_33 = x_86;
-                                                            x_34 = x_68;
-                                                            x_35 = x_83;
-                                                            x_36 = x_82;
+                                                            x_33 = x_82;
+                                                            x_34 = x_83;
+                                                            x_35 = x_86;
+                                                            x_36 = x_68;
                                                             x_37 = x_93;
                                                             break 'b32;
                                                         }
                                                         _ => {
                                                             let x_94: f64 = l_FloatArray_dget(x_57, x_9, rt::lean_box(0));
-                                                            x_33 = x_86;
-                                                            x_34 = x_68;
-                                                            x_35 = x_83;
-                                                            x_36 = x_82;
+                                                            x_33 = x_82;
+                                                            x_34 = x_83;
+                                                            x_35 = x_86;
+                                                            x_36 = x_68;
                                                             x_37 = x_94;
                                                             break 'b32;
                                                         }
@@ -6133,20 +6095,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         x_13 = x_52;
                         break 'b12;
                     }
-                    let x_38: f64 = l_Float_dmul(x_34, x_37);
+                    let x_38: f64 = l_Float_dmul(x_36, x_37);
                     let x_39: Obj = l_FloatArray_dset_x21_(x_28, x_9, x_38);
                     let mut x_41: Obj;
                     'b40: {
                         match x_31 {
                             0 => {
                                 rt::lean_ctor_set(x_30, 1, x_39);
-                                rt::lean_ctor_set(x_30, 0, x_33);
+                                rt::lean_ctor_set(x_30, 0, x_35);
                                 x_41 = x_30;
                                 break 'b40;
                             }
                             _ => {
                                 let x_48: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_48, 0, x_33);
+                                rt::lean_ctor_set(x_48, 0, x_35);
                                 rt::lean_ctor_set(x_48, 1, x_39);
                                 x_41 = x_48;
                                 break 'b40;
@@ -6158,13 +6120,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_26 {
                             0 => {
                                 rt::lean_ctor_set(x_25, 1, x_41);
-                                rt::lean_ctor_set(x_25, 0, x_35);
+                                rt::lean_ctor_set(x_25, 0, x_34);
                                 x_43 = x_25;
                                 break 'b42;
                             }
                             _ => {
                                 let x_47: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_47, 0, x_35);
+                                rt::lean_ctor_set(x_47, 0, x_34);
                                 rt::lean_ctor_set(x_47, 1, x_41);
                                 x_43 = x_47;
                                 break 'b42;
@@ -6176,13 +6138,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         match x_22 {
                             0 => {
                                 rt::lean_ctor_set(x_21, 1, x_43);
-                                rt::lean_ctor_set(x_21, 0, x_36);
+                                rt::lean_ctor_set(x_21, 0, x_33);
                                 x_45 = x_21;
                                 break 'b44;
                             }
                             _ => {
                                 let x_46: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_46, 0, x_36);
+                                rt::lean_ctor_set(x_46, 0, x_33);
                                 rt::lean_ctor_set(x_46, 1, x_43);
                                 x_45 = x_46;
                                 break 'b44;
