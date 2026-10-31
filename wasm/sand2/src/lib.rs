@@ -39,6 +39,9 @@ impl Universe {
         physics::count_simulation(self.state())
     }
     pub fn step_count(&self) -> u32 { physics::step_count_simulation(self.state()) }
+    #[cfg(not(target_arch = "wasm32"))]
+    pub fn numerical_probe(&self, stage: u32) -> u64 { physics::numerical_probe_simulation(self.state(), stage) }
+    pub fn solver_failures(&self) -> u64 { physics::solver_failures_simulation(self.state()) }
     pub fn time_milliseconds(&self) -> u64 { physics::time_milliseconds_simulation(self.state()) }
     pub fn digest(&self) -> u64 { physics::digest_simulation(self.state()) }
     pub fn audit(&self) -> String { physics::audit_simulation(self.state()) }
@@ -79,6 +82,8 @@ mod browser {
     #[unsafe(no_mangle)]
     pub extern "C" fn world_steps() -> u32 { world(|w| w.step_count()) }
     #[unsafe(no_mangle)]
+    pub extern "C" fn world_solver_failures() -> u64 { world(|w| w.solver_failures()) }
+    #[unsafe(no_mangle)]
     pub extern "C" fn world_time_ms() -> u64 { world(|w| w.time_milliseconds()) }
     #[unsafe(no_mangle)]
     pub extern "C" fn world_digest() -> u64 { world(|w| w.digest()) }
@@ -99,11 +104,43 @@ mod tests {
     use super::*;
     #[test]
     fn complete_timesteps_conserve_all_elements_and_total_energy() {
-        for scene in 1..=8 {
+        for scene in 1..=9 {
             let mut w = Universe::new(24, 20); w.scene(scene);
             let before = w.audit();
-            for tick in 0..12 { w.tick(); assert_eq!(w.audit(), before, "scene {scene}, tick {tick}"); }
+            for tick in 0..12 {
+                w.tick();
+                assert_eq!(w.audit(), before, "scene {scene}, tick {tick}");
+                assert_eq!(w.solver_failures(), 0, "Exhausted solver retries in scene {scene}, tick {tick}");
+            }
         }
+    }
+    #[test]
+    fn pressure_raises_water_above_the_communicating_vessel_outlet() {
+        let mut w = Universe::new(24, 20); w.scene(9);
+        let before = w.audit();
+        assert_eq!(physics::water_in_region_simulation(w.state(), 13, 1, 23, 15), 0);
+        let mut max_raised = 0;
+        let mut left_sum = 0u64; let mut right_sum = 0u64;
+        for tick in 0..120 {
+            w.tick();
+            let volume = physics::max_liquid_volume_simulation(w.state());
+            assert!(volume <= 10_000_010_000, "Liquid overfilled a cell at tick {}: {volume}", tick+1);
+            assert_eq!(physics::solver_failures_simulation(w.state()), 0, "Liquid retry limit at tick {}", tick+1);
+            max_raised = max_raised.max(physics::water_in_region_simulation(w.state(), 13, 1, 23, 15));
+            if tick >= 60 {
+                left_sum += physics::water_in_region_simulation(w.state(), 1, 1, 12, 19);
+                right_sum += physics::water_in_region_simulation(w.state(), 13, 1, 23, 19);
+            }
+            if tick % 20 == 19 {
+                eprintln!("tick {}: left={}, right={}, raised={}", tick+1,
+                    physics::water_in_region_simulation(w.state(), 1, 1, 12, 19),
+                    physics::water_in_region_simulation(w.state(), 13, 1, 23, 19),
+                    physics::water_in_region_simulation(w.state(), 13, 1, 23, 15));
+            }
+        }
+        assert!(max_raised > 30*55_555_555, "Water failed to rise above the outlet: {max_raised}");
+        assert!((left_sum*10).abs_diff(right_sum*11) < 110*60*55_555_555, "Time-averaged water levels differ by more than one cell");
+        assert_eq!(w.audit(), before);
     }
     #[test]
     fn checkpoint_restores_every_state_component() {

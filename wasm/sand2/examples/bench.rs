@@ -5,7 +5,7 @@ fn main() {
             let mut w = Universe::new(width,height); w.scene(scene);
             let start = std::time::Instant::now();
             for _ in 0..5 { w.tick(); }
-            println!("{width}x{height} scene {scene}: {:.2} ms/tick",start.elapsed().as_secs_f64()*200.0);
+            println!("{width}x{height} scene {scene}: {:.2} ms/tick, rejected substeps {}",start.elapsed().as_secs_f64()*200.0,w.solver_failures());
         }
     }
 }

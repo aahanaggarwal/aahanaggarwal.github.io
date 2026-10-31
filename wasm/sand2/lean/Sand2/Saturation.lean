@@ -62,7 +62,7 @@ theorem curve_temperature_upper_bound (curve : SaturationCurve p₀ t₀) (p : N
       exact Nat.le_trans (Nat.le_of_lt ht) lastBound
     · by_cases hi : p < p₁
       · simp only [curveTemperature,lastTemperature,lo,hi,↓reduceIte]
-        exact Nat.le_trans (interpolation_within_endpoints p₀ t₀ p₁ t₁ p (by omega)).2 lastBound
+        exact Nat.le_trans (interpolation_within_endpoints p₀ t₀ p₁ t₁ p (Nat.le_of_lt ht)).2 lastBound
       · simpa only [curveTemperature,lastTemperature,lo,hi,↓reduceIte] using ih p
 
 theorem curve_temperature_monotone (curve : SaturationCurve p₀ t₀) (p q : Nat) (ordered : p <= q) :
@@ -83,6 +83,44 @@ theorem curve_temperature_monotone (curve : SaturationCurve p₀ t₀) (p q : Na
       · have qi : ¬q < p₁ := by omega
         simp only [pi,qi,↓reduceIte]
         exact ih p q ordered
+
+/-- The same certified knots evaluated at one-millionth of a Celsius degree.
+    Fine equilibrium avoids a one-centidegree jump manufacturing large amounts
+    of vapor in a nearly full liquid cell. -/
+@[noinline] def curveTemperatureFine (curve : SaturationCurve p₀ t₀) (p : Nat) : Nat :=
+  if p <= p₀ then t₀*10000 else
+    match curve with
+    | .stop => t₀*10000
+    | .next p₁ t₁ _ _ tail =>
+      if p < p₁ then interpolateSaturation p₀ (t₀*10000) p₁ (t₁*10000) p
+      else curveTemperatureFine tail p
+
+theorem fine_curve_temperature_lower_bound (curve : SaturationCurve p₀ t₀) (p : Nat) :
+    t₀*10000 <= curveTemperatureFine curve p := by
+  induction curve generalizing p with
+  | stop => simp [curveTemperatureFine]
+  | @next p₀ t₀ p₁ t₁ hp ht tail ih =>
+    by_cases lo : p <= p₀
+    · simp [curveTemperatureFine,lo]
+    · by_cases hi : p < p₁
+      · simpa only [curveTemperatureFine,lo,hi,↓reduceIte] using
+          (interpolation_within_endpoints p₀ (t₀*10000) p₁ (t₁*10000) p (by omega)).1
+      · simpa only [curveTemperatureFine,lo,hi,↓reduceIte] using
+          Nat.le_trans (show t₀*10000 <= t₁*10000 by omega) (ih p)
+
+theorem fine_curve_temperature_upper_bound (curve : SaturationCurve p₀ t₀) (p : Nat) :
+    curveTemperatureFine curve p <= lastTemperature curve*10000 := by
+  induction curve generalizing p with
+  | stop => simp [curveTemperatureFine,lastTemperature]
+  | @next p₀ t₀ p₁ t₁ hp ht tail ih =>
+    have lastBound := Nat.le_trans (fine_curve_temperature_lower_bound tail p) (ih p)
+    by_cases lo : p <= p₀
+    · simp only [curveTemperatureFine,lastTemperature,lo,↓reduceIte]
+      exact Nat.le_trans (Nat.mul_le_mul_right 10000 (Nat.le_of_lt ht)) lastBound
+    · by_cases hi : p < p₁
+      · simp only [curveTemperatureFine,lastTemperature,lo,hi,↓reduceIte]
+        exact Nat.le_trans (interpolation_within_endpoints p₀ (t₀*10000) p₁ (t₁*10000) p (Nat.mul_le_mul_right 10000 (Nat.le_of_lt ht))).2 lastBound
+      · simpa only [curveTemperatureFine,lastTemperature,lo,hi,↓reduceIte] using ih p
 
 /-- Rounded millipascal knots computed from the IAPWS SR1-86(1992) vapor-pressure
     equation, every 5 C from 0 to 200 C. The integer interpolation is the declared
@@ -144,5 +182,10 @@ theorem saturation_temperature_bounded (p : Nat) : saturationTemperature p <= 20
 
 theorem higher_pressure_cannot_lower_boiling_point (p q : Nat) (ordered : p <= q) :
     saturationTemperature p <= saturationTemperature q := curve_temperature_monotone waterSaturation p q ordered
+
+@[noinline] def saturationTemperatureFine (pressure : Nat) : Nat := curveTemperatureFine waterSaturation pressure
+
+theorem fine_saturation_temperature_bounded (p : Nat) : saturationTemperatureFine p <= 200000000 :=
+  fine_curve_temperature_upper_bound waterSaturation p
 
 end Sand2

@@ -2,6 +2,7 @@ import Sand2.Conversions
 import Sand2.Transport
 import Sand2.PhasePressure
 import Sand2.Mechanics
+import Sand2.FluidDynamics
 
 namespace Sand2
 open Chemistry
@@ -14,18 +15,6 @@ def mobile (height width i : Nat) (p : Particle) : Bool :=
   !p.anchored && (let m := labelAt height width i p
     isPowder m || isLiquid m || gasCell height width i p ||
     (p.matter.iron*56 > p.mass/2 && solidRegime height width i p == .liquid))
-
-def unchangedSingle (p : Particle) : SingleEdit p := ⟨p,rfl,rfl⟩
-def unchangedPair (a b : Particle) : PairEdit a b := ⟨a,b,rfl,rfl⟩
-
-/-- Candidate edits that would take a cell below absolute zero are rejected,
-    retaining the entire original inventory instead of clipping its energy. -/
-def safePair (height width i j : Nat) (a b : Particle) (e : PairEdit a b) : PairEdit a b :=
-  if temperature height width i e.first >= -27315 && temperature height width j e.second >= -27315 then e
-  else unchangedPair a b
-
-def safeSingle (height width i : Nat) (p : Particle) (e : SingleEdit p) : SingleEdit p :=
-  if temperature height width i e.after >= -27315 then e else unchangedSingle p
 
 def normalize (i : Nat) : Physics width height Unit := do
   let p ← Physics.getParticle i
@@ -153,80 +142,27 @@ def reactive (m : Mixture) : Bool :=
           let e : PairEdit a b := ⟨e.first,{e.second with luminous := if activation r > 0 then 12 else b.luminous},e.atoms_eq,e.energy_eq⟩
           safePair height width i j a b e
 
-/-- Gas transport is a pressure-relaxation finite-volume model. It is deliberately
-    overdamped at this space/time resolution, rather than an unstable explicit
-    acoustic solver. Every molecule, its formation/sensible energy, and momentum
-    are transferred, with equal and opposite changes to the two cells. -/
-@[noinline] def flowOne (i j : Nat) (pa pb : Int) : Physics width height Unit := do
-  let a ← Physics.getParticle i
-  let b ← Physics.getParticle j
-  if b.anchored || !(gasCell height width j b) then return
-  if pa <= pb+200 || gasCount height width i a == 0 then return
-  let divisor := max 8 ((pa*8/max 1 (pa-pb)).toNat)
-  let portion := partialGasPortion a.matter divisor (vaporWaterMoles height width i a)
-  if Chemistry.mass portion.moved == 0 then return
-  Physics.pair i j fun a b => safePair height width i j a b (gasFlowEdit height width i j a b divisor)
-
 structure ThermalSample where
   t : Int := 2000
-  pressure : Int := 101325000
-  waterPartial : Int := 0
-  bulkPressure : Int := 101325000
-  gas : Bool := true
   enthalpy : Int := 0
-  phaseKey : Nat := 10000
+  phaseKey : Nat := 100000000
   deriving Inhabited
 
-@[noinline] def thermalField (w : World width height) : Array ThermalSample := Id.run do
-  let mut field := Array.ofFn fun i : Fin (width*height) =>
+/-- Start-of-tick thermal samples. Mechanical pressure and buoyancy are supplied
+    by the coupled fluid solve, rather than a separate column approximation. -/
+@[noinline] def thermalField (w : World width height) : Array ThermalSample :=
+  Array.ofFn fun i : Fin (width*height) =>
     let p := read w i
     let h := thermalEnergy height width i p
-    let t := temperatureFromEnthalpy p h
-    let vapor := vaporWaterFromEnthalpy p h
-    let gasMoles := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
-    let gas := p.mass < 10000000 || p.dryMass+18*(p.matter.water-vapor) < 10000000
-    { t,pressure := idealGasPressure gasMoles t,
-      waterPartial := idealGasPressure vapor t,gas,enthalpy := h,phaseKey := p.boiling : ThermalSample }
-  let mut total := (0 : Int)
-  let mut count := 0
-  for i in [:width*height] do
-    let p := read w i
-    if !p.anchored && (field[i]?.getD default).gas then
-      total := total+(field[i]?.getD default).pressure
-      count := count+1
-  let ambient := if count == 0 then (101325000 : Int) else total/max 1 count
-  -- Liquid-column pressure is a hydrostatic approximation; gas compartments
-  -- supply their local surface pressure. It is not an incompressible solve.
-  for x in [:width] do
-    let mut surface := ambient
-    let mut head := (0 : Int)
-    for y in [:height] do
-      let i := y*width+x
-      let p := read w i
-      let sample := field[i]?.getD default
-      if sample.gas && !p.anchored then
-        surface := sample.pressure
-        head := 0
-        field := field.set! i {sample with bulkPressure := sample.pressure}
-      else if isLiquid (labelAt height width i p) then
-        let increment := (condensedMass height width i p : Int)*981/10000000
-        field := field.set! i {sample with bulkPressure := max 0 surface+head+increment/2}
-        head := head+increment
-      else
-        head := 0
-        surface := ambient
-        field := field.set! i {sample with bulkPressure := max 0 ambient}
-  return field
+    {t := temperatureFromEnthalpy p h,enthalpy := h,phaseKey := p.boilingFine}
 
-/-- Vapor uses its partial pressure for dew-point equilibrium; condensed water
-    uses the surrounding mechanical pressure, including the hydrostatic head.
-    This is an explicit, lagged pressure/enthalpy coupling with bounded lookup. -/
+/-- The energy-volume flash calculation selects water's partial pressure without
+    changing any molecule or the parcel's conserved energy. -/
 def updatePhasePressure (field : Array ThermalSample) (i : Nat) : Physics width height Unit := do
   let p ← Physics.getParticle i
   if p.matter.water == 0 then return
-  let sample := field[i]?.getD default
-  let target := if sample.gas then (max 0 sample.waterPartial).toNat
-    else equilibriumPhasePressure p sample.enthalpy (max 0 sample.bulkPressure).toNat
+  let h := (field[i]?.getD default).enthalpy
+  let target := flashEquilibriumPressure p h
   if target != p.phasePressure then
     Physics.single i fun p => ⟨atPressure p target,rfl,rfl⟩
 
@@ -237,17 +173,9 @@ def updatePhasePressure (field : Array ThermalSample) (i : Nat) : Physics width 
   for i in [:width*height] do
     let p := read w i
     let old := field[i]?.getD default
-    if p.matter.water > 0 && p.boiling != old.phaseKey then
+    if p.matter.water > 0 && p.boilingFine != old.phaseKey then
       let t := temperatureFromEnthalpy p old.enthalpy
-      let vapor := vaporWaterFromEnthalpy p old.enthalpy
-      let moles := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
-      let gas := p.mass < 10000000 || p.dryMass+18*(p.matter.water-vapor) < 10000000
-      let fresh := {old with
-        t := t
-        pressure := idealGasPressure moles t
-        waterPartial := idealGasPressure vapor t
-        gas := gas
-        phaseKey := p.boiling}
+      let fresh := {old with t := t,phaseKey := p.boilingFine}
       result := result.set! i fresh
   return result
 
@@ -256,29 +184,19 @@ def updatePhasePressure (field : Array ThermalSample) (i : Nat) : Physics width 
 @[noinline] def diffuse (i j : Nat) : Physics width height Unit := do
   let a ← Physics.getParticle i
   let b ← Physics.getParticle j
-  if a.anchored || b.anchored || !gasCell height width i a || !gasCell height width j b || a.matter == b.matter then return
-  let divisor := diffusionDivisor a.matter b.matter
+  if a.matter == b.matter || a.anchored || b.anchored || liquidVolume height width i a >= cellVolume/2 ||
+      liquidVolume height width j b >= cellVolume/2 || gasFreeVolume height width i a < cellVolume/100000 ||
+      gasFreeVolume height width j b < cellVolume/100000 then return
+  let divisor := diffusionDivisor a.matter b.matter*cellVolume/
+    max 1 (min (gasFreeVolume height width i a) (gasFreeVolume height width j b))
   Physics.pair i j fun a b => safePair height width i j a b (gasDiffusionEdit height width i j a b divisor)
-
-/-- Overdamped buoyancy exchanges unstable gas layers: lighter gas below heavier
-    gas rises. Gravity stays in the conserved energy budget. This is a coarse
-    convective relaxation law, not a resolved momentum/viscosity solver. -/
-@[noinline] def buoyancy (upper lower : Nat) : Physics width height Unit := do
-  let a ← Physics.getParticle upper
-  let b ← Physics.getParticle lower
-  if a.anchored || b.anchored || !gasCell height width upper a || !gasCell height width lower b then return
-  if a.mass*100 > b.mass*101 then
-    Physics.pair upper lower fun a b => safePair height width upper lower a b (gasDiffusionEdit height width upper lower a b 16)
 
 @[noinline] def face (field : Array ThermalSample) (i j : Nat) : Physics width height Unit := do
   let a := field[i]?.getD default
   let b := field[j]?.getD default
   conduct i j a.t b.t
   reactContact i j (max a.t b.t)
-  flowOne i j a.pressure b.pressure
-  flowOne j i b.pressure a.pressure
   diffuse i j
-  if j == i+width then buoyancy i j
 
 /-- Dissipative drag/impact retains total energy: lost kinetic energy appears
     in the enthalpy budget. Fixtures exchange momentum with the closed vessel. -/
@@ -310,7 +228,8 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
 @[noinline] def moveCell (start : Nat) : Physics width height Unit := do
   let w ← Physics.getWorld
   let p := read w start
-  if p.stamp == w.generation || !mobile height width start p || gasCell height width start p then return
+  if p.stamp == w.generation || !mobile height width start p || gasCell height width start p ||
+      liquidVolume height width start p > cellVolume/1000000 then return
   Physics.single start fun p =>
     let vx := p.vx*995/1000
     let vy := gravityVelocity p.vy
@@ -340,8 +259,8 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
         pos := j
         moved := true
     if !moved then
-      -- A granular pile avalanches through a clear side face. Liquids use the
-      -- same face-based route, so touching corners remain impermeable.
+      -- A granular pile avalanches through a clear side face, so touching
+      -- corners remain impermeable. Liquids use the coupled field solver.
       let right := (w.generation+pos)%2 == 0
       for direction in [if right then (1 : Int) else -1,if right then -1 else 1] do
         if moved then break
@@ -355,22 +274,13 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
               if ← cross side below 0 1 then
                 pos := below
                 moved := true
-      if !moved && isLiquid (labelAt height width pos a) then
-        for direction in [if right then (1 : Int) else -1,if right then -1 else 1] do
-          if moved then break
-          if inside width height ((x : Int)+direction) y then
-            let j := idx width ((x : Int)+direction) y
-            if ← cross pos j direction 0 then
-              Physics.single j fun p => ⟨{p with rx := 0,px := direction*(p.mass : Int)*20000},rfl,rfl⟩
-              pos := j
-              moved := true
       if !moved then
         damp pos 700 0
         stopped := true
 
 /-- Alternating face order removes a persistent left/right sweep bias. All
     scheduling, kinetics and constitutive rules execute in this Lean program. -/
-@[noinline] def stepProgram : Physics width height Unit := do
+@[noinline] def thermochemicalStep : Physics width height Unit := do
   Physics.metadata (fun w => {w with generation := w.generation+1}) (by intro w; rfl)
   let generation := (← Physics.getWorld).generation
   let initialField := thermalField (← Physics.getWorld)
@@ -382,17 +292,60 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
     reactInside i (field[i]?.getD default).t
     if i%width+1 < width then face field i (i+1)
     if i/width+1 < height then face field i (i+width)
+
+@[noinline] def stepProgram : Physics width height Unit := do
+  thermochemicalStep
+  let generation := (← Physics.getWorld).generation
+  fluidStep
   for y' in [:height] do
     let y := height-1-y'
     for x' in [:width] do
       let x := if generation%2 == 0 then x' else width-1-x'
       moveCell (y*width+x)
 
-@[noinline] def stepWorld (w : World width height) : World width height := (stepProgram.run w).2
+/-- A failed tick never advances physical time or leaves a partially accepted
+    world. It records one failure for the UI, preserving the original cells. -/
+def tickAccept (before after : World width height) : Bool :=
+  decide (after.rejectedFluidSubsteps = before.rejectedFluidSubsteps) &&
+    kelvinScan after (width*height) 0 && decide (fluidOverflow after <= fluidOverflow before)
 
-/-- Universal guarantee on the actual game timestep, not an isolated oracle. -/
+@[noinline] def stepWorld (w : World width height) : World width height :=
+  let candidate := (stepProgram.run w).2
+  if tickAccept w candidate then candidate else
+    {w with rejectedFluidSubsteps := w.rejectedFluidSubsteps+1}
+
+/-- Universal guarantee on the actual game timestep, including rollback. -/
 theorem timestep_conserves_every_element_and_energy (w : World width height) :
-    Conserves w (stepWorld w) := stepProgram.preserves w
+    Conserves w (stepWorld w) := by
+  dsimp only [stepWorld]
+  split
+  · exact stepProgram.preserves w
+  · intro q; rfl
+
+theorem rejected_timestep_preserves_cells_and_time (w : World width height)
+    (rejected : tickAccept w (stepProgram.run w).2 = false) :
+    (stepWorld w).cells = w.cells ∧ (stepWorld w).generation = w.generation := by
+  simp [stepWorld,rejected]
+
+theorem timestep_cannot_create_negative_absolute_temperature (w : World width height)
+    (initial : ∀ i, i < width*height → cellTemperature w i >= -27315) :
+    ∀ i, i < width*height → cellTemperature (stepWorld w) i >= -27315 := by
+  dsimp only [stepWorld]
+  split
+  · rename_i accepted
+    simp only [tickAccept,Bool.and_eq_true,decide_eq_true_eq] at accepted
+    have valid := (kelvin_scan_sound_and_complete _ (width*height) 0).1 accepted.1.2
+    simpa only [Nat.zero_add] using valid
+  · exact initial
+
+theorem timestep_cannot_increase_liquid_overflow (w : World width height) :
+    fluidOverflow (stepWorld w) <= fluidOverflow w := by
+  dsimp only [stepWorld]
+  split
+  · rename_i accepted
+    simp only [tickAccept,Bool.and_eq_true,decide_eq_true_eq] at accepted
+    exact accepted.2
+  · exact Nat.le_refl _
 
 def repeatWorld : Nat → World width height → World width height
   | 0,w => w
@@ -405,5 +358,12 @@ theorem arbitrarily_many_timesteps_conserve (n : Nat) (w : World width height) :
   | succ n ih =>
     intro q
     exact (ih (stepWorld w) q).trans (timestep_conserves_every_element_and_energy w q)
+
+theorem arbitrary_steps_preserve_absolute_temperature (n : Nat) (w : World width height)
+    (initial : ∀ i, i < width*height → cellTemperature w i >= -27315) :
+    ∀ i, i < width*height → cellTemperature (repeatWorld n w) i >= -27315 := by
+  induction n generalizing w with
+  | zero => exact initial
+  | succ n ih => exact ih (stepWorld w) (timestep_cannot_create_negative_absolute_temperature w initial)
 
 end Sand2

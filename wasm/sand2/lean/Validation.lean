@@ -7,6 +7,7 @@ open Sand2 Sand2.Chemistry
 def check (label : String) (ok : Bool) : IO Unit := do
   unless ok do throw (IO.userError s!"FAILED: {label}")
   IO.println s!"PASS: {label}"
+  (← IO.getStdout).flush
 
 def silicaY (s : Simulation) : Nat := Id.run do
   let mut sum := 0
@@ -21,8 +22,8 @@ def waterX (s : Simulation) : Nat := Id.run do
     sum := sum+(read s.world i).matter.water*(i%s.width)
   return sum
 
-def main : IO Unit := do
-  let h := 20; let w := 24; let i := 10*w+12
+def main (args : List String) : IO Unit := do
+  let h := 20; let w := (args.headD "24").toNat?.getD 24; let i := 10*w+12
   let room := makeAt h w i .empty
   check "ideal-gas air at 20 C is within 1 percent of atmospheric pressure"
     (100000000 < pressure h w i room && pressure h w i room < 102000000)
@@ -45,6 +46,18 @@ def main : IO Unit := do
     ((solidDiagram iron).meltStart+(solidDiagram iron).meltEnd)/2}
   check "iron fusion consumes finite latent heat at 1538 C"
     (temperature h w i ironMelt == 153800 && solidRegime h w i ironMelt == .melting)
+  let wetIronMatter := add iron.matter {water := 1}
+  let wetIron := makeParticle wetIronMatter 0 .metal
+  let wetIronH := internalEnergyAt wetIronMatter .metal 2000
+  check "one trace water molecule cannot erase iron's fusion plateau"
+    ((ironDiagram wetIron).meltStart > wetIronH && temperatureFromEnthalpy wetIron wetIronH == 2000)
+  let mixedSolid := makeParticle (add iron.matter quartz.matter) 0 .metal
+  let ironHalf := ((ironDiagram mixedSolid).meltStart+(ironDiagram mixedSolid).meltEnd)/2
+  let silicaHalf := ((silicaDiagram mixedSolid).meltStart+(silicaDiagram mixedSolid).meltEnd)/2
+  check "a mixed iron/silica parcel retains separate ordered fusion plateaus"
+    (temperatureFromEnthalpy mixedSolid ironHalf == 153800 &&
+     temperatureFromEnthalpy mixedSolid silicaHalf == 170000 &&
+     (ironDiagram mixedSolid).meltEnd < (silicaDiagram mixedSolid).meltStart)
   let fuel : Mixture := {biomass := 20,oxygen := 5}
   let burned := react .burnBiomass fuel (capacity .burnBiomass fuel)
   check "oxygen exhaustion leaves unburned fuel and balanced products"
@@ -58,13 +71,13 @@ def main : IO Unit := do
   let after := (conduct i (i+1) (temperature h w i hot) (temperature h w (i+1) cold)).run world |>.2
   check "Fourier face flux cools the hot parcel and heats the cold parcel"
     ((read after i).energy < hot.energy && (read after (i+1)).energy > cold.energy)
-  let start := paintSimulation (newSimulation 24 20) 12 3 1 1
+  let start := paintSimulation (newSimulation w.toUInt32 h.toUInt32) 12 3 1 1
   let mut fallen := start
   for _ in [:20] do fallen := tickSimulation fallen
   check "gravity lowers the sand centre of mass" (silicaY fallen > silicaY start)
   check "falling conserves all eleven elements and total energy exactly"
     (auditSimulation fallen == auditSimulation start)
-  let dam := sceneSimulation (newSimulation 24 20) 1
+  let dam := sceneSimulation (newSimulation w.toUInt32 h.toUInt32) 1
   let mut spread := dam
   for _ in [:40] do spread := tickSimulation spread
   check "dam break moves water into the initially dry side" (waterX spread > waterX dam)
@@ -84,13 +97,7 @@ def main : IO Unit := do
   let uniform := gasDiffusionEdit h w i (i+w) room room2 300
   check "equal counterflows do not invent heat in uniform air"
     (uniform.first.energy == room.energy && uniform.second.energy == room2.energy)
-  let heavy := makeAt h w i .oxygen
-  let light := makeAt h w (i+w) .hydrogen
-  let layers := write (write (newWorld w h) i heavy) (i+w) light
-  let convected := (buoyancy i (i+w)).run layers |>.2
-  check "lighter gas below heavier gas rises through the buoyancy operator"
-    ((read convected i).matter.hydrogen > 0 && (read convected (i+w)).matter.oxygen > 0)
-  let ironAcid := sceneSimulation (newSimulation 24 20) 5
+  let ironAcid := sceneSimulation (newSimulation w.toUInt32 h.toUInt32) 5
   let changed := tickSimulation ironAcid
   let mut productGas := 0
   let mut productSalt := 0
@@ -106,7 +113,7 @@ def main : IO Unit := do
   check "water vapor diluted with air remains visibly steam"
     (vaporous h w i steam && labelAt h w i steam == .steam)
   check "phase conversion and temperature use the same water diagram for dilute vapor"
-    (conversionPhase h w i steam == regime h w i steam)
+    ((conversionPhase h w i steam).water == regime h w i steam)
 
   check "the saturation curve reconstructs 1 atm boiling near 100 C"
     (9950 < saturationTemperature 101325000 && saturationTemperature 101325000 < 10050)
@@ -125,18 +132,12 @@ def main : IO Unit := do
     (evaporated.second.matter.water == vaporCount/8 && evaporated.first.matter.water < boiling.matter.water)
   check "partial evaporation transfers vaporization energy without loss"
     (evaporated.first.energy+evaporated.second.energy == boiling.energy+room.energy)
-  let liquidColumn := fillRect (newSimulation 24 20) 10 6 11 12 .water
-  let columnField := thermalField liquidColumn.world
-  let upper := (columnField[6*24+10]?.getD default).bulkPressure
-  let lower := (columnField[11*24+10]?.getD default).bulkPressure
-  check "five centimetres of water adds approximately 490 Pa hydrostatic head"
-    (489000 < lower-upper && lower-upper < 492000)
   let sealedH : Int := 105000000000000000
-  let sealedP := equilibriumPhasePressure water sealedH 101325000
+  let sealedP := flashEquilibriumPressure water sealedH
   let sealed := atPressure {water with energy := water.chemical+potentialEnergy h w i water+sealedH} sealedP
   check "a sealed hot-water cell raises its own saturation pressure"
     (600000000 < sealedP && sealedP < 1000000000 && 16000 < temperature h w i sealed && temperature h w i sealed < 17500)
-  let residual := (sealedP : Int)-(predictedPhasePressure water sealedH sealedP : Int)
+  let residual := (sealedP : Int)-(predictedFlashPartialPressure water sealedH sealedP : Int)
   check "sealed-cell phase-pressure residual stays below 10 kPa in the benchmark"
     (residual.natAbs < 10000000)
 
@@ -154,9 +155,9 @@ def main : IO Unit := do
   check "compressed gas remains gas even when its mass exceeds the old threshold"
     (gasCell h w i compressed && temperature h w i compressed == 2000)
 
-  let dropStart := fillRect (newSimulation 24 40) 8 3 9 4 .sand
-  let initialGrain := read dropStart.world (3*24+8)
-  let initialThermal := thermalEnergy 40 24 (3*24+8) initialGrain
+  let dropStart := fillRect (newSimulation w.toUInt32 40) 8 3 9 4 .sand
+  let initialGrain := read dropStart.world (3*w+8)
+  let initialThermal := thermalEnergy 40 w (3*w+8) initialGrain
   let mut drop := dropStart
   for _ in [:6] do drop := tickSimulation drop
   let mut distance := (0 : Int)

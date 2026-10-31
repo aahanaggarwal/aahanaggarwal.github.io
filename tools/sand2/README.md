@@ -40,18 +40,25 @@ Cell energy stores gas internal energy with Cv. Advected packets carry enthalpy,
 including R*T pressure/volume work. Formation references include the gas
 reference offset, and the water phase curve uses internal-energy latent heat.
 
-Gas moves by bounded finite-volume pressure relaxation, symmetric molecular
-diffusion (including at equal pressure), and density-driven convective
-relaxation of unstable gas layers. These operations conserve each molecular
-species and transferring its energy and momentum. This is an overdamped model,
-not a resolved compressible Navier–Stokes solver. Dense parcels use gravity,
-fractional position, swept face crossings, density displacement and dissipative
-contact. Pile geometry, liquid viscosity and collision laws are coarse cell
-approximations. The velocity cap and iteration limit are declared numerical
-limits. Reactions use activation thresholds and bounded simplified kinetics.
+Gas and liquid share a variable-density pressure and velocity solve, implicit
+viscosity, gravity and conservative finite-volume advection. Gas compressibility
+uses its mixture Cv; the condensed fluid uses a rounded 2.2 GPa bulk modulus.
+An active-set pressure constraint represents cavitation without accepting negative
+absolute pressure. This is a coarse homogeneous mixture model, not a resolved
+sharp-interface or turbulent CFD model. Surface tension, temperature-dependent
+viscosity, thermal expansion and species-specific liquid compressibility are not
+yet represented. Water, oil, molten iron and molten silica use rounded constant
+viscosities. Molecular gas diffusion still acts separately at gas-accessible faces.
 
-Heat and pressure face fluxes use a start-of-timestep thermal field (explicit
-operator splitting); edits still use the current conserved inventories. Sweep
+Dense grains retain swept face crossings and dissipative contact mechanics.
+The speed cap, finite pressure iterations, outgoing-volume CFL limit and adaptive
+retry depth are declared numerical limits. A candidate that fails temperature,
+volume or pressure checks is rejected atomically. If minimum substeps fail, the
+entire tick rolls back, including simulated time, and the UI pauses at an accuracy
+limit. Reactions use activation thresholds and bounded simplified kinetics.
+
+Heat and contact reactions use a start-of-timestep thermal field; fluid updates
+then solve pressure and advect the current conserved inventories. Sweep
 direction alternates. Painting and erasing are explicit external additions or
 removals of matter/energy; the closed-system theorem applies between edits.
 
@@ -91,7 +98,12 @@ and mass balance, insufficient/excess reactants, maximum valid extent, contact
 reaction equivalence to aggregate stoichiometry, gas partition/recombination,
 per-species transfer, phase-specification soundness/completeness/uniqueness/
 totality, latent heat, equal-and-opposite impulse and grid shape. Normalization
-uses the proved phase classifier and retains all molecules, momentum and energy.
+uses proved component phase classifiers and retains all molecules, momentum and
+energy. The mineral classifiers have exactly three declared states, with no
+fictitious high-energy vaporization threshold. Water, iron and silica keep their
+own phase and latent-heat contributions in mixtures. Global theorems additionally
+preserve absolute-temperature admissibility from an admissible starting world,
+prevent increased liquid overfill and retain cells/time on a rejected tick.
 
 `ProofReport.lean` traverses every theorem in the Sand2 namespace and rejects
 `sorryAx` or custom axioms. The standard Lean foundations `propext`, `Quot.sound`
@@ -114,13 +126,16 @@ local toolchains and caches are ignored under `.tools/`.
 
 `Validation.lean` checks SI-unit pressure, initial temperature, water/mineral
 latent plateaus, oxygen exhaustion, selective chemistry, heat direction, sand
-centre of mass and water spreading. These numerical checks complement universal
+centre of mass and water spreading. `FluidValidation.lean` adds independent
+analytic Poisson and pressure-obstacle solutions, 18 mixed-phase volume-closure
+cases, evaporative cooling, hydrostatic head, resting-water centroid stability
+a liquid-filled connection between separate gas chambers, and hydrogen-bubble rise. These numerical checks complement universal
 proofs; a conserved but static or incorrectly scaled simulation must still fail.
 
-The independent Lean evaluator produces 25 complete-world reference digests and
-budgets across five scenes and multiple timesteps. Generated native Rust and the
+Lean’s independent native C compiler evaluates the same definitions and produces 50 complete-world reference digests and
+budgets across ten scenes and multiple timesteps. Generated native Rust and the
 packaged browser Wasm must agree on all of them. The digest includes every
-molecular field, energy, momentum, position fraction, morphology and update stamp.
+molecular field, energy, momentum, position fraction, morphology, update stamp, mechanical and phase pressures, and numerical diagnostics.
 Native/browser checks also exercise exact checkpoints, read-only rendering,
 input boundaries and conservation for every paintable material.
 
@@ -284,3 +299,65 @@ physics timestep. The clock is part of the retained world and restores on undo.
 All 127 handwritten theorems, the 800-theorem namespace audit, 38 independent
 physical checks and 45 complete-world Lean/native/Wasm comparisons pass. The
 96×64 dam-break benchmark is approximately 104 ms/tick on this host.
+
+
+## Coupled liquid/gas and component-phase milestone (2026-10-31 UTC)
+
+The former parcel-level liquid motion and overdamped gas-pressure/buoyancy rules
+are replaced by one Lean finite-volume fluid solve. The new communicating-vessel
+experiment requires water to rise above an outlet and approach equal mean levels;
+merely spreading along the bottom cannot pass it. Molecular transport never
+swaps a different chamber's air backward through a liquid-filled connection.
+
+Pressure is an independent mechanical state. Water's saturation lookup uses a
+microdegree internal cache, while displayed temperatures remain centidegrees.
+The energy-volume flash closure computes vapor fractions and pressure from the
+same inventory and conserved internal energy. Its actual search and all fast
+paths have a proved vapor-pressure bound within the declared saturation domain.
+The approximation tolerance is 5 Pa. Pure-liquid pressure retains a previous
+value only within 40 Pa of its exact quantized molecular EOS; Lean proves the
+resulting cell-volume error is at most 2e-8 of a cell. The coarser runtime volume
+guard allows 1e-6 of a cell, and the whole-timestep theorem prevents its growth.
+
+Mixed parcels now retain separate water, iron and silica phase states. Iron and
+silica have continuous partial-melting fractions and ordered latent intervals.
+A trace of water cannot erase their fusion energy. Soundness, completeness,
+uniqueness and totality cover the product of the component transitions; warming
+cannot reverse mineral fusion.
+
+The site retains its shared CRT typography and controls. Mechanical pressure
+is shown in the pressure view and inspector; partially filled liquid cells fade
+with their volume fraction. Vessel sizes state their physical dimensions, with
+48 × 32 cm as the default and the original 96 × 64 cm size available. Larger
+vessels and stiff hot scenes advance much more slowly than wall time. Page FPS,
+completed model Hz and simulated time remain separate measurements.
+
+Current validation and artifact counts are recorded in `sand2/build.json`.
+The complete build must pass the kernel axiom audit, 49 physical benchmark
+families, 2,001 independent IAPWS comparisons, native integration checks, 50
+Lean/native/Wasm complete-world states, and all 32 palette conservation/accuracy
+checks before a milestone is committed. The floating-point pressure algorithm's accuracy is
+validated numerically; universal convergence of arbitrary matrices is not claimed.
+
+Pressure-solver reference: [Bridson's fluid simulation notes](https://www.cs.ubc.ca/~rbridson/fluidsimulation/fluids_notes.pdf).
+
+
+The Wasm stress test also covers repeated world lifecycles and requires bounded
+memory reuse. This caught a 32-bit literal-lifetime defect in Lungo 1.117.0:
+large `Nat` literals were constructed repeatedly although host-optimized IR
+could omit their reference-count operations. `wasm/sand2/build.rs` automatically
+places literal constructions into the backend's existing persistent constant
+cells. This generic emission normalization contains no physics rules. Its source
+and normalized generated output are hashed in the build record; independent
+Lean/native/Wasm state comparisons check the resulting executable. JavaScript
+also normalizes C-ABI pointers to unsigned values, including addresses above 2 GB.
+
+This checkpoint passes 172 handwritten proofs in the 955-theorem axiom audit,
+49 physical benchmark families, all 50 independent Lean/native/Wasm reference
+states, every palette material and all ten default-size presets. The repeated
+65-tick empty-world memory regression holds at 1,572,864 bytes. Optimized mobile
+checks cover touch painting, undo, vessel changes and worker termination.
+The full-size 96 × 64 dam-break benchmark averages 12.4 seconds per 1/60-second
+model tick over its first ten ticks on this host. Stiff default-size hot scenes
+are also slow. Smaller physical timesteps and lower input latency are the next
+performance task; this checkpoint does not claim real-time simulation.

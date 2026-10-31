@@ -127,6 +127,20 @@ variable {width height : Nat}
     (unchanged : ∀ w, (f w).cells = w.cells) : Physics width height Unit :=
   ⟨fun w => ((),f w),by intro w q; simp [inventory,unchanged]⟩
 
+/-- Accept a complete conservative candidate atomically. Numerical guards
+    cannot drop one face of an otherwise simultaneous liquid flux plan. -/
+@[always_inline, inline] def transaction (program : Physics width height Unit)
+    (accept : World width height → World width height → Bool) : Physics width height Bool where
+  run := fun w =>
+    let candidate := (program.run w).2
+    if accept w candidate then (true,candidate) else (false,w)
+  preserves := by
+    intro w q
+    dsimp
+    split
+    · exact program.preserves w q
+    · rfl
+
 /-- These ghost certificates compose through arbitrary loops, so every complete
     timestep built in Physics inherits the global conservation theorem. -/
 theorem execution_conserves (program : Physics width height α) (w : World width height) :

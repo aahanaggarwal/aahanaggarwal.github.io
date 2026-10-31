@@ -1,6 +1,5 @@
 import {loadGame} from './bridge.js';
 
-const WIDTH = 96, HEIGHT = 64;
 let epoch = 0;
 let dispose;
 
@@ -12,15 +11,25 @@ export async function run() {
   const root = document.getElementById('s2');
   if (!root) return;
   const el = name => root.querySelector(`#s2-${name}`);
+  const requestedWidth = Number(el('size').value);
+  const WIDTH = [36, 48, 72, 96].includes(requestedWidth) ? requestedWidth : 48;
+  const HEIGHT = WIDTH * 2 / 3;
+  el('materials').replaceChildren();
+  el('loading').hidden = false;
+  el('loading').textContent = 'LOADING SIMULATION...';
+  el('speed').textContent = 'Fast';
+  el('speed').setAttribute('aria-label', 'Simulation playback: fast speed');
+  el('undo').disabled = true;
+  root.dataset.state = 'loading';
   document.body.classList.add('s2-active');
   const controller = new AbortController();
   const signal = controller.signal;
   let api, animation, pointer = null, drawing = false, eraseStroke = false, lastPaint;
-  let paused = false, speed = 1, brush = 3, material, count = 0, view = 0;
+  let paused = false, speed = 1, brush = Number(el('brush').value), material, count = 0, view = Number(el('view').value);
   let MATERIALS = [];
   let activePointer = null;
   let lastTime = 0, accumulator = 0, frames = 0, statsTime = 0;
-  let history = 0;
+  let history = 0, seenFailures = 0n, accuracyLimit = false;
   const decoder = new TextDecoder();
   const textResult = (pointer, length) => decoder.decode(new Uint8Array(api.memory.buffer, pointer, length));
   const canvas = el('canvas');
@@ -70,6 +79,7 @@ export async function run() {
   const eraser = {id: 0, name: 'Eraser', type: 'TOOL', color: '#dfa19a', description: 'Make room for your next idea. Right-click or hold Shift while drawing to erase, too.'};
   const setPaused = value => {
     paused = value; accumulator = 0;
+    if (!value) accuracyLimit = false;
     if (value) api?.world_pause();
     el('play-label').textContent = value ? 'Play' : 'Pause';
     el('play-icon').textContent = value ? '▷' : 'Ⅱ';
@@ -84,7 +94,7 @@ export async function run() {
   };
   const setScene = (name, remember = true) => {
     if (remember) snapshot();
-    stopDrawing(); api.world_scene(Number(name));
+    stopDrawing(); accuracyLimit = false; api.world_scene(Number(name));
     el('scene').value = name;
     accumulator = 0;
     draw();
@@ -92,7 +102,7 @@ export async function run() {
   };
   const undo = () => {
     if (!history) return;
-    stopDrawing(); history = api.world_undo();
+    stopDrawing(); accuracyLimit = false; history = api.world_undo();
     el('undo').disabled = history === 0;
     draw();
   };
@@ -110,6 +120,7 @@ export async function run() {
     const bounds = canvas.getBoundingClientRect();
     return {x: (event.clientX - bounds.left) / bounds.width * WIDTH, y: (event.clientY - bounds.top) / bounds.height * HEIGHT};
   };
+  on(el('size'), 'change', () => { void run(); });
   try {
     api = await loadGame(WIDTH, HEIGHT, error => {
       if (generation !== epoch || !root.isConnected) return;
@@ -141,7 +152,7 @@ export async function run() {
     el('loading').hidden = true;
     root.dataset.state = 'ready';
     setPaused(false);
-    setScene('1', false);
+    setScene(el('scene').value, false);
 
     on(el('play'), 'click', () => setPaused(!paused));
     on(el('step'), 'click', () => { setPaused(true); api.world_step(); draw(); });
@@ -211,7 +222,14 @@ export async function run() {
       }
       draw(); frames++;
       if (time - statsTime > 500) {
-        if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
+        const failures = api.world_solver_failures();
+        if (failures > seenFailures) { setPaused(true); accuracyLimit = true; }
+        seenFailures = failures;
+        if (failures === 0n) accuracyLimit = false;
+        if (accuracyLimit) {
+          el('state').textContent = 'ACCURACY LIMIT';
+          el('inspect').textContent = 'Physics paused because this scene exceeded the model’s accuracy limit. Undo, edit or clear the scene, then press Play to try again.';
+        } else if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
         el('time').textContent = `${(Number(api.world_time_ms()) / 1000).toFixed(2)} s`;
         el('count').textContent = count.toLocaleString();
         el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS · ${api.simulation_hz()} Hz`;

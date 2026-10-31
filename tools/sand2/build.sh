@@ -19,10 +19,21 @@ cd "$ROOT/wasm/sand2/lean"
 lake build
 lake env lean ProofReport.lean > "$ROOT/.tools/sand2/proofs.txt"
 tail -n 1 "$ROOT/.tools/sand2/proofs.txt"
-lake env lean --run Validation.lean
-lake env lean --run SaturationValidation.lean > "$ROOT/.tools/sand2/saturation.csv"
+# Lean's own C backend is independent of Lungo. Compiling the numerical
+# reference programs avoids the interpreter's large FloatArray overhead.
+lake build Sand2:static
+run_lean_reference() {
+  local entry="$1" name="${1%.lean}"
+  local cache="$ROOT/.tools/sand2"
+  lake env lean -c "$cache/$name.c" "$entry"
+  lake env leanc -O3 -ffp-contract=off -o "$cache/$name" "$cache/$name.c" .lake/build/lib/libsand2_Sand2.a
+  "$cache/$name"
+}
+run_lean_reference Validation.lean
+run_lean_reference FluidValidation.lean
+run_lean_reference SaturationValidation.lean > "$ROOT/.tools/sand2/saturation.csv"
 python3 "$ROOT/tools/sand2/check-saturation.py" "$ROOT/.tools/sand2/saturation.csv"
-lake env lean --run Oracle.lean > "$ROOT/.tools/sand2/oracle.csv"
+run_lean_reference Oracle.lean > "$ROOT/.tools/sand2/oracle.csv"
 cd ..
 cargo test --release --locked --jobs "${SAND2_BUILD_JOBS:-2}"
 cargo run --release --locked --example oracle --jobs "${SAND2_BUILD_JOBS:-2}" < "$ROOT/.tools/sand2/oracle.csv"

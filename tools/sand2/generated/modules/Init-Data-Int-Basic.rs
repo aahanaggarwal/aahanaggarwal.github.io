@@ -70,6 +70,33 @@ pub(crate) unsafe extern "C" fn l_Int_dneg(x_1: Obj) -> Obj {
     r
 }
 
+// Lean: Int.negOfNat
+// Source: <lean>/Init/Data/Int/Basic.lean:95:1
+pub(crate) unsafe extern "C" fn l_Int_dnegOfNat(x_1: Obj) -> Obj {
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: u8 = l_Nat_ddecEq(x_1, x_2);
+    match x_3 {
+        1 => {
+            let x_4: Obj = l_Int_dinstInhabited_d__closed__0();
+            return x_4;
+        }
+        _ => {
+            let x_5: Obj = rt::nat::lean_usize_to_nat(1);
+            let x_6: Obj = l_Nat_dsub(x_1, x_5);
+            let x_7: Obj = l_Int_dnegSucc(x_6);
+            return x_7;
+        }
+    }
+}
+
+// Lean: Int.negSucc
+// Source: <lean>/Init/Data/Int/Basic.lean:53:3
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_Int_dnegSucc(x_1: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_int_neg_succ_of_nat(x_1);
+    r
+}
+
 // Lean: Int.ofNat
 // Source: <lean>/Init/Data/Int/Basic.lean:47:3
 #[inline(always)]

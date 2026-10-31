@@ -11,6 +11,14 @@ pub(crate) unsafe extern "C" fn l_Array_dofFn_d__redArg(x_1: Obj, x_2: Obj) -> O
     return x_4;
 }
 
+// Lean: Array.replicate
+// Source: <lean>/Init/Data/Array/Basic.lean:214:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_Array_dreplicate(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_mk_array(x_2, x_3);
+    r
+}
+
 // Lean: _private.Init.Data.Array.Basic.0.Array.ofFn.go._redArg
 // Compiled from: _private.Init.Data.Array.Basic.0.Array.ofFn.go
 // Source: <lean>/Init/Data/Array/Basic.lean:333:3

@@ -42,9 +42,21 @@
     "renamed": true
   },
   {
+    "lean_name": "Sand2.maxLiquidVolumeSimulation",
+    "kind": "function",
+    "rust_path": "max_liquid_volume_simulation",
+    "renamed": true
+  },
+  {
     "lean_name": "Sand2.newSimulation",
     "kind": "function",
     "rust_path": "new_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.numericalProbeSimulation",
+    "kind": "function",
+    "rust_path": "numerical_probe_simulation",
     "renamed": true
   },
   {
@@ -72,6 +84,12 @@
     "renamed": true
   },
   {
+    "lean_name": "Sand2.solverFailuresSimulation",
+    "kind": "function",
+    "rust_path": "solver_failures_simulation",
+    "renamed": true
+  },
+  {
     "lean_name": "Sand2.stepCountSimulation",
     "kind": "function",
     "rust_path": "step_count_simulation",
@@ -87,6 +105,12 @@
     "lean_name": "Sand2.timeMillisecondsSimulation",
     "kind": "function",
     "rust_path": "time_milliseconds_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.waterInRegionSimulation",
+    "kind": "function",
+    "rust_path": "water_in_region_simulation",
     "renamed": true
   },
   {

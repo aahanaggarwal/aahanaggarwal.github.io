@@ -3,25 +3,36 @@ import Sand2.Conservative
 namespace Sand2
 open Chemistry
 
-/-- Every possible cell selects a declared enthalpy diagram. The relational
-    equilibrium spec contains disjoint inequalities, not the executable code. -/
-def phaseDiagramFor (p : Particle) : PhaseDiagram :=
-  if p.matter.water > 0 then waterDiagram p else solidDiagram p
+/-- Each component retains its own phase in a mixture. In particular, adding
+    water never replaces an iron or silica fusion state with a water state. -/
+structure ComponentPhases where
+  water : WaterRegime
+  iron : FusionPhase
+  silica : FusionPhase
+  deriving DecidableEq, BEq
 
-def conversionPhase (height width i : Nat) (p : Particle) : WaterRegime :=
-  phase (phaseDiagramFor p) (thermalEnergy height width i p)
+def conversionPhase (height width i : Nat) (p : Particle) : ComponentPhases :=
+  let h := thermalEnergy height width i p
+  ⟨phase (waterDiagram p) h,fusionPhase (ironDiagram p) h,fusionPhase (silicaDiagram p) h⟩
 
-abbrev ConversionSpec (height width i : Nat) (p : Particle) (r : WaterRegime) : Prop :=
-  Equilibrium (phaseDiagramFor p) (thermalEnergy height width i p) r
+/-- Independent relational specification for all three component transitions. -/
+def ConversionSpec (height width i : Nat) (p : Particle) (r : ComponentPhases) : Prop :=
+  let h := thermalEnergy height width i p
+  Equilibrium (waterDiagram p) h r.water ∧ FusionEquilibrium (ironDiagram p) h r.iron ∧
+    FusionEquilibrium (silicaDiagram p) h r.silica
 
 theorem conversion_sound (p : Particle) :
-    ConversionSpec height width i p (conversionPhase height width i p) := phase_sound _ _
+    ConversionSpec height width i p (conversionPhase height width i p) :=
+  ⟨phase_sound _ _,fusion_phase_sound _ _,fusion_phase_sound _ _⟩
 
-theorem conversion_complete (p : Particle) (r : WaterRegime)
-    (spec : ConversionSpec height width i p r) : conversionPhase height width i p = r :=
-  phase_complete _ _ _ spec
+theorem conversion_complete (p : Particle) (r : ComponentPhases)
+    (spec : ConversionSpec height width i p r) : conversionPhase height width i p = r := by
+  rcases r with ⟨water,iron,silica⟩
+  rcases spec with ⟨hw,hi,hs⟩
+  simp only [conversionPhase,phase_complete _ _ _ hw,
+    fusion_phase_complete _ _ _ hi,fusion_phase_complete _ _ _ hs]
 
-theorem conversion_unique (p : Particle) (a b : WaterRegime)
+theorem conversion_unique (p : Particle) (a b : ComponentPhases)
     (ha : ConversionSpec height width i p a) (hb : ConversionSpec height width i p b) : a = b := by
   rw [← conversion_complete p a ha,← conversion_complete p b hb]
 
@@ -29,28 +40,25 @@ theorem conversion_total (p : Particle) :
     ∃ r, ConversionSpec height width i p r ∧ ∀ s, ConversionSpec height width i p s → s = r :=
   ⟨_,conversion_sound p,fun _ spec => (conversion_complete p _ spec).symm⟩
 
-theorem water_conversion_uses_latent_heat (p : Particle)
-    (water : p.matter.water > 0) :
-    conversionPhase height width i p = regime height width i p := by
-  simp [conversionPhase,phaseDiagramFor,water,regime]
+theorem water_conversion_uses_latent_heat (p : Particle) :
+    (conversionPhase height width i p).water = regime height width i p := rfl
 
-theorem mineral_conversion_uses_latent_heat (p : Particle)
-    (mineral : ¬p.matter.water > 0) :
-    conversionPhase height width i p = solidRegime height width i p := by
-  simp [conversionPhase,phaseDiagramFor,mineral,solidRegime]
+theorem mineral_conversion_uses_both_latent_heats (p : Particle) :
+    (conversionPhase height width i p).iron = fusionPhase (ironDiagram p) (thermalEnergy height width i p) ∧
+    (conversionPhase height width i p).silica = fusionPhase (silicaDiagram p) (thermalEnergy height width i p) := ⟨rfl,rfl⟩
 
 def labelAt (height width i : Nat) (p : Particle) : Material :=
   if p.luminous > 0 then .fire
   else if p.matter.water*18 > p.mass/2 then
     if gasCell height width i p && vaporWaterMoles height width i p > 0 then .steam else
-    match conversionPhase height width i p with
+    match (conversionPhase height width i p).water with
     | .ice | .melting => .ice
     | .vapor => .steam
     | _ => if p.matter.acid > 0 then .acid else if p.matter.salt > 0 then .saltWater else .water
   else if p.matter.iron*56 > p.mass/2 then
-    if conversionPhase height width i p == .liquid then .moltenIron else .metal
+    if fusionPhase (ironDiagram p) (thermalEnergy height width i p) == .liquid then .moltenIron else .metal
   else if p.matter.silica*60 > p.mass/2 then
-    if conversionPhase height width i p == .liquid then .lava
+    if fusionPhase (silicaDiagram p) (thermalEnergy height width i p) == .liquid then .lava
     else if p.label == .lava then .glass else if p.fractured then .sand else p.label
   else if p.matter.biomass*30 > p.mass/2 then
     if p.label == .plant then .plant else .wood

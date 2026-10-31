@@ -73,6 +73,9 @@ open Chemistry
   | 8 => -- Iron fusion/solidification and finite hot/cold reservoirs.
     s := fillRect s (w/4) (h*2/3) (w*3/4) (h-2) .water
     s := fillRect s (w/3) (h/3) (w*2/3) (h/2) .moltenIron
+  | 9 => -- Communicating vessels: pressure must raise the initially empty arm.
+    s := fillRect s (w/2) (h/6) (w/2+1) (h*4/5) .stone
+    s := fillRect s 2 (h/6) (w/2) (h-1) .water
   | _ => pure ()
   return s
 
@@ -128,15 +131,17 @@ def description : Material → String
         let blue := (255-red)
         red*65536+24*256+blue
       else if view == 2 then
-        let pressure := if gasCell s.height s.width i p then pressure s.height s.width i p
-          else if isLiquid m then (p.phasePressure : Int) else 0
+        let pressure : Int := if fluidObstacle s.height s.width i p then 0 else p.mechanicalPressure
         let red := (max 0 (min 255 ((pressure-80000000)/2000000))).toNat.toUInt32
         red*65536+20*256+(255-red)
       else materialColor m
+    let fill := if view == 0 && !fluidObstacle s.height s.width i p && isLiquid m then
+      min 256 (occupiedLiquidVolume s.height s.width i p*256/cellVolume) else 256
     let grain := if m == .empty || edge s.width s.height i || view != 0 then (0 : Int)
       else (((i.toUInt32*747796405+s.world.generation.toUInt32*2891336453) >>> 24)%13).toNat-6
     for shift in [16,8,0] do
-      let v : Int := ((color >>> shift) &&& 255).toNat
+      let channel := ((color >>> shift) &&& 255).toNat
+      let v : Int := (channel*fill+10*(256-fill))/256
       result := result.push ((max 0 (min 255 (v+grain))).toNat.toUInt8)
     result := result.push 255
   return result
@@ -161,13 +166,13 @@ def massText (mass : Nat) : String :=
   let i := (min (s.height-1) y.toNat)*s.width+min (s.width-1) x.toNat
   let p := read s.world i
   let t := temperature s.height s.width i p
-  let pressureText := if gasCell s.height s.width i p then
-      fixedTwo ((max 0 (pressure s.height s.width i p)).toNat/10000) ++ " kPa"
-    else if isLiquid (labelAt s.height s.width i p) then
-      fixedTwo (p.phasePressure/10000) ++ " kPa"
-    else "solid"
+  let pressureText := if fluidObstacle s.height s.width i p then "solid"
+    else fixedTwo (p.mechanicalPressure/10000) ++ " kPa"
+  let liquidText := if !fluidObstacle s.height s.width i p && liquidVolume s.height s.width i p > 0 then
+    " | " ++ fixedTwo (min 10000 ((occupiedLiquidVolume s.height s.width i p*10000+cellVolume/2)/cellVolume)) ++ "% liquid"
+    else ""
   materialName (labelAt s.height s.width i p) ++ " | " ++ temperatureText t ++ " C | " ++
-    pressureText ++ " | " ++ massText p.mass
+    pressureText ++ " | " ++ massText p.mass ++ liquidText
 
 def quantities : List Quantity := [.hydrogen,.oxygen,.carbon,.silicon,.sodium,.chlorine,
   .calcium,.iron,.potassium,.nitrogen,.sulfur,.energy]
@@ -179,6 +184,8 @@ def mixHash (h : UInt64) (n : Int) : UInt64 := (h ^^^ (n % 18446744073709551616)
 
 @[noinline] def digestSimulation (s : Simulation) : UInt64 := Id.run do
   let mut h := mixHash 14695981039346656037 s.world.generation
+  h := mixHash h s.world.rejectedFluidSubsteps
+  h := mixHash h s.world.fluidResidual
   for i in [:s.width*s.height] do
     let p := read s.world i
     let m := p.matter
@@ -186,10 +193,54 @@ def mixHash (h : UInt64) (n : Int) : UInt64 := (h ^^^ (n % 18446744073709551616)
       m.silica,m.salt,m.acid,m.carbonate,m.calciumChloride,m.iron,m.rust,
       m.ironChloride,m.hydrogen,m.nitrate,m.sulfur,m.sulfide] do
       h := mixHash h v
-    for v in [p.energy,p.px,p.py,p.rx,p.ry,p.luminous,p.stamp,p.phasePressure,p.boiling,(materialCode p.label).toNat,
+    for v in [p.energy,p.px,p.py,p.rx,p.ry,p.luminous,p.stamp,p.mechanicalPressure,p.phasePressure,p.boiling,p.boilingFine,(materialCode p.label).toNat,
       if p.anchored then 1 else 0,if p.fractured then 1 else 0] do
       h := mixHash h v
   return h
+
+/-- Read-only spatial inventory for numerical experiments and diagnostics.
+    Rectangle bounds are clamped just like painting; no host reads raw state. -/
+def waterInRegionSimulation (s : Simulation) (x0 y0 x1 y1 : UInt32) : UInt64 := Id.run do
+  let mut count := 0
+  for y in [min s.height y0.toNat:min s.height y1.toNat] do
+    for x in [min s.width x0.toNat:min s.width x1.toNat] do
+      count := count+(read s.world (y*s.width+x)).matter.water
+  return count.toUInt64
+
+def maxLiquidVolumeSimulation (s : Simulation) : UInt64 := Id.run do
+  let mut largest := 0
+  for i in [:s.width*s.height] do largest := max largest (occupiedLiquidVolume s.height s.width i (read s.world i))
+  return largest.toUInt64
+
+def solverFailuresSimulation (s : Simulation) : UInt64 := s.world.rejectedFluidSubsteps.toUInt64
+
+/-- Read-only native profiling probe. The host times complete Lean operations;
+    it contains no duplicate implementation of any physics or numerical loop. -/
+@[noinline] def numericalProbeSimulation (s : Simulation) (stage : UInt32) : UInt64 := Id.run do
+  if stage == 5 then
+    return digestSimulation {s with world := (thermochemicalStep.run s.world).2}
+  if stage == 6 then return digestSimulation {s with world := (fluidStep.run s.world).2}
+  let g := fluidGeometry s.world
+  let mut hash := (14695981039346656037 : UInt64)
+  if stage == 0 then
+    for i in [:s.width*s.height] do
+      hash := (hash ^^^ (floatAt g.pressure i).toBits)*1099511628211
+    return hash
+  if stage == 1 || stage == 2 then
+    let system := viscositySystem g (1/120) (stage == 2)
+    let solved := pressureSolve system 128 0.00000001
+    for i in [:s.width*s.height] do
+      hash := (hash ^^^ (floatAt solved.values i).toBits)*1099511628211
+    return hash
+  if stage == 3 || stage == 7 then
+    let velocity := projectFluid g (1/120)
+    if stage == 7 then return velocity.iterations.toUInt64
+    for i in [:s.width*s.height] do
+      hash := (hash ^^^ (floatAt velocity.u i).toBits)*1099511628211
+      hash := (hash ^^^ (floatAt velocity.v i).toBits)*1099511628211
+      hash := (hash ^^^ (floatAt velocity.pressure i).toBits)*1099511628211
+    return hash
+  return digestSimulation {s with world := ((fluidCandidate (1/120)).run s.world).2}
 
 def stepCountSimulation (s : Simulation) : UInt32 := s.world.generation.toUInt32
 

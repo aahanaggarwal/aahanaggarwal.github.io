@@ -1,5 +1,5 @@
 import Sand2.Mixture
-import Sand2.Thermodynamics
+import Sand2.Fusion
 import Sand2.Saturation
 
 namespace Sand2
@@ -40,9 +40,12 @@ structure Particle where
   py : Int := 0
   rx : Int := 0
   ry : Int := 0
+  mechanicalPressure : Nat := 101325000
   phasePressure : Nat := 101325000
   boiling : Nat := saturationTemperature phasePressure
   boiling_eq : boiling = saturationTemperature phasePressure
+  boilingFine : Nat := saturationTemperatureFine phasePressure
+  boilingFine_eq : boilingFine = saturationTemperatureFine phasePressure
   label : Material := .empty
   anchored : Bool := false
   fractured : Bool := false
@@ -55,16 +58,16 @@ def makeParticle (matter : Mixture) (energy : Int) (label : Material := .empty)
    chemical := chemicalEnergy matter, chemical_eq := rfl,
    capacity := dryCapacity matter, capacity_eq := rfl,
    dryMass := nonWaterCondensedMass matter,dryMass_eq := rfl,energy,label,anchored,
-   phasePressure := 101325000,boiling := saturationTemperature 101325000,boiling_eq := rfl}
+   phasePressure := 101325000,boiling := saturationTemperature 101325000,boiling_eq := rfl,boilingFine := saturationTemperatureFine 101325000,boilingFine_eq := rfl}
 
 def replaceMatter (p : Particle) (matter : Mixture) : Particle :=
   {makeParticle matter p.energy p.label p.anchored with
     px := p.px, py := p.py, rx := p.rx, ry := p.ry, fractured := p.fractured,
     luminous := p.luminous, stamp := p.stamp,
-    phasePressure := p.phasePressure,boiling := p.boiling,boiling_eq := p.boiling_eq}
+    mechanicalPressure := p.mechanicalPressure,phasePressure := p.phasePressure,boiling := p.boiling,boiling_eq := p.boiling_eq,boilingFine := p.boilingFine,boilingFine_eq := p.boilingFine_eq}
 
 def atPressure (p : Particle) (pressure : Nat) : Particle :=
-  {p with phasePressure := pressure,boiling := saturationTemperature pressure,boiling_eq := rfl}
+  {p with phasePressure := pressure,boiling := saturationTemperature pressure,boiling_eq := rfl,boilingFine := saturationTemperatureFine pressure,boilingFine_eq := rfl}
 
 theorem cached_boiling_point_matches_pressure (p : Particle) :
     p.boiling = saturationTemperature p.phasePressure := p.boiling_eq
@@ -90,60 +93,75 @@ def potentialEnergy (height width i : Nat) (p : Particle) : Int :=
 def thermalEnergy (height width i : Nat) (p : Particle) : Int :=
   p.energy-p.chemical-kineticEnergy p-potentialEnergy height width i p
 
-/-- The water component has a finite fusion and vaporization enthalpy. Other
-    species contribute sensible heat to the same mixed-cell temperature. -/
-def waterDiagram (p : Particle) (boiling : Nat := p.boiling) : PhaseDiagram :=
-  let waterMass := p.matter.water*18
-  let fusion : Int := Int.ofNat (waterMass*33400000)
-  let capacity : Int := Int.ofNat (waterMass*4180) + max 0 p.capacity
-  let boil := fusion + capacity * (boiling : Int)
-  let vapor := boil + Int.ofNat (p.matter.water*internalLatentWaterAt boiling)
-  ⟨0,fusion,boil,vapor,Int.natCast_nonneg _,
-   Int.le_add_of_nonneg_right (Int.mul_nonneg (by have h := Int.natCast_nonneg (waterMass*4180); dsimp [capacity]; omega) (Int.natCast_nonneg _)),
-   Int.le_add_of_nonneg_right (Int.natCast_nonneg _)⟩
+def waterFusion (p : Particle) : Nat := p.matter.water*18*33400000
 
-def regime (height width i : Nat) (p : Particle) (boiling : Nat := p.boiling) : WaterRegime :=
-  phase (waterDiagram p boiling) (thermalEnergy height width i p)
+def vaporReference (p : Particle) : Nat := p.matter.water*4829103090
 
-/-- Rounded single-component fusion model for iron and quartz. Mixed water
-    cells use the water diagram; mineral polymorph chemistry is not modeled. -/
-def solidMeltingPoint (p : Particle) : Nat := if p.matter.iron*56 > p.mass/2 then 153800 else 170000
+def liquidCapacity (p : Particle) : Nat := p.matter.water*75240+p.capacity.toNat
 
-def solidFusion (p : Particle) : Nat :=
-  if p.matter.iron*56 > p.mass/2 then p.matter.iron*56*24700000
-  else p.matter.silica*60*15000000
+def vaporCapacity (p : Particle) : Nat := p.matter.water*27686+p.capacity.toNat
 
-def solidDiagram (p : Particle) : PhaseDiagram :=
-  let start := max 0 p.capacity * (solidMeltingPoint p : Int)
-  let finish := start + Int.ofNat (solidFusion p)
-  ⟨start,finish,finish+1000000000000000000000000000000,
-   finish+2000000000000000000000000000000,
-   Int.le_add_of_nonneg_right (Int.natCast_nonneg _),by omega,by omega⟩
+theorem fine_boiling_cache_bounded (p : Particle) : p.boilingFine <= 200000000 := by
+  rw [p.boilingFine_eq]
+  exact fine_saturation_temperature_bounded _
 
-def solidRegime (height width i : Nat) (p : Particle) : WaterRegime :=
-  phase (solidDiagram p) (thermalEnergy height width i p)
+/-- Additive mixture energy: water latent heat coexists with every other
+    component's sensible heat. The vapor reference is independent of pressure. -/
+def waterDiagram (p : Particle) : PhaseDiagram :=
+  let fusion := waterFusion p
+  let boil := fusion+liquidCapacity p*p.boilingFine/10000
+  let vapor := max boil (vaporReference p+vaporCapacity p*p.boilingFine/10000)
+  ⟨0,fusion,boil,vapor,Int.natCast_nonneg _,by omega,by omega⟩
 
-def temperatureFromEnthalpy (p : Particle) (h : Int) (boiling : Nat := p.boiling) : Int :=
-  let wm := (p.matter.water*18 : Nat)
-  if wm == 0 then
-    if p.matter.silica*60 > p.mass/2 || p.matter.iron*56 > p.mass/2 then
-      let d := solidDiagram p
-      if h < d.meltStart then h / max 1 p.capacity
-      else if h < d.meltEnd then solidMeltingPoint p
-      else (h-(solidFusion p : Int))/max 1 p.capacity
-    else h / max 1 p.capacity
-  else
-    let d := waterDiagram p boiling
+def regime (height width i : Nat) (p : Particle) : WaterRegime :=
+  phase (waterDiagram p) (thermalEnergy height width i p)
+
+def ironFusion (p : Particle) : Nat := p.matter.iron*56*24700000
+
+def silicaFusion (p : Particle) : Nat := p.matter.silica*60*15000000
+
+/-- Mineral fusion thresholds include the energy of water and the other
+    mineral. A trace of water cannot erase iron/silica latent heat. -/
+def ironDiagram (p : Particle) : FusionDiagram :=
+  let start := vaporReference p+vaporCapacity p*153800
+  let finish := start+ironFusion p
+  ⟨start,finish,by omega⟩
+
+def silicaDiagram (p : Particle) : FusionDiagram :=
+  let start := vaporReference p+vaporCapacity p*170000+ironFusion p
+  let finish := start+silicaFusion p
+  ⟨start,finish,by omega⟩
+
+def solidDiagram (p : Particle) : FusionDiagram :=
+  if p.matter.iron*56 > p.mass/2 then ironDiagram p else silicaDiagram p
+
+def solidRegime (height width i : Nat) (p : Particle) : FusionPhase :=
+  fusionPhase (solidDiagram p) (thermalEnergy height width i p)
+
+def waterTemperatureFromInternalEnergy (p : Particle) (h : Int) : Int :=
+  if p.matter.water == 0 then h/max 1 p.capacity else
+    let d := waterDiagram p
     match phase d h with
-    | .ice => h / max 1 ((wm : Int)*2100+p.capacity)
+    | .ice => h/max 1 ((p.matter.water*18*2100+p.capacity.toNat : Nat) : Int)
     | .melting => 0
-    | .liquid => (h-d.meltEnd)/max 1 ((wm : Int)*4180+p.capacity)
-    | .boiling => boiling
-    | .vapor => (boiling : Int)+(h-d.boilEnd)/max 1 ((p.matter.water : Int)*27686+p.capacity)
+    | .liquid => (h-d.meltEnd)/max 1 (liquidCapacity p : Int)
+    | .boiling => p.boilingFine/10000
+    | .vapor => (h-(vaporReference p : Int))/max 1 (vaporCapacity p : Int)
 
+/-- One common temperature for water, iron and silica, with each component's
+    own fusion plateau and additive latent inventory. -/
+def temperatureFromEnthalpy (p : Particle) (h : Int) : Int :=
+  if p.matter.iron == 0 && p.matter.silica == 0 then waterTemperatureFromInternalEnergy p h else
+  let iron := ironDiagram p
+  let silica := silicaDiagram p
+  if h >= silica.meltEnd then waterTemperatureFromInternalEnergy p (h-(ironFusion p : Int)-(silicaFusion p : Int))
+  else if h >= silica.meltStart then 170000
+  else if h >= iron.meltEnd then waterTemperatureFromInternalEnergy p (h-(ironFusion p : Int))
+  else if h >= iron.meltStart then 153800
+  else waterTemperatureFromInternalEnergy p h
 
-def temperature (height width i : Nat) (p : Particle) (boiling : Nat := p.boiling) : Int :=
-  temperatureFromEnthalpy p (thermalEnergy height width i p) boiling
+def temperature (height width i : Nat) (p : Particle) : Int :=
+  temperatureFromEnthalpy p (thermalEnergy height width i p)
 
 def vaporous (height width i : Nat) (p : Particle) : Bool :=
   p.matter.water > 0 && regime height width i p == .vapor
@@ -211,14 +229,16 @@ def internalEnergyAt (m : Mixture) (label : Material) (t : Int) : Int :=
 
 def matterFor : Material → Mixture
   | .empty => air
-  | .water | .ice => {water := 55555555}
+  | .water => {water := 55555555}
+  | .ice => {water := 50944444}
   | .steam => {air with water := 41575}
-  | .sand | .glass | .stone | .obsidian | .lava => {silica := 44166666}
+  | .sand | .glass | .stone | .obsidian => {silica := 44166666}
+  | .lava => {silica := 36630036}
   | .wood | .plant => {biomass := 23333333}
   | .oil => {oil := 57142857}
-  | .acid => {water := 45000000, acid := 3000000}
+  | .acid => {water := 52588888, acid := 3000000}
   | .salt => {salt := 37310344}
-  | .saltWater => {water := 53000000, salt := 700000}
+  | .saltWater => {water := 54910000, salt := 700000}
   | .metal => {iron := 140357142}
   | .limestone => {carbonate := 27000000}
   | .oxygen => {oxygen := 41575}
@@ -231,7 +251,7 @@ def matterFor : Material → Mixture
   | .sulfur => {sulfur := 64687500}
   | .calciumChloride => {calciumChloride := 19545454}
   | .ironChloride => {ironChloride := 25079365}
-  | .moltenIron => {iron := 140357142}
+  | .moltenIron => {iron := 125000000}
   | .gunpowder => {nitrate := 12592592, sulfur := 6296296, carbon := 18888888}
   | .fire => {air with oil := 10000, oxygen := 30000}
   | .smoke => {air with carbonDioxide := 20000, water := 20000}
@@ -244,15 +264,18 @@ def makeAt (height width i : Nat) (m : Material) (anchored : Bool := false) : Pa
     | .lava => 180000 | .moltenIron => 170000 | .fire => 90000 | .ember => 65000 | .ice => -1000
     | .steam => 13000 | .smoke => 14000 | _ => 2000
   let p := makeParticle matter 0 m anchored
-  {p with
+  let p : Particle := {p with
     energy := p.chemical+internalEnergyAt matter m t+potentialEnergy height width i p
-    luminous := (if m == .fire || m == .ember then 16 else 0)}
+    luminous := (if m == Material.fire || m == Material.ember then 16 else 0)}
+  {p with mechanicalPressure := if gasCell height width i p then (pressure height width i p).toNat else 101325000}
 
 /-- Fixed dimensions and exact grid shape are carried by the Lean state. -/
 structure World (width height : Nat) where
   cells : Array Particle
   size_eq : cells.size = width*height
   generation : Nat := 0
+  rejectedFluidSubsteps : Nat := 0
+  fluidResidual : Nat := 0
   seed : UInt32 := 0x5a172026
 
 structure Simulation where
@@ -262,6 +285,8 @@ structure Simulation where
 
 def read (w : World width height) (i : Nat) : Particle :=
   if h : i < w.cells.size then w.cells[i] else makeAt height width 0 .empty
+
+def cellTemperature (w : World width height) (i : Nat) : Int := temperature height width i (read w i)
 
 def write (w : World width height) (i : Nat) (p : Particle) : World width height :=
   {w with cells := w.cells.set! i p, size_eq := by simpa using w.size_eq}
@@ -277,7 +302,7 @@ def edge (width height i : Nat) : Bool :=
 def newWorld (width height : Nat) : World width height :=
   let cells := Array.ofFn fun (i : Fin (width*height)) =>
     makeAt height width i (if edge width height i then .metal else .empty) (edge width height i)
-  ⟨cells,by simp [cells],0,0x5a172026⟩
+  {cells,size_eq := by simp [cells]}
 
 theorem particle_mass_is_molecular_mass (p : Particle) : p.mass = Chemistry.mass p.matter := p.mass_eq
 

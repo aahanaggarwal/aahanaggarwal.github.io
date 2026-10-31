@@ -58,11 +58,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 175,
+          "line": 180,
           "column": 1
         },
         "end": {
-          "line": 176,
+          "line": 181,
           "column": 82
         }
       }
@@ -105,11 +105,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 112,
+          "line": 115,
           "column": 1
         },
         "end": {
-          "line": 116,
+          "line": 119,
           "column": 62
         }
       }
@@ -120,6 +120,7 @@
       "async": false,
       "trust": {
         "axioms": [
+          "Quot.sound",
           "propext"
         ],
         "depends_on_sorry": false,
@@ -130,11 +131,13 @@
           "lean_int_add",
           "lean_int_dec_eq",
           "lean_int_dec_le",
+          "lean_int_dec_lt",
           "lean_int_ediv",
           "lean_int_mul",
           "lean_int_neg",
           "lean_int_sub",
           "lean_mk_empty_array_with_capacity",
+          "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
@@ -208,11 +211,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 144,
+          "line": 149,
           "column": 1
         },
         "end": {
-          "line": 148,
+          "line": 153,
           "column": 20
         }
       }
@@ -264,11 +267,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 180,
+          "line": 185,
           "column": 1
         },
         "end": {
-          "line": 192,
+          "line": 199,
           "column": 11
         }
       }
@@ -325,12 +328,64 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 160,
+          "line": 165,
           "column": 1
         },
         "end": {
-          "line": 170,
-          "column": 45
+          "line": 175,
+          "column": 59
+        }
+      }
+    },
+    {
+      "name": "Sand2.maxLiquidVolumeSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_array_fget_borrowed",
+          "lean_array_get_size",
+          "lean_int_add",
+          "lean_int_dec_eq",
+          "lean_int_dec_le",
+          "lean_int_dec_lt",
+          "lean_int_ediv",
+          "lean_int_mul",
+          "lean_int_neg",
+          "lean_int_sub",
+          "lean_nat_abs",
+          "lean_nat_add",
+          "lean_nat_dec_eq",
+          "lean_nat_dec_le",
+          "lean_nat_dec_lt",
+          "lean_nat_div",
+          "lean_nat_mul",
+          "lean_nat_sub",
+          "lean_nat_to_int",
+          "lean_uint64_of_nat"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 210,
+          "column": 1
+        },
+        "end": {
+          "line": 213,
+          "column": 26
         }
       }
     },
@@ -340,6 +395,7 @@
       "async": false,
       "trust": {
         "axioms": [
+          "Quot.sound",
           "propext"
         ],
         "depends_on_sorry": false,
@@ -350,11 +406,13 @@
           "lean_int_add",
           "lean_int_dec_eq",
           "lean_int_dec_le",
+          "lean_int_dec_lt",
           "lean_int_ediv",
           "lean_int_mul",
           "lean_int_neg",
           "lean_int_sub",
           "lean_mk_empty_array_with_capacity",
+          "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
@@ -385,11 +443,109 @@
       }
     },
     {
+      "name": "Sand2.numericalProbeSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_array_fget",
+          "lean_array_fget_borrowed",
+          "lean_array_get_size",
+          "lean_array_push",
+          "lean_array_set",
+          "lean_byte_array_fget",
+          "lean_byte_array_mk",
+          "lean_byte_array_size",
+          "lean_float_add",
+          "lean_float_array_fget",
+          "lean_float_array_push",
+          "lean_float_array_set",
+          "lean_float_array_size",
+          "lean_float_decLe",
+          "lean_float_decLt",
+          "lean_float_div",
+          "lean_float_isinf",
+          "lean_float_isnan",
+          "lean_float_mul",
+          "lean_float_negate",
+          "lean_float_of_bits",
+          "lean_float_sub",
+          "lean_float_to_bits",
+          "lean_float_to_uint64",
+          "lean_int_add",
+          "lean_int_dec_eq",
+          "lean_int_dec_le",
+          "lean_int_dec_lt",
+          "lean_int_ediv",
+          "lean_int_emod",
+          "lean_int_mul",
+          "lean_int_neg",
+          "lean_int_neg_succ_of_nat",
+          "lean_int_sub",
+          "lean_mk_array",
+          "lean_mk_empty_array_with_capacity",
+          "lean_mk_empty_float_array",
+          "lean_nat_abs",
+          "lean_nat_add",
+          "lean_nat_dec_eq",
+          "lean_nat_dec_le",
+          "lean_nat_dec_lt",
+          "lean_nat_div",
+          "lean_nat_log2",
+          "lean_nat_lor",
+          "lean_nat_mod",
+          "lean_nat_mul",
+          "lean_nat_pow",
+          "lean_nat_shiftl",
+          "lean_nat_shiftr",
+          "lean_nat_sub",
+          "lean_nat_to_int",
+          "lean_uint32_dec_eq",
+          "lean_uint32_to_nat",
+          "lean_uint64_mul",
+          "lean_uint64_of_nat",
+          "lean_uint64_of_nat_mk",
+          "lean_uint64_to_float",
+          "lean_uint64_to_nat",
+          "lean_uint64_xor",
+          "lean_uint8_add",
+          "lean_uint8_dec_eq",
+          "lean_uint8_land",
+          "sqrt"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 217,
+          "column": 1
+        },
+        "end": {
+          "line": 243,
+          "column": 85
+        }
+      }
+    },
+    {
       "name": "Sand2.oracle",
       "module": "Sand2.Interface",
       "async": false,
       "trust": {
         "axioms": [
+          "Classical.choice",
           "Quot.sound",
           "propext"
         ],
@@ -404,6 +560,24 @@
           "lean_array_push",
           "lean_array_set",
           "lean_array_to_list",
+          "lean_byte_array_fget",
+          "lean_byte_array_mk",
+          "lean_byte_array_size",
+          "lean_float_add",
+          "lean_float_array_fget",
+          "lean_float_array_push",
+          "lean_float_array_set",
+          "lean_float_array_size",
+          "lean_float_decLe",
+          "lean_float_decLt",
+          "lean_float_div",
+          "lean_float_isinf",
+          "lean_float_isnan",
+          "lean_float_mul",
+          "lean_float_negate",
+          "lean_float_of_bits",
+          "lean_float_sub",
+          "lean_float_to_uint64",
           "lean_int_add",
           "lean_int_dec_eq",
           "lean_int_dec_le",
@@ -412,17 +586,23 @@
           "lean_int_emod",
           "lean_int_mul",
           "lean_int_neg",
+          "lean_int_neg_succ_of_nat",
           "lean_int_sub",
+          "lean_mk_array",
           "lean_mk_empty_array_with_capacity",
+          "lean_mk_empty_float_array",
           "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
           "lean_nat_dec_lt",
           "lean_nat_div",
+          "lean_nat_log2",
+          "lean_nat_lor",
           "lean_nat_mod",
           "lean_nat_mul",
           "lean_nat_pow",
+          "lean_nat_shiftl",
           "lean_nat_shiftr",
           "lean_nat_sub",
           "lean_nat_to_int",
@@ -433,9 +613,15 @@
           "lean_uint32_to_nat",
           "lean_uint64_mul",
           "lean_uint64_of_nat",
+          "lean_uint64_of_nat_mk",
+          "lean_uint64_to_float",
           "lean_uint64_to_nat",
           "lean_uint64_xor",
-          "lean_usize_of_nat"
+          "lean_uint8_add",
+          "lean_uint8_dec_eq",
+          "lean_uint8_land",
+          "lean_usize_of_nat",
+          "sqrt"
         ]
       },
       "claims": [],
@@ -446,11 +632,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 199,
+          "line": 250,
           "column": 1
         },
         "end": {
-          "line": 202,
+          "line": 253,
           "column": 67
         }
       }
@@ -566,11 +752,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 118,
+          "line": 121,
           "column": 1
         },
         "end": {
-          "line": 142,
+          "line": 147,
           "column": 16
         }
       }
@@ -593,11 +779,13 @@
           "lean_int_add",
           "lean_int_dec_eq",
           "lean_int_dec_le",
+          "lean_int_dec_lt",
           "lean_int_ediv",
           "lean_int_mul",
           "lean_int_neg",
           "lean_int_sub",
           "lean_mk_empty_array_with_capacity",
+          "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
@@ -623,8 +811,38 @@
           "column": 1
         },
         "end": {
-          "line": 77,
+          "line": 80,
           "column": 11
+        }
+      }
+    },
+    {
+      "name": "Sand2.solverFailuresSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_uint64_of_nat"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 215,
+          "column": 1
+        },
+        "end": {
+          "line": 215,
+          "column": 97
         }
       }
     },
@@ -649,11 +867,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 194,
+          "line": 245,
           "column": 1
         },
         "end": {
-          "line": 194,
+          "line": 245,
           "column": 81
         }
       }
@@ -664,6 +882,7 @@
       "async": false,
       "trust": {
         "axioms": [
+          "Classical.choice",
           "Quot.sound",
           "propext"
         ],
@@ -676,6 +895,24 @@
           "lean_array_get_size",
           "lean_array_push",
           "lean_array_set",
+          "lean_byte_array_fget",
+          "lean_byte_array_mk",
+          "lean_byte_array_size",
+          "lean_float_add",
+          "lean_float_array_fget",
+          "lean_float_array_push",
+          "lean_float_array_set",
+          "lean_float_array_size",
+          "lean_float_decLe",
+          "lean_float_decLt",
+          "lean_float_div",
+          "lean_float_isinf",
+          "lean_float_isnan",
+          "lean_float_mul",
+          "lean_float_negate",
+          "lean_float_of_bits",
+          "lean_float_sub",
+          "lean_float_to_uint64",
           "lean_int_add",
           "lean_int_dec_eq",
           "lean_int_dec_le",
@@ -683,19 +920,34 @@
           "lean_int_ediv",
           "lean_int_mul",
           "lean_int_neg",
+          "lean_int_neg_succ_of_nat",
           "lean_int_sub",
+          "lean_mk_array",
           "lean_mk_empty_array_with_capacity",
+          "lean_mk_empty_float_array",
           "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
           "lean_nat_dec_lt",
           "lean_nat_div",
+          "lean_nat_log2",
+          "lean_nat_lor",
           "lean_nat_mod",
           "lean_nat_mul",
+          "lean_nat_pow",
+          "lean_nat_shiftl",
           "lean_nat_shiftr",
           "lean_nat_sub",
-          "lean_nat_to_int"
+          "lean_nat_to_int",
+          "lean_uint64_of_nat",
+          "lean_uint64_of_nat_mk",
+          "lean_uint64_to_float",
+          "lean_uint64_to_nat",
+          "lean_uint8_add",
+          "lean_uint8_dec_eq",
+          "lean_uint8_land",
+          "sqrt"
         ]
       },
       "claims": [],
@@ -738,12 +990,65 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 196,
+          "line": 247,
           "column": 1
         },
         "end": {
-          "line": 197,
+          "line": 248,
           "column": 52
+        }
+      }
+    },
+    {
+      "name": "Sand2.waterInRegionSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_array_fget_borrowed",
+          "lean_array_get_size",
+          "lean_int_add",
+          "lean_int_dec_eq",
+          "lean_int_dec_le",
+          "lean_int_dec_lt",
+          "lean_int_ediv",
+          "lean_int_mul",
+          "lean_int_neg",
+          "lean_int_sub",
+          "lean_nat_abs",
+          "lean_nat_add",
+          "lean_nat_dec_eq",
+          "lean_nat_dec_le",
+          "lean_nat_dec_lt",
+          "lean_nat_div",
+          "lean_nat_mul",
+          "lean_nat_sub",
+          "lean_nat_to_int",
+          "lean_uint32_to_nat",
+          "lean_uint64_of_nat"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 201,
+          "column": 1
+        },
+        "end": {
+          "line": 208,
+          "column": 24
         }
       }
     }

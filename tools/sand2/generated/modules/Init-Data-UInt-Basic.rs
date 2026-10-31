@@ -72,3 +72,19 @@ pub(crate) unsafe extern "C" fn l_UInt64_dxor(x_1: u64, x_2: u64) -> u64 {
     r
 }
 
+// Lean: UInt8.add
+// Source: <lean>/Init/Data/UInt/Basic.lean:26:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt8_dadd(x_1: u8, x_2: u8) -> u8 {
+    let r: u8 = rt::intrinsics::lean_uint8_add(x_1, x_2);
+    r
+}
+
+// Lean: UInt8.land
+// Source: <lean>/Init/Data/UInt/Basic.lean:91:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt8_dland(x_1: u8, x_2: u8) -> u8 {
+    let r: u8 = rt::intrinsics::lean_uint8_land(x_1, x_2);
+    r
+}
+

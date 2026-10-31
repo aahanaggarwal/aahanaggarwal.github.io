@@ -89,4 +89,22 @@ theorem refinement_retains_threshold (below : Nat → Bool) (n : Nat) (b : Brack
   | succ n ih =>
     exact ih (tightenBracket below b) (tightening_retains_threshold below b root inside threshold)
 
+theorem tightening_retains_false_upper (below : Nat → Bool) (b : Bracket)
+    (safe : below b.hi = false) : below (tightenBracket below b).hi = false := by
+  unfold tightenBracket
+  dsimp only
+  split
+  · exact safe
+  · split
+    · exact safe
+    · rename_i notBelow
+      simpa only [Bool.not_eq_true] using notBelow
+
+theorem refinement_retains_false_upper (below : Nat → Bool) (n : Nat) (b : Bracket)
+    (safe : below b.hi = false) : below (refineBracket below n b).hi = false := by
+  induction n generalizing b with
+  | zero => exact safe
+  | succ n ih => exact ih (tightenBracket below b) (tightening_retains_false_upper below b safe)
+
+
 end Sand2

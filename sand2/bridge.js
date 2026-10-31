@@ -8,7 +8,7 @@ export async function loadGame(width, height, onError) {
   const encoder = new TextEncoder();
   let textLength = 0, count = 0, history = 0, catalogue, inspect = '';
   let busy = false, tick = false, disposed = false, view = 0, dirty = false;
-  let commands = [], point, steps = 0, timeMs = 0n, sentAt = 0, batchMs = 1000 / 60;
+  let commands = [], point, steps = 0, timeMs = 0n, failures = 0n, sentAt = 0, batchMs = 1000 / 60;
   let completedTicks = [];
   const writeText = value => {
     const text = encoder.encode(value);
@@ -17,9 +17,15 @@ export async function loadGame(width, height, onError) {
   };
   const pump = () => {
     if (disposed || busy || !dirty) return;
-    busy = true; dirty = false; sentAt = performance.now();
-    worker.postMessage({type: 'frame', commands, tick, view, inspect: point});
-    commands = []; tick = false;
+    // Return a rendered frame after each manual step even on a stiff scene.
+    // Keeping the remaining commands here preserves their exact order.
+    const manual = commands.findIndex(([name]) => name === 'world_tick');
+    const batch = manual < 0 ? commands : commands.slice(0, manual + 1);
+    commands = manual < 0 ? [] : commands.slice(manual + 1);
+    const advance = manual < 0 && tick;
+    if (advance) tick = false;
+    busy = true; dirty = commands.length > 0 || tick; sentAt = performance.now();
+    worker.postMessage({type: 'frame', commands: batch, tick: advance, view, inspect: point});
   };
   const command = (name, ...args) => {
     if (disposed) return;
@@ -36,7 +42,7 @@ export async function loadGame(width, height, onError) {
       else if (data.type === 'frame') {
         busy = false; bytes.set(data.pixels, 0); count = data.count;
         if (data.inspect !== undefined) inspect = data.inspect;
-        steps = data.steps; timeMs = data.timeMs;
+        steps = data.steps; timeMs = data.timeMs; failures = data.failures;
         const now = performance.now();
         if (data.stepsTaken) {
           const elapsed = (now - sentAt) / data.stepsTaken;
@@ -61,6 +67,7 @@ export async function loadGame(width, height, onError) {
     world_pause() { tick = false; },
     world_steps() { return steps; },
     world_time_ms() { return timeMs; },
+    world_solver_failures() { return failures; },
     world_render(nextView) { if (view !== nextView) { view = nextView; dirty = true; queueMicrotask(pump); } return count; },
     world_pixels() { return 0; },
     world_checkpoint() { history = Math.min(16, history + 1); command('world_checkpoint'); return history; },

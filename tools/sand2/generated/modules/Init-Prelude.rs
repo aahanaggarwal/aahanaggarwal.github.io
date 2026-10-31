@@ -32,6 +32,14 @@ pub(crate) unsafe extern "C" fn l_Array_dmk(x_1: Obj, x_2: Obj) -> Obj {
     r
 }
 
+// Lean: Array.mkEmpty
+// Source: <lean>/Init/Prelude.lean:3235:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_Array_dmkEmpty(x_1: Obj, x_2: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_mk_empty_array_with_capacity(x_2);
+    r
+}
+
 // Lean: Array.push
 // Source: <lean>/Init/Prelude.lean:3327:1
 #[inline(always)]
@@ -56,11 +64,29 @@ pub(crate) unsafe extern "C" fn l_Array_dtoList(x_1: Obj, x_2: Obj) -> Obj {
     r
 }
 
+// Lean: BitVec.ofNat
+// Source: <lean>/Init/Prelude.lean:2410:1
+pub(crate) unsafe extern "C" fn l_BitVec_dofNat(x_1: Obj, x_2: Obj) -> Obj {
+    let x_3: Obj = rt::nat::lean_usize_to_nat(2);
+    let x_4: Obj = l_Nat_dpow(x_3, x_1);
+    let x_5: Obj = l_Nat_dmod(x_2, x_4);
+    rt::lean_dec(x_4);
+    return x_5;
+}
+
 // Lean: ByteArray.emptyWithCapacity
 // Source: <lean>/Init/Prelude.lean:3437:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_ByteArray_demptyWithCapacity(x_1: Obj) -> Obj {
     let r: Obj = rt::intrinsics::lean_mk_empty_byte_array(x_1);
+    r
+}
+
+// Lean: ByteArray.mk
+// Source: <lean>/Init/Prelude.lean:3426:3
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_ByteArray_dmk(x_1: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_byte_array_mk(x_1);
     r
 }
 
@@ -223,6 +249,22 @@ pub(crate) unsafe extern "C" fn l_UInt32_ddecLe(x_1: u32, x_2: u32) -> u8 {
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_UInt32_dtoNat(x_1: u32) -> Obj {
     let r: Obj = rt::intrinsics::lean_uint32_to_nat(x_1);
+    r
+}
+
+// Lean: UInt64.ofBitVec
+// Source: <lean>/Init/Prelude.lean:2727:3
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt64_dofBitVec(x_1: Obj) -> u64 {
+    let r: u64 = rt::intrinsics::lean_uint64_of_nat_mk(x_1);
+    r
+}
+
+// Lean: UInt8.decEq
+// Source: <lean>/Init/Prelude.lean:2481:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt8_ddecEq(x_1: u8, x_2: u8) -> u8 {
+    let r: u8 = rt::intrinsics::lean_uint8_dec_eq(x_1, x_2);
     r
 }
 
