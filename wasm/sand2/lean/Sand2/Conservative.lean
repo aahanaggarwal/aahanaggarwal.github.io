@@ -138,7 +138,7 @@ theorem composition_conserves (a : Physics width height α) (b : α → Physics 
 /-- Execute the state function inside the recursive loop. A generic monadic
     continuation loop grows the Wasm call stack; this tail-recursive form does
     not, and carries precisely the same conservation certificate. -/
-@[noinline] def runList (f : α → β → Physics width height (ForInStep β)) :
+@[specialize] def runList (f : α → β → Physics width height (ForInStep β)) :
     List α → β → World width height → β × World width height
   | [],acc,w => (acc,w)
   | a::rest,acc,w =>
@@ -170,8 +170,48 @@ theorem runList_conserves (f : α → β → Physics width height (ForInStep β)
 @[always_inline] instance (priority := 2000) : ForIn (Physics width height) (List α) α where
   forIn := forList
 
+@[specialize] def runRange (f : Nat → β → Physics width height (ForInStep β)) :
+    Nat → Nat → Nat → β → World width height → β × World width height
+  | 0,_,_,acc,w => (acc,w)
+  | n+1,i,stride,acc,w =>
+    let (step,w') := (f i acc).run w
+    match step with
+    | .done result => (result,w')
+    | .yield result => runRange f n (i+stride) stride result w'
+
+theorem runRange_conserves (f : Nat → β → Physics width height (ForInStep β))
+    (n i stride : Nat) (acc : β) (w : World width height) :
+    Conserves w (runRange f n i stride acc w).2 := by
+  induction n generalizing i acc w with
+  | zero => intro q; rfl
+  | succ n ih =>
+    have conserved := (f i acc).preserves w
+    cases result : (f i acc).run w with
+    | mk step w' =>
+      have hw : Conserves w w' := by simpa only [result] using conserved
+      cases step with
+      | done value => simpa only [runRange,result] using hw
+      | yield value =>
+        intro q
+        simpa only [runRange,result] using (ih (i+stride) value w' q).trans (hw q)
+
+/-- Loop fusion is behavior-preserving for every body and initial world, not
+    merely the finite collection of differential-test scenes. -/
+theorem range_loop_matches_list_loop (f : Nat → β → Physics width height (ForInStep β))
+    (n i stride : Nat) (acc : β) (w : World width height) :
+    runRange f n i stride acc w = runList f (List.range' i n stride) acc w := by
+  induction n generalizing i acc w with
+  | zero => simp [runRange,runList]
+  | succ n ih =>
+    cases result : (f i acc).run w with
+    | mk step w' =>
+      cases step with
+      | done value => simp only [runRange,List.range'_succ,runList,result]
+      | yield value => simpa only [runRange,List.range'_succ,runList,result] using ih (i+stride) value w'
+
 @[always_inline] instance (priority := 2000) : ForIn (Physics width height) Std.Legacy.Range Nat where
-  forIn range init f := forList (List.range' range.start range.size range.step) init f
+  forIn range init f := ⟨runRange f range.size range.start range.step init,
+    runRange_conserves f range.size range.start range.step init⟩
 
 end Physics
 

@@ -195,3 +195,18 @@ cover all new experiments with no horizontal overflow or page errors. The
 [NIST gas diffusion reference compilation](https://doi.org/10.6028/NIST.TN.2279)
 informs the scale of the rounded diffusion parameters; the solver does not use
 its full gas-pair and temperature-dependent correlations.
+
+## Behavior-preserving loop optimization (2026-10-31 UTC)
+
+The proved physics loop now iterates ranges directly instead of allocating a
+list of indices. `range_loop_matches_list_loop` proves exact agreement with the
+previous loop for every body, counter, accumulator and starting world. Loop
+specialization removes generic callback overhead, and thermal samples reuse the
+same calculated temperature for ideal-gas pressure.
+
+The 45 saved reference states are byte-for-byte unchanged. A same-process
+old/new Wasm comparison over three repeated dam-break runs measured 88.43 versus
+77.41 ms/tick (about 12 percent faster), with identical final complete-state
+digests. The routine pipeline's shorter benchmark measured 69.81 ms/tick; the
+difference illustrates scene evolution and timing variation, not a faster
+physical timestep. All 89 handwritten theorems and existing checks pass.

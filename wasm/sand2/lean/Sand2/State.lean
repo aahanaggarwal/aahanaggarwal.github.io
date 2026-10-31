@@ -116,9 +116,14 @@ def temperature (height width i : Nat) (p : Particle) (boiling : Nat := 10000) :
 def vaporous (height width i : Nat) (p : Particle) : Bool :=
   p.matter.water > 0 && regime height width i p == .vapor
 
+def idealGasPressure (moles : Nat) (t : Int) : Int :=
+  (moles : Int)*8314*max 1 (t+27315)/100000
+
 def pressure (height width i : Nat) (p : Particle) : Int :=
-  let n := gasMoles p.matter (vaporous height width i p)
-  (n : Int)*8314*max 1 (temperature height width i p+27315)/100000
+  idealGasPressure (gasMoles p.matter (vaporous height width i p)) (temperature height width i p)
+
+theorem ideal_gas_pressure_matches_declared_units (n : Nat) (t : Int) :
+    idealGasPressure n t = (n : Int)*8314*max 1 (t+27315)/100000 := rfl
 
 /-- Initial sensible/phase enthalpy for a requested temperature. Editing is an
     explicit external energy/matter injection, never part of physics stepping. -/

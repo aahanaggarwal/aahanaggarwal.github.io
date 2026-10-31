@@ -180,7 +180,8 @@ structure ThermalSample where
 @[noinline] def thermalField (w : World width height) : Array ThermalSample :=
   Array.ofFn fun i : Fin (width*height) =>
     let p := read w i
-    ⟨temperature height width i p,pressure height width i p⟩
+    let t := temperature height width i p
+    ⟨t,idealGasPressure (gasMoles p.matter (vaporous height width i p)) t⟩
 
 /-- Face fluxes use the start-of-tick thermal field (explicit operator splitting).
     Edits still limit actual inventories and retain a conserved energy budget. -/
