@@ -8,6 +8,30 @@ pub(crate) unsafe extern "C" fn l_UInt32_dadd(x_1: u32, x_2: u32) -> u32 {
     r
 }
 
+// Lean: UInt32.ofNat
+// Source: <lean>/Init/Data/UInt/BasicAux.lean:143:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt32_dofNat(x_1: Obj) -> u32 {
+    let r: u32 = rt::intrinsics::lean_uint32_of_nat(x_1);
+    r
+}
+
+// Lean: UInt32.sub
+// Source: <lean>/Init/Data/UInt/BasicAux.lean:234:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt32_dsub(x_1: u32, x_2: u32) -> u32 {
+    let r: u32 = rt::intrinsics::lean_uint32_sub(x_1, x_2);
+    r
+}
+
+// Lean: UInt64.ofNat
+// Source: <lean>/Init/Data/UInt/BasicAux.lean:249:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt64_dofNat(x_1: Obj) -> u64 {
+    let r: u64 = rt::intrinsics::lean_uint64_of_nat(x_1);
+    r
+}
+
 // Lean: UInt64.toNat
 // Source: <lean>/Init/Data/UInt/BasicAux.lean:289:1
 #[inline(always)]

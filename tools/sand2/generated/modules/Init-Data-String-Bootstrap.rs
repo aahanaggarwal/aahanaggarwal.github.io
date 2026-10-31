@@ -8,6 +8,14 @@ pub(crate) unsafe extern "C" fn l_String_dInternal_dappend(x_1: Obj, x_2: Obj) -
     r
 }
 
+// Lean: String.Internal.length
+// Source: <lean>/Init/Data/String/Bootstrap.lean:70:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_String_dInternal_dlength(x_1: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_string_length(x_1);
+    r
+}
+
 // Lean: String.push
 // Source: <lean>/Init/Data/String/Bootstrap.lean:23:1
 #[inline(always)]

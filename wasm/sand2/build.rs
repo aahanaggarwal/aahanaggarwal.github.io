@@ -1,10 +1,9 @@
 fn main() -> lungo_build::Result<()> {
-    lungo_build::configure()
-        .export("Sand2.stepBlock")
-        .export("Sand2.settle")
-        .export("Sand2.canSwap")
-        .deny_sorry(true)
-        .deny_axioms(true)
-        .deny_unsafe(true)
-        .compile_lean("lean")
+    let mut program = lungo_build::configure();
+    for name in ["newSimulation", "tickSimulation", "clearSimulation", "paintSimulation",
+        "sceneSimulation", "catalogue", "renderSimulation", "countSimulation",
+        "inspectSimulation", "auditSimulation", "digestSimulation", "oracle"] {
+        program = program.export(format!("Sand2.{name}"));
+    }
+    program.deny_sorry(true).deny_axioms(true).deny_unsafe(true).compile_lean("lean")
 }

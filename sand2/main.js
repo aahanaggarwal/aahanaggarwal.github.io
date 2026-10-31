@@ -1,21 +1,6 @@
-import {loadEngine} from './engine.js';
-import {createScene} from './scenes.js';
+import {loadGame} from './bridge.js';
 
-const WIDTH = 256, HEIGHT = 160;
-const MATERIALS = [
-  {id: 1, name: 'Sand', key: '1', color: '#e6bc77', type: 'POWDER', description: 'Falls, piles up, and sinks through water. The beginning of a small world.'},
-  {id: 2, name: 'Water', key: '2', color: '#2f81cf', type: 'LIQUID', description: 'Flows into every gap. Cools lava into stone and turns to steam near fire.'},
-  {id: 3, name: 'Stone', key: '3', color: '#6f7a7e', type: 'SOLID', description: 'A steady foundation. Build walls, bridges, dams, or a home for everything else.'},
-  {id: 4, name: 'Wood', key: '4', color: '#915e3a', type: 'SOLID', description: 'Stays where you put it. Keep it away from fire, unless that is the plan.'},
-  {id: 5, name: 'Fire', key: '5', color: '#ff9b30', type: 'GAS', description: 'Rises, spreads through wood and oil, then fades into drifting smoke.'},
-  {id: 9, name: 'Lava', key: '6', color: '#ff5b27', type: 'LIQUID', description: 'Molten mischief. Meets water with a hiss. Turns sand into glass.'},
-  {id: 7, name: 'Oil', key: '7', color: '#80663a', type: 'LIQUID', description: 'Floats on water. Add a spark and watch the surface catch fire.'},
-  {id: 8, name: 'Acid', key: '8', color: '#b8e44a', type: 'LIQUID', description: 'Eats through sand, wood, plants, and ice. Stone and glass make good containers.'},
-  {id: 10, name: 'Plant', key: '9', color: '#53ab6b', type: 'LIVING', description: 'A patch of green. Grows when it drinks water, and burns when things get too hot.'},
-  {id: 11, name: 'Ice', key: '0', color: '#89d5eb', type: 'SOLID', description: 'Build a frozen sculpture, then melt it with fire or lava.'},
-  {id: 6, name: 'Steam', key: '', color: '#b0d3d5', type: 'GAS', description: 'Floats upwards, drifts, and condenses back into water.'},
-  {id: 13, name: 'Glass', key: '', color: '#92b3b0', type: 'SOLID', description: 'Born when lava heats sand. A fixed, acid-resistant material for your creations.'},
-];
+const WIDTH = 96, HEIGHT = 64;
 let epoch = 0;
 let dispose;
 
@@ -31,20 +16,22 @@ export async function run() {
   const controller = new AbortController();
   const signal = controller.signal;
   let api, animation, pointer = null, drawing = false, eraseStroke = false, lastPaint;
-  let paused = false, speed = 1, brush = 4, material = MATERIALS[0], count = 0;
+  let paused = false, speed = 1, brush = 3, material, count = 0, view = 0;
+  let MATERIALS = [];
   let activePointer = null;
   let lastTime = 0, accumulator = 0, frames = 0, statsTime = 0;
-  const history = [];
+  let history = 0;
+  const decoder = new TextDecoder();
+  const textResult = (pointer, length) => decoder.decode(new Uint8Array(api.memory.buffer, pointer, length));
   const canvas = el('canvas');
   const ctx = canvas.getContext('2d', {alpha: false});
   const buffer = document.createElement('canvas');
   buffer.width = WIDTH; buffer.height = HEIGHT;
   const bufferCtx = buffer.getContext('2d', {alpha: false});
   const on = (target, event, action, options = {}) => target.addEventListener(event, action, {...options, signal});
-  const cells = () => new Uint8Array(api.memory.buffer, api.world_cells(), WIDTH * HEIGHT);
   let image;
   const draw = () => {
-    count = api.world_render();
+    count = api.world_render(view);
     // The module can grow its memory; never retain a detached typed-array view.
     image = new ImageData(new Uint8ClampedArray(api.memory.buffer, api.world_pixels(), WIDTH * HEIGHT * 4), WIDTH, HEIGHT);
     bufferCtx.putImageData(image, 0, 0);
@@ -54,15 +41,14 @@ export async function run() {
       ctx.strokeStyle = material.id === 0 || eraseStroke ? '#f5ada6cc' : '#dde8ddaa';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.arc(pointer.x * 4, pointer.y * 4, (brush + .5) * 4, 0, Math.PI * 2);
+      ctx.arc(pointer.x * canvas.width / WIDTH, pointer.y * canvas.height / HEIGHT, (brush + .5) * canvas.width / WIDTH, 0, Math.PI * 2);
       ctx.stroke();
     }
-    el('empty-hint').hidden = count !== 0;
+    el('empty-hint').hidden = count !== 0 || el('scene').value !== '0';
   };
   const snapshot = () => {
     if (!api) return;
-    history.push(cells().slice());
-    if (history.length > 20) history.shift();
+    history = api.world_checkpoint();
     el('undo').disabled = false;
   };
   const stopDrawing = () => { activePointer = null; drawing = false; eraseStroke = false; lastPaint = undefined; };
@@ -82,46 +68,31 @@ export async function run() {
     root.style.setProperty('--selected-color', item.color);
   };
   const eraser = {id: 0, name: 'Eraser', type: 'TOOL', color: '#dfa19a', description: 'Make room for your next idea. Right-click or hold Shift while drawing to erase, too.'};
-  for (const item of MATERIALS) {
-    const button = document.createElement('button');
-    button.type = 'button'; button.className = 's2-material'; button.dataset.material = item.id;
-    button.setAttribute('aria-pressed', String(item.id === material.id));
-    button.setAttribute('aria-label', `${item.name}${item.key ? ` (${item.key})` : ''}`);
-    const swatch = document.createElement('span');
-    swatch.className = 's2-swatch'; swatch.style.background = item.color; swatch.setAttribute('aria-hidden', 'true');
-    const label = document.createElement('span'); label.textContent = item.name;
-    const key = document.createElement('kbd'); key.textContent = item.key;
-    button.append(swatch, label, key);
-    on(button, 'click', () => select(item));
-    el('materials').append(button);
-  }
   const setPaused = value => {
     paused = value; accumulator = 0;
     el('play-label').textContent = value ? 'Play' : 'Pause';
     el('play-icon').textContent = value ? '▷' : 'Ⅱ';
     el('play').setAttribute('aria-label', value ? 'Play simulation' : 'Pause simulation');
     el('paused').hidden = !value;
-    el('state').textContent = value ? 'WORLD PAUSED' : 'WORLD IS ALIVE';
+    el('state').textContent = value ? 'PAUSED' : 'RUNNING';
     root.dataset.paused = String(value);
   };
   const setBrush = value => {
-    brush = Math.min(24, Math.max(1, value));
+    brush = Math.min(16, Math.max(1, value));
     el('brush').value = brush; el('brush-value').value = brush;
   };
   const setScene = (name, remember = true) => {
     if (remember) snapshot();
-    stopDrawing(); api.world_clear();
-    createScene(name, cells(), WIDTH, HEIGHT);
-    api.world_repair();
+    stopDrawing(); api.world_scene(Number(name));
     el('scene').value = name;
     accumulator = 0;
     draw();
     el('count').textContent = count.toLocaleString();
   };
   const undo = () => {
-    if (!history.length) return;
-    stopDrawing(); cells().set(history.pop()); api.world_repair();
-    el('undo').disabled = history.length === 0;
+    if (!history) return;
+    stopDrawing(); history = api.world_undo();
+    el('undo').disabled = history === 0;
     draw();
   };
   const paint = () => {
@@ -139,13 +110,37 @@ export async function run() {
     return {x: (event.clientX - bounds.left) / bounds.width * WIDTH, y: (event.clientY - bounds.top) / bounds.height * HEIGHT};
   };
   try {
-    api = await loadEngine();
+    api = await loadGame(WIDTH, HEIGHT, error => {
+      if (generation !== epoch || !root.isConnected) return;
+      console.error('Sand 2 worker:', error);
+      root.dataset.state = 'error';
+      el('loading').hidden = false;
+      el('loading').textContent = 'Simulation stopped. Reload to start again.';
+      setPaused(true);
+    });
     if (generation !== epoch || !root.isConnected) { api.world_free(); return; }
     api.world_new(WIDTH, HEIGHT);
+    const cataloguePointer = api.world_catalogue();
+    MATERIALS = JSON.parse(textResult(cataloguePointer, api.world_text_length())).map((item, index) => ({...item, color: `#${item.color.toString(16).padStart(6, '0')}`, key: index < 9 ? String(index + 1) : ''}));
+    material = MATERIALS[0];
+  for (const item of MATERIALS) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 's2-material'; button.dataset.material = item.id;
+    button.setAttribute('aria-pressed', String(item.id === material.id));
+    button.setAttribute('aria-label', `${item.name}${item.key ? ` (${item.key})` : ''}`);
+    const swatch = document.createElement('span');
+    swatch.className = 's2-swatch'; swatch.style.background = item.color; swatch.setAttribute('aria-hidden', 'true');
+    const label = document.createElement('span'); label.textContent = item.name;
+    const key = document.createElement('kbd'); key.textContent = item.key;
+    button.append(swatch, label, key);
+    on(button, 'click', () => select(item));
+    el('materials').append(button);
+  }
+    select(material);
     el('loading').hidden = true;
     root.dataset.state = 'ready';
     setPaused(false);
-    setScene('terrarium', false);
+    setScene('1', false);
 
     on(el('play'), 'click', () => setPaused(!paused));
     on(el('step'), 'click', () => { setPaused(true); api.world_tick(); draw(); });
@@ -157,8 +152,9 @@ export async function run() {
     on(el('brush'), 'input', event => setBrush(Number(event.target.value)));
     on(el('eraser'), 'click', () => select(material.id === 0 ? MATERIALS[0] : eraser));
     on(el('undo'), 'click', undo);
-    on(el('clear'), 'click', () => setScene('empty'));
+    on(el('clear'), 'click', () => setScene('0'));
     on(el('scene'), 'change', event => setScene(event.target.value));
+    on(el('view'), 'change', event => { view = Number(event.target.value); draw(); });
     on(el('snapshot'), 'click', () => {
       const picture = document.createElement('canvas');
       picture.width = WIDTH * 4; picture.height = HEIGHT * 4;
@@ -195,6 +191,7 @@ export async function run() {
       else if (key === 'z') { event.preventDefault(); undo(); }
       else if (event.ctrlKey) return;
       else if (key === 'e') select(eraser);
+      else if (key === 'h') { view = view === 1 ? 0 : 1; el('view').value = String(view); }
       else if (key === '[' || key === '-') setBrush(brush - 1);
       else if (key === ']' || key === '=') setBrush(brush + 1);
       else if (key === '.') { setPaused(true); api.world_tick(); draw(); }
@@ -209,12 +206,13 @@ export async function run() {
       if (!paused) {
         accumulator = Math.min(accumulator + elapsed * speed, 100);
         let ticks = 0;
-        while (accumulator >= 1000 / 30 && ticks < 3) { api.world_tick(); accumulator -= 1000 / 30; ticks++; }
+        while (accumulator >= 1000 / 60 && ticks < 2) { api.world_tick(); accumulator -= 1000 / 60; ticks++; }
       }
       draw(); frames++;
       if (time - statsTime > 500) {
+        if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
         el('count').textContent = count.toLocaleString();
-        el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS`;
+        el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS · ${api.simulation_hz()} Hz`;
         frames = 0; statsTime = time;
       }
       animation = requestAnimationFrame(loop);

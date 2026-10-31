@@ -8,6 +8,42 @@ pub(crate) unsafe extern "C" fn l_List_drange(x_1: Obj) -> Obj {
     return x_3;
 }
 
+// Lean: List.range'TR.go
+// Source: <lean>/Init/Data/List/Basic.lean:2586:3
+pub(crate) unsafe extern "C" fn l_List_drange_x27_TR_dgo(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj) -> Obj {
+    'tail: loop {
+        let x_5: Obj = rt::nat::lean_usize_to_nat(0);
+        let x_6: u8 = l_Nat_ddecEq(x_2, x_5);
+        match x_6 {
+            1 => {
+                rt::lean_dec(x_3);
+                rt::lean_dec(x_2);
+                return x_4;
+            }
+            _ => {
+                let x_7: Obj = rt::nat::lean_usize_to_nat(1);
+                let x_8: Obj = l_Nat_dsub(x_2, x_7);
+                rt::lean_dec(x_2);
+                let x_9: Obj = l_Nat_dsub(x_3, x_1);
+                rt::lean_dec(x_3);
+                rt::lean_inc(x_9);
+                let x_10: Obj = rt::lean_alloc_ctor(1, 2, 0);
+                rt::lean_ctor_set(x_10, 0, x_9);
+                rt::lean_ctor_set(x_10, 1, x_4);
+                let t_0: Obj = x_1;
+                let t_1: Obj = x_8;
+                let t_2: Obj = x_9;
+                let t_3: Obj = x_10;
+                x_1 = t_0;
+                x_2 = t_1;
+                x_3 = t_2;
+                x_4 = t_3;
+                continue 'tail;
+            }
+        }
+    }
+}
+
 // Lean: List.range.loop
 // Source: <lean>/Init/Data/List/Basic.lean:2105:3
 pub(crate) unsafe extern "C" fn l_List_drange_dloop(mut x_1: Obj, mut x_2: Obj) -> Obj {

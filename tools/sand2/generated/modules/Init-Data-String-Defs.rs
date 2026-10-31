@@ -8,3 +8,62 @@ pub(crate) unsafe extern "C" fn l_String_dappend(x_1: Obj, x_2: Obj) -> Obj {
     r
 }
 
+// Lean: String.intercalate
+// Source: <lean>/Init/Data/String/Defs.lean:256:1
+pub(crate) unsafe extern "C" fn l_String_dintercalate(x_1: Obj, x_2: Obj) -> Obj {
+    match rt::lean_obj_tag(x_2) {
+        0 => {
+            let x_3: Obj = l_String_djoin_d__closed__0();
+            return x_3;
+        }
+        _ => {
+            let x_4: Obj = rt::lean_ctor_get(x_2, 0);
+            rt::lean_inc(x_4);
+            let x_5: Obj = rt::lean_ctor_get(x_2, 1);
+            rt::lean_inc(x_5);
+            rt::lean_dec_ref(x_2);
+            let x_6: Obj = l___private_dInit_dData_dString_dDefs_d0_dString_dintercalate_dgo(x_4, x_1, x_5);
+            rt::lean_dec(x_5);
+            return x_6;
+        }
+    }
+}
+
+// Lean: String.join._closed_0
+// Compiled from: String.join
+// Source: <lean>/Init/Data/String/Defs.lean:243:1
+static C_l_String_djoin_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_String_djoin_d__closed__0__init() -> Obj {
+    let x_1: Obj = rt::lean_mk_string_unchecked(b"", 0);
+    return x_1;
+}
+#[inline]
+pub(crate) unsafe fn l_String_djoin_d__closed__0() -> Obj {
+    C_l_String_djoin_d__closed__0.get(l_String_djoin_d__closed__0__init)
+}
+
+// Lean: _private.Init.Data.String.Defs.0.String.intercalate.go
+// Source: <lean>/Init/Data/String/Defs.lean:267:7
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dString_dDefs_d0_dString_dintercalate_dgo(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj) -> Obj {
+    'tail: loop {
+        match rt::lean_obj_tag(x_3) {
+            0 => {
+                return x_1;
+            }
+            _ => {
+                let x_4: Obj = rt::lean_ctor_get(x_3, 0);
+                let x_5: Obj = rt::lean_ctor_get(x_3, 1);
+                let x_6: Obj = l_String_dappend(x_1, x_2);
+                let x_7: Obj = l_String_dappend(x_6, x_4);
+                let t_0: Obj = x_7;
+                let t_1: Obj = x_2;
+                let t_2: Obj = x_5;
+                x_1 = t_0;
+                x_2 = t_1;
+                x_3 = t_2;
+                continue 'tail;
+            }
+        }
+    }
+}
+

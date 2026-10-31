@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import shutil
+import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -14,9 +15,11 @@ SOURCE_FILES = [
     'wasm/sand2/lean/lean-toolchain', 'wasm/sand2/lean/lakefile.toml',
     'wasm/sand2/lean/lake-manifest.json', 'wasm/sand2/lean/Sand2.lean',
     'wasm/sand2/lean/Oracle.lean', 'wasm/sand2/lean/ProofReport.lean',
-    'wasm/sand2/examples/oracle.rs',
+    'wasm/sand2/examples/oracle.rs', 'wasm/sand2/examples/bench.rs',
+    'wasm/sand2/lean/Validation.lean',
     'tools/sand2/build.sh', 'tools/sand2/package.py', 'tools/sand2/check-wasm.mjs',
 ]
+SOURCE_FILES += [str(p.relative_to(ROOT)) for p in sorted((CRATE / 'lean/Sand2').glob('*.lean'))]
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -41,11 +44,20 @@ wasm = ROOT / 'sand2/pkg/sand2.wasm'
 wasm.parent.mkdir(parents=True, exist_ok=True)
 shutil.copyfile(CRATE / 'target/wasm32-wasip1/release/sand2.wasm', wasm)
 outputs = [wasm, *sorted(GENERATED.rglob('*'))]
+audited = {line.split('|')[1] for line in (ROOT / '.tools/sand2/proofs.txt').read_text().splitlines() if 'PROOF|' in line}
+handwritten = set()
+for path in sorted((CRATE / 'lean/Sand2').glob('*.lean')):
+    for name in re.findall(r'^theorem\s+([\w.]+)', path.read_text(), re.M):
+        matches = {proof for proof in audited if proof.endswith('.' + name)}
+        if not matches:
+            raise SystemExit(f'Theorem missing from kernel axiom audit: {name}')
+        handwritten.update(matches)
 record = {
     'format': 1, 'generator': 'lungo 1.117.0', 'lean': '4.34.1',
     'rust': subprocess.check_output(['rustc', '--version'], text=True).strip(),
     'target': 'wasm32-wasip1',
-    'proofs': ['settle_conserves', 'fixed_never_falls', 'fixed_never_displaced', 'blocked_pair_unchanged'],
+    'proofs': sorted(handwritten), 'audited_theorems_including_generated': len(audited),
+    'trust': 'Lean kernel; standard propext, Quot.sound and Classical.choice only; no sorryAx or custom axioms',
     'inputs': {name: digest(ROOT / name) for name in SOURCE_FILES},
     'outputs': {str(path.relative_to(ROOT)): digest(path) for path in outputs if path.is_file()},
 }

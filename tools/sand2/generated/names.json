@@ -1,20 +1,104 @@
 [
   {
-    "lean_name": "Sand2.canSwap",
-    "kind": "function",
-    "rust_path": "can_swap",
-    "renamed": true
-  },
-  {
-    "lean_name": "Sand2.settle",
-    "kind": "function",
-    "rust_path": "settle",
+    "lean_name": "Sand2.Simulation",
+    "kind": "type",
+    "rust_path": "Simulation",
     "renamed": false
   },
   {
-    "lean_name": "Sand2.stepBlock",
+    "lean_name": "Sand2.auditSimulation",
     "kind": "function",
-    "rust_path": "step_block",
+    "rust_path": "audit_simulation",
     "renamed": true
+  },
+  {
+    "lean_name": "Sand2.catalogue",
+    "kind": "function",
+    "rust_path": "catalogue",
+    "renamed": false
+  },
+  {
+    "lean_name": "Sand2.clearSimulation",
+    "kind": "function",
+    "rust_path": "clear_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.countSimulation",
+    "kind": "function",
+    "rust_path": "count_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.digestSimulation",
+    "kind": "function",
+    "rust_path": "digest_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.inspectSimulation",
+    "kind": "function",
+    "rust_path": "inspect_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.newSimulation",
+    "kind": "function",
+    "rust_path": "new_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.oracle",
+    "kind": "function",
+    "rust_path": "oracle",
+    "renamed": false
+  },
+  {
+    "lean_name": "Sand2.paintSimulation",
+    "kind": "function",
+    "rust_path": "paint_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.renderSimulation",
+    "kind": "function",
+    "rust_path": "render_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.sceneSimulation",
+    "kind": "function",
+    "rust_path": "scene_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.tickSimulation",
+    "kind": "function",
+    "rust_path": "tick_simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.Simulation.mk",
+    "kind": "constructor",
+    "rust_path": "Simulation",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.Simulation.width",
+    "kind": "field",
+    "rust_path": "Simulation.width",
+    "renamed": false
+  },
+  {
+    "lean_name": "Sand2.Simulation.height",
+    "kind": "field",
+    "rust_path": "Simulation.height",
+    "renamed": false
+  },
+  {
+    "lean_name": "Sand2.Simulation.world",
+    "kind": "field",
+    "rust_path": "Simulation.world",
+    "renamed": false
   }
 ]

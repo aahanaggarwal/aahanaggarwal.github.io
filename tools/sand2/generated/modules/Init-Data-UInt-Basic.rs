@@ -8,11 +8,19 @@ pub(crate) unsafe extern "C" fn l_UInt32_dland(x_1: u32, x_2: u32) -> u32 {
     r
 }
 
-// Lean: UInt32.lor
-// Source: <lean>/Init/Data/UInt/Basic.lean:476:1
+// Lean: UInt32.mod
+// Source: <lean>/Init/Data/UInt/Basic.lean:447:1
 #[inline(always)]
-pub(crate) unsafe extern "C" fn l_UInt32_dlor(x_1: u32, x_2: u32) -> u32 {
-    let r: u32 = rt::intrinsics::lean_uint32_lor(x_1, x_2);
+pub(crate) unsafe extern "C" fn l_UInt32_dmod(x_1: u32, x_2: u32) -> u32 {
+    let r: u32 = rt::intrinsics::lean_uint32_mod(x_1, x_2);
+    r
+}
+
+// Lean: UInt32.mul
+// Source: <lean>/Init/Data/UInt/Basic.lean:418:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt32_dmul(x_1: u32, x_2: u32) -> u32 {
+    let r: u32 = rt::intrinsics::lean_uint32_mul(x_1, x_2);
     r
 }
 
@@ -40,11 +48,27 @@ pub(crate) unsafe extern "C" fn l_UInt64_dlor(x_1: u64, x_2: u64) -> u64 {
     r
 }
 
+// Lean: UInt64.mul
+// Source: <lean>/Init/Data/UInt/Basic.lean:589:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt64_dmul(x_1: u64, x_2: u64) -> u64 {
+    let r: u64 = rt::intrinsics::lean_uint64_mul(x_1, x_2);
+    r
+}
+
 // Lean: UInt64.shiftLeft
 // Source: <lean>/Init/Data/UInt/Basic.lean:667:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_UInt64_dshiftLeft(x_1: u64, x_2: u64) -> u64 {
     let r: u64 = rt::intrinsics::lean_uint64_shift_left(x_1, x_2);
+    r
+}
+
+// Lean: UInt64.xor
+// Source: <lean>/Init/Data/UInt/Basic.lean:657:1
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_UInt64_dxor(x_1: u64, x_2: u64) -> u64 {
+    let r: u64 = rt::intrinsics::lean_uint64_xor(x_1, x_2);
     r
 }
 

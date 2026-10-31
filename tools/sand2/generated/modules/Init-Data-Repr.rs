@@ -357,6 +357,121 @@ pub(crate) unsafe extern "C" fn l_Nat_dtoDigitsCore(mut x_1: Obj, mut x_2: Obj, 
     }
 }
 
+// Lean: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+pub(crate) unsafe extern "C" fn l_Repr_daddAppParen(x_1: Obj, x_2: Obj) -> Obj {
+    let x_3: Obj = rt::nat::lean_usize_to_nat(1024);
+    let x_4: u8 = l_Nat_ddecLe(x_3, x_2);
+    match x_4 {
+        0 => {
+            return x_1;
+        }
+        _ => {
+            let x_5: Obj = l_Repr_daddAppParen_d__closed__3();
+            let x_6: Obj = l_Repr_daddAppParen_d__closed__4();
+            let x_7: Obj = rt::lean_alloc_ctor(5, 2, 0);
+            rt::lean_ctor_set(x_7, 0, x_6);
+            rt::lean_ctor_set(x_7, 1, x_1);
+            let x_8: Obj = l_Repr_daddAppParen_d__closed__5();
+            let x_9: Obj = rt::lean_alloc_ctor(5, 2, 0);
+            rt::lean_ctor_set(x_9, 0, x_7);
+            rt::lean_ctor_set(x_9, 1, x_8);
+            let x_10: Obj = rt::lean_alloc_ctor(4, 2, 0);
+            rt::lean_ctor_set(x_10, 0, x_5);
+            rt::lean_ctor_set(x_10, 1, x_9);
+            let x_11: u8 = 0u8;
+            let x_12: Obj = rt::lean_alloc_ctor(6, 1, 1);
+            rt::lean_ctor_set(x_12, 0, x_10);
+            rt::lean_ctor_set_uint8(x_12, ::core::mem::size_of::<usize>(), x_11);
+            return x_12;
+        }
+    }
+}
+
+// Lean: Repr.addAppParen._closed_0
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__0__init() -> Obj {
+    let x_1: Obj = rt::lean_mk_string_unchecked(b"(", 1);
+    return x_1;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__0() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__0.get(l_Repr_daddAppParen_d__closed__0__init)
+}
+
+// Lean: Repr.addAppParen._closed_1
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__1: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__1__init() -> Obj {
+    let x_1: Obj = rt::lean_mk_string_unchecked(b")", 1);
+    return x_1;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__1() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__1.get(l_Repr_daddAppParen_d__closed__1__init)
+}
+
+// Lean: Repr.addAppParen._closed_2
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__2: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__2__init() -> Obj {
+    let x_1: Obj = l_Repr_daddAppParen_d__closed__0();
+    let x_2: Obj = l_String_dInternal_dlength(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__2() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__2.get(l_Repr_daddAppParen_d__closed__2__init)
+}
+
+// Lean: Repr.addAppParen._closed_3
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__3: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__3__init() -> Obj {
+    let x_1: Obj = l_Repr_daddAppParen_d__closed__2();
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__3() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__3.get(l_Repr_daddAppParen_d__closed__3__init)
+}
+
+// Lean: Repr.addAppParen._closed_4
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__4: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__4__init() -> Obj {
+    let x_1: Obj = l_Repr_daddAppParen_d__closed__0();
+    let x_2: Obj = rt::lean_alloc_ctor(3, 1, 0);
+    rt::lean_ctor_set(x_2, 0, x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__4() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__4.get(l_Repr_daddAppParen_d__closed__4__init)
+}
+
+// Lean: Repr.addAppParen._closed_5
+// Compiled from: Repr.addAppParen
+// Source: <lean>/Init/Data/Repr.lean:83:1
+static C_l_Repr_daddAppParen_d__closed__5: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Repr_daddAppParen_d__closed__5__init() -> Obj {
+    let x_1: Obj = l_Repr_daddAppParen_d__closed__1();
+    let x_2: Obj = rt::lean_alloc_ctor(3, 1, 0);
+    rt::lean_ctor_set(x_2, 0, x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Repr_daddAppParen_d__closed__5() -> Obj {
+    C_l_Repr_daddAppParen_d__closed__5.get(l_Repr_daddAppParen_d__closed__5__init)
+}
+
 // Lean: USize.repr
 // Source: <lean>/Init/Data/Repr.lean:220:1
 #[inline(always)]

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A little world of falling sand, flowing water, growing plants and molten lava. Draw, mix and experiment in Sand Game 2.">
+  <meta name="description" content="A Lean-defined simulation of matter, heat, phases and chemical reactions. Draw and experiment in Sand Game 2.">
   <title>Sand Game 2 — Aahan</title>
   <link rel="stylesheet" href="/style.css?v=4">
   <link rel="icon" href="/favicon.ico">
@@ -23,46 +23,35 @@
   <div id="hud-coords">X: 0000 Y: 0000</div><div id="hud-timer">SESSION: 00:00:00</div>
   <canvas id="circuit"></canvas><div id="cursor"></div>
   <div id="content">
-    <link rel="stylesheet" href="/sand2/style.css">
+    <link rel="stylesheet" href="/sand2/style.css?v=2">
     <main id="s2" aria-label="Sand Game 2">
-      <header class="s2-heading">
-        <div><div class="s2-eyebrow"><span></span> A PLAYGROUND FOR SMALL WORLDS</div>
-          <h1>Sand Game <span>2</span><span class="s2-title-dot">.</span></h1>
-          <p>A little sand. A little science. A lot of possibilities.</p>
-        </div>
-        <a class="s2-original" href="/sand/">Play the original <span aria-hidden="true">↗</span></a>
-      </header>
-      <div class="s2-workbench">
-        <div class="s2-world-column">
-          <div class="s2-stage-top"><div class="s2-world-label"><span class="s2-live-dot"></span><span id="s2-state">LOADING WORLD</span></div>
-            <label class="s2-scene-label">Scene <select id="s2-scene" aria-label="Starter scene"><option value="terrarium">Terrarium</option><option value="volcano">Volcano</option><option value="hourglass">Hourglass</option><option value="empty">Empty canvas</option></select></label>
-          </div>
-          <div class="s2-stage">
-            <canvas id="s2-canvas" width="1024" height="640" tabindex="0" aria-label="Particle sandbox. Draw with your pointer or finger. Choose a material from the palette. Press Space to pause."></canvas>
-            <div id="s2-loading" role="status">Assembling your little world<span class="s2-loading-dots">...</span></div>
-            <div id="s2-paused" hidden>PAUSED <span>Draw now. Watch it happen later.</span></div>
-            <div id="s2-empty-hint" hidden>Start with a handful of sand.<span>Click or touch anywhere to draw.</span></div>
-          </div>
-          <div class="s2-transport">
-            <div class="s2-playback">
-              <button id="s2-play" class="s2-play" type="button" aria-label="Pause simulation" title="Pause / play (Space)"><span id="s2-play-icon" aria-hidden="true">Ⅱ</span><span id="s2-play-label">Pause</span></button>
-              <button id="s2-step" type="button" aria-label="Advance one frame" title="One frame (.)">↦</button>
-              <button id="s2-speed" type="button" aria-label="Simulation speed: 1 times" title="Change simulation speed">1×</button>
-            </div>
-            <div class="s2-brush"><label for="s2-brush">BRUSH</label><input id="s2-brush" type="range" min="1" max="24" value="4"><output id="s2-brush-value" for="s2-brush">4</output><span class="s2-brush-dot" aria-hidden="true"></span></div>
-            <div class="s2-actions"><button id="s2-undo" type="button" disabled title="Undo last drawing (Z)">↶ <span>Undo</span></button><button id="s2-clear" type="button" title="Clear canvas">⌫ <span>Clear</span></button></div>
-          </div>
-          <div class="s2-stage-footer"><span><span id="s2-count">0</span> PARTICLES</span><span id="s2-fps">— FPS</span><button id="s2-snapshot" type="button" title="Download a picture of your world">Save image <span aria-hidden="true">↓</span></button></div>
-        </div>
-        <aside class="s2-palette" aria-label="Materials and tools">
-          <div class="s2-palette-heading"><span>MATERIALS</span><span>12 TO EXPLORE</span></div>
-          <div id="s2-materials" class="s2-materials"></div>
-          <button id="s2-eraser" class="s2-eraser" type="button" aria-pressed="false"><span aria-hidden="true">⌫</span> Eraser <kbd>E</kbd></button>
-          <div class="s2-selected"><div class="s2-selected-heading"><span id="s2-selected-swatch"></span><strong id="s2-selected-name">Sand</strong><span id="s2-selected-type">POWDER</span></div><p id="s2-selected-description">Falls, piles up, and sinks through water. The beginning of a small world.</p></div>
-          <div class="s2-tip"><span>TRY THIS</span><p id="s2-tip">Pour water over sand. Then add a little lava and see what survives.</p></div>
-        </aside>
+      <h1 class="glitch decrypt-effect" data-text="SAND 2">SAND 2</h1>
+      <div class="s2-stage">
+        <canvas id="s2-canvas" width="960" height="640" tabindex="0" aria-label="Sand simulation. Draw with your pointer or finger; choose a material below. Space pauses."></canvas>
+        <div id="s2-loading" role="status">LOADING SIMULATION...</div>
+        <div id="s2-paused" hidden>PAUSED</div>
+        <div id="s2-empty-hint" hidden>SELECT A MATERIAL AND DRAW</div>
       </div>
-      <footer class="s2-footer"><span><kbd>SPACE</kbd> pause <span class="s2-keyboard-extra">· <kbd>1–9</kbd> material · <kbd>[ ]</kbd> brush · right-click to erase</span></span><span>MAKE SOMETHING. BREAK SOMETHING.</span></footer>
+      <div class="s2-controls">
+        <button id="s2-play" type="button" title="Pause / play (Space)"><span id="s2-play-icon">Ⅱ</span> <span id="s2-play-label">Pause</span></button>
+        <button id="s2-step" type="button" title="Advance one timestep (.)">Step</button>
+        <button id="s2-speed" type="button" aria-label="Simulation speed">1×</button>
+        <label>BRUSH <input id="s2-brush" type="range" min="1" max="16" value="3"><output id="s2-brush-value" for="s2-brush">3</output></label>
+        <button id="s2-undo" type="button" disabled title="Undo drawing (Z)">Undo</button>
+        <button id="s2-clear" type="button">Clear</button>
+        <button id="s2-snapshot" type="button">Save image</button>
+      </div>
+      <div class="s2-controls">
+        <label>EXPERIMENT <select id="s2-scene"><option value="1">Dam break</option><option value="2">Heat and phase</option><option value="3">Combustion</option><option value="4">Density separation</option><option value="0">Empty</option></select></label>
+        <label>VIEW <select id="s2-view"><option value="0">Materials</option><option value="1">Temperature</option><option value="2">Pressure</option></select></label>
+        <span id="s2-state">LOADING</span><span><span id="s2-count">0</span> CELLS</span><span id="s2-fps">— FPS</span>
+      </div>
+      <div id="s2-materials" aria-label="Materials"></div>
+      <button id="s2-eraser" type="button" aria-pressed="false">Eraser [E]</button>
+      <p class="s2-selected"><span id="s2-selected-swatch"></span> <strong id="s2-selected-name">Sand</strong> <span id="s2-selected-type">POWDER</span> — <span id="s2-selected-description"></span></p>
+      <p id="s2-inspect" aria-live="off">Point at a cell to inspect its temperature, pressure and mass.</p>
+      <p class="s2-hint">SPACE: pause · 1–9: material · scroll: brush · H: heat · Z: undo · right-click: erase</p>
+      <details class="s2-model"><summary>Physics model and proofs</summary><p>A closed 2D cell model with finite molecular inventories, enthalpy-based water phases, oxygen-limited chemistry, heat conduction, gravity and pressure-driven gas transport. Lean defines the entire timestep and proves conservation of all 11 tracked elements and total energy. Rust hosts the generated program in WebAssembly.</p><p>The proofs establish properties of this declared model. Coarse cell mechanics, rounded properties and simplified reaction kinetics remain approximations. Painting adds or removes matter and energy; conservation applies between edits.</p><p><a href="https://github.com/aahanaggarwal/aahanaggarwal.github.io/tree/master/wasm/sand2/lean">Read the model and proofs</a> · <a href="/sand/">Sand 1</a></p></details>
     </main>
   </div>
   <script type="module" src="/main.js"></script>

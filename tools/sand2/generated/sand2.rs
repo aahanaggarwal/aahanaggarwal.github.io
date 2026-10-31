@@ -7,25 +7,42 @@ pub mod __lng {
     use rt::Obj;
     const _: () = rt::assert_abi::<2>();
 
+    include!("modules/Init-Data-Array-Basic.rs");
+    include!("modules/Init-Data-Array-Set.rs");
     include!("modules/Init-Data-ByteArray-Basic.rs");
     include!("modules/Init-Data-ByteArray-Extra.rs");
     include!("modules/Init-Data-Int-Basic.rs");
+    include!("modules/Init-Data-Int-DivMod-Basic.rs");
     include!("modules/Init-Data-Int-Repr.rs");
     include!("modules/Init-Data-List-Basic.rs");
+    include!("modules/Init-Data-Nat-Bitwise-Basic.rs");
     include!("modules/Init-Data-Random.rs");
+    include!("modules/Init-Data-Range-Basic.rs");
     include!("modules/Init-Data-Repr.rs");
+    include!("modules/Init-Data-SInt-Basic.rs");
     include!("modules/Init-Data-String-Basic.rs");
     include!("modules/Init-Data-String-Bootstrap.rs");
     include!("modules/Init-Data-String-Defs.rs");
     include!("modules/Init-Data-String-Modify.rs");
     include!("modules/Init-Data-UInt-Basic.rs");
     include!("modules/Init-Data-UInt-BasicAux.rs");
+    include!("modules/Init-Omega-IntList.rs");
     include!("modules/Init-Prelude.rs");
     include!("modules/Init-System-IO.rs");
     include!("modules/Init-System-IOError.rs");
     include!("modules/Init-System-ST.rs");
     include!("modules/Init-Util.rs");
-    include!("modules/Sand2.rs");
+    include!("modules/Sand2-Chemistry.rs");
+    include!("modules/Sand2-Conservation.rs");
+    include!("modules/Sand2-Conservative.rs");
+    include!("modules/Sand2-Conversions.rs");
+    include!("modules/Sand2-Evolution.rs");
+    include!("modules/Sand2-Interface.rs");
+    include!("modules/Sand2-Materials.rs");
+    include!("modules/Sand2-Mixture.rs");
+    include!("modules/Sand2-PairChemistry.rs");
+    include!("modules/Sand2-State.rs");
+    include!("modules/Sand2-Thermodynamics.rs");
 
     // The runtime calls IO.Error.toString as `lean_io_error_to_string`.
     unsafe extern "C" fn e_l_IO_dError_dtoString(a_0: Obj) -> Obj {
@@ -234,48 +251,219 @@ pub mod __lng {
     }
 }
 
-/// Lean: `Sand2.canSwap : UInt32 → UInt32 → Bool`
-/// 
-/// Source: lean/Sand2.lean:29:1
-#[allow(unused_imports, unused_unsafe, clippy::all)]
-pub fn can_swap(a: u32, b: u32) -> bool {
-    use ::lungo::__runtime::{self as rt, Obj};
-    __lng::__initialize();
-    unsafe {
-        let __p0: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(a);
-        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(b);
-        let __r: u8 = __lng::l_Sand2_dcanSwap(__p0, __p1);
-        ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
+/// Lean: `Sand2.Simulation`
+#[derive(Clone, Debug)]
+pub struct Simulation {
+    pub width: ::lungo::Nat,
+    pub height: ::lungo::Nat,
+    pub world: ::lungo::LeanValue<__opaque::World, ::lungo::RustBackend>,
+}
+
+impl ::lungo::LeanLayout for Simulation {
+    const FINGERPRINT: &'static str = "e0bc52e60eea4d159f086e2ec8787058e1251eb271942c3e3cb163d537f8c54e";
+}
+
+#[allow(unused_imports, unused_unsafe)]
+unsafe impl ::lungo::LeanType<::lungo::RustBackend> for Simulation {
+    fn into_lean(self) -> ::lungo::__runtime::Obj {
+        use ::lungo::__runtime as rt;
+        unsafe {
+            let Simulation { width: f0, height: f1, world: f2 } = self;
+            let o = ::lungo::__facade::alloc_ctor::<::lungo::RustBackend>(0, 3, 0);
+            rt::lean_ctor_set(o, 0, ::lungo::LeanType::<::lungo::RustBackend>::into_lean(f0));
+            rt::lean_ctor_set(o, 1, ::lungo::LeanType::<::lungo::RustBackend>::into_lean(f1));
+            rt::lean_ctor_set(o, 2, ::lungo::LeanType::<::lungo::RustBackend>::into_lean(f2));
+            o
+        }
+    }
+    unsafe fn from_lean(o: ::lungo::__runtime::Obj) -> Self {
+        use ::lungo::__runtime as rt;
+        unsafe {
+            match rt::lean_obj_tag(o) {
+                0 => Simulation { width: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), height: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)), world: <::lungo::LeanValue<__opaque::World, ::lungo::RustBackend> as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 2)) },
+                tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Sand2.Simulation")),
+            }
+        }
     }
 }
 
-/// Lean: `Sand2.settle : UInt32 → UInt32 → UInt32`
+/// Lean: `Sand2.auditSimulation : Sand2.Simulation → String`
 /// 
-/// Source: lean/Sand2.lean:34:1
+/// Source: lean/Sand2/Interface.lean:135:1
 #[allow(unused_imports, unused_unsafe, clippy::all)]
-pub fn settle(a: u32, b: u32) -> u32 {
+pub fn audit_simulation(s: Simulation) -> ::std::string::String {
     use ::lungo::__runtime::{self as rt, Obj};
     __lng::__initialize();
     unsafe {
-        let __p0: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(a);
-        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(b);
-        let __r: u32 = __lng::l_Sand2_dsettle(__p0, __p1);
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __r: Obj = __lng::l_Sand2_dauditSimulation(__p0);
+        ::lungo::__facade::take::<::lungo::RustBackend, ::std::string::String>(__r)
+    }
+}
+
+/// Lean: `Sand2.catalogue : String`
+/// 
+/// Source: lean/Sand2/Interface.lean:88:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn catalogue() -> ::std::string::String {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __r: Obj = __lng::l_Sand2_dcatalogue();
+        ::lungo::__facade::take::<::lungo::RustBackend, ::std::string::String>(__r)
+    }
+}
+
+/// Lean: `Sand2.clearSimulation : Sand2.Simulation → Sand2.Simulation`
+/// 
+/// Source: lean/Sand2/Interface.lean:14:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn clear_simulation(s: Simulation) -> Simulation {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __r: Obj = __lng::l_Sand2_dclearSimulation(__p0);
+        ::lungo::__facade::take::<::lungo::RustBackend, Simulation>(__r)
+    }
+}
+
+/// Lean: `Sand2.countSimulation : Sand2.Simulation → UInt32`
+/// 
+/// Source: lean/Sand2/Interface.lean:119:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn count_simulation(s: Simulation) -> u32 {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __r: u32 = __lng::l_Sand2_dcountSimulation(__p0);
+        ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
         ::lungo::__facade::from_u32::<::lungo::RustBackend, u32>(__r)
     }
 }
 
-/// Lean: `Sand2.stepBlock : UInt32 → UInt32 → UInt32`
+/// Lean: `Sand2.digestSimulation : Sand2.Simulation → UInt64`
 /// 
-/// Source: lean/Sand2.lean:68:1
+/// Source: lean/Sand2/Interface.lean:140:1
 #[allow(unused_imports, unused_unsafe, clippy::all)]
-pub fn step_block(block: u32, r: u32) -> u32 {
+pub fn digest_simulation(s: Simulation) -> u64 {
     use ::lungo::__runtime::{self as rt, Obj};
     __lng::__initialize();
     unsafe {
-        let __p0: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(block);
-        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(r);
-        let __r: u32 = __lng::l_Sand2_dstepBlock(__p0, __p1);
-        ::lungo::__facade::from_u32::<::lungo::RustBackend, u32>(__r)
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __r: u64 = __lng::l_Sand2_ddigestSimulation(__p0);
+        ::lungo::__facade::from_u64::<::lungo::RustBackend, u64>(__r)
+    }
+}
+
+/// Lean: `Sand2.inspectSimulation : Sand2.Simulation → UInt32 → UInt32 → String`
+/// 
+/// Source: lean/Sand2/Interface.lean:125:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn inspect_simulation(s: Simulation, x: u32, y: u32) -> ::std::string::String {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(x);
+        let __p2: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(y);
+        let __r: Obj = __lng::l_Sand2_dinspectSimulation(__p0, __p1, __p2);
+        ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
+        ::lungo::__facade::take::<::lungo::RustBackend, ::std::string::String>(__r)
+    }
+}
+
+/// Lean: `Sand2.newSimulation : UInt32 → UInt32 → Sand2.Simulation`
+/// 
+/// Source: lean/Sand2/Interface.lean:6:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn new_simulation(width: u32, height: u32) -> Simulation {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(width);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(height);
+        let __r: Obj = __lng::l_Sand2_dnewSimulation(__p0, __p1);
+        ::lungo::__facade::take::<::lungo::RustBackend, Simulation>(__r)
+    }
+}
+
+/// Lean: `Sand2.oracle : UInt32 → UInt32 → String`
+/// 
+/// Source: lean/Sand2/Interface.lean:154:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn oracle(scene: u32, ticks: u32) -> ::std::string::String {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(scene);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(ticks);
+        let __r: Obj = __lng::l_Sand2_doracle(__p0, __p1);
+        ::lungo::__facade::take::<::lungo::RustBackend, ::std::string::String>(__r)
+    }
+}
+
+/// Lean: `Sand2.paintSimulation : Sand2.Simulation → Int32 → Int32 → UInt32 → UInt32 → Sand2.Simulation`
+/// 
+/// Source: lean/Sand2/Interface.lean:17:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn paint_simulation(s: Simulation, cx: i32, cy: i32, radius: u32, code: u32) -> Simulation {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(cx);
+        let __p2: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(cy);
+        let __p3: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(radius);
+        let __p4: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(code);
+        let __r: Obj = __lng::l_Sand2_dpaintSimulation(__p0, __p1, __p2, __p3, __p4);
+        ::lungo::__facade::take::<::lungo::RustBackend, Simulation>(__r)
+    }
+}
+
+/// Lean: `Sand2.renderSimulation : Sand2.Simulation → UInt32 → ByteArray`
+/// 
+/// Source: lean/Sand2/Interface.lean:94:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn render_simulation(s: Simulation, view: u32) -> ::lungo::ByteArray {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(view);
+        let __r: Obj = __lng::l_Sand2_drenderSimulation(__p0, __p1);
+        ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
+        ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::ByteArray>(__r)
+    }
+}
+
+/// Lean: `Sand2.sceneSimulation : Sand2.Simulation → UInt32 → Sand2.Simulation`
+/// 
+/// Source: lean/Sand2/Interface.lean:41:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn scene_simulation(s: Simulation, scene: u32) -> Simulation {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __p1: u32 = ::lungo::__facade::to_u32::<::lungo::RustBackend, _>(scene);
+        let __r: Obj = __lng::l_Sand2_dsceneSimulation(__p0, __p1);
+        ::lungo::__facade::take::<::lungo::RustBackend, Simulation>(__r)
+    }
+}
+
+/// Lean: `Sand2.tickSimulation : Sand2.Simulation → Sand2.Simulation`
+/// 
+/// Source: lean/Sand2/Interface.lean:11:1
+#[allow(unused_imports, unused_unsafe, clippy::all)]
+pub fn tick_simulation(s: Simulation) -> Simulation {
+    use ::lungo::__runtime::{self as rt, Obj};
+    __lng::__initialize();
+    unsafe {
+        let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
+        let __r: Obj = __lng::l_Sand2_dtickSimulation(__p0);
+        ::lungo::__facade::take::<::lungo::RustBackend, Simulation>(__r)
     }
 }
 
@@ -283,6 +471,8 @@ pub fn step_block(block: u32, r: u32) -> u32 {
 #[doc(hidden)]
 pub mod __opaque {
     //! Marker types identifying Lean types exposed as opaque values.
+    /// Values of Lean type `Sand2.World`.
+    pub enum World {}
 }
 
 /// Static metadata about the generated declarations.
@@ -295,19 +485,19 @@ pub mod __meta {
 
     static DECLARATIONS: &[::lungo::DeclarationInfo] = &[
         ::lungo::DeclarationInfo {
-            lean_name: "Sand2.canSwap",
-            module: "Sand2",
-            source_file: Some("lean/Sand2.lean"),
-            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 29, column: 1 }, end: ::lungo::SourcePosition { line: 32, column: 48 } }),
-            lean_type: "UInt32 → UInt32 → Bool",
-            compiled_signature: "(u32, u32) -> u8",
-            rust_path: "can_swap",
+            lean_name: "Sand2.auditSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 135, column: 1 }, end: ::lungo::SourcePosition { line: 136, column: 82 } }),
+            lean_type: "Sand2.Simulation → String",
+            compiled_signature: "(obj) -> obj",
+            rust_path: "audit_simulation",
             trust: ::lungo::ExportTrust {
-                axioms: &[],
+                axioms: &["propext"],
                 depends_on_sorry: false,
                 unsafe_dependencies: &[],
                 partial_dependencies: &[],
-                extern_dependencies: &["lean_uint32_dec_eq", "lean_uint32_dec_lt"],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_array_mk", "lean_array_to_list", "lean_int_add", "lean_int_dec_lt", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_pow", "lean_nat_sub", "lean_nat_to_int", "lean_string_append", "lean_string_mk", "lean_string_of_usize", "lean_system_platform_nbits", "lean_usize_of_nat"],
             },
             assurance: ::lungo::ExportAssurance {
                 claims: &[],
@@ -318,19 +508,19 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Sand2.settle",
-            module: "Sand2",
-            source_file: Some("lean/Sand2.lean"),
-            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 34, column: 1 }, end: ::lungo::SourcePosition { line: 35, column: 45 } }),
-            lean_type: "UInt32 → UInt32 → UInt32",
-            compiled_signature: "(u32, u32) -> u32",
-            rust_path: "settle",
+            lean_name: "Sand2.catalogue",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 88, column: 1 }, end: ::lungo::SourcePosition { line: 92, column: 62 } }),
+            lean_type: "String",
+            compiled_signature: "() -> obj",
+            rust_path: "catalogue",
             trust: ::lungo::ExportTrust {
-                axioms: &["Quot.sound", "propext"],
+                axioms: &["propext"],
                 depends_on_sorry: false,
                 unsafe_dependencies: &[],
                 partial_dependencies: &[],
-                extern_dependencies: &["lean_uint32_dec_eq", "lean_uint32_dec_lt", "lean_uint32_land", "lean_uint32_lor", "lean_uint32_shift_left"],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_array_mk", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_pow", "lean_nat_sub", "lean_string_append", "lean_string_mk", "lean_string_of_usize", "lean_system_platform_nbits", "lean_uint32_to_nat", "lean_usize_of_nat"],
             },
             assurance: ::lungo::ExportAssurance {
                 claims: &[],
@@ -341,19 +531,226 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Sand2.stepBlock",
-            module: "Sand2",
-            source_file: Some("lean/Sand2.lean"),
-            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 68, column: 1 }, end: ::lungo::SourcePosition { line: 100, column: 55 } }),
-            lean_type: "UInt32 → UInt32 → UInt32",
-            compiled_signature: "(u32, u32) -> u32",
-            rust_path: "step_block",
+            lean_name: "Sand2.clearSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 14, column: 1 }, end: ::lungo::SourcePosition { line: 15, column: 46 } }),
+            lean_type: "Sand2.Simulation → Sand2.Simulation",
+            compiled_signature: "(obj) -> obj",
+            rust_path: "clear_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_push", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_array_with_capacity", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_sub", "lean_nat_to_int"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.countSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 119, column: 1 }, end: ::lungo::SourcePosition { line: 123, column: 20 } }),
+            lean_type: "Sand2.Simulation → UInt32",
+            compiled_signature: "(@& obj) -> u32",
+            rust_path: "count_simulation",
             trust: ::lungo::ExportTrust {
                 axioms: &["Quot.sound", "propext"],
                 depends_on_sorry: false,
                 unsafe_dependencies: &[],
                 partial_dependencies: &[],
-                extern_dependencies: &["lean_uint32_dec_eq", "lean_uint32_dec_lt", "lean_uint32_land", "lean_uint32_lor", "lean_uint32_shift_left", "lean_uint32_shift_right"],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_of_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.digestSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 140, column: 1 }, end: ::lungo::SourcePosition { line: 152, column: 11 } }),
+            lean_type: "Sand2.Simulation → UInt64",
+            compiled_signature: "(obj) -> u64",
+            rust_path: "digest_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_emod", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mul", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_to_nat", "lean_uint64_mul", "lean_uint64_of_nat", "lean_uint64_xor"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.inspectSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 125, column: 1 }, end: ::lungo::SourcePosition { line: 130, column: 90 } }),
+            lean_type: "Sand2.Simulation → UInt32 → UInt32 → String",
+            compiled_signature: "(@& obj, u32, u32) -> obj",
+            rust_path: "inspect_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_array_mk", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_pow", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int", "lean_string_append", "lean_string_mk", "lean_string_of_usize", "lean_system_platform_nbits", "lean_uint32_to_nat", "lean_usize_of_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.newSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 6, column: 1 }, end: ::lungo::SourcePosition { line: 9, column: 39 } }),
+            lean_type: "UInt32 → UInt32 → Sand2.Simulation",
+            compiled_signature: "(u32, u32) -> obj",
+            rust_path: "new_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_push", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_array_with_capacity", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_to_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.oracle",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 154, column: 1 }, end: ::lungo::SourcePosition { line: 157, column: 67 } }),
+            lean_type: "UInt32 → UInt32 → String",
+            compiled_signature: "(u32, u32) -> obj",
+            rust_path: "oracle",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_fget", "lean_array_fget_borrowed", "lean_array_get_size", "lean_array_mk", "lean_array_push", "lean_array_set", "lean_array_to_list", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_emod", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_array_with_capacity", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_pow", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int", "lean_string_append", "lean_string_mk", "lean_string_of_usize", "lean_system_platform_nbits", "lean_uint32_to_nat", "lean_uint64_mul", "lean_uint64_of_nat", "lean_uint64_to_nat", "lean_uint64_xor", "lean_usize_of_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.paintSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 17, column: 1 }, end: ::lungo::SourcePosition { line: 31, column: 29 } }),
+            lean_type: "Sand2.Simulation → Int32 → Int32 → UInt32 → UInt32 → Sand2.Simulation",
+            compiled_signature: "(obj, u32, u32, u32, u32) -> obj",
+            rust_path: "paint_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_set", "lean_int32_to_int", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_pow", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_to_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.renderSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 94, column: 1 }, end: ::lungo::SourcePosition { line: 117, column: 16 } }),
+            lean_type: "Sand2.Simulation → UInt32 → ByteArray",
+            compiled_signature: "(@& obj, u32) -> obj",
+            rust_path: "render_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_fget_borrowed", "lean_array_get_size", "lean_byte_array_push", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_byte_array", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_add", "lean_uint32_dec_eq", "lean_uint32_land", "lean_uint32_mod", "lean_uint32_mul", "lean_uint32_of_nat", "lean_uint32_shift_left", "lean_uint32_shift_right", "lean_uint32_sub", "lean_uint32_to_nat", "lean_uint8_of_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.sceneSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 41, column: 1 }, end: ::lungo::SourcePosition { line: 65, column: 11 } }),
+            lean_type: "Sand2.Simulation → UInt32 → Sand2.Simulation",
+            compiled_signature: "(obj, u32) -> obj",
+            rust_path: "scene_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_push", "lean_array_set", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_array_with_capacity", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int", "lean_uint32_to_nat"],
+            },
+            assurance: ::lungo::ExportAssurance {
+                claims: &[],
+                assumptions: &[],
+                facilities: &[],
+                roles: &[],
+                asynchronous: false,
+            },
+        },
+        ::lungo::DeclarationInfo {
+            lean_name: "Sand2.tickSimulation",
+            module: "Sand2.Interface",
+            source_file: Some("lean/Sand2/Interface.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 11, column: 1 }, end: ::lungo::SourcePosition { line: 12, column: 38 } }),
+            lean_type: "Sand2.Simulation → Sand2.Simulation",
+            compiled_signature: "(obj) -> obj",
+            rust_path: "tick_simulation",
+            trust: ::lungo::ExportTrust {
+                axioms: &["Quot.sound", "propext"],
+                depends_on_sorry: false,
+                unsafe_dependencies: &[],
+                partial_dependencies: &[],
+                extern_dependencies: &["lean_array_fget", "lean_array_fget_borrowed", "lean_array_get_size", "lean_array_push", "lean_array_set", "lean_int_add", "lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_mk_empty_array_with_capacity", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mod", "lean_nat_mul", "lean_nat_shiftr", "lean_nat_sub", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
                 claims: &[],
@@ -366,7 +763,7 @@ pub mod __meta {
     ];
 
     /// The program's assurance document, as `assurance.json` holds it.
-    pub const ASSURANCE_JSON: &str = "{\n  \"schema_version\": 1,\n  \"program\": \"sand2\",\n  \"provenance\": {\n    \"lean_version\": \"4.34.1\",\n    \"lean_githash\": \"5045d0056413266e57c625dcd7c365b10e377c52\",\n    \"lungo_version\": \"1.117.0\",\n    \"bir_version\": 3,\n    \"runtime_abi\": 2\n  },\n  \"library\": null,\n  \"specifications\": [],\n  \"facilities\": [],\n  \"assumptions\": [],\n  \"claims\": [],\n  \"roles\": [],\n  \"exports\": [\n    {\n      \"name\": \"Sand2.canSwap\",\n      \"module\": \"Sand2\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_uint32_dec_eq\",\n          \"lean_uint32_dec_lt\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2.lean\",\n        \"start\": {\n          \"line\": 29,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 32,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.settle\",\n      \"module\": \"Sand2\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_uint32_dec_eq\",\n          \"lean_uint32_dec_lt\",\n          \"lean_uint32_land\",\n          \"lean_uint32_lor\",\n          \"lean_uint32_shift_left\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2.lean\",\n        \"start\": {\n          \"line\": 34,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 35,\n          \"column\": 45\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.stepBlock\",\n      \"module\": \"Sand2\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_uint32_dec_eq\",\n          \"lean_uint32_dec_lt\",\n          \"lean_uint32_land\",\n          \"lean_uint32_lor\",\n          \"lean_uint32_shift_left\",\n          \"lean_uint32_shift_right\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2.lean\",\n        \"start\": {\n          \"line\": 68,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 100,\n          \"column\": 55\n        }\n      }\n    }\n  ]\n}\n";
+    pub const ASSURANCE_JSON: &str = "{\n  \"schema_version\": 1,\n  \"program\": \"sand2\",\n  \"provenance\": {\n    \"lean_version\": \"4.34.1\",\n    \"lean_githash\": \"5045d0056413266e57c625dcd7c365b10e377c52\",\n    \"lungo_version\": \"1.117.0\",\n    \"bir_version\": 3,\n    \"runtime_abi\": 2\n  },\n  \"library\": null,\n  \"specifications\": [],\n  \"facilities\": [],\n  \"assumptions\": [],\n  \"claims\": [],\n  \"roles\": [],\n  \"exports\": [\n    {\n      \"name\": \"Sand2.auditSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_array_mk\",\n          \"lean_array_to_list\",\n          \"lean_int_add\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_pow\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_string_append\",\n          \"lean_string_mk\",\n          \"lean_string_of_usize\",\n          \"lean_system_platform_nbits\",\n          \"lean_usize_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 135,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 136,\n          \"column\": 82\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.catalogue\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_array_mk\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_sub\",\n          \"lean_string_append\",\n          \"lean_string_mk\",\n          \"lean_string_of_usize\",\n          \"lean_system_platform_nbits\",\n          \"lean_uint32_to_nat\",\n          \"lean_usize_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 88,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 92,\n          \"column\": 62\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.clearSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_push\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_array_with_capacity\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 14,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 15,\n          \"column\": 46\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.countSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 119,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 123,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.digestSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_emod\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_to_nat\",\n          \"lean_uint64_mul\",\n          \"lean_uint64_of_nat\",\n          \"lean_uint64_xor\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 140,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 152,\n          \"column\": 11\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.inspectSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_array_mk\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_pow\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_string_append\",\n          \"lean_string_mk\",\n          \"lean_string_of_usize\",\n          \"lean_system_platform_nbits\",\n          \"lean_uint32_to_nat\",\n          \"lean_usize_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 125,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 130,\n          \"column\": 90\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.newSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_push\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_array_with_capacity\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_to_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 6,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 9,\n          \"column\": 39\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.oracle\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget\",\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_array_mk\",\n          \"lean_array_push\",\n          \"lean_array_set\",\n          \"lean_array_to_list\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_emod\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_array_with_capacity\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_pow\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_string_append\",\n          \"lean_string_mk\",\n          \"lean_string_of_usize\",\n          \"lean_system_platform_nbits\",\n          \"lean_uint32_to_nat\",\n          \"lean_uint64_mul\",\n          \"lean_uint64_of_nat\",\n          \"lean_uint64_to_nat\",\n          \"lean_uint64_xor\",\n          \"lean_usize_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 154,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 157,\n          \"column\": 67\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.paintSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_set\",\n          \"lean_int32_to_int\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_pow\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_to_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 17,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 31,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.renderSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_byte_array_push\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_byte_array\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_add\",\n          \"lean_uint32_dec_eq\",\n          \"lean_uint32_land\",\n          \"lean_uint32_mod\",\n          \"lean_uint32_mul\",\n          \"lean_uint32_of_nat\",\n          \"lean_uint32_shift_left\",\n          \"lean_uint32_shift_right\",\n          \"lean_uint32_sub\",\n          \"lean_uint32_to_nat\",\n          \"lean_uint8_of_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 94,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 117,\n          \"column\": 16\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.sceneSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_push\",\n          \"lean_array_set\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_array_with_capacity\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\",\n          \"lean_uint32_to_nat\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 41,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 65,\n          \"column\": 11\n        }\n      }\n    },\n    {\n      \"name\": \"Sand2.tickSimulation\",\n      \"module\": \"Sand2.Interface\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_array_fget\",\n          \"lean_array_fget_borrowed\",\n          \"lean_array_get_size\",\n          \"lean_array_push\",\n          \"lean_array_set\",\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_mk_empty_array_with_capacity\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mod\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"sand2\",\n        \"file\": \"Sand2/Interface.lean\",\n        \"start\": {\n          \"line\": 11,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 12,\n          \"column\": 38\n        }\n      }\n    }\n  ]\n}\n";
 
     static ASSURANCE: ::lungo::Assurance = ::lungo::Assurance {
         schema_version: 1,
