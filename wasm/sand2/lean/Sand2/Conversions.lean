@@ -11,7 +11,7 @@ structure ComponentPhases where
   silica : FusionPhase
   deriving DecidableEq, BEq
 
-def conversionPhase (height width i : Nat) (p : Particle) : ComponentPhases :=
+@[macro_inline] def conversionPhase (height width i : Nat) (p : Particle) : ComponentPhases :=
   let h := thermalEnergy height width i p
   ⟨phase (waterDiagram p) h,fusionPhase (ironDiagram p) h,fusionPhase (silicaDiagram p) h⟩
 
@@ -47,19 +47,30 @@ theorem mineral_conversion_uses_both_latent_heats (p : Particle) :
     (conversionPhase height width i p).iron = fusionPhase (ironDiagram p) (thermalEnergy height width i p) ∧
     (conversionPhase height width i p).silica = fusionPhase (silicaDiagram p) (thermalEnergy height width i p) := ⟨rfl,rfl⟩
 
+/-- The display phase follows the complete water energy diagram. A low parcel
+    mass or a trace of vapor cannot turn remaining liquid into a gas label. -/
+def aqueousMaterial (p : Particle) (r : WaterRegime) : Material :=
+  match r with
+  | .ice | .melting => .ice
+  | .vapor => .steam
+  | _ => if p.matter.acid > 0 then .acid else if p.matter.salt > 0 then .saltWater else .water
+
+theorem aqueous_material_is_vapor_iff (p : Particle) (r : WaterRegime) :
+    aqueousMaterial p r = .steam ↔ r = .vapor := by
+  by_cases acid : p.matter.acid > 0 <;> by_cases salt : p.matter.salt > 0 <;>
+    cases r <;> simp [aqueousMaterial,acid,salt]
+
 def labelAt (height width i : Nat) (p : Particle) : Material :=
   if p.luminous > 0 then .fire
   else if p.matter.water*18 > p.mass/2 then
-    if gasCell height width i p && vaporWaterMoles height width i p > 0 then .steam else
-    match (conversionPhase height width i p).water with
-    | .ice | .melting => .ice
-    | .vapor => .steam
-    | _ => if p.matter.acid > 0 then .acid else if p.matter.salt > 0 then .saltWater else .water
+    aqueousMaterial p (conversionPhase height width i p).water
   else if p.matter.iron*56 > p.mass/2 then
     if fusionPhase (ironDiagram p) (thermalEnergy height width i p) == .liquid then .moltenIron else .metal
   else if p.matter.silica*60 > p.mass/2 then
     if fusionPhase (silicaDiagram p) (thermalEnergy height width i p) == .liquid then .lava
-    else if p.label == .lava then .glass else if p.fractured then .sand else p.label
+    else if p.label == .lava then .glass else if p.fractured || p.label == .sand then .sand
+    else if p.label == .ash then .ash else if p.label == .glass then .glass
+    else if p.label == .obsidian then .obsidian else .stone
   else if p.matter.biomass*30 > p.mass/2 then
     if p.label == .plant then .plant else .wood
   else if p.matter.oil*14 > p.mass/2 then .oil
@@ -79,9 +90,43 @@ def labelAt (height width i : Nat) (p : Particle) : Material :=
   else if p.matter.oxygen > p.matter.nitrogen then .oxygen
   else if p.label == .nitrogen && p.matter.nitrogen > p.matter.oxygen then .nitrogen
   else if p.matter.carbonDioxide > 4000 then .smoke
-  else if p.matter.water > 4000 && vaporWaterMoles height width i p > 0 then .steam
+  else if p.matter.water > 4000 && vaporWaterMoles height width i p > 0 then
+    aqueousMaterial p (conversionPhase height width i p).water
   else .empty
 
+
+private theorem material_ite_eq (c : Prop) [Decidable c] (a b target : Material) :
+    (if c then a else b) = target ↔ (c ∧ a = target) ∨ (¬c ∧ b = target) := by
+  by_cases chosen : c <;> simp [chosen]
+
+theorem steam_label_requires_vapor_phase (p : Particle)
+    (tagged : labelAt height width i p = .steam) : regime height width i p = .vapor := by
+  apply Classical.byContradiction
+  intro notVapor
+  have nonAqueous : aqueousMaterial p (conversionPhase height width i p).water ≠ .steam := by
+    intro same
+    exact notVapor ((aqueous_material_is_vapor_iff _ _).mp same)
+  simp only [labelAt,material_ite_eq,nonAqueous,reduceCtorEq,and_false,or_false] at tagged
+
+/-- Every parcel called water vapor has spent its complete water latent budget.
+    This applies to the actual classifier, including dilute and tiny parcels. -/
+theorem steam_label_has_no_remaining_liquid_water (p : Particle)
+    (tagged : labelAt height width i p = .steam) :
+    vaporWaterMoles height width i p = p.matter.water := by
+  have spec := phase_sound (waterDiagram p) (thermalEnergy height width i p)
+  change Equilibrium (waterDiagram p) (thermalEnergy height width i p) (regime height width i p) at spec
+  rw [steam_label_requires_vapor_phase p tagged] at spec
+  cases spec with
+  | gas hot =>
+    rw [vapor_read_fastpath_matches_complete_phase]
+    unfold vaporWaterFromEnthalpy
+    split
+    · rename_i dry
+      simp only [beq_iff_eq] at dry
+      exact dry.symm
+    · simpa only [phase_fraction_fast_matches_reference] using
+        phase_fraction_complete_above_finish p.matter.water (waterDiagram p).boilStart
+          (waterDiagram p).boilEnd (thermalEnergy height width i p) hot
 
 /-- Phase normalization changes the observable phase/morphology tag, never the
     molecular inventory, momentum or any component of the energy budget. -/

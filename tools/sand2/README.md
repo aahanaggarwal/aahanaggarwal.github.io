@@ -425,3 +425,89 @@ On this host the 96 × 64 dam-break benchmark now averages 988.67 ms per
 step than the preceding checkpoint, while simulated time still advances much
 more slowly than wall time. The finer clock must not be interpreted as a
 600 Hz real-time performance claim.
+
+
+## Exact-arithmetic optimization and water/vapor correction (2026-10-31 UTC)
+
+The retained performance changes reuse phase samples, avoid building inactive
+phase diagrams, and derive the Kelvin guard directly from the exact energy
+bound. Universal Lean equalities justify the phase and energy fast paths.
+Transferred parcels update their proved composition caches incrementally;
+`cached_portion_edit_matches_reference` proves the complete edit agrees with
+recomputing the caches. Numerical scratch reads use the primitive total array
+access with a proof that it matches the original option/default semantics.
+The pressure solver skips preconditioner construction for an already-zero RHS.
+
+The browser runtime adds bounded reuse of small allocations and generic integer
+fast paths. Machine arithmetic uses checked operations and falls back to the
+original arbitrary-precision representation. Borrowed large operands avoid
+unnecessary clones. There are no material constants or physics equations in
+these Rust helpers. These runtime changes are tested, rather than kernel-proved:
+6,621 arithmetic/comparison cases compare with the unmodified runtime, allocator
+checks exercise alignment/zeroing/reallocation, and the independent Lean C
+reference remains the cross-compiler oracle. Build provenance records both files.
+The model keeps its grid, integer inventories, numerical tolerances and 600 Hz
+physical clock. Worker batching is bounded by work and model time; one costly
+individual step can still exceed that work target.
+
+A reported cloud around freshly painted 20 C water exposed an actual classifier
+bug: a parcel below 10 mg became “Steam” when it contained any vapor, including
+parcels with remaining liquid at 17 C. The executing classifier now uses the
+complete component phase. Universal theorems prove that a vapor label requires
+the vapor phase and leaves no remaining liquid-water inventory. Silica labels
+are also selected from their actual solid morphology rather than an arbitrary
+stored material tag. The palette/inspector call gaseous H2O “Water vapor.” Pure
+vapor is clear in the normal view; temperature and pressure views still reveal
+it. This model does not resolve the optics of suspended mist droplets.
+
+Water/air heat conductivity now uses actual occupied liquid volume, bounded
+between air's 26 and water's 600 mW/(m K), instead of promoting a mostly-air
+parcel to bulk-water conductivity through its display label. This rule is
+restricted to parcels without other condensed species; a theorem preserves
+the existing material conductivity when oil or minerals are present. This is a declared
+volume-weighted homogeneous-mixture approximation. Regression checks cover a
+tiny wet parcel, clear-vapor color, and twenty steps after painting cool water.
+The hydrostatic five-centimetre benchmark remains approximately 490 Pa.
+
+For repeatable profiling without publishing unchecked artifacts:
+
+```sh
+./dev.sh --sand2-profile 48
+SAND2_BENCH_SCENES=1 SAND2_BENCH_TICKS=120 SAND2_BENCH_WINDOW=20 ./dev.sh --sand2-profile 48
+# Compare another saved artifact in a fresh process, with its hash in every row:
+SAND2_BENCH_WASM=/absolute/path/before.wasm node tools/sand2/benchmark.mjs 48
+```
+
+Reports include the artifact hash, exact model-step window, simulated time,
+complete-state digest and memory high-water mark. Every window also checks
+conservation and solver acceptance. `SAND2_BENCH_WARMUP` selects evolved starting
+states; `SAND2_BENCH_MAX_MS` optionally enforces a machine-specific timing budget.
+Initial ticks and sustained evolved-state timings must be reported separately.
+
+
+Release validation passes 224 listed handwritten theorems in the 1,236-theorem
+namespace audit, 63 physical benchmark families, 2,001 saturation samples, six
+native integration tests, 66 Lean/native/Wasm complete-world comparisons, all
+34 palette materials and eleven default-size experiments. Repeated-world
+65-tick memory reuse holds at 1,703,936 bytes. Chromium verifies the actual
+17.20 C wet edge parcel is labeled Water, vapor is clear in Materials view and
+visible in Temperature view, six manual steps equal 0.010 s, exact undo, touch
+painting, 390 px layout, resizing and worker termination.
+
+Fresh-process release-to-release dam benchmarks on this host, 48 × 32 cells:
+
+| Model ticks | Previous ms/tick | Updated ms/tick | Speedup |
+| --- | ---: | ---: | ---: |
+| 1–20 | 268.2 | 101.7 | 2.64× |
+| 21–40 | 374.0 | 140.1 | 2.67× |
+| 41–60 | 659.6 | 242.0 | 2.73× |
+
+These sixty ticks advance only 0.100 s of model time. They take 26.04 s
+before and 9.68 s after the changes. **The game is still far from real time.**
+The 96 × 64 first-ten-tick validation benchmark measured 356.02 ms/tick versus
+the prior release's 988.67 ms/tick. Initial default-size five-tick runs measure
+roughly 79 ms/tick for the dam and 335 ms/tick for the hot phase scene.
+Timings depend on scene evolution and host load; these are compute timings,
+excluding rendering. The water-label/conductivity correction changes some
+trajectories, so release digests differ; each release is independently checked
+for conservation and against its Lean C reference.

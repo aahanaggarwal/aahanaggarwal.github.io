@@ -74,6 +74,14 @@ pub(crate) unsafe extern "C" fn l_BitVec_dofNat(x_1: Obj, x_2: Obj) -> Obj {
     return x_5;
 }
 
+// Lean: ByteArray.data
+// Source: <lean>/Init/Prelude.lean:3432:3
+#[inline(always)]
+pub(crate) unsafe extern "C" fn l_ByteArray_ddata(x_1: Obj) -> Obj {
+    let r: Obj = rt::intrinsics::lean_byte_array_data(x_1);
+    r
+}
+
 // Lean: ByteArray.emptyWithCapacity
 // Source: <lean>/Init/Prelude.lean:3437:1
 #[inline(always)]
@@ -106,11 +114,28 @@ pub(crate) unsafe extern "C" fn l_ByteArray_dsize(x_1: Obj) -> Obj {
     r
 }
 
+// Lean: Function.const
+// Source: <lean>/Init/Prelude.lean:144:1
+pub(crate) unsafe extern "C" fn l_Function_dconst(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
+    rt::lean_inc(x_3);
+    return x_3;
+}
+
+// Lean: Function.const._boxed
+// Compiled from: Function.const
+// Source: <lean>/Init/Prelude.lean:144:1
+pub(crate) unsafe extern "C" fn l_Function_dconst_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
+    let x_5: Obj = l_Function_dconst(x_1, x_2, x_3, x_4);
+    rt::lean_dec(x_4);
+    rt::lean_dec(x_3);
+    return x_5;
+}
+
 // Lean: Nat.add
 // Source: <lean>/Init/Prelude.lean:1764:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_dadd(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_nat_add(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_nat_add(x_1, x_2);
     r
 }
 
@@ -118,7 +143,7 @@ pub(crate) unsafe extern "C" fn l_Nat_dadd(x_1: Obj, x_2: Obj) -> Obj {
 // Source: <lean>/Init/Prelude.lean:1881:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_dble(x_1: Obj, x_2: Obj) -> u8 {
-    let r: u8 = rt::intrinsics::lean_nat_dec_le(x_1, x_2);
+    let r: u8 = crate::runtime_arithmetic::lean_nat_dec_le(x_1, x_2);
     r
 }
 
@@ -134,7 +159,7 @@ pub(crate) unsafe extern "C" fn l_Nat_ddecEq(x_1: Obj, x_2: Obj) -> u8 {
 // Source: <lean>/Init/Prelude.lean:2079:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_ddecLe(x_1: Obj, x_2: Obj) -> u8 {
-    let r: u8 = rt::intrinsics::lean_nat_dec_le(x_1, x_2);
+    let r: u8 = crate::runtime_arithmetic::lean_nat_dec_le(x_1, x_2);
     r
 }
 
@@ -142,7 +167,7 @@ pub(crate) unsafe extern "C" fn l_Nat_ddecLe(x_1: Obj, x_2: Obj) -> u8 {
 // Source: <lean>/Init/Prelude.lean:2093:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_ddecLt(x_1: Obj, x_2: Obj) -> u8 {
-    let r: u8 = rt::intrinsics::lean_nat_dec_lt(x_1, x_2);
+    let r: u8 = crate::runtime_arithmetic::lean_nat_dec_lt(x_1, x_2);
     r
 }
 
@@ -150,7 +175,7 @@ pub(crate) unsafe extern "C" fn l_Nat_ddecLt(x_1: Obj, x_2: Obj) -> u8 {
 // Source: <lean>/Init/Prelude.lean:2170:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_ddiv(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_nat_div(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_nat_div(x_1, x_2);
     r
 }
 
@@ -158,7 +183,7 @@ pub(crate) unsafe extern "C" fn l_Nat_ddiv(x_1: Obj, x_2: Obj) -> Obj {
 // Source: <lean>/Init/Prelude.lean:2248:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_dmod(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_nat_mod(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_nat_mod(x_1, x_2);
     r
 }
 
@@ -166,7 +191,7 @@ pub(crate) unsafe extern "C" fn l_Nat_dmod(x_1: Obj, x_2: Obj) -> Obj {
 // Source: <lean>/Init/Prelude.lean:1785:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_dmul(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_nat_mul(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_nat_mul(x_1, x_2);
     r
 }
 
@@ -182,7 +207,7 @@ pub(crate) unsafe extern "C" fn l_Nat_dpow(x_1: Obj, x_2: Obj) -> Obj {
 // Source: <lean>/Init/Prelude.lean:2110:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Nat_dsub(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_nat_sub(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_nat_sub(x_1, x_2);
     r
 }
 

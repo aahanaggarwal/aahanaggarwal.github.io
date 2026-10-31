@@ -2,6 +2,17 @@ import Std
 
 namespace Sand2.Chemistry
 
+@[inline] def weightedInt (total coefficient : Int) (quantity : Nat) : Int :=
+  if quantity == 0 then total else total+coefficient*(quantity : Int)
+theorem weightedInt_eq (total coefficient : Int) (quantity : Nat) :
+    weightedInt total coefficient quantity = total+coefficient*(quantity : Int) := by
+  unfold weightedInt
+  split
+  · rename_i zero
+    simp only [beq_iff_eq] at zero
+    simp [zero]
+  · rfl
+
 /-- Molecule counts are nonnegative integer quanta. Mixtures can hold products
     and reactants simultaneously; a visible material label is not the matter. -/
 structure Mixture where

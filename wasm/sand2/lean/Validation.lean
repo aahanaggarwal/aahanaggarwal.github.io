@@ -27,6 +27,8 @@ def main (args : List String) : IO Unit := do
   let room := makeAt h w i .empty
   check "ideal-gas air at 20 C is within 1 percent of atmospheric pressure"
     (100000000 < pressure h w i room && pressure h w i room < 102000000)
+  check "silica-bearing ash retains its declared powder material"
+    (labelAt h w i (makeAt h w i .ash) == .ash)
   let water := makeAt h w i .water
   check "water initialization reconstructs 20 C" (temperature h w i water == 2000)
   let melting := {water with energy := water.chemical+potentialEnergy h w i water+(waterDiagram water).meltEnd/2}
@@ -110,10 +112,34 @@ def main (args : List String) : IO Unit := do
     (reactionExtent .burnBiomass {biomass := 1,oxygen := 1} 50000 == 1)
 
   let steam := makeAt h w i .steam
-  check "water vapor diluted with air remains visibly steam"
+  check "water vapor diluted with air retains its gaseous water classification"
     (vaporous h w i steam && labelAt h w i steam == .steam)
   check "phase conversion and temperature use the same water diagram for dilute vapor"
     ((conversionPhase h w i steam).water == regime h w i steam)
+
+  let wetMatter := add air {water := 150000}
+  let wet := makeParticle wetMatter 0 .water
+  let wetH := internalEnergyAt wetMatter .water 2000
+  let wet := {wet with energy := wet.chemical+wetH+potentialEnergy h w i wet}
+  let wet := equilibriumParticleFromInternalEnergy wet wetH
+  let wetVapor := vaporWaterMoles h w i wet
+  check "a tiny cool parcel with both liquid and vapor is still labeled water"
+    (gasCell h w i wet && wetVapor > 0 && wetVapor < wet.matter.water &&
+     labelAt h w i wet == .water && temperature h w i wet < 2000)
+  check "pure gaseous water has the same normal-view color as clear air"
+    (normalMaterialColor .steam == materialColor .empty)
+  let fresh := paintSimulation (newSimulation 48 32) 20 7 4 2
+  let freshBudget := auditSimulation fresh
+  let mut evolved := fresh
+  let mut correct := true
+  for _ in [:20] do
+    evolved := tickSimulation evolved
+    for cell in [:48*32] do
+      let p := read evolved.world cell
+      if labelAt 32 48 cell p == .steam then
+        correct := correct && vaporWaterMoles 32 48 cell p == p.matter.water
+  check "fresh room-temperature water never labels remaining liquid as water vapor over 20 ticks"
+    (correct && evolved.world.rejectedFluidSubsteps == 0 && auditSimulation evolved == freshBudget)
 
   check "the saturation curve reconstructs 1 atm boiling near 100 C"
     (9950 < saturationTemperature 101325000 && saturationTemperature 101325000 < 10050)

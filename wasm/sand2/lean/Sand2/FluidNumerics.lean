@@ -18,13 +18,17 @@ namespace Sand2
 @[always_inline, inline] def finiteClamp (lo hi x : Float) : Float :=
   if x.isNaN || x.isInf then 0 else floatMax lo (floatMin hi x)
 
-@[always_inline, inline] def floatAt (a : FloatArray) (i : Nat) : Float :=
-  if h : i < a.size then a.get i h else 0
+/-- The primitive performs the same total read without generic Nat bounds
+    comparisons at every stencil access. Its logical default is exactly zero. -/
+@[always_inline, inline] def floatAt (a : FloatArray) (i : Nat) : Float := a.get! i
 
 theorem numerical_read_matches_total_option_read (a : FloatArray) (i : Nat) :
     floatAt a i = (a.get? i).getD 0 := by
-  unfold floatAt FloatArray.get?
-  split <;> rfl
+  cases a with
+  | mk data =>
+    by_cases inside : i < data.size
+    · simp [floatAt,FloatArray.get!,FloatArray.get?,FloatArray.get,FloatArray.size,inside] <;> rfl
+    · simp [floatAt,FloatArray.get!,FloatArray.get?,FloatArray.size,inside] <;> rfl
 
 @[always_inline, inline] def boolAt (a : Array Bool) (i : Nat) : Bool :=
   if h : i < a.size then a[i] else false
@@ -51,8 +55,17 @@ theorem pressure_mask_encodes_all_five_flags (a r l d u : Bool) :
     ((packPressureMask a r l d u &&& 16) != 0) = u := by
   cases a <;> cases r <;> cases l <;> cases d <;> cases u <;> decide
 
-@[always_inline, inline] def byteAt (a : ByteArray) (i : Nat) : UInt8 :=
-  if h : i < a.size then a[i] else 0
+@[always_inline, inline] def byteAt (a : ByteArray) (i : Nat) : UInt8 := a.get! i
+
+theorem byte_read_matches_total_option_read (a : ByteArray) (i : Nat) :
+    byteAt a i = a[i]?.getD 0 := by
+  cases a with
+  | mk data =>
+    by_cases inside : i < data.size
+    · simp only [byteAt,ByteArray.get!,ByteArray.size,getElem!_def,getElem?_def]
+      simp [inside] <;> rfl
+    · simp only [byteAt,ByteArray.get!,ByteArray.size,getElem!_def,getElem?_def]
+      simp [inside] <;> rfl
 
 def pressureMaskArray (width height : Nat) (unknown : Array Bool) : ByteArray :=
   ⟨Array.ofFn fun i : Fin (width*height) =>
@@ -165,13 +178,14 @@ structure PressureSolution where
   let n := s.width*s.height
   let mut x := floats n
   let mut r := s.rhs
+  let mut residual := (0 : Float)
+  for i in [:n] do residual := floatMax residual (floatAbs (floatAt r i))
+  if residual <= tolerance then return ⟨x,0,residual⟩
   let factors := pressureFactors s
   let mut z := pressureFactorApply s factors r
   let mut direction := z
   let mut rz := pressureDot s r z
   let mut iterations := 0
-  let mut residual := (0 : Float)
-  for i in [:n] do residual := floatMax residual (floatAbs (floatAt r i))
   for k in [:limit] do
     if residual <= tolerance then break
     let q := pressureApply s direction

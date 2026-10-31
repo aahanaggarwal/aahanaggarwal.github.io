@@ -13,18 +13,46 @@ pub(crate) unsafe fn l_Sand2_dcellVolume() -> Obj {
 }
 
 // Lean: Sand2.liquidMatter
-// Source: lean/Sand2/LiquidVolume.lean:87:1
+// Source: lean/Sand2/LiquidVolume.lean:90:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatter(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
-    rt::lean_inc_ref(x_4);
-    let x_5: Obj = l_Sand2_dthermalEnergy(x_1, x_2, x_3, x_4);
-    let x_6: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_4, x_5);
-    rt::lean_dec(x_5);
-    return x_6;
+    let x_5: Obj = rt::lean_ctor_get(x_4, 0);
+    let x_6: Obj = rt::lean_ctor_get(x_4, 4);
+    let x_7: Obj = rt::lean_ctor_get(x_5, 0);
+    let x_8: Obj = rt::nat::lean_usize_to_nat(0);
+    let mut x_10: u8;
+    'b9: {
+        let x_14: u8 = l_Nat_ddecEq(x_7, x_8);
+        match x_14 {
+            0 => {
+                x_10 = x_14;
+                break 'b9;
+            }
+            _ => {
+                let x_15: u8 = l_Nat_ddecEq(x_6, x_8);
+                x_10 = x_15;
+                break 'b9;
+            }
+        }
+    }
+    match x_10 {
+        0 => {
+            rt::lean_inc_ref(x_4);
+            let x_11: Obj = l_Sand2_dthermalEnergy(x_1, x_2, x_3, x_4);
+            let x_12: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_4, x_11);
+            rt::lean_dec(x_11);
+            return x_12;
+        }
+        _ => {
+            rt::lean_dec_ref(x_4);
+            let x_13: Obj = l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0();
+            return x_13;
+        }
+    }
 }
 
 // Lean: Sand2.liquidMatter._boxed
 // Compiled from: Sand2.liquidMatter
-// Source: lean/Sand2/LiquidVolume.lean:87:1
+// Source: lean/Sand2/LiquidVolume.lean:90:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatter_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dliquidMatter(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_3);
@@ -34,7 +62,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatter_d__boxed(x_1: Obj, x_2: Ob
 }
 
 // Lean: Sand2.liquidMatterFromInternalEnergy
-// Source: lean/Sand2/LiquidVolume.lean:72:1
+// Source: lean/Sand2/LiquidVolume.lean:75:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatterFromInternalEnergy(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
     let x_4: Obj = rt::lean_ctor_get(x_1, 4);
@@ -70,7 +98,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatterFromInternalEnergy(x_1: Obj
 
 // Lean: Sand2.liquidMatterFromInternalEnergy._boxed
 // Compiled from: Sand2.liquidMatterFromInternalEnergy
-// Source: lean/Sand2/LiquidVolume.lean:72:1
+// Source: lean/Sand2/LiquidVolume.lean:75:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatterFromInternalEnergy_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_1, x_2);
     rt::lean_dec(x_2);
@@ -79,7 +107,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidMatterFromInternalEnergy_d__boxed
 
 // Lean: Sand2.liquidMatterFromInternalEnergy._closed_0
 // Compiled from: Sand2.liquidMatterFromInternalEnergy
-// Source: lean/Sand2/LiquidVolume.lean:72:1
+// Source: lean/Sand2/LiquidVolume.lean:75:1
 static C_l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(0);
@@ -113,7 +141,7 @@ pub(crate) unsafe fn l_Sand2_dliquidMatterFromInternalEnergy_d__closed__0() -> O
 }
 
 // Lean: Sand2.liquidRequest
-// Source: lean/Sand2/LiquidVolume.lean:104:1
+// Source: lean/Sand2/LiquidVolume.lean:115:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Obj {
     let mut x_4: Obj;
     let mut x_5: Obj;
@@ -314,7 +342,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidRequest(x_1: Obj, x_2: Obj) -> Ob
 }
 
 // Lean: Sand2.liquidVolume
-// Source: lean/Sand2/LiquidVolume.lean:101:1
+// Source: lean/Sand2/LiquidVolume.lean:112:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dliquidMatter(x_1, x_2, x_3, x_4);
     let x_6: Obj = l_Sand2_dreferenceLiquidVolume(x_5);
@@ -324,7 +352,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume(x_1: Obj, x_2: Obj, x_3: O
 
 // Lean: Sand2.liquidVolume._boxed
 // Compiled from: Sand2.liquidVolume
-// Source: lean/Sand2/LiquidVolume.lean:101:1
+// Source: lean/Sand2/LiquidVolume.lean:112:1
 pub(crate) unsafe extern "C" fn l_Sand2_dliquidVolume_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dliquidVolume(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_3);
@@ -342,27 +370,77 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidWaterFromInternalEnergy(x_1: Obj,
     let x_6: u8 = l_Nat_ddecEq(x_4, x_5);
     match x_6 {
         0 => {
-            let x_7: Obj = l_Sand2_dwaterDiagram(x_1);
-            let x_8: Obj = rt::lean_ctor_get(x_7, 0);
-            rt::lean_inc(x_8);
-            let x_9: Obj = rt::lean_ctor_get(x_7, 1);
-            rt::lean_inc(x_9);
-            rt::lean_dec_ref(x_7);
-            let x_10: u8 = l_Int_ddecLt(x_2, x_9);
-            match x_10 {
+            let x_7: Obj = l_Sand2_dwaterFusion(x_1);
+            let x_8: Obj = l_Int_dofNat(x_7);
+            let x_9: u8 = l_Int_ddecLt(x_2, x_8);
+            match x_9 {
                 0 => {
-                    rt::lean_dec(x_9);
                     rt::lean_dec(x_8);
-                    let x_11: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_1, x_2);
-                    let x_12: Obj = l_Nat_dsub(x_4, x_11);
-                    rt::lean_dec(x_11);
-                    return x_12;
+                    let x_10: Obj = l_Sand2_dvaporWaterFast(x_1, x_2);
+                    let x_11: Obj = l_Nat_dsub(x_4, x_10);
+                    rt::lean_dec(x_10);
+                    return x_11;
                 }
                 _ => {
-                    let x_13: Obj = l_Sand2_dphaseFraction(x_4, x_8, x_9, x_2);
-                    rt::lean_dec(x_9);
-                    rt::lean_dec(x_8);
-                    return x_13;
+                    let x_12: u8 = l_Int_ddecLe(x_8, x_2);
+                    match x_12 {
+                        0 => {
+                            let x_13: Obj = l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0();
+                            let x_14: u8 = l_Int_ddecLe(x_2, x_13);
+                            match x_14 {
+                                0 => {
+                                    let x_15: Obj = l_Int_dsub(x_2, x_13);
+                                    let x_16: Obj = l_Int_dtoNat(x_15);
+                                    rt::lean_dec(x_15);
+                                    let x_17: Obj = l_Nat_dmul(x_4, x_16);
+                                    rt::lean_dec(x_16);
+                                    let mut x_19: Obj;
+                                    'b18: {
+                                        let x_22: Obj = rt::nat::lean_usize_to_nat(1);
+                                        let x_23: Obj = l_Int_dsub(x_8, x_13);
+                                        rt::lean_dec(x_8);
+                                        let x_24: Obj = l_Int_dtoNat(x_23);
+                                        rt::lean_dec(x_23);
+                                        let x_25: u8 = l_Nat_ddecLe(x_22, x_24);
+                                        match x_25 {
+                                            0 => {
+                                                rt::lean_dec(x_24);
+                                                x_19 = x_22;
+                                                break 'b18;
+                                            }
+                                            _ => {
+                                                x_19 = x_24;
+                                                break 'b18;
+                                            }
+                                        }
+                                    }
+                                    let x_20: Obj = l_Nat_ddiv(x_17, x_19);
+                                    rt::lean_dec(x_19);
+                                    rt::lean_dec(x_17);
+                                    let x_21: u8 = l_Nat_ddecLe(x_4, x_20);
+                                    match x_21 {
+                                        0 => {
+                                            return x_20;
+                                        }
+                                        _ => {
+                                            rt::lean_dec(x_20);
+                                            rt::lean_inc(x_4);
+                                            return x_4;
+                                        }
+                                    }
+                                }
+                                _ => {
+                                    rt::lean_dec(x_8);
+                                    return x_5;
+                                }
+                            }
+                        }
+                        _ => {
+                            rt::lean_dec(x_8);
+                            rt::lean_inc(x_4);
+                            return x_4;
+                        }
+                    }
                 }
             }
         }
@@ -380,6 +458,20 @@ pub(crate) unsafe extern "C" fn l_Sand2_dliquidWaterFromInternalEnergy_d__boxed(
     rt::lean_dec(x_2);
     rt::lean_dec_ref(x_1);
     return x_3;
+}
+
+// Lean: Sand2.liquidWaterFromInternalEnergy._closed_0
+// Compiled from: Sand2.liquidWaterFromInternalEnergy
+// Source: lean/Sand2/LiquidVolume.lean:21:1
+static C_l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0() -> Obj {
+    C_l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0.get(l_Sand2_dliquidWaterFromInternalEnergy_d__closed__0__init)
 }
 
 // Lean: Sand2.liquidWaterMoles
@@ -421,35 +513,35 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
     let mut x_14: Obj;
     let mut x_15: u8;
     'b13: {
-        let x_53: u8 = (!rt::lean_is_exclusive(x_3)) as u8;
-        match x_53 {
+        let x_110: u8 = (!rt::lean_is_exclusive(x_3)) as u8;
+        match x_110 {
             0 => {
-                let x_54: Obj = rt::lean_ctor_get(x_3, 20);
-                rt::lean_dec(x_54);
-                let x_55: Obj = rt::lean_ctor_get(x_3, 19);
-                rt::lean_dec(x_55);
-                let x_56: Obj = rt::lean_ctor_get(x_3, 17);
-                rt::lean_dec(x_56);
-                let x_57: Obj = rt::lean_ctor_get(x_3, 15);
-                rt::lean_dec(x_57);
-                let x_58: Obj = rt::lean_ctor_get(x_3, 13);
-                rt::lean_dec(x_58);
-                let x_59: Obj = rt::lean_ctor_get(x_3, 10);
-                rt::lean_dec(x_59);
-                let x_60: Obj = rt::lean_ctor_get(x_3, 6);
-                rt::lean_dec(x_60);
-                let x_61: Obj = rt::lean_ctor_get(x_3, 4);
-                rt::lean_dec(x_61);
-                let x_62: Obj = rt::lean_ctor_get(x_3, 3);
-                rt::lean_dec(x_62);
-                let x_63: Obj = rt::lean_ctor_get(x_3, 2);
-                rt::lean_dec(x_63);
-                let x_64: Obj = rt::lean_ctor_get(x_3, 1);
-                rt::lean_dec(x_64);
-                let x_65: Obj = rt::lean_ctor_get(x_3, 0);
-                rt::lean_dec(x_65);
+                let x_111: Obj = rt::lean_ctor_get(x_3, 20);
+                rt::lean_dec(x_111);
+                let x_112: Obj = rt::lean_ctor_get(x_3, 19);
+                rt::lean_dec(x_112);
+                let x_113: Obj = rt::lean_ctor_get(x_3, 17);
+                rt::lean_dec(x_113);
+                let x_114: Obj = rt::lean_ctor_get(x_3, 15);
+                rt::lean_dec(x_114);
+                let x_115: Obj = rt::lean_ctor_get(x_3, 13);
+                rt::lean_dec(x_115);
+                let x_116: Obj = rt::lean_ctor_get(x_3, 10);
+                rt::lean_dec(x_116);
+                let x_117: Obj = rt::lean_ctor_get(x_3, 6);
+                rt::lean_dec(x_117);
+                let x_118: Obj = rt::lean_ctor_get(x_3, 4);
+                rt::lean_dec(x_118);
+                let x_119: Obj = rt::lean_ctor_get(x_3, 3);
+                rt::lean_dec(x_119);
+                let x_120: Obj = rt::lean_ctor_get(x_3, 2);
+                rt::lean_dec(x_120);
+                let x_121: Obj = rt::lean_ctor_get(x_3, 1);
+                rt::lean_dec(x_121);
+                let x_122: Obj = rt::lean_ctor_get(x_3, 0);
+                rt::lean_dec(x_122);
                 x_14 = x_3;
-                x_15 = x_53;
+                x_15 = x_110;
                 break 'b13;
             }
             _ => {
@@ -464,251 +556,460 @@ pub(crate) unsafe extern "C" fn l_Sand2_drawLiquidMatterFromInternalEnergy(x_1: 
                 rt::lean_inc(x_4);
                 rt::lean_dec(x_3);
                 x_14 = rt::lean_box(0);
-                x_15 = x_53;
+                x_15 = x_110;
                 break 'b13;
             }
         }
     }
-    let x_16: Obj = l_Sand2_dsilicaDiagram(x_1);
-    let x_17: Obj = rt::lean_ctor_get(x_16, 0);
-    rt::lean_inc(x_17);
-    let x_18: Obj = rt::lean_ctor_get(x_16, 1);
-    rt::lean_inc(x_18);
-    rt::lean_dec_ref(x_16);
-    let x_19: Obj = l_Sand2_dironDiagram(x_1);
-    let x_20: Obj = rt::lean_ctor_get(x_19, 0);
-    rt::lean_inc(x_20);
-    let x_21: Obj = rt::lean_ctor_get(x_19, 1);
-    rt::lean_inc(x_21);
-    rt::lean_dec_ref(x_19);
-    let x_22: Obj = l_Sand2_dliquidWaterFromInternalEnergy(x_1, x_2);
-    rt::lean_dec_ref(x_1);
-    let x_23: Obj = l_Sand2_dphaseFraction(x_5, x_17, x_18, x_2);
-    rt::lean_dec(x_18);
-    rt::lean_dec(x_17);
-    rt::lean_dec(x_5);
-    let x_24: Obj = l_Sand2_dphaseFraction(x_9, x_20, x_21, x_2);
-    rt::lean_dec(x_21);
-    rt::lean_dec(x_20);
-    rt::lean_dec(x_9);
-    let x_25: Obj = rt::nat::lean_usize_to_nat(0);
-    let x_26: u8 = l_Nat_ddecLt(x_25, x_22);
-    let mut x_28: Obj;
-    let mut x_29: Obj;
-    let mut x_30: Obj;
-    let mut x_31: Obj;
-    let mut x_32: Obj;
-    'b27: {
+    let x_16: Obj = l_Sand2_dliquidWaterFromInternalEnergy(x_1, x_2);
+    let x_17: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_18: u8 = l_Nat_ddecEq(x_5, x_17);
+    let x_19: u8 = l_Nat_ddecLt(x_17, x_16);
+    let mut x_21: Obj;
+    let mut x_22: Obj;
+    let mut x_23: Obj;
+    let mut x_24: Obj;
+    let mut x_25: Obj;
+    let mut x_26: Obj;
+    let mut x_27: Obj;
+    'b20: {
+        let mut x_35: Obj;
+        let mut x_36: Obj;
+        let mut x_37: Obj;
+        let mut x_38: Obj;
+        let mut x_39: Obj;
         let mut x_40: Obj;
-        let mut x_41: Obj;
-        let mut x_42: Obj;
-        let mut x_43: Obj;
-        'b39: {
+        'b34: {
+            let mut x_42: Obj;
+            let mut x_43: Obj;
+            let mut x_44: Obj;
             let mut x_45: Obj;
             let mut x_46: Obj;
-            let mut x_47: Obj;
-            'b44: {
+            'b41: {
+                let mut x_48: Obj;
                 let mut x_49: Obj;
                 let mut x_50: Obj;
-                'b48: {
-                    let mut x_52: Obj;
-                    'b51: {
-                        match x_26 {
+                let mut x_51: Obj;
+                'b47: {
+                    let mut x_53: Obj;
+                    let mut x_54: Obj;
+                    let mut x_55: Obj;
+                    'b52: {
+                        let mut x_57: Obj;
+                        let mut x_58: Obj;
+                        'b56: {
+                            let mut x_60: Obj;
+                            let mut x_61: Obj;
+                            let mut x_62: Obj;
+                            'b59: {
+                                let mut x_66: Obj;
+                                'b65: {
+                                    match x_18 {
+                                        0 => {
+                                            let x_86: Obj = l_Sand2_dvaporReference(x_1);
+                                            let x_87: Obj = l_Sand2_dvaporCapacity(x_1);
+                                            let x_88: Obj = rt::nat::lean_usize_to_nat(170000);
+                                            let x_89: Obj = l_Nat_dmul(x_87, x_88);
+                                            rt::lean_dec(x_87);
+                                            let x_90: Obj = l_Nat_dadd(x_86, x_89);
+                                            rt::lean_dec(x_89);
+                                            rt::lean_dec(x_86);
+                                            let x_91: Obj = l_Sand2_dironFusion(x_1);
+                                            let x_92: Obj = l_Nat_dadd(x_90, x_91);
+                                            rt::lean_dec(x_91);
+                                            rt::lean_dec(x_90);
+                                            let x_93: Obj = l_Sand2_dsilicaFusion(x_1);
+                                            let x_94: Obj = l_Nat_dadd(x_92, x_93);
+                                            rt::lean_dec(x_93);
+                                            let x_95: Obj = l_Int_dofNat(x_94);
+                                            let x_96: u8 = l_Int_ddecLe(x_95, x_2);
+                                            match x_96 {
+                                                0 => {
+                                                    let x_97: Obj = l_Int_dofNat(x_92);
+                                                    let x_98: u8 = l_Int_ddecLe(x_2, x_97);
+                                                    match x_98 {
+                                                        0 => {
+                                                            let x_99: Obj = l_Int_dsub(x_2, x_97);
+                                                            let x_100: Obj = l_Int_dtoNat(x_99);
+                                                            rt::lean_dec(x_99);
+                                                            let x_101: Obj = l_Nat_dmul(x_5, x_100);
+                                                            rt::lean_dec(x_100);
+                                                            let mut x_103: Obj;
+                                                            'b102: {
+                                                                let x_106: Obj = rt::nat::lean_usize_to_nat(1);
+                                                                let x_107: Obj = l_Int_dsub(x_95, x_97);
+                                                                rt::lean_dec(x_97);
+                                                                rt::lean_dec(x_95);
+                                                                let x_108: Obj = l_Int_dtoNat(x_107);
+                                                                rt::lean_dec(x_107);
+                                                                let x_109: u8 = l_Nat_ddecLe(x_106, x_108);
+                                                                match x_109 {
+                                                                    0 => {
+                                                                        rt::lean_dec(x_108);
+                                                                        x_103 = x_106;
+                                                                        break 'b102;
+                                                                    }
+                                                                    _ => {
+                                                                        x_103 = x_108;
+                                                                        break 'b102;
+                                                                    }
+                                                                }
+                                                            }
+                                                            let x_104: Obj = l_Nat_ddiv(x_101, x_103);
+                                                            rt::lean_dec(x_103);
+                                                            rt::lean_dec(x_101);
+                                                            let x_105: u8 = l_Nat_ddecLe(x_5, x_104);
+                                                            match x_105 {
+                                                                0 => {
+                                                                    rt::lean_dec(x_5);
+                                                                    x_66 = x_104;
+                                                                    break 'b65;
+                                                                }
+                                                                _ => {
+                                                                    rt::lean_dec(x_104);
+                                                                    x_66 = x_5;
+                                                                    break 'b65;
+                                                                }
+                                                            }
+                                                        }
+                                                        _ => {
+                                                            rt::lean_dec(x_97);
+                                                            rt::lean_dec(x_95);
+                                                            rt::lean_dec(x_5);
+                                                            x_66 = x_17;
+                                                            break 'b65;
+                                                        }
+                                                    }
+                                                }
+                                                _ => {
+                                                    rt::lean_dec(x_95);
+                                                    rt::lean_dec(x_92);
+                                                    x_66 = x_5;
+                                                    break 'b65;
+                                                }
+                                            }
+                                        }
+                                        _ => {
+                                            rt::lean_dec(x_5);
+                                            x_66 = x_17;
+                                            break 'b65;
+                                        }
+                                    }
+                                }
+                                let x_67: u8 = l_Nat_ddecEq(x_9, x_17);
+                                match x_67 {
+                                    0 => {
+                                        let x_68: Obj = l_Sand2_dvaporReference(x_1);
+                                        let x_69: Obj = l_Sand2_dvaporCapacity(x_1);
+                                        let x_70: Obj = rt::nat::lean_usize_to_nat(153800);
+                                        let x_71: Obj = l_Nat_dmul(x_69, x_70);
+                                        rt::lean_dec(x_69);
+                                        let x_72: Obj = l_Nat_dadd(x_68, x_71);
+                                        rt::lean_dec(x_71);
+                                        rt::lean_dec(x_68);
+                                        let x_73: Obj = l_Sand2_dironFusion(x_1);
+                                        rt::lean_dec_ref(x_1);
+                                        let x_74: Obj = l_Nat_dadd(x_72, x_73);
+                                        rt::lean_dec(x_73);
+                                        let x_75: Obj = l_Int_dofNat(x_74);
+                                        let x_76: u8 = l_Int_ddecLe(x_75, x_2);
+                                        match x_76 {
+                                            0 => {
+                                                let x_77: Obj = l_Int_dofNat(x_72);
+                                                let x_78: u8 = l_Int_ddecLe(x_2, x_77);
+                                                match x_78 {
+                                                    0 => {
+                                                        let x_79: Obj = l_Int_dsub(x_2, x_77);
+                                                        let x_80: Obj = l_Int_dtoNat(x_79);
+                                                        rt::lean_dec(x_79);
+                                                        let x_81: Obj = l_Nat_dmul(x_9, x_80);
+                                                        rt::lean_dec(x_80);
+                                                        let x_82: Obj = rt::nat::lean_usize_to_nat(1);
+                                                        let x_83: Obj = l_Int_dsub(x_75, x_77);
+                                                        rt::lean_dec(x_77);
+                                                        rt::lean_dec(x_75);
+                                                        let x_84: Obj = l_Int_dtoNat(x_83);
+                                                        rt::lean_dec(x_83);
+                                                        let x_85: u8 = l_Nat_ddecLe(x_82, x_84);
+                                                        match x_85 {
+                                                            0 => {
+                                                                rt::lean_dec(x_84);
+                                                                x_60 = x_81;
+                                                                x_61 = x_66;
+                                                                x_62 = x_82;
+                                                                break 'b59;
+                                                            }
+                                                            _ => {
+                                                                x_60 = x_81;
+                                                                x_61 = x_66;
+                                                                x_62 = x_84;
+                                                                break 'b59;
+                                                            }
+                                                        }
+                                                    }
+                                                    _ => {
+                                                        rt::lean_dec(x_77);
+                                                        rt::lean_dec(x_75);
+                                                        rt::lean_dec(x_9);
+                                                        x_57 = x_66;
+                                                        x_58 = x_17;
+                                                        break 'b56;
+                                                    }
+                                                }
+                                            }
+                                            _ => {
+                                                rt::lean_dec(x_75);
+                                                rt::lean_dec(x_72);
+                                                x_57 = x_66;
+                                                x_58 = x_9;
+                                                break 'b56;
+                                            }
+                                        }
+                                    }
+                                    _ => {
+                                        rt::lean_dec(x_9);
+                                        rt::lean_dec_ref(x_1);
+                                        x_57 = x_66;
+                                        x_58 = x_17;
+                                        break 'b56;
+                                    }
+                                }
+                            }
+                            let x_63: Obj = l_Nat_ddiv(x_60, x_62);
+                            rt::lean_dec(x_62);
+                            rt::lean_dec(x_60);
+                            let x_64: u8 = l_Nat_ddecLe(x_9, x_63);
+                            match x_64 {
+                                0 => {
+                                    rt::lean_dec(x_9);
+                                    x_57 = x_61;
+                                    x_58 = x_63;
+                                    break 'b56;
+                                }
+                                _ => {
+                                    rt::lean_dec(x_63);
+                                    x_57 = x_61;
+                                    x_58 = x_9;
+                                    break 'b56;
+                                }
+                            }
+                        }
+                        match x_19 {
                             0 => {
                                 rt::lean_dec(x_6);
-                                x_52 = x_25;
-                                break 'b51;
+                                x_53 = x_57;
+                                x_54 = x_58;
+                                x_55 = x_17;
+                                break 'b52;
                             }
                             _ => {
-                                x_52 = x_6;
-                                break 'b51;
+                                x_53 = x_57;
+                                x_54 = x_58;
+                                x_55 = x_6;
+                                break 'b52;
                             }
                         }
                     }
-                    match x_26 {
+                    match x_19 {
                         0 => {
                             rt::lean_dec(x_7);
-                            x_49 = x_52;
-                            x_50 = x_25;
-                            break 'b48;
+                            x_48 = x_55;
+                            x_49 = x_53;
+                            x_50 = x_54;
+                            x_51 = x_17;
+                            break 'b47;
                         }
                         _ => {
-                            x_49 = x_52;
-                            x_50 = x_7;
-                            break 'b48;
+                            x_48 = x_55;
+                            x_49 = x_53;
+                            x_50 = x_54;
+                            x_51 = x_7;
+                            break 'b47;
                         }
                     }
                 }
-                match x_26 {
+                match x_19 {
                     0 => {
                         rt::lean_dec(x_8);
-                        x_45 = x_50;
-                        x_46 = x_49;
-                        x_47 = x_25;
-                        break 'b44;
+                        x_42 = x_48;
+                        x_43 = x_49;
+                        x_44 = x_50;
+                        x_45 = x_51;
+                        x_46 = x_17;
+                        break 'b41;
                     }
                     _ => {
-                        x_45 = x_50;
-                        x_46 = x_49;
-                        x_47 = x_8;
-                        break 'b44;
+                        x_42 = x_48;
+                        x_43 = x_49;
+                        x_44 = x_50;
+                        x_45 = x_51;
+                        x_46 = x_8;
+                        break 'b41;
                     }
                 }
             }
-            match x_26 {
+            match x_19 {
                 0 => {
                     rt::lean_dec(x_10);
-                    x_40 = x_45;
-                    x_41 = x_46;
-                    x_42 = x_47;
-                    x_43 = x_25;
-                    break 'b39;
+                    x_35 = x_42;
+                    x_36 = x_43;
+                    x_37 = x_44;
+                    x_38 = x_45;
+                    x_39 = x_46;
+                    x_40 = x_17;
+                    break 'b34;
                 }
                 _ => {
-                    x_40 = x_45;
-                    x_41 = x_46;
-                    x_42 = x_47;
-                    x_43 = x_10;
-                    break 'b39;
+                    x_35 = x_42;
+                    x_36 = x_43;
+                    x_37 = x_44;
+                    x_38 = x_45;
+                    x_39 = x_46;
+                    x_40 = x_10;
+                    break 'b34;
                 }
             }
         }
-        match x_26 {
+        match x_19 {
             0 => {
                 rt::lean_dec(x_11);
-                x_28 = x_40;
-                x_29 = x_41;
-                x_30 = x_42;
-                x_31 = x_43;
-                x_32 = x_25;
-                break 'b27;
+                x_21 = x_35;
+                x_22 = x_36;
+                x_23 = x_37;
+                x_24 = x_38;
+                x_25 = x_40;
+                x_26 = x_39;
+                x_27 = x_17;
+                break 'b20;
             }
             _ => {
-                x_28 = x_40;
-                x_29 = x_41;
-                x_30 = x_42;
-                x_31 = x_43;
-                x_32 = x_11;
-                break 'b27;
+                x_21 = x_35;
+                x_22 = x_36;
+                x_23 = x_37;
+                x_24 = x_38;
+                x_25 = x_40;
+                x_26 = x_39;
+                x_27 = x_11;
+                break 'b20;
             }
         }
     }
-    match x_26 {
+    match x_19 {
         0 => {
             rt::lean_dec(x_12);
-            let mut x_34: Obj;
-            'b33: {
+            let mut x_29: Obj;
+            'b28: {
                 match x_15 {
                     0 => {
-                        rt::lean_ctor_set(x_14, 20, x_25);
-                        rt::lean_ctor_set(x_14, 19, x_25);
-                        rt::lean_ctor_set(x_14, 18, x_25);
-                        rt::lean_ctor_set(x_14, 17, x_25);
-                        rt::lean_ctor_set(x_14, 16, x_32);
-                        rt::lean_ctor_set(x_14, 15, x_25);
-                        rt::lean_ctor_set(x_14, 14, x_31);
-                        rt::lean_ctor_set(x_14, 13, x_25);
-                        rt::lean_ctor_set(x_14, 12, x_24);
-                        rt::lean_ctor_set(x_14, 11, x_30);
-                        rt::lean_ctor_set(x_14, 10, x_25);
-                        rt::lean_ctor_set(x_14, 9, x_28);
-                        rt::lean_ctor_set(x_14, 8, x_29);
-                        rt::lean_ctor_set(x_14, 7, x_23);
-                        rt::lean_ctor_set(x_14, 6, x_25);
-                        rt::lean_ctor_set(x_14, 4, x_25);
-                        rt::lean_ctor_set(x_14, 3, x_25);
-                        rt::lean_ctor_set(x_14, 2, x_25);
-                        rt::lean_ctor_set(x_14, 1, x_25);
-                        rt::lean_ctor_set(x_14, 0, x_22);
-                        x_34 = x_14;
-                        break 'b33;
+                        rt::lean_ctor_set(x_14, 20, x_17);
+                        rt::lean_ctor_set(x_14, 19, x_17);
+                        rt::lean_ctor_set(x_14, 18, x_17);
+                        rt::lean_ctor_set(x_14, 17, x_17);
+                        rt::lean_ctor_set(x_14, 16, x_27);
+                        rt::lean_ctor_set(x_14, 15, x_17);
+                        rt::lean_ctor_set(x_14, 14, x_25);
+                        rt::lean_ctor_set(x_14, 13, x_17);
+                        rt::lean_ctor_set(x_14, 12, x_23);
+                        rt::lean_ctor_set(x_14, 11, x_26);
+                        rt::lean_ctor_set(x_14, 10, x_17);
+                        rt::lean_ctor_set(x_14, 9, x_24);
+                        rt::lean_ctor_set(x_14, 8, x_21);
+                        rt::lean_ctor_set(x_14, 7, x_22);
+                        rt::lean_ctor_set(x_14, 6, x_17);
+                        rt::lean_ctor_set(x_14, 4, x_17);
+                        rt::lean_ctor_set(x_14, 3, x_17);
+                        rt::lean_ctor_set(x_14, 2, x_17);
+                        rt::lean_ctor_set(x_14, 1, x_17);
+                        rt::lean_ctor_set(x_14, 0, x_16);
+                        x_29 = x_14;
+                        break 'b28;
                     }
                     _ => {
-                        let x_35: Obj = rt::lean_alloc_ctor(0, 21, 0);
-                        rt::lean_ctor_set(x_35, 0, x_22);
-                        rt::lean_ctor_set(x_35, 1, x_25);
-                        rt::lean_ctor_set(x_35, 2, x_25);
-                        rt::lean_ctor_set(x_35, 3, x_25);
-                        rt::lean_ctor_set(x_35, 4, x_25);
-                        rt::lean_ctor_set(x_35, 5, x_4);
-                        rt::lean_ctor_set(x_35, 6, x_25);
-                        rt::lean_ctor_set(x_35, 7, x_23);
-                        rt::lean_ctor_set(x_35, 8, x_29);
-                        rt::lean_ctor_set(x_35, 9, x_28);
-                        rt::lean_ctor_set(x_35, 10, x_25);
-                        rt::lean_ctor_set(x_35, 11, x_30);
-                        rt::lean_ctor_set(x_35, 12, x_24);
-                        rt::lean_ctor_set(x_35, 13, x_25);
-                        rt::lean_ctor_set(x_35, 14, x_31);
-                        rt::lean_ctor_set(x_35, 15, x_25);
-                        rt::lean_ctor_set(x_35, 16, x_32);
-                        rt::lean_ctor_set(x_35, 17, x_25);
-                        rt::lean_ctor_set(x_35, 18, x_25);
-                        rt::lean_ctor_set(x_35, 19, x_25);
-                        rt::lean_ctor_set(x_35, 20, x_25);
-                        x_34 = x_35;
-                        break 'b33;
+                        let x_30: Obj = rt::lean_alloc_ctor(0, 21, 0);
+                        rt::lean_ctor_set(x_30, 0, x_16);
+                        rt::lean_ctor_set(x_30, 1, x_17);
+                        rt::lean_ctor_set(x_30, 2, x_17);
+                        rt::lean_ctor_set(x_30, 3, x_17);
+                        rt::lean_ctor_set(x_30, 4, x_17);
+                        rt::lean_ctor_set(x_30, 5, x_4);
+                        rt::lean_ctor_set(x_30, 6, x_17);
+                        rt::lean_ctor_set(x_30, 7, x_22);
+                        rt::lean_ctor_set(x_30, 8, x_21);
+                        rt::lean_ctor_set(x_30, 9, x_24);
+                        rt::lean_ctor_set(x_30, 10, x_17);
+                        rt::lean_ctor_set(x_30, 11, x_26);
+                        rt::lean_ctor_set(x_30, 12, x_23);
+                        rt::lean_ctor_set(x_30, 13, x_17);
+                        rt::lean_ctor_set(x_30, 14, x_25);
+                        rt::lean_ctor_set(x_30, 15, x_17);
+                        rt::lean_ctor_set(x_30, 16, x_27);
+                        rt::lean_ctor_set(x_30, 17, x_17);
+                        rt::lean_ctor_set(x_30, 18, x_17);
+                        rt::lean_ctor_set(x_30, 19, x_17);
+                        rt::lean_ctor_set(x_30, 20, x_17);
+                        x_29 = x_30;
+                        break 'b28;
                     }
                 }
             }
-            return x_34;
+            return x_29;
         }
         _ => {
-            let mut x_37: Obj;
-            'b36: {
+            let mut x_32: Obj;
+            'b31: {
                 match x_15 {
                     0 => {
-                        rt::lean_ctor_set(x_14, 20, x_25);
-                        rt::lean_ctor_set(x_14, 19, x_25);
-                        rt::lean_ctor_set(x_14, 17, x_25);
-                        rt::lean_ctor_set(x_14, 16, x_32);
-                        rt::lean_ctor_set(x_14, 15, x_25);
-                        rt::lean_ctor_set(x_14, 14, x_31);
-                        rt::lean_ctor_set(x_14, 13, x_25);
-                        rt::lean_ctor_set(x_14, 12, x_24);
-                        rt::lean_ctor_set(x_14, 11, x_30);
-                        rt::lean_ctor_set(x_14, 10, x_25);
-                        rt::lean_ctor_set(x_14, 9, x_28);
-                        rt::lean_ctor_set(x_14, 8, x_29);
-                        rt::lean_ctor_set(x_14, 7, x_23);
-                        rt::lean_ctor_set(x_14, 6, x_25);
-                        rt::lean_ctor_set(x_14, 4, x_25);
-                        rt::lean_ctor_set(x_14, 3, x_25);
-                        rt::lean_ctor_set(x_14, 2, x_25);
-                        rt::lean_ctor_set(x_14, 1, x_25);
-                        rt::lean_ctor_set(x_14, 0, x_22);
-                        x_37 = x_14;
-                        break 'b36;
+                        rt::lean_ctor_set(x_14, 20, x_17);
+                        rt::lean_ctor_set(x_14, 19, x_17);
+                        rt::lean_ctor_set(x_14, 17, x_17);
+                        rt::lean_ctor_set(x_14, 16, x_27);
+                        rt::lean_ctor_set(x_14, 15, x_17);
+                        rt::lean_ctor_set(x_14, 14, x_25);
+                        rt::lean_ctor_set(x_14, 13, x_17);
+                        rt::lean_ctor_set(x_14, 12, x_23);
+                        rt::lean_ctor_set(x_14, 11, x_26);
+                        rt::lean_ctor_set(x_14, 10, x_17);
+                        rt::lean_ctor_set(x_14, 9, x_24);
+                        rt::lean_ctor_set(x_14, 8, x_21);
+                        rt::lean_ctor_set(x_14, 7, x_22);
+                        rt::lean_ctor_set(x_14, 6, x_17);
+                        rt::lean_ctor_set(x_14, 4, x_17);
+                        rt::lean_ctor_set(x_14, 3, x_17);
+                        rt::lean_ctor_set(x_14, 2, x_17);
+                        rt::lean_ctor_set(x_14, 1, x_17);
+                        rt::lean_ctor_set(x_14, 0, x_16);
+                        x_32 = x_14;
+                        break 'b31;
                     }
                     _ => {
-                        let x_38: Obj = rt::lean_alloc_ctor(0, 21, 0);
-                        rt::lean_ctor_set(x_38, 0, x_22);
-                        rt::lean_ctor_set(x_38, 1, x_25);
-                        rt::lean_ctor_set(x_38, 2, x_25);
-                        rt::lean_ctor_set(x_38, 3, x_25);
-                        rt::lean_ctor_set(x_38, 4, x_25);
-                        rt::lean_ctor_set(x_38, 5, x_4);
-                        rt::lean_ctor_set(x_38, 6, x_25);
-                        rt::lean_ctor_set(x_38, 7, x_23);
-                        rt::lean_ctor_set(x_38, 8, x_29);
-                        rt::lean_ctor_set(x_38, 9, x_28);
-                        rt::lean_ctor_set(x_38, 10, x_25);
-                        rt::lean_ctor_set(x_38, 11, x_30);
-                        rt::lean_ctor_set(x_38, 12, x_24);
-                        rt::lean_ctor_set(x_38, 13, x_25);
-                        rt::lean_ctor_set(x_38, 14, x_31);
-                        rt::lean_ctor_set(x_38, 15, x_25);
-                        rt::lean_ctor_set(x_38, 16, x_32);
-                        rt::lean_ctor_set(x_38, 17, x_25);
-                        rt::lean_ctor_set(x_38, 18, x_12);
-                        rt::lean_ctor_set(x_38, 19, x_25);
-                        rt::lean_ctor_set(x_38, 20, x_25);
-                        x_37 = x_38;
-                        break 'b36;
+                        let x_33: Obj = rt::lean_alloc_ctor(0, 21, 0);
+                        rt::lean_ctor_set(x_33, 0, x_16);
+                        rt::lean_ctor_set(x_33, 1, x_17);
+                        rt::lean_ctor_set(x_33, 2, x_17);
+                        rt::lean_ctor_set(x_33, 3, x_17);
+                        rt::lean_ctor_set(x_33, 4, x_17);
+                        rt::lean_ctor_set(x_33, 5, x_4);
+                        rt::lean_ctor_set(x_33, 6, x_17);
+                        rt::lean_ctor_set(x_33, 7, x_22);
+                        rt::lean_ctor_set(x_33, 8, x_21);
+                        rt::lean_ctor_set(x_33, 9, x_24);
+                        rt::lean_ctor_set(x_33, 10, x_17);
+                        rt::lean_ctor_set(x_33, 11, x_26);
+                        rt::lean_ctor_set(x_33, 12, x_23);
+                        rt::lean_ctor_set(x_33, 13, x_17);
+                        rt::lean_ctor_set(x_33, 14, x_25);
+                        rt::lean_ctor_set(x_33, 15, x_17);
+                        rt::lean_ctor_set(x_33, 16, x_27);
+                        rt::lean_ctor_set(x_33, 17, x_17);
+                        rt::lean_ctor_set(x_33, 18, x_12);
+                        rt::lean_ctor_set(x_33, 19, x_17);
+                        rt::lean_ctor_set(x_33, 20, x_17);
+                        x_32 = x_33;
+                        break 'b31;
                     }
                 }
             }
-            return x_37;
+            return x_32;
         }
     }
 }

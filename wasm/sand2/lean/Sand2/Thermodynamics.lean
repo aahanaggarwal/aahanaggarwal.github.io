@@ -128,7 +128,7 @@ inductive Equilibrium (d : PhaseDiagram) (h : Int) : WaterRegime → Prop
   | boiling (lo : d.boilStart ≤ h) (hi : h < d.boilEnd) : Equilibrium d h .boiling
   | gas (hot : d.boilEnd ≤ h) : Equilibrium d h .vapor
 
-def phase (d : PhaseDiagram) (h : Int) : WaterRegime :=
+@[macro_inline] def phase (d : PhaseDiagram) (h : Int) : WaterRegime :=
   if h < d.meltStart then .ice else if h < d.meltEnd then .melting
   else if h < d.boilStart then .liquid else if h < d.boilEnd then .boiling else .vapor
 
@@ -196,6 +196,23 @@ theorem thermal_diagram_ordered (mass cs cl tm lf tb lv : Nat) :
 def phaseFraction (count : Nat) (start finish h : Int) : Nat :=
   if h >= finish then count
   else min count (count*(h-start).toNat/max 1 (finish-start).toNat)
+
+@[macro_inline] def phaseFractionFast (count : Nat) (start finish h : Int) : Nat :=
+  if count == 0 then 0
+  else if h >= finish then count
+  else if h <= start then 0
+  else min count (count*(h-start).toNat/max 1 (finish-start).toNat)
+
+theorem phase_fraction_fast_matches_reference (count : Nat) (start finish h : Int) :
+    phaseFractionFast count start finish h = phaseFraction count start finish h := by
+  by_cases zero : count = 0
+  · simp [phaseFractionFast,phaseFraction,zero]
+  · by_cases hot : h >= finish
+    · simp [phaseFractionFast,phaseFraction,zero,hot]
+    · by_cases cold : h <= start
+      · have noEnergy : (h-start).toNat = 0 := by omega
+        simp [phaseFractionFast,phaseFraction,zero,hot,cold,noEnergy]
+      · simp [phaseFractionFast,phaseFraction,zero,hot,cold]
 
 theorem phase_fraction_bounded (count : Nat) (start finish h : Int) :
     phaseFraction count start finish h <= count := by

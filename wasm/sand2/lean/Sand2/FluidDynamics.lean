@@ -33,7 +33,7 @@ theorem fluid_transport_does_not_invent_absent_gases (m : Mixture) (fraction : N
 /-- Internal energy is advected with the local mixture. Pressure work crosses
     the same physical face for both gas and liquid, including air displaced by
     a moving surface. The global total remains an exact integer inventory. -/
-def fluidPacket (height width i j : Nat) (source : Particle) (matter : Mixture)
+@[inline] def fluidPacket (height width i j : Nat) (source : Particle) (matter : Mixture)
     (volume facePressure : Nat) : Particle :=
   let dm := Chemistry.mass matter
   let q := makeParticle matter 0
@@ -42,16 +42,27 @@ def fluidPacket (height width i j : Nat) (source : Particle) (matter : Mixture)
   let work : Int := facePressure*volume/100000
   {q with energy := q.chemical+internal+kineticEnergy q+facePotential height width i j q+work}
 
+def requestedFluidFlowEdit (height width i j : Nat) (a b source : Particle)
+    (request : Mixture) (fraction facePressure : Nat) : PairEdit a b :=
+  let portion := requestedPortion a.matter request
+  let packet := fluidPacket height width i j source portion.moved (min cellVolume fraction) facePressure
+  portionEditCached a b packet (makeParticle {} 0) portion (emptyPortion b.matter) rfl rfl
+
 def fluidFlowEdit (height width i j : Nat) (a b source : Particle)
     (fraction facePressure : Nat) : PairEdit a b :=
-  let portion := requestedPortion a.matter (mixtureRequest source.matter fraction)
-  let packet := fluidPacket height width i j source portion.moved (min cellVolume fraction) facePressure
-  portionEdit a b portion (emptyPortion b.matter) packet.energy 0 packet.px 0 packet.py 0
+  requestedFluidFlowEdit height width i j a b source (mixtureRequest source.matter fraction) fraction facePressure
+
+theorem cached_advection_request_matches_original (a b source : Particle) (fraction pressure : Nat) :
+    requestedFluidFlowEdit height width i j a b source (mixtureRequest source.matter fraction) fraction pressure =
+      fluidFlowEdit height width i j a b source fraction pressure := rfl
 
 theorem fluid_flow_conserves_every_molecule (a b source : Particle) (fraction pressure : Nat) :
     add (fluidFlowEdit height width i j a b source fraction pressure).first.matter
       (fluidFlowEdit height width i j a b source fraction pressure).second.matter = add a.matter b.matter :=
-  portion_exchange_conserves_every_molecule _ _ _ _
+  by
+    simpa only [fluidFlowEdit,requestedFluidFlowEdit,portionEditCached,replaceExchangedMatter,fluidPacket,makeParticle,exchangePortions,emptyPortion] using
+      portion_exchange_conserves_every_molecule a.matter b.matter
+        (requestedPortion a.matter (mixtureRequest source.matter fraction)) (emptyPortion b.matter)
 
 theorem fluid_flow_conserves_total_energy (a b source : Particle) (fraction pressure : Nat) :
     (fluidFlowEdit height width i j a b source fraction pressure).first.energy+
@@ -85,9 +96,10 @@ def fluidCellVelocity (g : FluidGeometry) (velocity : FluidVelocity) (i : Nat) :
   let original := read snapshot source
   if original.mass == 0 then return
   let fraction := (floatAbs amount*floatNat cellVolume).toUInt64.toNat
-  if Chemistry.mass (mixtureRequest original.matter fraction) == 0 then return
+  let request := mixtureRequest original.matter fraction
+  if Chemistry.mass request == 0 then return
   let facePressure := (floatMax 0 ((floatAt velocity.pressure i+floatAt velocity.pressure j)/2)*1000).toUInt64.toNat
-  Physics.pair source target fun a b => fluidFlowEdit height width source target a b original fraction facePressure
+  Physics.pair source target fun a b => requestedFluidFlowEdit height width source target a b original request fraction facePressure
 
 @[noinline] def fluidCandidate (dt : Float) : Physics width height Unit := do
   let geometry := fluidGeometry (← Physics.getWorld)
@@ -160,6 +172,19 @@ theorem kelvin_scan_sound_and_complete (w : World width height) (remaining start
         have same : (start+1)+offset = start+(offset+1) := by omega
         rw [same]
         exact value
+
+def kelvinScanFast (w : World width height) : Nat → Nat → Bool
+  | 0,_ => true
+  | remaining+1,start =>
+    kelvinAdmissible height width start (read w start) && kelvinScanFast w remaining (start+1)
+
+@[csimp] theorem compile_kelvin_scan_energy_guard : @kelvinScan = @kelvinScanFast := by
+  funext width height w remaining
+  induction remaining with
+  | zero => rfl
+  | succ remaining ih =>
+    funext start
+    simp only [kelvinScan,kelvinScanFast,kelvinAdmissible,cellTemperature,congrFun ih (start+1)] <;> rfl
 
 def fluidCandidateAccept (before after : World width height) : Bool :=
   kelvinScan after (width*height) 0 && decide (fluidOverflow after <= fluidOverflow before) && decide (after.fluidResidual <= 10000)

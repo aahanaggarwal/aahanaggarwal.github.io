@@ -60,7 +60,7 @@ def decodeMaterial (n : UInt32) : Material := match n.toNat with
 
 def materialName : Material → String
   | .empty => "Air" | .sand => "Sand" | .water => "Water" | .stone => "Quartz"
-  | .wood => "Wood" | .fire => "Fire" | .steam => "Steam" | .oil => "Oil"
+  | .wood => "Wood" | .fire => "Fire" | .steam => "Water vapor" | .oil => "Oil"
   | .acid => "Acid" | .lava => "Molten silica" | .plant => "Plant fibre" | .ice => "Ice"
   | .smoke => "Smoke" | .glass => "Glass" | .obsidian => "Obsidian"
   | .gunpowder => "Gunpowder" | .salt => "Salt" | .saltWater => "Salt water"

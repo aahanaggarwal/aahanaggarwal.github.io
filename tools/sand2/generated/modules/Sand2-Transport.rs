@@ -34,16 +34,50 @@ pub(crate) unsafe extern "C" fn l_Sand2_ddiffusionDivisor_d__boxed(x_1: Obj, x_2
 // Lean: Sand2.facePotential
 // Source: lean/Sand2/Transport.lean:7:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfacePotential(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
-    rt::lean_inc_ref(x_5);
-    let x_6: Obj = l_Sand2_dpotentialEnergy(x_1, x_2, x_3, x_5);
-    let x_7: Obj = l_Sand2_dpotentialEnergy(x_1, x_2, x_4, x_5);
-    let x_8: Obj = l_Int_dadd(x_6, x_7);
-    rt::lean_dec(x_7);
-    rt::lean_dec(x_6);
+    let x_6: Obj = rt::lean_ctor_get(x_5, 1);
+    rt::lean_inc(x_6);
+    let x_7: Obj = rt::lean_ctor_get(x_5, 9);
+    rt::lean_inc(x_7);
+    rt::lean_dec_ref(x_5);
+    let x_8: Obj = l_Int_dofNat(x_6);
     let x_9: Obj = l_Sand2_dfacePotential_d__closed__0();
-    let x_10: Obj = l_Int_dediv(x_8, x_9);
+    let x_10: Obj = l_Int_dmul(x_8, x_9);
     rt::lean_dec(x_8);
-    return x_10;
+    let x_11: Obj = l_Nat_ddiv(x_3, x_2);
+    let x_12: Obj = l_Nat_dsub(x_1, x_11);
+    rt::lean_dec(x_11);
+    let x_13: Obj = l_Int_dofNat(x_12);
+    let x_14: Obj = l_Sand2_dfacePotential_d__closed__1();
+    let x_15: Obj = l_Int_dmul(x_13, x_14);
+    rt::lean_dec(x_13);
+    let x_16: Obj = l_Int_dsub(x_15, x_7);
+    rt::lean_dec(x_15);
+    let x_17: Obj = l_Int_dmul(x_10, x_16);
+    rt::lean_dec(x_16);
+    let x_18: Obj = l_Sand2_dfacePotential_d__closed__3();
+    let x_19: Obj = l_Int_dediv(x_17, x_18);
+    rt::lean_dec(x_17);
+    let x_20: Obj = l_Nat_ddiv(x_4, x_2);
+    let x_21: Obj = l_Nat_dsub(x_1, x_20);
+    rt::lean_dec(x_20);
+    let x_22: Obj = l_Int_dofNat(x_21);
+    let x_23: Obj = l_Int_dmul(x_22, x_14);
+    rt::lean_dec(x_22);
+    let x_24: Obj = l_Int_dsub(x_23, x_7);
+    rt::lean_dec(x_7);
+    rt::lean_dec(x_23);
+    let x_25: Obj = l_Int_dmul(x_10, x_24);
+    rt::lean_dec(x_24);
+    rt::lean_dec(x_10);
+    let x_26: Obj = l_Int_dediv(x_25, x_18);
+    rt::lean_dec(x_25);
+    let x_27: Obj = l_Int_dadd(x_19, x_26);
+    rt::lean_dec(x_26);
+    rt::lean_dec(x_19);
+    let x_28: Obj = l_Sand2_dfacePotential_d__closed__4();
+    let x_29: Obj = l_Int_dediv(x_27, x_28);
+    rt::lean_dec(x_27);
+    return x_29;
 }
 
 // Lean: Sand2.facePotential._boxed
@@ -63,7 +97,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfacePotential_d__boxed(x_1: Obj, x_2: O
 // Source: lean/Sand2/Transport.lean:7:1
 static C_l_Sand2_dfacePotential_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dfacePotential_d__closed__0__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(2);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(981);
     let x_2: Obj = l_Int_dofNat(x_1);
     return x_2;
 }
@@ -72,49 +106,5206 @@ pub(crate) unsafe fn l_Sand2_dfacePotential_d__closed__0() -> Obj {
     C_l_Sand2_dfacePotential_d__closed__0.get(l_Sand2_dfacePotential_d__closed__0__init)
 }
 
+// Lean: Sand2.facePotential._closed_1
+// Compiled from: Sand2.facePotential
+// Source: lean/Sand2/Transport.lean:7:1
+static C_l_Sand2_dfacePotential_d__closed__1: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dfacePotential_d__closed__1__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(1000000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dfacePotential_d__closed__1() -> Obj {
+    C_l_Sand2_dfacePotential_d__closed__1.get(l_Sand2_dfacePotential_d__closed__1__init)
+}
+
+// Lean: Sand2.facePotential._closed_2
+// Compiled from: Sand2.facePotential
+// Source: lean/Sand2/Transport.lean:7:1
+static C_l_Sand2_dfacePotential_d__closed__2: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dfacePotential_d__closed__2__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(100);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dfacePotential_d__closed__2() -> Obj {
+    C_l_Sand2_dfacePotential_d__closed__2.get(l_Sand2_dfacePotential_d__closed__2__init)
+}
+
+// Lean: Sand2.facePotential._closed_3
+// Compiled from: Sand2.facePotential
+// Source: lean/Sand2/Transport.lean:7:1
+static C_l_Sand2_dfacePotential_d__closed__3: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dfacePotential_d__closed__3__init() -> Obj {
+    let x_1: Obj = l_Sand2_dfacePotential_d__closed__1();
+    let x_2: Obj = l_Sand2_dfacePotential_d__closed__2();
+    let x_3: Obj = l_Int_dmul(x_2, x_1);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dfacePotential_d__closed__3() -> Obj {
+    C_l_Sand2_dfacePotential_d__closed__3.get(l_Sand2_dfacePotential_d__closed__3__init)
+}
+
+// Lean: Sand2.facePotential._closed_4
+// Compiled from: Sand2.facePotential
+// Source: lean/Sand2/Transport.lean:7:1
+static C_l_Sand2_dfacePotential_d__closed__4: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dfacePotential_d__closed__4__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(2);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dfacePotential_d__closed__4() -> Obj {
+    C_l_Sand2_dfacePotential_d__closed__4.get(l_Sand2_dfacePotential_d__closed__4__init)
+}
+
 // Lean: Sand2.gasDiffusionEdit
 // Source: lean/Sand2/Transport.lean:28:1
 pub(crate) unsafe extern "C" fn l_Sand2_dgasDiffusionEdit(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj) -> Obj {
     let x_8: Obj = rt::lean_ctor_get(x_5, 0);
-    let x_9: Obj = rt::lean_ctor_get(x_6, 0);
-    rt::lean_inc_ref_n(x_5, 2);
-    let x_10: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_5);
+    let x_9: Obj = rt::lean_ctor_get(x_5, 1);
+    let x_10: Obj = rt::lean_ctor_get(x_5, 6);
+    let x_11: Obj = rt::lean_ctor_get(x_5, 7);
+    let x_12: Obj = rt::lean_ctor_get(x_6, 0);
+    let x_13: Obj = rt::lean_ctor_get(x_6, 1);
+    let x_14: Obj = rt::lean_ctor_get(x_6, 6);
+    let x_15: Obj = rt::lean_ctor_get(x_6, 7);
+    rt::lean_inc_ref(x_5);
+    let x_16: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_5);
     rt::lean_inc_ref(x_8);
-    let x_11: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_8, x_7, x_10);
-    rt::lean_dec(x_10);
-    let x_12: Obj = rt::lean_ctor_get(x_11, 0);
+    let x_17: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_8, x_7, x_16);
+    rt::lean_dec(x_16);
+    let x_18: Obj = rt::lean_ctor_get(x_17, 0);
+    rt::lean_inc_ref(x_18);
+    let x_19: Obj = rt::lean_ctor_get(x_18, 0);
+    let x_20: Obj = rt::lean_ctor_get(x_18, 3);
+    let x_21: Obj = rt::lean_ctor_get(x_18, 4);
+    let x_22: Obj = rt::lean_ctor_get(x_18, 5);
+    let x_23: Obj = rt::lean_ctor_get(x_18, 6);
+    let x_24: Obj = rt::lean_ctor_get(x_18, 7);
+    let x_25: Obj = rt::lean_ctor_get(x_18, 8);
+    let x_26: Obj = rt::lean_ctor_get(x_18, 9);
+    let x_27: Obj = rt::lean_ctor_get(x_18, 10);
+    let x_28: Obj = rt::lean_ctor_get(x_18, 11);
+    let x_29: Obj = rt::lean_ctor_get(x_18, 12);
+    let x_30: Obj = rt::lean_ctor_get(x_18, 13);
+    let x_31: Obj = rt::lean_ctor_get(x_18, 14);
+    let x_32: Obj = rt::lean_ctor_get(x_18, 16);
+    let x_33: Obj = rt::lean_ctor_get(x_18, 17);
+    let x_34: Obj = rt::lean_ctor_get(x_18, 18);
+    let x_35: Obj = rt::lean_ctor_get(x_18, 19);
+    let x_36: Obj = rt::lean_ctor_get(x_18, 20);
+    rt::lean_inc_ref(x_6);
+    let x_37: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_4, x_6);
     rt::lean_inc_ref(x_12);
-    rt::lean_inc_ref_n(x_6, 2);
-    let x_13: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_4, x_6);
-    rt::lean_inc_ref(x_9);
-    let x_14: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_9, x_7, x_13);
-    rt::lean_dec(x_13);
-    let x_15: Obj = rt::lean_ctor_get(x_14, 0);
-    rt::lean_inc_ref(x_15);
-    let x_16: Obj = l_Sand2_dgasPacket(x_1, x_2, x_3, x_4, x_5, x_12);
-    let x_17: Obj = rt::lean_ctor_get(x_16, 5);
-    rt::lean_inc(x_17);
-    let x_18: Obj = rt::lean_ctor_get(x_16, 6);
-    rt::lean_inc(x_18);
-    let x_19: Obj = rt::lean_ctor_get(x_16, 7);
-    rt::lean_inc(x_19);
-    rt::lean_dec_ref(x_16);
-    let x_20: Obj = l_Sand2_dgasPacket(x_1, x_2, x_4, x_3, x_6, x_15);
-    let x_21: Obj = rt::lean_ctor_get(x_20, 5);
-    rt::lean_inc(x_21);
-    let x_22: Obj = rt::lean_ctor_get(x_20, 6);
-    rt::lean_inc(x_22);
-    let x_23: Obj = rt::lean_ctor_get(x_20, 7);
-    rt::lean_inc(x_23);
-    rt::lean_dec_ref(x_20);
-    let x_24: Obj = l_Sand2_dportionEdit(x_5, x_6, x_11, x_14, x_17, x_21, x_18, x_22, x_19, x_23);
-    rt::lean_dec(x_23);
-    rt::lean_dec(x_19);
-    rt::lean_dec(x_22);
-    rt::lean_dec(x_18);
-    rt::lean_dec(x_21);
-    rt::lean_dec(x_17);
-    return x_24;
+    let x_38: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_12, x_7, x_37);
+    rt::lean_dec(x_37);
+    let x_39: Obj = l_Sand2_dChemistry_dmass(x_18);
+    let x_40: u8 = 0u8;
+    let x_41: u8 = 0u8;
+    let mut x_43: Obj;
+    let mut x_44: Obj;
+    let mut x_45: Obj;
+    let mut x_46: Obj;
+    let mut x_47: Obj;
+    let mut x_48: Obj;
+    let mut x_49: Obj;
+    let mut x_50: Obj;
+    let mut x_51: Obj;
+    let mut x_52: Obj;
+    let mut x_53: Obj;
+    let mut x_54: Obj;
+    let mut x_55: Obj;
+    let mut x_56: Obj;
+    let mut x_57: Obj;
+    let mut x_58: Obj;
+    let mut x_59: Obj;
+    let mut x_60: Obj;
+    let mut x_61: Obj;
+    let mut x_62: Obj;
+    let mut x_63: Obj;
+    'b42: {
+        let mut x_76: Obj;
+        let mut x_77: Obj;
+        let mut x_78: Obj;
+        let mut x_79: Obj;
+        let mut x_80: Obj;
+        let mut x_81: Obj;
+        let mut x_82: Obj;
+        let mut x_83: Obj;
+        let mut x_84: Obj;
+        let mut x_85: Obj;
+        let mut x_86: Obj;
+        let mut x_87: Obj;
+        let mut x_88: Obj;
+        let mut x_89: Obj;
+        let mut x_90: Obj;
+        let mut x_91: Obj;
+        let mut x_92: Obj;
+        let mut x_93: Obj;
+        let mut x_94: Obj;
+        let mut x_95: Obj;
+        let mut x_96: Obj;
+        let mut x_97: Obj;
+        'b75: {
+            let mut x_104: Obj;
+            let mut x_105: Obj;
+            let mut x_106: Obj;
+            let mut x_107: Obj;
+            let mut x_108: Obj;
+            let mut x_109: Obj;
+            let mut x_110: Obj;
+            let mut x_111: Obj;
+            let mut x_112: Obj;
+            let mut x_113: Obj;
+            let mut x_114: Obj;
+            let mut x_115: Obj;
+            let mut x_116: Obj;
+            let mut x_117: Obj;
+            let mut x_118: Obj;
+            let mut x_119: Obj;
+            let mut x_120: Obj;
+            let mut x_121: Obj;
+            let mut x_122: Obj;
+            let mut x_123: Obj;
+            let mut x_124: u8;
+            'b103: {
+                let mut x_131: Obj;
+                let mut x_132: Obj;
+                let mut x_133: Obj;
+                let mut x_134: Obj;
+                let mut x_135: Obj;
+                let mut x_136: Obj;
+                let mut x_137: Obj;
+                let mut x_138: Obj;
+                let mut x_139: Obj;
+                let mut x_140: Obj;
+                let mut x_141: Obj;
+                let mut x_142: Obj;
+                let mut x_143: Obj;
+                let mut x_144: Obj;
+                let mut x_145: Obj;
+                let mut x_146: Obj;
+                let mut x_147: Obj;
+                let mut x_148: Obj;
+                let mut x_149: u8;
+                let mut x_150: Obj;
+                let mut x_151: Obj;
+                let mut x_152: Obj;
+                let mut x_153: Obj;
+                'b130: {
+                    let mut x_170: Obj;
+                    let mut x_171: Obj;
+                    let mut x_172: Obj;
+                    let mut x_173: Obj;
+                    let mut x_174: Obj;
+                    let mut x_175: Obj;
+                    let mut x_176: Obj;
+                    let mut x_177: Obj;
+                    let mut x_178: Obj;
+                    let mut x_179: Obj;
+                    let mut x_180: Obj;
+                    let mut x_181: Obj;
+                    let mut x_182: Obj;
+                    let mut x_183: Obj;
+                    let mut x_184: Obj;
+                    let mut x_185: u8;
+                    let mut x_186: Obj;
+                    let mut x_187: Obj;
+                    let mut x_188: Obj;
+                    let mut x_189: Obj;
+                    let mut x_190: Obj;
+                    'b169: {
+                        let mut x_198: Obj;
+                        let mut x_199: Obj;
+                        let mut x_200: Obj;
+                        let mut x_201: Obj;
+                        let mut x_202: Obj;
+                        let mut x_203: Obj;
+                        let mut x_204: Obj;
+                        let mut x_205: Obj;
+                        let mut x_206: Obj;
+                        let mut x_207: Obj;
+                        let mut x_208: Obj;
+                        let mut x_209: Obj;
+                        let mut x_210: Obj;
+                        let mut x_211: u8;
+                        let mut x_212: Obj;
+                        let mut x_213: Obj;
+                        let mut x_214: Obj;
+                        let mut x_215: Obj;
+                        let mut x_216: Obj;
+                        'b197: {
+                            let mut x_221: Obj;
+                            let mut x_222: Obj;
+                            let mut x_223: Obj;
+                            let mut x_224: Obj;
+                            let mut x_225: Obj;
+                            let mut x_226: Obj;
+                            let mut x_227: Obj;
+                            let mut x_228: Obj;
+                            let mut x_229: Obj;
+                            let mut x_230: Obj;
+                            let mut x_231: Obj;
+                            let mut x_232: Obj;
+                            let mut x_233: Obj;
+                            let mut x_234: u8;
+                            let mut x_235: Obj;
+                            let mut x_236: Obj;
+                            let mut x_237: Obj;
+                            let mut x_238: Obj;
+                            let mut x_239: Obj;
+                            let mut x_240: Obj;
+                            'b220: {
+                                let mut x_247: Obj;
+                                let mut x_248: Obj;
+                                let mut x_249: Obj;
+                                let mut x_250: Obj;
+                                let mut x_251: Obj;
+                                let mut x_252: Obj;
+                                let mut x_253: Obj;
+                                let mut x_254: Obj;
+                                let mut x_255: Obj;
+                                let mut x_256: Obj;
+                                let mut x_257: Obj;
+                                let mut x_258: Obj;
+                                let mut x_259: Obj;
+                                let mut x_260: u8;
+                                let mut x_261: Obj;
+                                let mut x_262: Obj;
+                                let mut x_263: Obj;
+                                let mut x_264: Obj;
+                                let mut x_265: Obj;
+                                let mut x_266: Obj;
+                                let mut x_267: Obj;
+                                'b246: {
+                                    let mut x_274: Obj;
+                                    let mut x_275: Obj;
+                                    let mut x_276: Obj;
+                                    let mut x_277: Obj;
+                                    let mut x_278: Obj;
+                                    let mut x_279: Obj;
+                                    let mut x_280: Obj;
+                                    let mut x_281: Obj;
+                                    let mut x_282: Obj;
+                                    let mut x_283: Obj;
+                                    let mut x_284: Obj;
+                                    let mut x_285: Obj;
+                                    let mut x_286: Obj;
+                                    let mut x_287: u8;
+                                    let mut x_288: Obj;
+                                    let mut x_289: Obj;
+                                    let mut x_290: Obj;
+                                    let mut x_291: Obj;
+                                    let mut x_292: Obj;
+                                    let mut x_293: Obj;
+                                    let mut x_294: Obj;
+                                    let mut x_295: Obj;
+                                    'b273: {
+                                        let mut x_302: Obj;
+                                        let mut x_303: Obj;
+                                        let mut x_304: Obj;
+                                        let mut x_305: Obj;
+                                        let mut x_306: Obj;
+                                        let mut x_307: Obj;
+                                        let mut x_308: Obj;
+                                        let mut x_309: Obj;
+                                        let mut x_310: Obj;
+                                        let mut x_311: Obj;
+                                        let mut x_312: Obj;
+                                        let mut x_313: Obj;
+                                        let mut x_314: Obj;
+                                        let mut x_315: u8;
+                                        let mut x_316: Obj;
+                                        let mut x_317: Obj;
+                                        let mut x_318: Obj;
+                                        let mut x_319: Obj;
+                                        let mut x_320: Obj;
+                                        let mut x_321: Obj;
+                                        let mut x_322: Obj;
+                                        let mut x_323: Obj;
+                                        let mut x_324: Obj;
+                                        'b301: {
+                                            let mut x_331: Obj;
+                                            let mut x_332: Obj;
+                                            let mut x_333: Obj;
+                                            let mut x_334: Obj;
+                                            let mut x_335: Obj;
+                                            let mut x_336: Obj;
+                                            let mut x_337: Obj;
+                                            let mut x_338: Obj;
+                                            let mut x_339: Obj;
+                                            let mut x_340: Obj;
+                                            let mut x_341: Obj;
+                                            let mut x_342: Obj;
+                                            let mut x_343: Obj;
+                                            let mut x_344: u8;
+                                            let mut x_345: Obj;
+                                            let mut x_346: Obj;
+                                            let mut x_347: Obj;
+                                            let mut x_348: Obj;
+                                            let mut x_349: Obj;
+                                            let mut x_350: Obj;
+                                            let mut x_351: Obj;
+                                            let mut x_352: Obj;
+                                            let mut x_353: Obj;
+                                            let mut x_354: Obj;
+                                            'b330: {
+                                                let mut x_361: Obj;
+                                                let mut x_362: Obj;
+                                                let mut x_363: Obj;
+                                                let mut x_364: Obj;
+                                                let mut x_365: Obj;
+                                                let mut x_366: Obj;
+                                                let mut x_367: Obj;
+                                                let mut x_368: Obj;
+                                                let mut x_369: Obj;
+                                                let mut x_370: Obj;
+                                                let mut x_371: Obj;
+                                                let mut x_372: Obj;
+                                                let mut x_373: Obj;
+                                                let mut x_374: u8;
+                                                let mut x_375: Obj;
+                                                let mut x_376: Obj;
+                                                let mut x_377: Obj;
+                                                let mut x_378: Obj;
+                                                let mut x_379: Obj;
+                                                let mut x_380: Obj;
+                                                let mut x_381: Obj;
+                                                let mut x_382: Obj;
+                                                let mut x_383: Obj;
+                                                let mut x_384: Obj;
+                                                let mut x_385: Obj;
+                                                'b360: {
+                                                    let mut x_392: Obj;
+                                                    let mut x_393: Obj;
+                                                    let mut x_394: Obj;
+                                                    let mut x_395: Obj;
+                                                    let mut x_396: Obj;
+                                                    let mut x_397: Obj;
+                                                    let mut x_398: Obj;
+                                                    let mut x_399: Obj;
+                                                    let mut x_400: Obj;
+                                                    let mut x_401: Obj;
+                                                    let mut x_402: Obj;
+                                                    let mut x_403: Obj;
+                                                    let mut x_404: Obj;
+                                                    let mut x_405: u8;
+                                                    let mut x_406: Obj;
+                                                    let mut x_407: Obj;
+                                                    let mut x_408: Obj;
+                                                    let mut x_409: Obj;
+                                                    let mut x_410: Obj;
+                                                    let mut x_411: Obj;
+                                                    let mut x_412: Obj;
+                                                    let mut x_413: Obj;
+                                                    let mut x_414: Obj;
+                                                    let mut x_415: Obj;
+                                                    let mut x_416: Obj;
+                                                    let mut x_417: Obj;
+                                                    'b391: {
+                                                        let mut x_424: Obj;
+                                                        let mut x_425: Obj;
+                                                        let mut x_426: Obj;
+                                                        let mut x_427: Obj;
+                                                        let mut x_428: Obj;
+                                                        let mut x_429: Obj;
+                                                        let mut x_430: Obj;
+                                                        let mut x_431: Obj;
+                                                        let mut x_432: Obj;
+                                                        let mut x_433: Obj;
+                                                        let mut x_434: Obj;
+                                                        let mut x_435: Obj;
+                                                        let mut x_436: Obj;
+                                                        let mut x_437: u8;
+                                                        let mut x_438: Obj;
+                                                        let mut x_439: Obj;
+                                                        let mut x_440: Obj;
+                                                        let mut x_441: Obj;
+                                                        let mut x_442: Obj;
+                                                        let mut x_443: Obj;
+                                                        let mut x_444: Obj;
+                                                        let mut x_445: Obj;
+                                                        let mut x_446: Obj;
+                                                        let mut x_447: Obj;
+                                                        let mut x_448: Obj;
+                                                        let mut x_449: Obj;
+                                                        let mut x_450: Obj;
+                                                        'b423: {
+                                                            let mut x_457: Obj;
+                                                            let mut x_458: Obj;
+                                                            let mut x_459: Obj;
+                                                            let mut x_460: Obj;
+                                                            let mut x_461: Obj;
+                                                            let mut x_462: Obj;
+                                                            let mut x_463: Obj;
+                                                            let mut x_464: Obj;
+                                                            let mut x_465: Obj;
+                                                            let mut x_466: Obj;
+                                                            let mut x_467: Obj;
+                                                            let mut x_468: Obj;
+                                                            let mut x_469: Obj;
+                                                            let mut x_470: u8;
+                                                            let mut x_471: Obj;
+                                                            let mut x_472: Obj;
+                                                            let mut x_473: Obj;
+                                                            let mut x_474: Obj;
+                                                            let mut x_475: Obj;
+                                                            let mut x_476: Obj;
+                                                            let mut x_477: Obj;
+                                                            let mut x_478: Obj;
+                                                            let mut x_479: Obj;
+                                                            let mut x_480: Obj;
+                                                            let mut x_481: Obj;
+                                                            let mut x_482: Obj;
+                                                            let mut x_483: Obj;
+                                                            let mut x_484: Obj;
+                                                            'b456: {
+                                                                let mut x_491: Obj;
+                                                                let mut x_492: Obj;
+                                                                let mut x_493: Obj;
+                                                                let mut x_494: Obj;
+                                                                let mut x_495: Obj;
+                                                                let mut x_496: Obj;
+                                                                let mut x_497: Obj;
+                                                                let mut x_498: Obj;
+                                                                let mut x_499: Obj;
+                                                                let mut x_500: Obj;
+                                                                let mut x_501: Obj;
+                                                                let mut x_502: Obj;
+                                                                let mut x_503: Obj;
+                                                                let mut x_504: u8;
+                                                                let mut x_505: Obj;
+                                                                let mut x_506: Obj;
+                                                                let mut x_507: Obj;
+                                                                let mut x_508: Obj;
+                                                                let mut x_509: Obj;
+                                                                let mut x_510: Obj;
+                                                                let mut x_511: Obj;
+                                                                let mut x_512: Obj;
+                                                                let mut x_513: Obj;
+                                                                let mut x_514: Obj;
+                                                                let mut x_515: Obj;
+                                                                let mut x_516: Obj;
+                                                                let mut x_517: Obj;
+                                                                let mut x_518: Obj;
+                                                                let mut x_519: Obj;
+                                                                'b490: {
+                                                                    let mut x_526: Obj;
+                                                                    let mut x_527: Obj;
+                                                                    let mut x_528: Obj;
+                                                                    let mut x_529: Obj;
+                                                                    let mut x_530: Obj;
+                                                                    let mut x_531: Obj;
+                                                                    let mut x_532: Obj;
+                                                                    let mut x_533: Obj;
+                                                                    let mut x_534: Obj;
+                                                                    let mut x_535: Obj;
+                                                                    let mut x_536: Obj;
+                                                                    let mut x_537: Obj;
+                                                                    let mut x_538: Obj;
+                                                                    let mut x_539: u8;
+                                                                    let mut x_540: Obj;
+                                                                    let mut x_541: Obj;
+                                                                    let mut x_542: Obj;
+                                                                    let mut x_543: Obj;
+                                                                    let mut x_544: Obj;
+                                                                    let mut x_545: Obj;
+                                                                    let mut x_546: Obj;
+                                                                    let mut x_547: Obj;
+                                                                    let mut x_548: Obj;
+                                                                    let mut x_549: Obj;
+                                                                    let mut x_550: Obj;
+                                                                    let mut x_551: Obj;
+                                                                    let mut x_552: Obj;
+                                                                    let mut x_553: Obj;
+                                                                    let mut x_554: Obj;
+                                                                    let mut x_555: Obj;
+                                                                    'b525: {
+                                                                        let mut x_562: Obj;
+                                                                        let mut x_563: Obj;
+                                                                        let mut x_564: Obj;
+                                                                        let mut x_565: Obj;
+                                                                        let mut x_566: Obj;
+                                                                        let mut x_567: Obj;
+                                                                        let mut x_568: Obj;
+                                                                        let mut x_569: Obj;
+                                                                        let mut x_570: Obj;
+                                                                        let mut x_571: Obj;
+                                                                        let mut x_572: Obj;
+                                                                        let mut x_573: Obj;
+                                                                        let mut x_574: Obj;
+                                                                        let mut x_575: u8;
+                                                                        let mut x_576: Obj;
+                                                                        let mut x_577: Obj;
+                                                                        let mut x_578: Obj;
+                                                                        let mut x_579: Obj;
+                                                                        let mut x_580: Obj;
+                                                                        let mut x_581: Obj;
+                                                                        let mut x_582: Obj;
+                                                                        let mut x_583: Obj;
+                                                                        let mut x_584: Obj;
+                                                                        let mut x_585: Obj;
+                                                                        let mut x_586: Obj;
+                                                                        let mut x_587: Obj;
+                                                                        let mut x_588: Obj;
+                                                                        let mut x_589: Obj;
+                                                                        let mut x_590: Obj;
+                                                                        let mut x_591: Obj;
+                                                                        let mut x_592: Obj;
+                                                                        'b561: {
+                                                                            let mut x_599: Obj;
+                                                                            let mut x_600: Obj;
+                                                                            let mut x_601: Obj;
+                                                                            let mut x_602: Obj;
+                                                                            let mut x_603: Obj;
+                                                                            let mut x_604: Obj;
+                                                                            let mut x_605: Obj;
+                                                                            let mut x_606: Obj;
+                                                                            let mut x_607: Obj;
+                                                                            let mut x_608: Obj;
+                                                                            let mut x_609: Obj;
+                                                                            let mut x_610: Obj;
+                                                                            let mut x_611: Obj;
+                                                                            let mut x_612: u8;
+                                                                            let mut x_613: Obj;
+                                                                            let mut x_614: Obj;
+                                                                            let mut x_615: Obj;
+                                                                            let mut x_616: Obj;
+                                                                            let mut x_617: Obj;
+                                                                            let mut x_618: Obj;
+                                                                            let mut x_619: Obj;
+                                                                            let mut x_620: Obj;
+                                                                            let mut x_621: Obj;
+                                                                            let mut x_622: Obj;
+                                                                            let mut x_623: Obj;
+                                                                            let mut x_624: Obj;
+                                                                            let mut x_625: Obj;
+                                                                            let mut x_626: Obj;
+                                                                            let mut x_627: Obj;
+                                                                            let mut x_628: Obj;
+                                                                            let mut x_629: Obj;
+                                                                            let mut x_630: Obj;
+                                                                            'b598: {
+                                                                                let mut x_637: Obj;
+                                                                                let mut x_638: Obj;
+                                                                                let mut x_639: Obj;
+                                                                                let mut x_640: Obj;
+                                                                                let mut x_641: Obj;
+                                                                                let mut x_642: Obj;
+                                                                                let mut x_643: Obj;
+                                                                                let mut x_644: Obj;
+                                                                                let mut x_645: Obj;
+                                                                                let mut x_646: Obj;
+                                                                                let mut x_647: Obj;
+                                                                                let mut x_648: Obj;
+                                                                                let mut x_649: Obj;
+                                                                                let mut x_650: u8;
+                                                                                let mut x_651: Obj;
+                                                                                let mut x_652: Obj;
+                                                                                let mut x_653: Obj;
+                                                                                let mut x_654: Obj;
+                                                                                let mut x_655: Obj;
+                                                                                let mut x_656: Obj;
+                                                                                let mut x_657: Obj;
+                                                                                let mut x_658: Obj;
+                                                                                let mut x_659: Obj;
+                                                                                let mut x_660: Obj;
+                                                                                let mut x_661: Obj;
+                                                                                let mut x_662: Obj;
+                                                                                let mut x_663: Obj;
+                                                                                let mut x_664: Obj;
+                                                                                let mut x_665: Obj;
+                                                                                let mut x_666: Obj;
+                                                                                let mut x_667: Obj;
+                                                                                let mut x_668: Obj;
+                                                                                let mut x_669: Obj;
+                                                                                'b636: {
+                                                                                    let mut x_683: Obj;
+                                                                                    let mut x_684: Obj;
+                                                                                    let mut x_685: Obj;
+                                                                                    let mut x_686: Obj;
+                                                                                    let mut x_687: Obj;
+                                                                                    let mut x_688: Obj;
+                                                                                    let mut x_689: Obj;
+                                                                                    let mut x_690: Obj;
+                                                                                    let mut x_691: Obj;
+                                                                                    let mut x_692: Obj;
+                                                                                    let mut x_693: Obj;
+                                                                                    let mut x_694: Obj;
+                                                                                    let mut x_695: Obj;
+                                                                                    let mut x_696: u8;
+                                                                                    let mut x_697: Obj;
+                                                                                    let mut x_698: Obj;
+                                                                                    let mut x_699: Obj;
+                                                                                    let mut x_700: Obj;
+                                                                                    let mut x_701: Obj;
+                                                                                    let mut x_702: Obj;
+                                                                                    let mut x_703: Obj;
+                                                                                    let mut x_704: Obj;
+                                                                                    let mut x_705: Obj;
+                                                                                    let mut x_706: Obj;
+                                                                                    let mut x_707: Obj;
+                                                                                    let mut x_708: Obj;
+                                                                                    let mut x_709: Obj;
+                                                                                    let mut x_710: Obj;
+                                                                                    let mut x_711: Obj;
+                                                                                    let mut x_712: Obj;
+                                                                                    let mut x_713: Obj;
+                                                                                    let mut x_714: Obj;
+                                                                                    let mut x_715: Obj;
+                                                                                    let mut x_716: Obj;
+                                                                                    'b682: {
+                                                                                        let mut x_723: Obj;
+                                                                                        let mut x_724: Obj;
+                                                                                        let mut x_725: Obj;
+                                                                                        let mut x_726: Obj;
+                                                                                        let mut x_727: Obj;
+                                                                                        let mut x_728: Obj;
+                                                                                        let mut x_729: Obj;
+                                                                                        let mut x_730: Obj;
+                                                                                        let mut x_731: Obj;
+                                                                                        let mut x_732: Obj;
+                                                                                        let mut x_733: Obj;
+                                                                                        let mut x_734: Obj;
+                                                                                        let mut x_735: Obj;
+                                                                                        let mut x_736: u8;
+                                                                                        let mut x_737: Obj;
+                                                                                        let mut x_738: Obj;
+                                                                                        let mut x_739: Obj;
+                                                                                        let mut x_740: Obj;
+                                                                                        let mut x_741: Obj;
+                                                                                        let mut x_742: Obj;
+                                                                                        let mut x_743: Obj;
+                                                                                        let mut x_744: Obj;
+                                                                                        let mut x_745: Obj;
+                                                                                        let mut x_746: Obj;
+                                                                                        let mut x_747: Obj;
+                                                                                        let mut x_748: Obj;
+                                                                                        let mut x_749: Obj;
+                                                                                        let mut x_750: Obj;
+                                                                                        let mut x_751: Obj;
+                                                                                        let mut x_752: Obj;
+                                                                                        let mut x_753: Obj;
+                                                                                        let mut x_754: Obj;
+                                                                                        let mut x_755: Obj;
+                                                                                        let mut x_756: Obj;
+                                                                                        let mut x_757: Obj;
+                                                                                        'b722: {
+                                                                                            let mut x_764: Obj;
+                                                                                            let mut x_765: Obj;
+                                                                                            let mut x_766: Obj;
+                                                                                            let mut x_767: Obj;
+                                                                                            let mut x_768: Obj;
+                                                                                            let mut x_769: Obj;
+                                                                                            let mut x_770: Obj;
+                                                                                            let mut x_771: Obj;
+                                                                                            let mut x_772: Obj;
+                                                                                            let mut x_773: Obj;
+                                                                                            let mut x_774: Obj;
+                                                                                            let mut x_775: Obj;
+                                                                                            let mut x_776: Obj;
+                                                                                            let mut x_777: u8;
+                                                                                            let mut x_778: Obj;
+                                                                                            let mut x_779: Obj;
+                                                                                            let mut x_780: Obj;
+                                                                                            let mut x_781: Obj;
+                                                                                            let mut x_782: Obj;
+                                                                                            let mut x_783: Obj;
+                                                                                            let mut x_784: Obj;
+                                                                                            let mut x_785: Obj;
+                                                                                            let mut x_786: Obj;
+                                                                                            let mut x_787: Obj;
+                                                                                            let mut x_788: Obj;
+                                                                                            let mut x_789: Obj;
+                                                                                            let mut x_790: Obj;
+                                                                                            let mut x_791: Obj;
+                                                                                            let mut x_792: Obj;
+                                                                                            let mut x_793: Obj;
+                                                                                            let mut x_794: Obj;
+                                                                                            let mut x_795: Obj;
+                                                                                            let mut x_796: Obj;
+                                                                                            let mut x_797: Obj;
+                                                                                            let mut x_798: Obj;
+                                                                                            'b763: {
+                                                                                                let mut x_805: Obj;
+                                                                                                let mut x_806: Obj;
+                                                                                                let mut x_807: Obj;
+                                                                                                let mut x_808: Obj;
+                                                                                                let mut x_809: Obj;
+                                                                                                let mut x_810: Obj;
+                                                                                                let mut x_811: Obj;
+                                                                                                let mut x_812: Obj;
+                                                                                                let mut x_813: Obj;
+                                                                                                let mut x_814: Obj;
+                                                                                                let mut x_815: Obj;
+                                                                                                let mut x_816: Obj;
+                                                                                                let mut x_817: Obj;
+                                                                                                let mut x_818: u8;
+                                                                                                let mut x_819: Obj;
+                                                                                                let mut x_820: Obj;
+                                                                                                let mut x_821: Obj;
+                                                                                                let mut x_822: Obj;
+                                                                                                let mut x_823: Obj;
+                                                                                                let mut x_824: Obj;
+                                                                                                let mut x_825: Obj;
+                                                                                                let mut x_826: Obj;
+                                                                                                let mut x_827: Obj;
+                                                                                                let mut x_828: Obj;
+                                                                                                let mut x_829: Obj;
+                                                                                                let mut x_830: Obj;
+                                                                                                let mut x_831: Obj;
+                                                                                                let mut x_832: Obj;
+                                                                                                let mut x_833: Obj;
+                                                                                                let mut x_834: Obj;
+                                                                                                let mut x_835: Obj;
+                                                                                                let mut x_836: Obj;
+                                                                                                let mut x_837: Obj;
+                                                                                                let mut x_838: Obj;
+                                                                                                let mut x_839: Obj;
+                                                                                                'b804: {
+                                                                                                    let mut x_846: Obj;
+                                                                                                    let mut x_847: Obj;
+                                                                                                    let mut x_848: Obj;
+                                                                                                    let mut x_849: Obj;
+                                                                                                    let mut x_850: Obj;
+                                                                                                    let mut x_851: Obj;
+                                                                                                    let mut x_852: Obj;
+                                                                                                    let mut x_853: Obj;
+                                                                                                    let mut x_854: Obj;
+                                                                                                    let mut x_855: Obj;
+                                                                                                    let mut x_856: Obj;
+                                                                                                    let mut x_857: Obj;
+                                                                                                    let mut x_858: Obj;
+                                                                                                    let mut x_859: u8;
+                                                                                                    let mut x_860: Obj;
+                                                                                                    let mut x_861: Obj;
+                                                                                                    let mut x_862: Obj;
+                                                                                                    let mut x_863: Obj;
+                                                                                                    let mut x_864: Obj;
+                                                                                                    let mut x_865: Obj;
+                                                                                                    let mut x_866: Obj;
+                                                                                                    let mut x_867: Obj;
+                                                                                                    let mut x_868: Obj;
+                                                                                                    let mut x_869: Obj;
+                                                                                                    let mut x_870: Obj;
+                                                                                                    let mut x_871: Obj;
+                                                                                                    let mut x_872: Obj;
+                                                                                                    let mut x_873: Obj;
+                                                                                                    let mut x_874: Obj;
+                                                                                                    let mut x_875: Obj;
+                                                                                                    let mut x_876: Obj;
+                                                                                                    let mut x_877: Obj;
+                                                                                                    let mut x_878: Obj;
+                                                                                                    let mut x_879: Obj;
+                                                                                                    let mut x_880: Obj;
+                                                                                                    'b845: {
+                                                                                                        let mut x_887: Obj;
+                                                                                                        let mut x_888: Obj;
+                                                                                                        let mut x_889: Obj;
+                                                                                                        let mut x_890: Obj;
+                                                                                                        let mut x_891: Obj;
+                                                                                                        let mut x_892: Obj;
+                                                                                                        let mut x_893: Obj;
+                                                                                                        let mut x_894: Obj;
+                                                                                                        let mut x_895: Obj;
+                                                                                                        let mut x_896: Obj;
+                                                                                                        let mut x_897: Obj;
+                                                                                                        let mut x_898: Obj;
+                                                                                                        let mut x_899: Obj;
+                                                                                                        let mut x_900: u8;
+                                                                                                        let mut x_901: Obj;
+                                                                                                        let mut x_902: Obj;
+                                                                                                        let mut x_903: Obj;
+                                                                                                        let mut x_904: Obj;
+                                                                                                        let mut x_905: Obj;
+                                                                                                        let mut x_906: Obj;
+                                                                                                        let mut x_907: Obj;
+                                                                                                        let mut x_908: Obj;
+                                                                                                        let mut x_909: Obj;
+                                                                                                        let mut x_910: Obj;
+                                                                                                        let mut x_911: Obj;
+                                                                                                        let mut x_912: Obj;
+                                                                                                        let mut x_913: Obj;
+                                                                                                        let mut x_914: Obj;
+                                                                                                        let mut x_915: Obj;
+                                                                                                        let mut x_916: Obj;
+                                                                                                        let mut x_917: Obj;
+                                                                                                        let mut x_918: Obj;
+                                                                                                        let mut x_919: Obj;
+                                                                                                        let mut x_920: Obj;
+                                                                                                        let mut x_921: Obj;
+                                                                                                        'b886: {
+                                                                                                            let mut x_928: Obj;
+                                                                                                            let mut x_929: Obj;
+                                                                                                            let mut x_930: Obj;
+                                                                                                            let mut x_931: Obj;
+                                                                                                            let mut x_932: Obj;
+                                                                                                            let mut x_933: Obj;
+                                                                                                            let mut x_934: Obj;
+                                                                                                            let mut x_935: Obj;
+                                                                                                            let mut x_936: Obj;
+                                                                                                            let mut x_937: Obj;
+                                                                                                            let mut x_938: Obj;
+                                                                                                            let mut x_939: Obj;
+                                                                                                            let mut x_940: Obj;
+                                                                                                            let mut x_941: u8;
+                                                                                                            let mut x_942: Obj;
+                                                                                                            let mut x_943: Obj;
+                                                                                                            let mut x_944: Obj;
+                                                                                                            let mut x_945: Obj;
+                                                                                                            let mut x_946: Obj;
+                                                                                                            let mut x_947: Obj;
+                                                                                                            let mut x_948: Obj;
+                                                                                                            let mut x_949: Obj;
+                                                                                                            let mut x_950: Obj;
+                                                                                                            let mut x_951: Obj;
+                                                                                                            let mut x_952: Obj;
+                                                                                                            let mut x_953: Obj;
+                                                                                                            let mut x_954: Obj;
+                                                                                                            let mut x_955: Obj;
+                                                                                                            let mut x_956: Obj;
+                                                                                                            let mut x_957: Obj;
+                                                                                                            let mut x_958: Obj;
+                                                                                                            let mut x_959: Obj;
+                                                                                                            let mut x_960: Obj;
+                                                                                                            let mut x_961: Obj;
+                                                                                                            let mut x_962: Obj;
+                                                                                                            'b927: {
+                                                                                                                let mut x_969: Obj;
+                                                                                                                let mut x_970: Obj;
+                                                                                                                let mut x_971: Obj;
+                                                                                                                let mut x_972: Obj;
+                                                                                                                let mut x_973: Obj;
+                                                                                                                let mut x_974: Obj;
+                                                                                                                let mut x_975: Obj;
+                                                                                                                let mut x_976: Obj;
+                                                                                                                let mut x_977: Obj;
+                                                                                                                let mut x_978: Obj;
+                                                                                                                let mut x_979: Obj;
+                                                                                                                let mut x_980: Obj;
+                                                                                                                let mut x_981: Obj;
+                                                                                                                let mut x_982: u8;
+                                                                                                                let mut x_983: Obj;
+                                                                                                                let mut x_984: Obj;
+                                                                                                                let mut x_985: Obj;
+                                                                                                                let mut x_986: Obj;
+                                                                                                                let mut x_987: Obj;
+                                                                                                                let mut x_988: Obj;
+                                                                                                                let mut x_989: Obj;
+                                                                                                                let mut x_990: Obj;
+                                                                                                                let mut x_991: Obj;
+                                                                                                                let mut x_992: Obj;
+                                                                                                                let mut x_993: Obj;
+                                                                                                                let mut x_994: Obj;
+                                                                                                                let mut x_995: Obj;
+                                                                                                                let mut x_996: Obj;
+                                                                                                                let mut x_997: Obj;
+                                                                                                                let mut x_998: Obj;
+                                                                                                                let mut x_999: Obj;
+                                                                                                                let mut x_1000: Obj;
+                                                                                                                let mut x_1001: Obj;
+                                                                                                                let mut x_1002: Obj;
+                                                                                                                let mut x_1003: Obj;
+                                                                                                                'b968: {
+                                                                                                                    let mut x_1010: Obj;
+                                                                                                                    let mut x_1011: Obj;
+                                                                                                                    let mut x_1012: Obj;
+                                                                                                                    let mut x_1013: Obj;
+                                                                                                                    let mut x_1014: Obj;
+                                                                                                                    let mut x_1015: Obj;
+                                                                                                                    let mut x_1016: Obj;
+                                                                                                                    let mut x_1017: Obj;
+                                                                                                                    let mut x_1018: Obj;
+                                                                                                                    let mut x_1019: Obj;
+                                                                                                                    let mut x_1020: Obj;
+                                                                                                                    let mut x_1021: Obj;
+                                                                                                                    let mut x_1022: Obj;
+                                                                                                                    let mut x_1023: u8;
+                                                                                                                    let mut x_1024: Obj;
+                                                                                                                    let mut x_1025: Obj;
+                                                                                                                    let mut x_1026: Obj;
+                                                                                                                    let mut x_1027: Obj;
+                                                                                                                    let mut x_1028: Obj;
+                                                                                                                    let mut x_1029: Obj;
+                                                                                                                    let mut x_1030: Obj;
+                                                                                                                    let mut x_1031: Obj;
+                                                                                                                    let mut x_1032: Obj;
+                                                                                                                    let mut x_1033: Obj;
+                                                                                                                    let mut x_1034: Obj;
+                                                                                                                    let mut x_1035: Obj;
+                                                                                                                    let mut x_1036: Obj;
+                                                                                                                    let mut x_1037: Obj;
+                                                                                                                    let mut x_1038: Obj;
+                                                                                                                    let mut x_1039: Obj;
+                                                                                                                    let mut x_1040: Obj;
+                                                                                                                    let mut x_1041: Obj;
+                                                                                                                    let mut x_1042: Obj;
+                                                                                                                    let mut x_1043: Obj;
+                                                                                                                    let mut x_1044: Obj;
+                                                                                                                    'b1009: {
+                                                                                                                        let mut x_1051: Obj;
+                                                                                                                        let mut x_1052: Obj;
+                                                                                                                        let mut x_1053: Obj;
+                                                                                                                        let mut x_1054: Obj;
+                                                                                                                        let mut x_1055: Obj;
+                                                                                                                        let mut x_1056: Obj;
+                                                                                                                        let mut x_1057: Obj;
+                                                                                                                        let mut x_1058: Obj;
+                                                                                                                        let mut x_1059: Obj;
+                                                                                                                        let mut x_1060: Obj;
+                                                                                                                        let mut x_1061: Obj;
+                                                                                                                        let mut x_1062: Obj;
+                                                                                                                        let mut x_1063: Obj;
+                                                                                                                        let mut x_1064: u8;
+                                                                                                                        let mut x_1065: Obj;
+                                                                                                                        let mut x_1066: Obj;
+                                                                                                                        let mut x_1067: Obj;
+                                                                                                                        let mut x_1068: Obj;
+                                                                                                                        let mut x_1069: Obj;
+                                                                                                                        let mut x_1070: Obj;
+                                                                                                                        let mut x_1071: Obj;
+                                                                                                                        let mut x_1072: Obj;
+                                                                                                                        let mut x_1073: Obj;
+                                                                                                                        let mut x_1074: Obj;
+                                                                                                                        let mut x_1075: Obj;
+                                                                                                                        let mut x_1076: Obj;
+                                                                                                                        let mut x_1077: Obj;
+                                                                                                                        let mut x_1078: Obj;
+                                                                                                                        let mut x_1079: Obj;
+                                                                                                                        let mut x_1080: Obj;
+                                                                                                                        let mut x_1081: Obj;
+                                                                                                                        let mut x_1082: Obj;
+                                                                                                                        let mut x_1083: Obj;
+                                                                                                                        let mut x_1084: Obj;
+                                                                                                                        let mut x_1085: Obj;
+                                                                                                                        'b1050: {
+                                                                                                                            let mut x_1092: Obj;
+                                                                                                                            let mut x_1093: Obj;
+                                                                                                                            let mut x_1094: Obj;
+                                                                                                                            let mut x_1095: Obj;
+                                                                                                                            let mut x_1096: Obj;
+                                                                                                                            let mut x_1097: Obj;
+                                                                                                                            let mut x_1098: Obj;
+                                                                                                                            let mut x_1099: Obj;
+                                                                                                                            let mut x_1100: Obj;
+                                                                                                                            let mut x_1101: Obj;
+                                                                                                                            let mut x_1102: Obj;
+                                                                                                                            let mut x_1103: Obj;
+                                                                                                                            let mut x_1104: Obj;
+                                                                                                                            let mut x_1105: u8;
+                                                                                                                            let mut x_1106: Obj;
+                                                                                                                            let mut x_1107: Obj;
+                                                                                                                            let mut x_1108: Obj;
+                                                                                                                            let mut x_1109: Obj;
+                                                                                                                            let mut x_1110: Obj;
+                                                                                                                            let mut x_1111: Obj;
+                                                                                                                            let mut x_1112: Obj;
+                                                                                                                            let mut x_1113: Obj;
+                                                                                                                            let mut x_1114: Obj;
+                                                                                                                            let mut x_1115: Obj;
+                                                                                                                            let mut x_1116: Obj;
+                                                                                                                            let mut x_1117: Obj;
+                                                                                                                            let mut x_1118: Obj;
+                                                                                                                            let mut x_1119: Obj;
+                                                                                                                            let mut x_1120: Obj;
+                                                                                                                            let mut x_1121: Obj;
+                                                                                                                            let mut x_1122: Obj;
+                                                                                                                            let mut x_1123: Obj;
+                                                                                                                            let mut x_1124: Obj;
+                                                                                                                            let mut x_1125: Obj;
+                                                                                                                            let mut x_1126: Obj;
+                                                                                                                            'b1091: {
+                                                                                                                                let mut x_1133: Obj;
+                                                                                                                                let mut x_1134: Obj;
+                                                                                                                                let mut x_1135: Obj;
+                                                                                                                                let mut x_1136: Obj;
+                                                                                                                                let mut x_1137: Obj;
+                                                                                                                                let mut x_1138: Obj;
+                                                                                                                                let mut x_1139: Obj;
+                                                                                                                                let mut x_1140: Obj;
+                                                                                                                                let mut x_1141: Obj;
+                                                                                                                                let mut x_1142: Obj;
+                                                                                                                                let mut x_1143: Obj;
+                                                                                                                                let mut x_1144: Obj;
+                                                                                                                                let mut x_1145: Obj;
+                                                                                                                                let mut x_1146: u8;
+                                                                                                                                let mut x_1147: Obj;
+                                                                                                                                let mut x_1148: Obj;
+                                                                                                                                let mut x_1149: Obj;
+                                                                                                                                let mut x_1150: Obj;
+                                                                                                                                let mut x_1151: Obj;
+                                                                                                                                let mut x_1152: Obj;
+                                                                                                                                let mut x_1153: Obj;
+                                                                                                                                let mut x_1154: Obj;
+                                                                                                                                let mut x_1155: Obj;
+                                                                                                                                let mut x_1156: Obj;
+                                                                                                                                let mut x_1157: Obj;
+                                                                                                                                let mut x_1158: Obj;
+                                                                                                                                let mut x_1159: Obj;
+                                                                                                                                let mut x_1160: Obj;
+                                                                                                                                let mut x_1161: Obj;
+                                                                                                                                let mut x_1162: Obj;
+                                                                                                                                let mut x_1163: Obj;
+                                                                                                                                let mut x_1164: Obj;
+                                                                                                                                let mut x_1165: Obj;
+                                                                                                                                let mut x_1166: Obj;
+                                                                                                                                let mut x_1167: Obj;
+                                                                                                                                'b1132: {
+                                                                                                                                    let mut x_1174: Obj;
+                                                                                                                                    let mut x_1175: Obj;
+                                                                                                                                    let mut x_1176: Obj;
+                                                                                                                                    let mut x_1177: Obj;
+                                                                                                                                    let mut x_1178: Obj;
+                                                                                                                                    let mut x_1179: Obj;
+                                                                                                                                    let mut x_1180: Obj;
+                                                                                                                                    let mut x_1181: Obj;
+                                                                                                                                    let mut x_1182: Obj;
+                                                                                                                                    let mut x_1183: Obj;
+                                                                                                                                    let mut x_1184: Obj;
+                                                                                                                                    let mut x_1185: Obj;
+                                                                                                                                    let mut x_1186: Obj;
+                                                                                                                                    let mut x_1187: u8;
+                                                                                                                                    let mut x_1188: Obj;
+                                                                                                                                    let mut x_1189: Obj;
+                                                                                                                                    let mut x_1190: Obj;
+                                                                                                                                    let mut x_1191: Obj;
+                                                                                                                                    let mut x_1192: Obj;
+                                                                                                                                    let mut x_1193: Obj;
+                                                                                                                                    let mut x_1194: Obj;
+                                                                                                                                    let mut x_1195: Obj;
+                                                                                                                                    let mut x_1196: Obj;
+                                                                                                                                    let mut x_1197: Obj;
+                                                                                                                                    let mut x_1198: Obj;
+                                                                                                                                    let mut x_1199: Obj;
+                                                                                                                                    let mut x_1200: Obj;
+                                                                                                                                    let mut x_1201: Obj;
+                                                                                                                                    let mut x_1202: Obj;
+                                                                                                                                    let mut x_1203: Obj;
+                                                                                                                                    let mut x_1204: Obj;
+                                                                                                                                    let mut x_1205: Obj;
+                                                                                                                                    let mut x_1206: Obj;
+                                                                                                                                    let mut x_1207: Obj;
+                                                                                                                                    let mut x_1208: Obj;
+                                                                                                                                    'b1173: {
+                                                                                                                                        let mut x_1215: Obj;
+                                                                                                                                        let mut x_1216: Obj;
+                                                                                                                                        let mut x_1217: Obj;
+                                                                                                                                        let mut x_1218: Obj;
+                                                                                                                                        let mut x_1219: Obj;
+                                                                                                                                        let mut x_1220: Obj;
+                                                                                                                                        let mut x_1221: Obj;
+                                                                                                                                        let mut x_1222: Obj;
+                                                                                                                                        let mut x_1223: Obj;
+                                                                                                                                        let mut x_1224: Obj;
+                                                                                                                                        let mut x_1225: Obj;
+                                                                                                                                        let mut x_1226: Obj;
+                                                                                                                                        let mut x_1227: Obj;
+                                                                                                                                        let mut x_1228: u8;
+                                                                                                                                        let mut x_1229: Obj;
+                                                                                                                                        let mut x_1230: Obj;
+                                                                                                                                        let mut x_1231: Obj;
+                                                                                                                                        let mut x_1232: Obj;
+                                                                                                                                        let mut x_1233: Obj;
+                                                                                                                                        let mut x_1234: Obj;
+                                                                                                                                        let mut x_1235: Obj;
+                                                                                                                                        let mut x_1236: Obj;
+                                                                                                                                        let mut x_1237: Obj;
+                                                                                                                                        let mut x_1238: Obj;
+                                                                                                                                        let mut x_1239: Obj;
+                                                                                                                                        let mut x_1240: Obj;
+                                                                                                                                        let mut x_1241: Obj;
+                                                                                                                                        let mut x_1242: Obj;
+                                                                                                                                        let mut x_1243: Obj;
+                                                                                                                                        let mut x_1244: Obj;
+                                                                                                                                        let mut x_1245: Obj;
+                                                                                                                                        let mut x_1246: Obj;
+                                                                                                                                        let mut x_1247: Obj;
+                                                                                                                                        let mut x_1248: Obj;
+                                                                                                                                        let mut x_1249: Obj;
+                                                                                                                                        let mut x_1250: Obj;
+                                                                                                                                        'b1214: {
+                                                                                                                                            let mut x_1257: Obj;
+                                                                                                                                            let mut x_1258: Obj;
+                                                                                                                                            let mut x_1259: Obj;
+                                                                                                                                            let mut x_1260: Obj;
+                                                                                                                                            let mut x_1261: Obj;
+                                                                                                                                            let mut x_1262: Obj;
+                                                                                                                                            let mut x_1263: Obj;
+                                                                                                                                            let mut x_1264: Obj;
+                                                                                                                                            let mut x_1265: Obj;
+                                                                                                                                            let mut x_1266: Obj;
+                                                                                                                                            let mut x_1267: Obj;
+                                                                                                                                            let mut x_1268: Obj;
+                                                                                                                                            let mut x_1269: Obj;
+                                                                                                                                            let mut x_1270: Obj;
+                                                                                                                                            let mut x_1271: Obj;
+                                                                                                                                            let mut x_1272: u8;
+                                                                                                                                            let mut x_1273: Obj;
+                                                                                                                                            let mut x_1274: Obj;
+                                                                                                                                            'b1256: {
+                                                                                                                                                let mut x_1325: Obj;
+                                                                                                                                                let mut x_1326: Obj;
+                                                                                                                                                let mut x_1327: Obj;
+                                                                                                                                                let mut x_1328: Obj;
+                                                                                                                                                let mut x_1329: Obj;
+                                                                                                                                                let mut x_1330: Obj;
+                                                                                                                                                let mut x_1331: Obj;
+                                                                                                                                                let mut x_1332: Obj;
+                                                                                                                                                let mut x_1333: Obj;
+                                                                                                                                                let mut x_1334: Obj;
+                                                                                                                                                let mut x_1335: Obj;
+                                                                                                                                                let mut x_1336: Obj;
+                                                                                                                                                let mut x_1337: Obj;
+                                                                                                                                                let mut x_1338: Obj;
+                                                                                                                                                let mut x_1339: Obj;
+                                                                                                                                                let mut x_1340: Obj;
+                                                                                                                                                let mut x_1341: u8;
+                                                                                                                                                let mut x_1342: Obj;
+                                                                                                                                                let mut x_1343: Obj;
+                                                                                                                                                let mut x_1344: Obj;
+                                                                                                                                                'b1324: {
+                                                                                                                                                    let mut x_1351: Obj;
+                                                                                                                                                    let mut x_1352: Obj;
+                                                                                                                                                    let mut x_1353: Obj;
+                                                                                                                                                    let mut x_1354: Obj;
+                                                                                                                                                    let mut x_1355: Obj;
+                                                                                                                                                    let mut x_1356: Obj;
+                                                                                                                                                    let mut x_1357: Obj;
+                                                                                                                                                    let mut x_1358: Obj;
+                                                                                                                                                    let mut x_1359: Obj;
+                                                                                                                                                    let mut x_1360: Obj;
+                                                                                                                                                    let mut x_1361: Obj;
+                                                                                                                                                    let mut x_1362: Obj;
+                                                                                                                                                    let mut x_1363: Obj;
+                                                                                                                                                    let mut x_1364: Obj;
+                                                                                                                                                    let mut x_1365: Obj;
+                                                                                                                                                    let mut x_1366: u8;
+                                                                                                                                                    let mut x_1367: Obj;
+                                                                                                                                                    let mut x_1368: u8;
+                                                                                                                                                    'b1350: {
+                                                                                                                                                        let mut x_1376: Obj;
+                                                                                                                                                        let mut x_1377: Obj;
+                                                                                                                                                        let mut x_1378: Obj;
+                                                                                                                                                        let mut x_1379: Obj;
+                                                                                                                                                        let mut x_1380: Obj;
+                                                                                                                                                        let mut x_1381: Obj;
+                                                                                                                                                        let mut x_1382: Obj;
+                                                                                                                                                        let mut x_1383: Obj;
+                                                                                                                                                        let mut x_1384: Obj;
+                                                                                                                                                        let mut x_1385: Obj;
+                                                                                                                                                        let mut x_1386: Obj;
+                                                                                                                                                        let mut x_1387: Obj;
+                                                                                                                                                        let mut x_1388: Obj;
+                                                                                                                                                        let mut x_1389: Obj;
+                                                                                                                                                        let mut x_1390: Obj;
+                                                                                                                                                        let mut x_1391: Obj;
+                                                                                                                                                        'b1375: {
+                                                                                                                                                            let mut x_1408: Obj;
+                                                                                                                                                            let mut x_1409: Obj;
+                                                                                                                                                            let mut x_1410: Obj;
+                                                                                                                                                            let mut x_1411: Obj;
+                                                                                                                                                            let mut x_1412: Obj;
+                                                                                                                                                            let mut x_1413: Obj;
+                                                                                                                                                            let mut x_1414: Obj;
+                                                                                                                                                            let mut x_1415: Obj;
+                                                                                                                                                            let mut x_1416: Obj;
+                                                                                                                                                            let mut x_1417: Obj;
+                                                                                                                                                            let mut x_1418: Obj;
+                                                                                                                                                            let mut x_1419: Obj;
+                                                                                                                                                            let mut x_1420: Obj;
+                                                                                                                                                            let mut x_1421: Obj;
+                                                                                                                                                            'b1407: {
+                                                                                                                                                                let mut x_1429: Obj;
+                                                                                                                                                                let mut x_1430: Obj;
+                                                                                                                                                                let mut x_1431: Obj;
+                                                                                                                                                                let mut x_1432: Obj;
+                                                                                                                                                                let mut x_1433: Obj;
+                                                                                                                                                                let mut x_1434: Obj;
+                                                                                                                                                                let mut x_1435: Obj;
+                                                                                                                                                                'b1428: {
+                                                                                                                                                                    let mut x_1445: Obj;
+                                                                                                                                                                    let mut x_1446: Obj;
+                                                                                                                                                                    let mut x_1447: Obj;
+                                                                                                                                                                    let mut x_1448: Obj;
+                                                                                                                                                                    let mut x_1449: Obj;
+                                                                                                                                                                    let mut x_1450: Obj;
+                                                                                                                                                                    let mut x_1451: Obj;
+                                                                                                                                                                    'b1444: {
+                                                                                                                                                                        let mut x_1459: Obj;
+                                                                                                                                                                        let mut x_1460: Obj;
+                                                                                                                                                                        let mut x_1461: Obj;
+                                                                                                                                                                        let mut x_1462: Obj;
+                                                                                                                                                                        let mut x_1463: Obj;
+                                                                                                                                                                        let mut x_1464: Obj;
+                                                                                                                                                                        let mut x_1465: Obj;
+                                                                                                                                                                        'b1458: {
+                                                                                                                                                                            let mut x_1473: Obj;
+                                                                                                                                                                            let mut x_1474: Obj;
+                                                                                                                                                                            let mut x_1475: Obj;
+                                                                                                                                                                            let mut x_1476: Obj;
+                                                                                                                                                                            let mut x_1477: Obj;
+                                                                                                                                                                            let mut x_1478: Obj;
+                                                                                                                                                                            let mut x_1479: Obj;
+                                                                                                                                                                            'b1472: {
+                                                                                                                                                                                let mut x_1487: Obj;
+                                                                                                                                                                                let mut x_1488: Obj;
+                                                                                                                                                                                let mut x_1489: Obj;
+                                                                                                                                                                                let mut x_1490: Obj;
+                                                                                                                                                                                let mut x_1491: Obj;
+                                                                                                                                                                                let mut x_1492: Obj;
+                                                                                                                                                                                let mut x_1493: Obj;
+                                                                                                                                                                                'b1486: {
+                                                                                                                                                                                    let mut x_1501: Obj;
+                                                                                                                                                                                    let mut x_1502: Obj;
+                                                                                                                                                                                    let mut x_1503: Obj;
+                                                                                                                                                                                    let mut x_1504: Obj;
+                                                                                                                                                                                    let mut x_1505: Obj;
+                                                                                                                                                                                    let mut x_1506: Obj;
+                                                                                                                                                                                    let mut x_1507: Obj;
+                                                                                                                                                                                    'b1500: {
+                                                                                                                                                                                        let mut x_1515: Obj;
+                                                                                                                                                                                        let mut x_1516: Obj;
+                                                                                                                                                                                        let mut x_1517: Obj;
+                                                                                                                                                                                        let mut x_1518: Obj;
+                                                                                                                                                                                        let mut x_1519: Obj;
+                                                                                                                                                                                        let mut x_1520: Obj;
+                                                                                                                                                                                        let mut x_1521: Obj;
+                                                                                                                                                                                        'b1514: {
+                                                                                                                                                                                            let mut x_1529: Obj;
+                                                                                                                                                                                            let mut x_1530: Obj;
+                                                                                                                                                                                            let mut x_1531: Obj;
+                                                                                                                                                                                            let mut x_1532: Obj;
+                                                                                                                                                                                            let mut x_1533: Obj;
+                                                                                                                                                                                            let mut x_1534: Obj;
+                                                                                                                                                                                            let mut x_1535: Obj;
+                                                                                                                                                                                            'b1528: {
+                                                                                                                                                                                                let mut x_1543: Obj;
+                                                                                                                                                                                                let mut x_1544: Obj;
+                                                                                                                                                                                                let mut x_1545: Obj;
+                                                                                                                                                                                                let mut x_1546: Obj;
+                                                                                                                                                                                                let mut x_1547: Obj;
+                                                                                                                                                                                                let mut x_1548: Obj;
+                                                                                                                                                                                                let mut x_1549: Obj;
+                                                                                                                                                                                                'b1542: {
+                                                                                                                                                                                                    let mut x_1557: Obj;
+                                                                                                                                                                                                    let mut x_1558: Obj;
+                                                                                                                                                                                                    let mut x_1559: Obj;
+                                                                                                                                                                                                    let mut x_1560: Obj;
+                                                                                                                                                                                                    let mut x_1561: Obj;
+                                                                                                                                                                                                    let mut x_1562: Obj;
+                                                                                                                                                                                                    let mut x_1563: Obj;
+                                                                                                                                                                                                    'b1556: {
+                                                                                                                                                                                                        let mut x_1571: Obj;
+                                                                                                                                                                                                        let mut x_1572: Obj;
+                                                                                                                                                                                                        let mut x_1573: Obj;
+                                                                                                                                                                                                        let mut x_1574: Obj;
+                                                                                                                                                                                                        let mut x_1575: Obj;
+                                                                                                                                                                                                        let mut x_1576: Obj;
+                                                                                                                                                                                                        let mut x_1577: Obj;
+                                                                                                                                                                                                        'b1570: {
+                                                                                                                                                                                                            let mut x_1585: Obj;
+                                                                                                                                                                                                            let mut x_1586: Obj;
+                                                                                                                                                                                                            let mut x_1587: Obj;
+                                                                                                                                                                                                            let mut x_1588: Obj;
+                                                                                                                                                                                                            let mut x_1589: Obj;
+                                                                                                                                                                                                            let mut x_1590: Obj;
+                                                                                                                                                                                                            let mut x_1591: Obj;
+                                                                                                                                                                                                            'b1584: {
+                                                                                                                                                                                                                let mut x_1599: Obj;
+                                                                                                                                                                                                                let mut x_1600: Obj;
+                                                                                                                                                                                                                let mut x_1601: Obj;
+                                                                                                                                                                                                                let mut x_1602: Obj;
+                                                                                                                                                                                                                let mut x_1603: Obj;
+                                                                                                                                                                                                                let mut x_1604: Obj;
+                                                                                                                                                                                                                let mut x_1605: Obj;
+                                                                                                                                                                                                                'b1598: {
+                                                                                                                                                                                                                    let mut x_1613: Obj;
+                                                                                                                                                                                                                    let mut x_1614: Obj;
+                                                                                                                                                                                                                    let mut x_1615: Obj;
+                                                                                                                                                                                                                    let mut x_1616: Obj;
+                                                                                                                                                                                                                    let mut x_1617: Obj;
+                                                                                                                                                                                                                    let mut x_1618: Obj;
+                                                                                                                                                                                                                    let mut x_1619: Obj;
+                                                                                                                                                                                                                    'b1612: {
+                                                                                                                                                                                                                        let mut x_1627: Obj;
+                                                                                                                                                                                                                        'b1626: {
+                                                                                                                                                                                                                            let mut x_1646: Obj;
+                                                                                                                                                                                                                            'b1645: {
+                                                                                                                                                                                                                                let mut x_1654: Obj;
+                                                                                                                                                                                                                                'b1653: {
+                                                                                                                                                                                                                                    let mut x_1662: Obj;
+                                                                                                                                                                                                                                    'b1661: {
+                                                                                                                                                                                                                                        let mut x_1670: Obj;
+                                                                                                                                                                                                                                        'b1669: {
+                                                                                                                                                                                                                                            let mut x_1678: Obj;
+                                                                                                                                                                                                                                            'b1677: {
+                                                                                                                                                                                                                                                let mut x_1686: Obj;
+                                                                                                                                                                                                                                                'b1685: {
+                                                                                                                                                                                                                                                    let mut x_1694: Obj;
+                                                                                                                                                                                                                                                    'b1693: {
+                                                                                                                                                                                                                                                        let mut x_1702: Obj;
+                                                                                                                                                                                                                                                        'b1701: {
+                                                                                                                                                                                                                                                            let mut x_1710: Obj;
+                                                                                                                                                                                                                                                            'b1709: {
+                                                                                                                                                                                                                                                                let mut x_1718: Obj;
+                                                                                                                                                                                                                                                                'b1717: {
+                                                                                                                                                                                                                                                                    let mut x_1726: Obj;
+                                                                                                                                                                                                                                                                    'b1725: {
+                                                                                                                                                                                                                                                                        let mut x_1734: Obj;
+                                                                                                                                                                                                                                                                        'b1733: {
+                                                                                                                                                                                                                                                                            let mut x_1742: Obj;
+                                                                                                                                                                                                                                                                            'b1741: {
+                                                                                                                                                                                                                                                                                let mut x_1750: Obj;
+                                                                                                                                                                                                                                                                                'b1749: {
+                                                                                                                                                                                                                                                                                    let x_1757: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                                    let x_1758: Obj = l_Sand2_dgasPacket_d__closed__1();
+                                                                                                                                                                                                                                                                                    let x_1759: u8 = l_Nat_ddecEq(x_19, x_1757);
+                                                                                                                                                                                                                                                                                    match x_1759 {
+                                                                                                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                                                                                                            let x_1760: Obj = l_Sand2_dgasPacket_d__closed__51();
+                                                                                                                                                                                                                                                                                            rt::lean_inc(x_19);
+                                                                                                                                                                                                                                                                                            let x_1761: Obj = l_Int_dofNat(x_19);
+                                                                                                                                                                                                                                                                                            let x_1762: Obj = l_Int_dmul(x_1760, x_1761);
+                                                                                                                                                                                                                                                                                            rt::lean_dec(x_1761);
+                                                                                                                                                                                                                                                                                            let x_1763: Obj = l_Int_dadd(x_1758, x_1762);
+                                                                                                                                                                                                                                                                                            rt::lean_dec(x_1762);
+                                                                                                                                                                                                                                                                                            x_1750 = x_1763;
+                                                                                                                                                                                                                                                                                            break 'b1749;
+                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                                                                                                            x_1750 = x_1758;
+                                                                                                                                                                                                                                                                                            break 'b1749;
+                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                let x_1751: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                                let x_1752: u8 = l_Nat_ddecEq(x_20, x_1751);
+                                                                                                                                                                                                                                                                                match x_1752 {
+                                                                                                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                                                                                                        let x_1753: Obj = l_Sand2_dgasPacket_d__closed__49();
+                                                                                                                                                                                                                                                                                        rt::lean_inc(x_20);
+                                                                                                                                                                                                                                                                                        let x_1754: Obj = l_Int_dofNat(x_20);
+                                                                                                                                                                                                                                                                                        let x_1755: Obj = l_Int_dmul(x_1753, x_1754);
+                                                                                                                                                                                                                                                                                        rt::lean_dec(x_1754);
+                                                                                                                                                                                                                                                                                        let x_1756: Obj = l_Int_dadd(x_1750, x_1755);
+                                                                                                                                                                                                                                                                                        rt::lean_dec(x_1755);
+                                                                                                                                                                                                                                                                                        rt::lean_dec(x_1750);
+                                                                                                                                                                                                                                                                                        x_1742 = x_1756;
+                                                                                                                                                                                                                                                                                        break 'b1741;
+                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                                                                                                        x_1742 = x_1750;
+                                                                                                                                                                                                                                                                                        break 'b1741;
+                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                            let x_1743: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                            let x_1744: u8 = l_Nat_ddecEq(x_21, x_1743);
+                                                                                                                                                                                                                                                                            match x_1744 {
+                                                                                                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                                                                                                    let x_1745: Obj = l_Sand2_dgasPacket_d__closed__47();
+                                                                                                                                                                                                                                                                                    rt::lean_inc(x_21);
+                                                                                                                                                                                                                                                                                    let x_1746: Obj = l_Int_dofNat(x_21);
+                                                                                                                                                                                                                                                                                    let x_1747: Obj = l_Int_dmul(x_1745, x_1746);
+                                                                                                                                                                                                                                                                                    rt::lean_dec(x_1746);
+                                                                                                                                                                                                                                                                                    let x_1748: Obj = l_Int_dadd(x_1742, x_1747);
+                                                                                                                                                                                                                                                                                    rt::lean_dec(x_1747);
+                                                                                                                                                                                                                                                                                    rt::lean_dec(x_1742);
+                                                                                                                                                                                                                                                                                    x_1734 = x_1748;
+                                                                                                                                                                                                                                                                                    break 'b1733;
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                                                                                                    x_1734 = x_1742;
+                                                                                                                                                                                                                                                                                    break 'b1733;
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                        let x_1735: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                        let x_1736: u8 = l_Nat_ddecEq(x_22, x_1735);
+                                                                                                                                                                                                                                                                        match x_1736 {
+                                                                                                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                                                                                                let x_1737: Obj = l_Sand2_dgasPacket_d__closed__45();
+                                                                                                                                                                                                                                                                                rt::lean_inc(x_22);
+                                                                                                                                                                                                                                                                                let x_1738: Obj = l_Int_dofNat(x_22);
+                                                                                                                                                                                                                                                                                let x_1739: Obj = l_Int_dmul(x_1737, x_1738);
+                                                                                                                                                                                                                                                                                rt::lean_dec(x_1738);
+                                                                                                                                                                                                                                                                                let x_1740: Obj = l_Int_dadd(x_1734, x_1739);
+                                                                                                                                                                                                                                                                                rt::lean_dec(x_1739);
+                                                                                                                                                                                                                                                                                rt::lean_dec(x_1734);
+                                                                                                                                                                                                                                                                                x_1726 = x_1740;
+                                                                                                                                                                                                                                                                                break 'b1725;
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                                                                                                x_1726 = x_1734;
+                                                                                                                                                                                                                                                                                break 'b1725;
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                    let x_1727: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                    let x_1728: u8 = l_Nat_ddecEq(x_24, x_1727);
+                                                                                                                                                                                                                                                                    match x_1728 {
+                                                                                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                                                                                            let x_1729: Obj = l_Sand2_dgasPacket_d__closed__43();
+                                                                                                                                                                                                                                                                            rt::lean_inc(x_24);
+                                                                                                                                                                                                                                                                            let x_1730: Obj = l_Int_dofNat(x_24);
+                                                                                                                                                                                                                                                                            let x_1731: Obj = l_Int_dmul(x_1729, x_1730);
+                                                                                                                                                                                                                                                                            rt::lean_dec(x_1730);
+                                                                                                                                                                                                                                                                            let x_1732: Obj = l_Int_dadd(x_1726, x_1731);
+                                                                                                                                                                                                                                                                            rt::lean_dec(x_1731);
+                                                                                                                                                                                                                                                                            rt::lean_dec(x_1726);
+                                                                                                                                                                                                                                                                            x_1718 = x_1732;
+                                                                                                                                                                                                                                                                            break 'b1717;
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                                                                                            x_1718 = x_1726;
+                                                                                                                                                                                                                                                                            break 'b1717;
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                let x_1719: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                                let x_1720: u8 = l_Nat_ddecEq(x_25, x_1719);
+                                                                                                                                                                                                                                                                match x_1720 {
+                                                                                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                                                                                        let x_1721: Obj = l_Sand2_dgasPacket_d__closed__41();
+                                                                                                                                                                                                                                                                        rt::lean_inc(x_25);
+                                                                                                                                                                                                                                                                        let x_1722: Obj = l_Int_dofNat(x_25);
+                                                                                                                                                                                                                                                                        let x_1723: Obj = l_Int_dmul(x_1721, x_1722);
+                                                                                                                                                                                                                                                                        rt::lean_dec(x_1722);
+                                                                                                                                                                                                                                                                        let x_1724: Obj = l_Int_dadd(x_1718, x_1723);
+                                                                                                                                                                                                                                                                        rt::lean_dec(x_1723);
+                                                                                                                                                                                                                                                                        rt::lean_dec(x_1718);
+                                                                                                                                                                                                                                                                        x_1710 = x_1724;
+                                                                                                                                                                                                                                                                        break 'b1709;
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                                                                                        x_1710 = x_1718;
+                                                                                                                                                                                                                                                                        break 'b1709;
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            let x_1711: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                            let x_1712: u8 = l_Nat_ddecEq(x_26, x_1711);
+                                                                                                                                                                                                                                                            match x_1712 {
+                                                                                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                                                                                    let x_1713: Obj = l_Sand2_dgasPacket_d__closed__39();
+                                                                                                                                                                                                                                                                    rt::lean_inc(x_26);
+                                                                                                                                                                                                                                                                    let x_1714: Obj = l_Int_dofNat(x_26);
+                                                                                                                                                                                                                                                                    let x_1715: Obj = l_Int_dmul(x_1713, x_1714);
+                                                                                                                                                                                                                                                                    rt::lean_dec(x_1714);
+                                                                                                                                                                                                                                                                    let x_1716: Obj = l_Int_dadd(x_1710, x_1715);
+                                                                                                                                                                                                                                                                    rt::lean_dec(x_1715);
+                                                                                                                                                                                                                                                                    rt::lean_dec(x_1710);
+                                                                                                                                                                                                                                                                    x_1702 = x_1716;
+                                                                                                                                                                                                                                                                    break 'b1701;
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                                                                                    x_1702 = x_1710;
+                                                                                                                                                                                                                                                                    break 'b1701;
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                        let x_1703: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                        let x_1704: u8 = l_Nat_ddecEq(x_27, x_1703);
+                                                                                                                                                                                                                                                        match x_1704 {
+                                                                                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                                                                                let x_1705: Obj = l_Sand2_dgasPacket_d__closed__37();
+                                                                                                                                                                                                                                                                rt::lean_inc(x_27);
+                                                                                                                                                                                                                                                                let x_1706: Obj = l_Int_dofNat(x_27);
+                                                                                                                                                                                                                                                                let x_1707: Obj = l_Int_dmul(x_1705, x_1706);
+                                                                                                                                                                                                                                                                rt::lean_dec(x_1706);
+                                                                                                                                                                                                                                                                let x_1708: Obj = l_Int_dadd(x_1702, x_1707);
+                                                                                                                                                                                                                                                                rt::lean_dec(x_1707);
+                                                                                                                                                                                                                                                                rt::lean_dec(x_1702);
+                                                                                                                                                                                                                                                                x_1694 = x_1708;
+                                                                                                                                                                                                                                                                break 'b1693;
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                                                                                x_1694 = x_1702;
+                                                                                                                                                                                                                                                                break 'b1693;
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                    let x_1695: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                    let x_1696: u8 = l_Nat_ddecEq(x_28, x_1695);
+                                                                                                                                                                                                                                                    match x_1696 {
+                                                                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                                                                            let x_1697: Obj = l_Sand2_dgasPacket_d__closed__35();
+                                                                                                                                                                                                                                                            rt::lean_inc(x_28);
+                                                                                                                                                                                                                                                            let x_1698: Obj = l_Int_dofNat(x_28);
+                                                                                                                                                                                                                                                            let x_1699: Obj = l_Int_dmul(x_1697, x_1698);
+                                                                                                                                                                                                                                                            rt::lean_dec(x_1698);
+                                                                                                                                                                                                                                                            let x_1700: Obj = l_Int_dadd(x_1694, x_1699);
+                                                                                                                                                                                                                                                            rt::lean_dec(x_1699);
+                                                                                                                                                                                                                                                            rt::lean_dec(x_1694);
+                                                                                                                                                                                                                                                            x_1686 = x_1700;
+                                                                                                                                                                                                                                                            break 'b1685;
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                                                                            x_1686 = x_1694;
+                                                                                                                                                                                                                                                            break 'b1685;
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                let x_1687: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                                let x_1688: u8 = l_Nat_ddecEq(x_30, x_1687);
+                                                                                                                                                                                                                                                match x_1688 {
+                                                                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                                                                        let x_1689: Obj = l_Sand2_dgasPacket_d__closed__33();
+                                                                                                                                                                                                                                                        rt::lean_inc(x_30);
+                                                                                                                                                                                                                                                        let x_1690: Obj = l_Int_dofNat(x_30);
+                                                                                                                                                                                                                                                        let x_1691: Obj = l_Int_dmul(x_1689, x_1690);
+                                                                                                                                                                                                                                                        rt::lean_dec(x_1690);
+                                                                                                                                                                                                                                                        let x_1692: Obj = l_Int_dadd(x_1686, x_1691);
+                                                                                                                                                                                                                                                        rt::lean_dec(x_1691);
+                                                                                                                                                                                                                                                        rt::lean_dec(x_1686);
+                                                                                                                                                                                                                                                        x_1678 = x_1692;
+                                                                                                                                                                                                                                                        break 'b1677;
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                                                                        x_1678 = x_1686;
+                                                                                                                                                                                                                                                        break 'b1677;
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                            let x_1679: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                            let x_1680: u8 = l_Nat_ddecEq(x_31, x_1679);
+                                                                                                                                                                                                                                            match x_1680 {
+                                                                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                                                                    let x_1681: Obj = l_Sand2_dgasPacket_d__closed__31();
+                                                                                                                                                                                                                                                    rt::lean_inc(x_31);
+                                                                                                                                                                                                                                                    let x_1682: Obj = l_Int_dofNat(x_31);
+                                                                                                                                                                                                                                                    let x_1683: Obj = l_Int_dmul(x_1681, x_1682);
+                                                                                                                                                                                                                                                    rt::lean_dec(x_1682);
+                                                                                                                                                                                                                                                    let x_1684: Obj = l_Int_dadd(x_1678, x_1683);
+                                                                                                                                                                                                                                                    rt::lean_dec(x_1683);
+                                                                                                                                                                                                                                                    rt::lean_dec(x_1678);
+                                                                                                                                                                                                                                                    x_1670 = x_1684;
+                                                                                                                                                                                                                                                    break 'b1669;
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                                                                    x_1670 = x_1678;
+                                                                                                                                                                                                                                                    break 'b1669;
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                        let x_1671: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                        let x_1672: u8 = l_Nat_ddecEq(x_32, x_1671);
+                                                                                                                                                                                                                                        match x_1672 {
+                                                                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                                                                let x_1673: Obj = l_Sand2_dgasPacket_d__closed__29();
+                                                                                                                                                                                                                                                rt::lean_inc(x_32);
+                                                                                                                                                                                                                                                let x_1674: Obj = l_Int_dofNat(x_32);
+                                                                                                                                                                                                                                                let x_1675: Obj = l_Int_dmul(x_1673, x_1674);
+                                                                                                                                                                                                                                                rt::lean_dec(x_1674);
+                                                                                                                                                                                                                                                let x_1676: Obj = l_Int_dadd(x_1670, x_1675);
+                                                                                                                                                                                                                                                rt::lean_dec(x_1675);
+                                                                                                                                                                                                                                                rt::lean_dec(x_1670);
+                                                                                                                                                                                                                                                x_1662 = x_1676;
+                                                                                                                                                                                                                                                break 'b1661;
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                                                                x_1662 = x_1670;
+                                                                                                                                                                                                                                                break 'b1661;
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                    let x_1663: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                    let x_1664: u8 = l_Nat_ddecEq(x_34, x_1663);
+                                                                                                                                                                                                                                    match x_1664 {
+                                                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                                                            let x_1665: Obj = l_Sand2_dgasPacket_d__closed__27();
+                                                                                                                                                                                                                                            rt::lean_inc(x_34);
+                                                                                                                                                                                                                                            let x_1666: Obj = l_Int_dofNat(x_34);
+                                                                                                                                                                                                                                            let x_1667: Obj = l_Int_dmul(x_1665, x_1666);
+                                                                                                                                                                                                                                            rt::lean_dec(x_1666);
+                                                                                                                                                                                                                                            let x_1668: Obj = l_Int_dadd(x_1662, x_1667);
+                                                                                                                                                                                                                                            rt::lean_dec(x_1667);
+                                                                                                                                                                                                                                            rt::lean_dec(x_1662);
+                                                                                                                                                                                                                                            x_1654 = x_1668;
+                                                                                                                                                                                                                                            break 'b1653;
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                                                            x_1654 = x_1662;
+                                                                                                                                                                                                                                            break 'b1653;
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                let x_1655: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                                let x_1656: u8 = l_Nat_ddecEq(x_35, x_1655);
+                                                                                                                                                                                                                                match x_1656 {
+                                                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                                                        let x_1657: Obj = l_Sand2_dgasPacket_d__closed__25();
+                                                                                                                                                                                                                                        rt::lean_inc(x_35);
+                                                                                                                                                                                                                                        let x_1658: Obj = l_Int_dofNat(x_35);
+                                                                                                                                                                                                                                        let x_1659: Obj = l_Int_dmul(x_1657, x_1658);
+                                                                                                                                                                                                                                        rt::lean_dec(x_1658);
+                                                                                                                                                                                                                                        let x_1660: Obj = l_Int_dadd(x_1654, x_1659);
+                                                                                                                                                                                                                                        rt::lean_dec(x_1659);
+                                                                                                                                                                                                                                        rt::lean_dec(x_1654);
+                                                                                                                                                                                                                                        x_1646 = x_1660;
+                                                                                                                                                                                                                                        break 'b1645;
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                                                        x_1646 = x_1654;
+                                                                                                                                                                                                                                        break 'b1645;
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                            let x_1647: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                            let x_1648: u8 = l_Nat_ddecEq(x_36, x_1647);
+                                                                                                                                                                                                                            match x_1648 {
+                                                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                                                    let x_1649: Obj = l_Sand2_dgasPacket_d__closed__23();
+                                                                                                                                                                                                                                    rt::lean_inc(x_36);
+                                                                                                                                                                                                                                    let x_1650: Obj = l_Int_dofNat(x_36);
+                                                                                                                                                                                                                                    let x_1651: Obj = l_Int_dmul(x_1649, x_1650);
+                                                                                                                                                                                                                                    rt::lean_dec(x_1650);
+                                                                                                                                                                                                                                    let x_1652: Obj = l_Int_dadd(x_1646, x_1651);
+                                                                                                                                                                                                                                    rt::lean_dec(x_1651);
+                                                                                                                                                                                                                                    rt::lean_dec(x_1646);
+                                                                                                                                                                                                                                    x_1627 = x_1652;
+                                                                                                                                                                                                                                    break 'b1626;
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                                                    x_1627 = x_1646;
+                                                                                                                                                                                                                                    break 'b1626;
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                        let x_1628: Obj = l_Sand2_dgasPacket_d__closed__17();
+                                                                                                                                                                                                                        let x_1629: Obj = l_Int_dmul(x_1627, x_1628);
+                                                                                                                                                                                                                        rt::lean_dec(x_1627);
+                                                                                                                                                                                                                        let x_1630: Obj = l_Sand2_dgasPacket_d__closed__18();
+                                                                                                                                                                                                                        let x_1631: Obj = l_Sand2_dgasPacket_d__closed__19();
+                                                                                                                                                                                                                        let x_1632: Obj = l_Sand2_dgasPacket_d__closed__20();
+                                                                                                                                                                                                                        let x_1633: Obj = l_Sand2_dChemistry_ddryGasMoles(x_18);
+                                                                                                                                                                                                                        rt::lean_inc(x_1633);
+                                                                                                                                                                                                                        let x_1634: Obj = l_Int_dofNat(x_1633);
+                                                                                                                                                                                                                        let x_1635: Obj = l_Int_dmul(x_1632, x_1634);
+                                                                                                                                                                                                                        rt::lean_dec(x_1634);
+                                                                                                                                                                                                                        let x_1636: Obj = l_Int_dsub(x_1629, x_1635);
+                                                                                                                                                                                                                        rt::lean_dec(x_1635);
+                                                                                                                                                                                                                        rt::lean_dec(x_1629);
+                                                                                                                                                                                                                        let x_1637: Obj = l_Sand2_dChemistry_dgasCv(x_18);
+                                                                                                                                                                                                                        let x_1638: Obj = l_Int_dofNat(x_1637);
+                                                                                                                                                                                                                        let x_1639: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                        let x_1640: u8 = l_Nat_ddecEq(x_21, x_1639);
+                                                                                                                                                                                                                        match x_1640 {
+                                                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                                                let x_1641: Obj = l_Sand2_dgasPacket_d__closed__21();
+                                                                                                                                                                                                                                rt::lean_inc(x_21);
+                                                                                                                                                                                                                                let x_1642: Obj = l_Int_dofNat(x_21);
+                                                                                                                                                                                                                                let x_1643: Obj = l_Int_dmul(x_1641, x_1642);
+                                                                                                                                                                                                                                rt::lean_dec(x_1642);
+                                                                                                                                                                                                                                let x_1644: Obj = l_Int_dadd(x_1638, x_1643);
+                                                                                                                                                                                                                                rt::lean_dec(x_1643);
+                                                                                                                                                                                                                                rt::lean_dec(x_1638);
+                                                                                                                                                                                                                                x_1613 = x_1633;
+                                                                                                                                                                                                                                x_1614 = x_1636;
+                                                                                                                                                                                                                                x_1615 = x_1631;
+                                                                                                                                                                                                                                x_1616 = x_1632;
+                                                                                                                                                                                                                                x_1617 = x_1630;
+                                                                                                                                                                                                                                x_1618 = x_1628;
+                                                                                                                                                                                                                                x_1619 = x_1644;
+                                                                                                                                                                                                                                break 'b1612;
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                                                x_1613 = x_1633;
+                                                                                                                                                                                                                                x_1614 = x_1636;
+                                                                                                                                                                                                                                x_1615 = x_1631;
+                                                                                                                                                                                                                                x_1616 = x_1632;
+                                                                                                                                                                                                                                x_1617 = x_1630;
+                                                                                                                                                                                                                                x_1618 = x_1628;
+                                                                                                                                                                                                                                x_1619 = x_1638;
+                                                                                                                                                                                                                                break 'b1612;
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                    let x_1620: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                    let x_1621: u8 = l_Nat_ddecEq(x_22, x_1620);
+                                                                                                                                                                                                                    match x_1621 {
+                                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                                            let x_1622: Obj = l_Sand2_dgasPacket_d__closed__16();
+                                                                                                                                                                                                                            rt::lean_inc(x_22);
+                                                                                                                                                                                                                            let x_1623: Obj = l_Int_dofNat(x_22);
+                                                                                                                                                                                                                            let x_1624: Obj = l_Int_dmul(x_1622, x_1623);
+                                                                                                                                                                                                                            rt::lean_dec(x_1623);
+                                                                                                                                                                                                                            let x_1625: Obj = l_Int_dadd(x_1619, x_1624);
+                                                                                                                                                                                                                            rt::lean_dec(x_1624);
+                                                                                                                                                                                                                            rt::lean_dec(x_1619);
+                                                                                                                                                                                                                            x_1599 = x_1613;
+                                                                                                                                                                                                                            x_1600 = x_1615;
+                                                                                                                                                                                                                            x_1601 = x_1614;
+                                                                                                                                                                                                                            x_1602 = x_1617;
+                                                                                                                                                                                                                            x_1603 = x_1616;
+                                                                                                                                                                                                                            x_1604 = x_1618;
+                                                                                                                                                                                                                            x_1605 = x_1625;
+                                                                                                                                                                                                                            break 'b1598;
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                                            x_1599 = x_1613;
+                                                                                                                                                                                                                            x_1600 = x_1615;
+                                                                                                                                                                                                                            x_1601 = x_1614;
+                                                                                                                                                                                                                            x_1602 = x_1617;
+                                                                                                                                                                                                                            x_1603 = x_1616;
+                                                                                                                                                                                                                            x_1604 = x_1618;
+                                                                                                                                                                                                                            x_1605 = x_1619;
+                                                                                                                                                                                                                            break 'b1598;
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                                let x_1606: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                                let x_1607: u8 = l_Nat_ddecEq(x_23, x_1606);
+                                                                                                                                                                                                                match x_1607 {
+                                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                                        let x_1608: Obj = l_Sand2_dgasPacket_d__closed__15();
+                                                                                                                                                                                                                        rt::lean_inc(x_23);
+                                                                                                                                                                                                                        let x_1609: Obj = l_Int_dofNat(x_23);
+                                                                                                                                                                                                                        let x_1610: Obj = l_Int_dmul(x_1608, x_1609);
+                                                                                                                                                                                                                        rt::lean_dec(x_1609);
+                                                                                                                                                                                                                        let x_1611: Obj = l_Int_dadd(x_1605, x_1610);
+                                                                                                                                                                                                                        rt::lean_dec(x_1610);
+                                                                                                                                                                                                                        rt::lean_dec(x_1605);
+                                                                                                                                                                                                                        x_1585 = x_1599;
+                                                                                                                                                                                                                        x_1586 = x_1601;
+                                                                                                                                                                                                                        x_1587 = x_1600;
+                                                                                                                                                                                                                        x_1588 = x_1603;
+                                                                                                                                                                                                                        x_1589 = x_1602;
+                                                                                                                                                                                                                        x_1590 = x_1604;
+                                                                                                                                                                                                                        x_1591 = x_1611;
+                                                                                                                                                                                                                        break 'b1584;
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                                        x_1585 = x_1599;
+                                                                                                                                                                                                                        x_1586 = x_1601;
+                                                                                                                                                                                                                        x_1587 = x_1600;
+                                                                                                                                                                                                                        x_1588 = x_1603;
+                                                                                                                                                                                                                        x_1589 = x_1602;
+                                                                                                                                                                                                                        x_1590 = x_1604;
+                                                                                                                                                                                                                        x_1591 = x_1605;
+                                                                                                                                                                                                                        break 'b1584;
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                            let x_1592: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                            let x_1593: u8 = l_Nat_ddecEq(x_24, x_1592);
+                                                                                                                                                                                                            match x_1593 {
+                                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                                    let x_1594: Obj = l_Sand2_dgasPacket_d__closed__14();
+                                                                                                                                                                                                                    rt::lean_inc(x_24);
+                                                                                                                                                                                                                    let x_1595: Obj = l_Int_dofNat(x_24);
+                                                                                                                                                                                                                    let x_1596: Obj = l_Int_dmul(x_1594, x_1595);
+                                                                                                                                                                                                                    rt::lean_dec(x_1595);
+                                                                                                                                                                                                                    let x_1597: Obj = l_Int_dadd(x_1591, x_1596);
+                                                                                                                                                                                                                    rt::lean_dec(x_1596);
+                                                                                                                                                                                                                    rt::lean_dec(x_1591);
+                                                                                                                                                                                                                    x_1571 = x_1585;
+                                                                                                                                                                                                                    x_1572 = x_1587;
+                                                                                                                                                                                                                    x_1573 = x_1586;
+                                                                                                                                                                                                                    x_1574 = x_1589;
+                                                                                                                                                                                                                    x_1575 = x_1588;
+                                                                                                                                                                                                                    x_1576 = x_1590;
+                                                                                                                                                                                                                    x_1577 = x_1597;
+                                                                                                                                                                                                                    break 'b1570;
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                                    x_1571 = x_1585;
+                                                                                                                                                                                                                    x_1572 = x_1587;
+                                                                                                                                                                                                                    x_1573 = x_1586;
+                                                                                                                                                                                                                    x_1574 = x_1589;
+                                                                                                                                                                                                                    x_1575 = x_1588;
+                                                                                                                                                                                                                    x_1576 = x_1590;
+                                                                                                                                                                                                                    x_1577 = x_1591;
+                                                                                                                                                                                                                    break 'b1570;
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                        let x_1578: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                        let x_1579: u8 = l_Nat_ddecEq(x_25, x_1578);
+                                                                                                                                                                                                        match x_1579 {
+                                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                                let x_1580: Obj = l_Sand2_dgasPacket_d__closed__13();
+                                                                                                                                                                                                                rt::lean_inc(x_25);
+                                                                                                                                                                                                                let x_1581: Obj = l_Int_dofNat(x_25);
+                                                                                                                                                                                                                let x_1582: Obj = l_Int_dmul(x_1580, x_1581);
+                                                                                                                                                                                                                rt::lean_dec(x_1581);
+                                                                                                                                                                                                                let x_1583: Obj = l_Int_dadd(x_1577, x_1582);
+                                                                                                                                                                                                                rt::lean_dec(x_1582);
+                                                                                                                                                                                                                rt::lean_dec(x_1577);
+                                                                                                                                                                                                                x_1557 = x_1571;
+                                                                                                                                                                                                                x_1558 = x_1573;
+                                                                                                                                                                                                                x_1559 = x_1572;
+                                                                                                                                                                                                                x_1560 = x_1575;
+                                                                                                                                                                                                                x_1561 = x_1574;
+                                                                                                                                                                                                                x_1562 = x_1576;
+                                                                                                                                                                                                                x_1563 = x_1583;
+                                                                                                                                                                                                                break 'b1556;
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                                x_1557 = x_1571;
+                                                                                                                                                                                                                x_1558 = x_1573;
+                                                                                                                                                                                                                x_1559 = x_1572;
+                                                                                                                                                                                                                x_1560 = x_1575;
+                                                                                                                                                                                                                x_1561 = x_1574;
+                                                                                                                                                                                                                x_1562 = x_1576;
+                                                                                                                                                                                                                x_1563 = x_1577;
+                                                                                                                                                                                                                break 'b1556;
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    let x_1564: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                    let x_1565: u8 = l_Nat_ddecEq(x_26, x_1564);
+                                                                                                                                                                                                    match x_1565 {
+                                                                                                                                                                                                        0 => {
+                                                                                                                                                                                                            let x_1566: Obj = l_Sand2_dgasPacket_d__closed__12();
+                                                                                                                                                                                                            rt::lean_inc(x_26);
+                                                                                                                                                                                                            let x_1567: Obj = l_Int_dofNat(x_26);
+                                                                                                                                                                                                            let x_1568: Obj = l_Int_dmul(x_1566, x_1567);
+                                                                                                                                                                                                            rt::lean_dec(x_1567);
+                                                                                                                                                                                                            let x_1569: Obj = l_Int_dadd(x_1563, x_1568);
+                                                                                                                                                                                                            rt::lean_dec(x_1568);
+                                                                                                                                                                                                            rt::lean_dec(x_1563);
+                                                                                                                                                                                                            x_1543 = x_1557;
+                                                                                                                                                                                                            x_1544 = x_1559;
+                                                                                                                                                                                                            x_1545 = x_1558;
+                                                                                                                                                                                                            x_1546 = x_1561;
+                                                                                                                                                                                                            x_1547 = x_1560;
+                                                                                                                                                                                                            x_1548 = x_1562;
+                                                                                                                                                                                                            x_1549 = x_1569;
+                                                                                                                                                                                                            break 'b1542;
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                        _ => {
+                                                                                                                                                                                                            x_1543 = x_1557;
+                                                                                                                                                                                                            x_1544 = x_1559;
+                                                                                                                                                                                                            x_1545 = x_1558;
+                                                                                                                                                                                                            x_1546 = x_1561;
+                                                                                                                                                                                                            x_1547 = x_1560;
+                                                                                                                                                                                                            x_1548 = x_1562;
+                                                                                                                                                                                                            x_1549 = x_1563;
+                                                                                                                                                                                                            break 'b1542;
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                }
+                                                                                                                                                                                                let x_1550: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                                let x_1551: u8 = l_Nat_ddecEq(x_27, x_1550);
+                                                                                                                                                                                                match x_1551 {
+                                                                                                                                                                                                    0 => {
+                                                                                                                                                                                                        let x_1552: Obj = l_Sand2_dgasPacket_d__closed__11();
+                                                                                                                                                                                                        rt::lean_inc(x_27);
+                                                                                                                                                                                                        let x_1553: Obj = l_Int_dofNat(x_27);
+                                                                                                                                                                                                        let x_1554: Obj = l_Int_dmul(x_1552, x_1553);
+                                                                                                                                                                                                        rt::lean_dec(x_1553);
+                                                                                                                                                                                                        let x_1555: Obj = l_Int_dadd(x_1549, x_1554);
+                                                                                                                                                                                                        rt::lean_dec(x_1554);
+                                                                                                                                                                                                        rt::lean_dec(x_1549);
+                                                                                                                                                                                                        x_1529 = x_1543;
+                                                                                                                                                                                                        x_1530 = x_1545;
+                                                                                                                                                                                                        x_1531 = x_1544;
+                                                                                                                                                                                                        x_1532 = x_1547;
+                                                                                                                                                                                                        x_1533 = x_1546;
+                                                                                                                                                                                                        x_1534 = x_1548;
+                                                                                                                                                                                                        x_1535 = x_1555;
+                                                                                                                                                                                                        break 'b1528;
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                    _ => {
+                                                                                                                                                                                                        x_1529 = x_1543;
+                                                                                                                                                                                                        x_1530 = x_1545;
+                                                                                                                                                                                                        x_1531 = x_1544;
+                                                                                                                                                                                                        x_1532 = x_1547;
+                                                                                                                                                                                                        x_1533 = x_1546;
+                                                                                                                                                                                                        x_1534 = x_1548;
+                                                                                                                                                                                                        x_1535 = x_1549;
+                                                                                                                                                                                                        break 'b1528;
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                }
+                                                                                                                                                                                            }
+                                                                                                                                                                                            let x_1536: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                            let x_1537: u8 = l_Nat_ddecEq(x_28, x_1536);
+                                                                                                                                                                                            match x_1537 {
+                                                                                                                                                                                                0 => {
+                                                                                                                                                                                                    let x_1538: Obj = l_Sand2_dgasPacket_d__closed__10();
+                                                                                                                                                                                                    rt::lean_inc(x_28);
+                                                                                                                                                                                                    let x_1539: Obj = l_Int_dofNat(x_28);
+                                                                                                                                                                                                    let x_1540: Obj = l_Int_dmul(x_1538, x_1539);
+                                                                                                                                                                                                    rt::lean_dec(x_1539);
+                                                                                                                                                                                                    let x_1541: Obj = l_Int_dadd(x_1535, x_1540);
+                                                                                                                                                                                                    rt::lean_dec(x_1540);
+                                                                                                                                                                                                    rt::lean_dec(x_1535);
+                                                                                                                                                                                                    x_1515 = x_1529;
+                                                                                                                                                                                                    x_1516 = x_1531;
+                                                                                                                                                                                                    x_1517 = x_1530;
+                                                                                                                                                                                                    x_1518 = x_1533;
+                                                                                                                                                                                                    x_1519 = x_1532;
+                                                                                                                                                                                                    x_1520 = x_1534;
+                                                                                                                                                                                                    x_1521 = x_1541;
+                                                                                                                                                                                                    break 'b1514;
+                                                                                                                                                                                                }
+                                                                                                                                                                                                _ => {
+                                                                                                                                                                                                    x_1515 = x_1529;
+                                                                                                                                                                                                    x_1516 = x_1531;
+                                                                                                                                                                                                    x_1517 = x_1530;
+                                                                                                                                                                                                    x_1518 = x_1533;
+                                                                                                                                                                                                    x_1519 = x_1532;
+                                                                                                                                                                                                    x_1520 = x_1534;
+                                                                                                                                                                                                    x_1521 = x_1535;
+                                                                                                                                                                                                    break 'b1514;
+                                                                                                                                                                                                }
+                                                                                                                                                                                            }
+                                                                                                                                                                                        }
+                                                                                                                                                                                        let x_1522: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                        let x_1523: u8 = l_Nat_ddecEq(x_29, x_1522);
+                                                                                                                                                                                        match x_1523 {
+                                                                                                                                                                                            0 => {
+                                                                                                                                                                                                let x_1524: Obj = l_Sand2_dgasPacket_d__closed__9();
+                                                                                                                                                                                                rt::lean_inc(x_29);
+                                                                                                                                                                                                let x_1525: Obj = l_Int_dofNat(x_29);
+                                                                                                                                                                                                let x_1526: Obj = l_Int_dmul(x_1524, x_1525);
+                                                                                                                                                                                                rt::lean_dec(x_1525);
+                                                                                                                                                                                                let x_1527: Obj = l_Int_dadd(x_1521, x_1526);
+                                                                                                                                                                                                rt::lean_dec(x_1526);
+                                                                                                                                                                                                rt::lean_dec(x_1521);
+                                                                                                                                                                                                x_1501 = x_1515;
+                                                                                                                                                                                                x_1502 = x_1517;
+                                                                                                                                                                                                x_1503 = x_1516;
+                                                                                                                                                                                                x_1504 = x_1519;
+                                                                                                                                                                                                x_1505 = x_1518;
+                                                                                                                                                                                                x_1506 = x_1520;
+                                                                                                                                                                                                x_1507 = x_1527;
+                                                                                                                                                                                                break 'b1500;
+                                                                                                                                                                                            }
+                                                                                                                                                                                            _ => {
+                                                                                                                                                                                                x_1501 = x_1515;
+                                                                                                                                                                                                x_1502 = x_1517;
+                                                                                                                                                                                                x_1503 = x_1516;
+                                                                                                                                                                                                x_1504 = x_1519;
+                                                                                                                                                                                                x_1505 = x_1518;
+                                                                                                                                                                                                x_1506 = x_1520;
+                                                                                                                                                                                                x_1507 = x_1521;
+                                                                                                                                                                                                break 'b1500;
+                                                                                                                                                                                            }
+                                                                                                                                                                                        }
+                                                                                                                                                                                    }
+                                                                                                                                                                                    let x_1508: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                    let x_1509: u8 = l_Nat_ddecEq(x_30, x_1508);
+                                                                                                                                                                                    match x_1509 {
+                                                                                                                                                                                        0 => {
+                                                                                                                                                                                            let x_1510: Obj = l_Sand2_dgasPacket_d__closed__8();
+                                                                                                                                                                                            rt::lean_inc(x_30);
+                                                                                                                                                                                            let x_1511: Obj = l_Int_dofNat(x_30);
+                                                                                                                                                                                            let x_1512: Obj = l_Int_dmul(x_1510, x_1511);
+                                                                                                                                                                                            rt::lean_dec(x_1511);
+                                                                                                                                                                                            let x_1513: Obj = l_Int_dadd(x_1507, x_1512);
+                                                                                                                                                                                            rt::lean_dec(x_1512);
+                                                                                                                                                                                            rt::lean_dec(x_1507);
+                                                                                                                                                                                            x_1487 = x_1501;
+                                                                                                                                                                                            x_1488 = x_1503;
+                                                                                                                                                                                            x_1489 = x_1502;
+                                                                                                                                                                                            x_1490 = x_1505;
+                                                                                                                                                                                            x_1491 = x_1504;
+                                                                                                                                                                                            x_1492 = x_1506;
+                                                                                                                                                                                            x_1493 = x_1513;
+                                                                                                                                                                                            break 'b1486;
+                                                                                                                                                                                        }
+                                                                                                                                                                                        _ => {
+                                                                                                                                                                                            x_1487 = x_1501;
+                                                                                                                                                                                            x_1488 = x_1503;
+                                                                                                                                                                                            x_1489 = x_1502;
+                                                                                                                                                                                            x_1490 = x_1505;
+                                                                                                                                                                                            x_1491 = x_1504;
+                                                                                                                                                                                            x_1492 = x_1506;
+                                                                                                                                                                                            x_1493 = x_1507;
+                                                                                                                                                                                            break 'b1486;
+                                                                                                                                                                                        }
+                                                                                                                                                                                    }
+                                                                                                                                                                                }
+                                                                                                                                                                                let x_1494: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                                let x_1495: u8 = l_Nat_ddecEq(x_31, x_1494);
+                                                                                                                                                                                match x_1495 {
+                                                                                                                                                                                    0 => {
+                                                                                                                                                                                        let x_1496: Obj = l_Sand2_dgasPacket_d__closed__7();
+                                                                                                                                                                                        rt::lean_inc(x_31);
+                                                                                                                                                                                        let x_1497: Obj = l_Int_dofNat(x_31);
+                                                                                                                                                                                        let x_1498: Obj = l_Int_dmul(x_1496, x_1497);
+                                                                                                                                                                                        rt::lean_dec(x_1497);
+                                                                                                                                                                                        let x_1499: Obj = l_Int_dadd(x_1493, x_1498);
+                                                                                                                                                                                        rt::lean_dec(x_1498);
+                                                                                                                                                                                        rt::lean_dec(x_1493);
+                                                                                                                                                                                        x_1473 = x_1487;
+                                                                                                                                                                                        x_1474 = x_1489;
+                                                                                                                                                                                        x_1475 = x_1488;
+                                                                                                                                                                                        x_1476 = x_1491;
+                                                                                                                                                                                        x_1477 = x_1490;
+                                                                                                                                                                                        x_1478 = x_1492;
+                                                                                                                                                                                        x_1479 = x_1499;
+                                                                                                                                                                                        break 'b1472;
+                                                                                                                                                                                    }
+                                                                                                                                                                                    _ => {
+                                                                                                                                                                                        x_1473 = x_1487;
+                                                                                                                                                                                        x_1474 = x_1489;
+                                                                                                                                                                                        x_1475 = x_1488;
+                                                                                                                                                                                        x_1476 = x_1491;
+                                                                                                                                                                                        x_1477 = x_1490;
+                                                                                                                                                                                        x_1478 = x_1492;
+                                                                                                                                                                                        x_1479 = x_1493;
+                                                                                                                                                                                        break 'b1472;
+                                                                                                                                                                                    }
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                            let x_1480: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                            let x_1481: u8 = l_Nat_ddecEq(x_32, x_1480);
+                                                                                                                                                                            match x_1481 {
+                                                                                                                                                                                0 => {
+                                                                                                                                                                                    let x_1482: Obj = l_Sand2_dgasPacket_d__closed__6();
+                                                                                                                                                                                    rt::lean_inc(x_32);
+                                                                                                                                                                                    let x_1483: Obj = l_Int_dofNat(x_32);
+                                                                                                                                                                                    let x_1484: Obj = l_Int_dmul(x_1482, x_1483);
+                                                                                                                                                                                    rt::lean_dec(x_1483);
+                                                                                                                                                                                    let x_1485: Obj = l_Int_dadd(x_1479, x_1484);
+                                                                                                                                                                                    rt::lean_dec(x_1484);
+                                                                                                                                                                                    rt::lean_dec(x_1479);
+                                                                                                                                                                                    x_1459 = x_1473;
+                                                                                                                                                                                    x_1460 = x_1475;
+                                                                                                                                                                                    x_1461 = x_1474;
+                                                                                                                                                                                    x_1462 = x_1477;
+                                                                                                                                                                                    x_1463 = x_1476;
+                                                                                                                                                                                    x_1464 = x_1478;
+                                                                                                                                                                                    x_1465 = x_1485;
+                                                                                                                                                                                    break 'b1458;
+                                                                                                                                                                                }
+                                                                                                                                                                                _ => {
+                                                                                                                                                                                    x_1459 = x_1473;
+                                                                                                                                                                                    x_1460 = x_1475;
+                                                                                                                                                                                    x_1461 = x_1474;
+                                                                                                                                                                                    x_1462 = x_1477;
+                                                                                                                                                                                    x_1463 = x_1476;
+                                                                                                                                                                                    x_1464 = x_1478;
+                                                                                                                                                                                    x_1465 = x_1479;
+                                                                                                                                                                                    break 'b1458;
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                        }
+                                                                                                                                                                        let x_1466: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                        let x_1467: u8 = l_Nat_ddecEq(x_33, x_1466);
+                                                                                                                                                                        match x_1467 {
+                                                                                                                                                                            0 => {
+                                                                                                                                                                                let x_1468: Obj = l_Sand2_dgasPacket_d__closed__5();
+                                                                                                                                                                                rt::lean_inc(x_33);
+                                                                                                                                                                                let x_1469: Obj = l_Int_dofNat(x_33);
+                                                                                                                                                                                let x_1470: Obj = l_Int_dmul(x_1468, x_1469);
+                                                                                                                                                                                rt::lean_dec(x_1469);
+                                                                                                                                                                                let x_1471: Obj = l_Int_dadd(x_1465, x_1470);
+                                                                                                                                                                                rt::lean_dec(x_1470);
+                                                                                                                                                                                rt::lean_dec(x_1465);
+                                                                                                                                                                                x_1445 = x_1459;
+                                                                                                                                                                                x_1446 = x_1461;
+                                                                                                                                                                                x_1447 = x_1460;
+                                                                                                                                                                                x_1448 = x_1463;
+                                                                                                                                                                                x_1449 = x_1462;
+                                                                                                                                                                                x_1450 = x_1464;
+                                                                                                                                                                                x_1451 = x_1471;
+                                                                                                                                                                                break 'b1444;
+                                                                                                                                                                            }
+                                                                                                                                                                            _ => {
+                                                                                                                                                                                x_1445 = x_1459;
+                                                                                                                                                                                x_1446 = x_1461;
+                                                                                                                                                                                x_1447 = x_1460;
+                                                                                                                                                                                x_1448 = x_1463;
+                                                                                                                                                                                x_1449 = x_1462;
+                                                                                                                                                                                x_1450 = x_1464;
+                                                                                                                                                                                x_1451 = x_1465;
+                                                                                                                                                                                break 'b1444;
+                                                                                                                                                                            }
+                                                                                                                                                                        }
+                                                                                                                                                                    }
+                                                                                                                                                                    let x_1452: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                    let x_1453: u8 = l_Nat_ddecEq(x_34, x_1452);
+                                                                                                                                                                    match x_1453 {
+                                                                                                                                                                        0 => {
+                                                                                                                                                                            let x_1454: Obj = l_Sand2_dgasPacket_d__closed__4();
+                                                                                                                                                                            rt::lean_inc(x_34);
+                                                                                                                                                                            let x_1455: Obj = l_Int_dofNat(x_34);
+                                                                                                                                                                            let x_1456: Obj = l_Int_dmul(x_1454, x_1455);
+                                                                                                                                                                            rt::lean_dec(x_1455);
+                                                                                                                                                                            let x_1457: Obj = l_Int_dadd(x_1451, x_1456);
+                                                                                                                                                                            rt::lean_dec(x_1456);
+                                                                                                                                                                            rt::lean_dec(x_1451);
+                                                                                                                                                                            x_1429 = x_1445;
+                                                                                                                                                                            x_1430 = x_1447;
+                                                                                                                                                                            x_1431 = x_1446;
+                                                                                                                                                                            x_1432 = x_1449;
+                                                                                                                                                                            x_1433 = x_1448;
+                                                                                                                                                                            x_1434 = x_1450;
+                                                                                                                                                                            x_1435 = x_1457;
+                                                                                                                                                                            break 'b1428;
+                                                                                                                                                                        }
+                                                                                                                                                                        _ => {
+                                                                                                                                                                            x_1429 = x_1445;
+                                                                                                                                                                            x_1430 = x_1447;
+                                                                                                                                                                            x_1431 = x_1446;
+                                                                                                                                                                            x_1432 = x_1449;
+                                                                                                                                                                            x_1433 = x_1448;
+                                                                                                                                                                            x_1434 = x_1450;
+                                                                                                                                                                            x_1435 = x_1451;
+                                                                                                                                                                            break 'b1428;
+                                                                                                                                                                        }
+                                                                                                                                                                    }
+                                                                                                                                                                }
+                                                                                                                                                                let x_1436: Obj = l_Sand2_dnonWaterCondensedMass(x_18);
+                                                                                                                                                                let x_1437: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                                                let x_1438: Obj = l_Sand2_dgasPacket_d__closed__1();
+                                                                                                                                                                let x_1439: Obj = rt::nat::lean_usize_to_nat(101325000);
+                                                                                                                                                                let x_1440: Obj = l_Sand2_dgasPacket_d__closed__2();
+                                                                                                                                                                let x_1441: Obj = l_Sand2_dgasPacket_d__closed__3();
+                                                                                                                                                                let x_1442: Obj = rt::nat::lean_usize_to_nat(1);
+                                                                                                                                                                let x_1443: u8 = l_Nat_ddecLe(x_1442, x_9);
+                                                                                                                                                                match x_1443 {
+                                                                                                                                                                    0 => {
+                                                                                                                                                                        x_1408 = x_1429;
+                                                                                                                                                                        x_1409 = x_1439;
+                                                                                                                                                                        x_1410 = x_1431;
+                                                                                                                                                                        x_1411 = x_1436;
+                                                                                                                                                                        x_1412 = x_1440;
+                                                                                                                                                                        x_1413 = x_1438;
+                                                                                                                                                                        x_1414 = x_1441;
+                                                                                                                                                                        x_1415 = x_1434;
+                                                                                                                                                                        x_1416 = x_1437;
+                                                                                                                                                                        x_1417 = x_1430;
+                                                                                                                                                                        x_1418 = x_1433;
+                                                                                                                                                                        x_1419 = x_1432;
+                                                                                                                                                                        x_1420 = x_1435;
+                                                                                                                                                                        x_1421 = x_1442;
+                                                                                                                                                                        break 'b1407;
+                                                                                                                                                                    }
+                                                                                                                                                                    _ => {
+                                                                                                                                                                        rt::lean_inc(x_9);
+                                                                                                                                                                        x_1408 = x_1429;
+                                                                                                                                                                        x_1409 = x_1439;
+                                                                                                                                                                        x_1410 = x_1431;
+                                                                                                                                                                        x_1411 = x_1436;
+                                                                                                                                                                        x_1412 = x_1440;
+                                                                                                                                                                        x_1413 = x_1438;
+                                                                                                                                                                        x_1414 = x_1441;
+                                                                                                                                                                        x_1415 = x_1434;
+                                                                                                                                                                        x_1416 = x_1437;
+                                                                                                                                                                        x_1417 = x_1430;
+                                                                                                                                                                        x_1418 = x_1433;
+                                                                                                                                                                        x_1419 = x_1432;
+                                                                                                                                                                        x_1420 = x_1435;
+                                                                                                                                                                        x_1421 = x_9;
+                                                                                                                                                                        break 'b1407;
+                                                                                                                                                                    }
+                                                                                                                                                                }
+                                                                                                                                                            }
+                                                                                                                                                            let x_1422: Obj = l_Int_dofNat(x_1421);
+                                                                                                                                                            let x_1423: Obj = l_Int_dediv(x_10, x_1422);
+                                                                                                                                                            rt::lean_dec(x_1422);
+                                                                                                                                                            rt::lean_inc(x_39);
+                                                                                                                                                            let x_1424: Obj = l_Int_dofNat(x_39);
+                                                                                                                                                            let x_1425: Obj = l_Int_dmul(x_1423, x_1424);
+                                                                                                                                                            rt::lean_dec(x_1423);
+                                                                                                                                                            let x_1426: Obj = rt::nat::lean_usize_to_nat(1);
+                                                                                                                                                            let x_1427: u8 = l_Nat_ddecLe(x_1426, x_9);
+                                                                                                                                                            match x_1427 {
+                                                                                                                                                                0 => {
+                                                                                                                                                                    x_1376 = x_1408;
+                                                                                                                                                                    x_1377 = x_1409;
+                                                                                                                                                                    x_1378 = x_1410;
+                                                                                                                                                                    x_1379 = x_1425;
+                                                                                                                                                                    x_1380 = x_1411;
+                                                                                                                                                                    x_1381 = x_1424;
+                                                                                                                                                                    x_1382 = x_1412;
+                                                                                                                                                                    x_1383 = x_1413;
+                                                                                                                                                                    x_1384 = x_1414;
+                                                                                                                                                                    x_1385 = x_1415;
+                                                                                                                                                                    x_1386 = x_1416;
+                                                                                                                                                                    x_1387 = x_1417;
+                                                                                                                                                                    x_1388 = x_1418;
+                                                                                                                                                                    x_1389 = x_1419;
+                                                                                                                                                                    x_1390 = x_1420;
+                                                                                                                                                                    x_1391 = x_1426;
+                                                                                                                                                                    break 'b1375;
+                                                                                                                                                                }
+                                                                                                                                                                _ => {
+                                                                                                                                                                    rt::lean_inc(x_9);
+                                                                                                                                                                    x_1376 = x_1408;
+                                                                                                                                                                    x_1377 = x_1409;
+                                                                                                                                                                    x_1378 = x_1410;
+                                                                                                                                                                    x_1379 = x_1425;
+                                                                                                                                                                    x_1380 = x_1411;
+                                                                                                                                                                    x_1381 = x_1424;
+                                                                                                                                                                    x_1382 = x_1412;
+                                                                                                                                                                    x_1383 = x_1413;
+                                                                                                                                                                    x_1384 = x_1414;
+                                                                                                                                                                    x_1385 = x_1415;
+                                                                                                                                                                    x_1386 = x_1416;
+                                                                                                                                                                    x_1387 = x_1417;
+                                                                                                                                                                    x_1388 = x_1418;
+                                                                                                                                                                    x_1389 = x_1419;
+                                                                                                                                                                    x_1390 = x_1420;
+                                                                                                                                                                    x_1391 = x_9;
+                                                                                                                                                                    break 'b1375;
+                                                                                                                                                                }
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                        let x_1392: Obj = l_Int_dofNat(x_1391);
+                                                                                                                                                        let x_1393: Obj = l_Int_dediv(x_11, x_1392);
+                                                                                                                                                        rt::lean_dec(x_1392);
+                                                                                                                                                        let x_1394: Obj = l_Int_dmul(x_1393, x_1381);
+                                                                                                                                                        rt::lean_dec(x_1393);
+                                                                                                                                                        let x_1395: u8 = 6u8;
+                                                                                                                                                        rt::lean_inc_ref(x_5);
+                                                                                                                                                        let x_1396: Obj = l_Sand2_dtemperature(x_1, x_2, x_3, x_5);
+                                                                                                                                                        rt::lean_inc_ref(x_18);
+                                                                                                                                                        let x_1397: Obj = l_Sand2_dinternalEnergyAt(x_18, x_1395, x_1396);
+                                                                                                                                                        let x_1398: Obj = l_Nat_dadd(x_1376, x_19);
+                                                                                                                                                        rt::lean_dec(x_1376);
+                                                                                                                                                        let x_1399: Obj = l_Int_dofNat(x_1398);
+                                                                                                                                                        let x_1400: Obj = l_Int_dmul(x_1399, x_1389);
+                                                                                                                                                        rt::lean_dec(x_1399);
+                                                                                                                                                        let x_1401: Obj = l_Int_dadd(x_1396, x_1387);
+                                                                                                                                                        rt::lean_dec(x_1396);
+                                                                                                                                                        let x_1402: Obj = l_Int_dmul(x_1400, x_1401);
+                                                                                                                                                        rt::lean_dec(x_1401);
+                                                                                                                                                        rt::lean_dec(x_1400);
+                                                                                                                                                        let x_1403: Obj = l_Int_dadd(x_1378, x_1397);
+                                                                                                                                                        rt::lean_dec(x_1397);
+                                                                                                                                                        let x_1404: Obj = l_Int_dadd(x_1403, x_1402);
+                                                                                                                                                        rt::lean_dec(x_1402);
+                                                                                                                                                        rt::lean_dec(x_1403);
+                                                                                                                                                        let x_1405: u8 = l_Int_ddecEq(x_1379, x_1383);
+                                                                                                                                                        match x_1405 {
+                                                                                                                                                            0 => {
+                                                                                                                                                                x_1351 = x_1377;
+                                                                                                                                                                x_1352 = x_1379;
+                                                                                                                                                                x_1353 = x_1378;
+                                                                                                                                                                x_1354 = x_1380;
+                                                                                                                                                                x_1355 = x_1381;
+                                                                                                                                                                x_1356 = x_1382;
+                                                                                                                                                                x_1357 = x_1404;
+                                                                                                                                                                x_1358 = x_1383;
+                                                                                                                                                                x_1359 = x_1384;
+                                                                                                                                                                x_1360 = x_1385;
+                                                                                                                                                                x_1361 = x_1386;
+                                                                                                                                                                x_1362 = x_1394;
+                                                                                                                                                                x_1363 = x_1387;
+                                                                                                                                                                x_1364 = x_1388;
+                                                                                                                                                                x_1365 = x_1389;
+                                                                                                                                                                x_1366 = x_1395;
+                                                                                                                                                                x_1367 = x_1390;
+                                                                                                                                                                x_1368 = x_1405;
+                                                                                                                                                                break 'b1350;
+                                                                                                                                                            }
+                                                                                                                                                            _ => {
+                                                                                                                                                                let x_1406: u8 = l_Int_ddecEq(x_1394, x_1383);
+                                                                                                                                                                x_1351 = x_1377;
+                                                                                                                                                                x_1352 = x_1379;
+                                                                                                                                                                x_1353 = x_1378;
+                                                                                                                                                                x_1354 = x_1380;
+                                                                                                                                                                x_1355 = x_1381;
+                                                                                                                                                                x_1356 = x_1382;
+                                                                                                                                                                x_1357 = x_1404;
+                                                                                                                                                                x_1358 = x_1383;
+                                                                                                                                                                x_1359 = x_1384;
+                                                                                                                                                                x_1360 = x_1385;
+                                                                                                                                                                x_1361 = x_1386;
+                                                                                                                                                                x_1362 = x_1394;
+                                                                                                                                                                x_1363 = x_1387;
+                                                                                                                                                                x_1364 = x_1388;
+                                                                                                                                                                x_1365 = x_1389;
+                                                                                                                                                                x_1366 = x_1395;
+                                                                                                                                                                x_1367 = x_1390;
+                                                                                                                                                                x_1368 = x_1406;
+                                                                                                                                                                break 'b1350;
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                    match x_1368 {
+                                                                                                                                                        0 => {
+                                                                                                                                                            let x_1369: Obj = l_Int_dmul(x_1352, x_1352);
+                                                                                                                                                            let x_1370: Obj = l_Int_dmul(x_1362, x_1362);
+                                                                                                                                                            let x_1371: Obj = l_Int_dadd(x_1369, x_1370);
+                                                                                                                                                            rt::lean_dec(x_1370);
+                                                                                                                                                            rt::lean_dec(x_1369);
+                                                                                                                                                            let x_1372: Obj = l_Sand2_dfacePotential_d__closed__4();
+                                                                                                                                                            let x_1373: Obj = rt::nat::lean_usize_to_nat(1);
+                                                                                                                                                            let x_1374: u8 = l_Nat_ddecLe(x_1373, x_39);
+                                                                                                                                                            match x_1374 {
+                                                                                                                                                                0 => {
+                                                                                                                                                                    x_1325 = x_1351;
+                                                                                                                                                                    x_1326 = x_1353;
+                                                                                                                                                                    x_1327 = x_1352;
+                                                                                                                                                                    x_1328 = x_1354;
+                                                                                                                                                                    x_1329 = x_1355;
+                                                                                                                                                                    x_1330 = x_1356;
+                                                                                                                                                                    x_1331 = x_1357;
+                                                                                                                                                                    x_1332 = x_1358;
+                                                                                                                                                                    x_1333 = x_1359;
+                                                                                                                                                                    x_1334 = x_1371;
+                                                                                                                                                                    x_1335 = x_1360;
+                                                                                                                                                                    x_1336 = x_1361;
+                                                                                                                                                                    x_1337 = x_1362;
+                                                                                                                                                                    x_1338 = x_1363;
+                                                                                                                                                                    x_1339 = x_1365;
+                                                                                                                                                                    x_1340 = x_1364;
+                                                                                                                                                                    x_1341 = x_1366;
+                                                                                                                                                                    x_1342 = x_1372;
+                                                                                                                                                                    x_1343 = x_1367;
+                                                                                                                                                                    x_1344 = x_1373;
+                                                                                                                                                                    break 'b1324;
+                                                                                                                                                                }
+                                                                                                                                                                _ => {
+                                                                                                                                                                    rt::lean_inc(x_39);
+                                                                                                                                                                    x_1325 = x_1351;
+                                                                                                                                                                    x_1326 = x_1353;
+                                                                                                                                                                    x_1327 = x_1352;
+                                                                                                                                                                    x_1328 = x_1354;
+                                                                                                                                                                    x_1329 = x_1355;
+                                                                                                                                                                    x_1330 = x_1356;
+                                                                                                                                                                    x_1331 = x_1357;
+                                                                                                                                                                    x_1332 = x_1358;
+                                                                                                                                                                    x_1333 = x_1359;
+                                                                                                                                                                    x_1334 = x_1371;
+                                                                                                                                                                    x_1335 = x_1360;
+                                                                                                                                                                    x_1336 = x_1361;
+                                                                                                                                                                    x_1337 = x_1362;
+                                                                                                                                                                    x_1338 = x_1363;
+                                                                                                                                                                    x_1339 = x_1365;
+                                                                                                                                                                    x_1340 = x_1364;
+                                                                                                                                                                    x_1341 = x_1366;
+                                                                                                                                                                    x_1342 = x_1372;
+                                                                                                                                                                    x_1343 = x_1367;
+                                                                                                                                                                    x_1344 = x_39;
+                                                                                                                                                                    break 'b1324;
+                                                                                                                                                                }
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                        _ => {
+                                                                                                                                                            rt::lean_inc(x_1358);
+                                                                                                                                                            x_1257 = x_1351;
+                                                                                                                                                            x_1258 = x_1353;
+                                                                                                                                                            x_1259 = x_1352;
+                                                                                                                                                            x_1260 = x_1354;
+                                                                                                                                                            x_1261 = x_1355;
+                                                                                                                                                            x_1262 = x_1356;
+                                                                                                                                                            x_1263 = x_1357;
+                                                                                                                                                            x_1264 = x_1358;
+                                                                                                                                                            x_1265 = x_1359;
+                                                                                                                                                            x_1266 = x_1360;
+                                                                                                                                                            x_1267 = x_1361;
+                                                                                                                                                            x_1268 = x_1362;
+                                                                                                                                                            x_1269 = x_1363;
+                                                                                                                                                            x_1270 = x_1364;
+                                                                                                                                                            x_1271 = x_1365;
+                                                                                                                                                            x_1272 = x_1366;
+                                                                                                                                                            x_1273 = x_1367;
+                                                                                                                                                            x_1274 = x_1358;
+                                                                                                                                                            break 'b1256;
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                                let x_1345: Obj = l_Int_dofNat(x_1344);
+                                                                                                                                                let x_1346: Obj = l_Int_dmul(x_1342, x_1345);
+                                                                                                                                                rt::lean_dec(x_1345);
+                                                                                                                                                let x_1347: Obj = l_Sand2_dgasPacket_d__closed__0();
+                                                                                                                                                let x_1348: Obj = l_Int_dmul(x_1346, x_1347);
+                                                                                                                                                rt::lean_dec(x_1346);
+                                                                                                                                                let x_1349: Obj = l_Int_dediv(x_1334, x_1348);
+                                                                                                                                                rt::lean_dec(x_1348);
+                                                                                                                                                rt::lean_dec(x_1334);
+                                                                                                                                                x_1257 = x_1325;
+                                                                                                                                                x_1258 = x_1326;
+                                                                                                                                                x_1259 = x_1327;
+                                                                                                                                                x_1260 = x_1328;
+                                                                                                                                                x_1261 = x_1329;
+                                                                                                                                                x_1262 = x_1330;
+                                                                                                                                                x_1263 = x_1331;
+                                                                                                                                                x_1264 = x_1332;
+                                                                                                                                                x_1265 = x_1333;
+                                                                                                                                                x_1266 = x_1335;
+                                                                                                                                                x_1267 = x_1336;
+                                                                                                                                                x_1268 = x_1337;
+                                                                                                                                                x_1269 = x_1338;
+                                                                                                                                                x_1270 = x_1340;
+                                                                                                                                                x_1271 = x_1339;
+                                                                                                                                                x_1272 = x_1341;
+                                                                                                                                                x_1273 = x_1343;
+                                                                                                                                                x_1274 = x_1349;
+                                                                                                                                                break 'b1256;
+                                                                                                                                            }
+                                                                                                                                            let x_1275: Obj = l_Int_dadd(x_1263, x_1274);
+                                                                                                                                            rt::lean_dec(x_1274);
+                                                                                                                                            rt::lean_dec(x_1263);
+                                                                                                                                            let x_1276: Obj = l_Sand2_dfacePotential_d__closed__0();
+                                                                                                                                            let x_1277: Obj = l_Int_dmul(x_1261, x_1276);
+                                                                                                                                            rt::lean_dec(x_1261);
+                                                                                                                                            let x_1278: Obj = l_Nat_ddiv(x_3, x_2);
+                                                                                                                                            let x_1279: Obj = l_Nat_dsub(x_1, x_1278);
+                                                                                                                                            rt::lean_dec(x_1278);
+                                                                                                                                            let x_1280: Obj = l_Int_dofNat(x_1279);
+                                                                                                                                            let x_1281: Obj = l_Sand2_dfacePotential_d__closed__1();
+                                                                                                                                            let x_1282: Obj = l_Int_dmul(x_1280, x_1281);
+                                                                                                                                            rt::lean_dec(x_1280);
+                                                                                                                                            let x_1283: Obj = l_Int_dsub(x_1282, x_1264);
+                                                                                                                                            rt::lean_dec(x_1282);
+                                                                                                                                            let x_1284: Obj = l_Int_dmul(x_1277, x_1283);
+                                                                                                                                            let x_1285: Obj = l_Sand2_dfacePotential_d__closed__3();
+                                                                                                                                            let x_1286: Obj = l_Int_dediv(x_1284, x_1285);
+                                                                                                                                            rt::lean_dec(x_1284);
+                                                                                                                                            let x_1287: Obj = l_Nat_ddiv(x_4, x_2);
+                                                                                                                                            let x_1288: Obj = l_Nat_dsub(x_1, x_1287);
+                                                                                                                                            rt::lean_dec(x_1287);
+                                                                                                                                            let x_1289: Obj = l_Int_dofNat(x_1288);
+                                                                                                                                            let x_1290: Obj = l_Int_dmul(x_1289, x_1281);
+                                                                                                                                            rt::lean_dec(x_1289);
+                                                                                                                                            let x_1291: Obj = l_Int_dsub(x_1290, x_1264);
+                                                                                                                                            rt::lean_dec(x_1290);
+                                                                                                                                            let x_1292: Obj = l_Int_dmul(x_1277, x_1291);
+                                                                                                                                            rt::lean_dec(x_1277);
+                                                                                                                                            let x_1293: Obj = l_Int_dediv(x_1292, x_1285);
+                                                                                                                                            rt::lean_dec(x_1292);
+                                                                                                                                            let x_1294: Obj = l_Int_dadd(x_1286, x_1293);
+                                                                                                                                            rt::lean_dec(x_1293);
+                                                                                                                                            rt::lean_dec(x_1286);
+                                                                                                                                            let x_1295: Obj = l_Sand2_dfacePotential_d__closed__4();
+                                                                                                                                            let x_1296: Obj = l_Int_dediv(x_1294, x_1295);
+                                                                                                                                            rt::lean_dec(x_1294);
+                                                                                                                                            let x_1297: Obj = l_Int_dadd(x_1275, x_1296);
+                                                                                                                                            rt::lean_dec(x_1296);
+                                                                                                                                            rt::lean_dec(x_1275);
+                                                                                                                                            rt::lean_inc_n(x_1267, 2);
+                                                                                                                                            rt::lean_inc(x_1265);
+                                                                                                                                            rt::lean_inc(x_1262);
+                                                                                                                                            rt::lean_inc_n(x_1257, 2);
+                                                                                                                                            rt::lean_inc_n(x_1264, 2);
+                                                                                                                                            let x_1298: Obj = rt::lean_alloc_ctor(0, 16, 3);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 0, x_18);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 1, x_39);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 2, x_1258);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 3, x_1273);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 4, x_1260);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 5, x_1297);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 6, x_1259);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 7, x_1268);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 8, x_1264);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 9, x_1264);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 10, x_1257);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 11, x_1257);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 12, x_1262);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 13, x_1265);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 14, x_1267);
+                                                                                                                                            rt::lean_ctor_set(x_1298, 15, x_1267);
+                                                                                                                                            rt::lean_ctor_set_uint8(x_1298, 16 * ::core::mem::size_of::<usize>(), x_40);
+                                                                                                                                            rt::lean_ctor_set_uint8(x_1298, 16 * ::core::mem::size_of::<usize>() + 1, x_41);
+                                                                                                                                            rt::lean_ctor_set_uint8(x_1298, 16 * ::core::mem::size_of::<usize>() + 2, x_41);
+                                                                                                                                            let x_1299: Obj = rt::lean_ctor_get(x_38, 0);
+                                                                                                                                            rt::lean_inc_ref(x_1299);
+                                                                                                                                            let x_1300: Obj = rt::lean_ctor_get(x_1299, 0);
+                                                                                                                                            let x_1301: Obj = rt::lean_ctor_get(x_1299, 3);
+                                                                                                                                            rt::lean_inc(x_1301);
+                                                                                                                                            let x_1302: Obj = rt::lean_ctor_get(x_1299, 4);
+                                                                                                                                            rt::lean_inc(x_1302);
+                                                                                                                                            let x_1303: Obj = rt::lean_ctor_get(x_1299, 5);
+                                                                                                                                            rt::lean_inc(x_1303);
+                                                                                                                                            let x_1304: Obj = rt::lean_ctor_get(x_1299, 6);
+                                                                                                                                            rt::lean_inc(x_1304);
+                                                                                                                                            let x_1305: Obj = rt::lean_ctor_get(x_1299, 7);
+                                                                                                                                            rt::lean_inc(x_1305);
+                                                                                                                                            let x_1306: Obj = rt::lean_ctor_get(x_1299, 8);
+                                                                                                                                            rt::lean_inc(x_1306);
+                                                                                                                                            let x_1307: Obj = rt::lean_ctor_get(x_1299, 9);
+                                                                                                                                            rt::lean_inc(x_1307);
+                                                                                                                                            let x_1308: Obj = rt::lean_ctor_get(x_1299, 10);
+                                                                                                                                            rt::lean_inc(x_1308);
+                                                                                                                                            let x_1309: Obj = rt::lean_ctor_get(x_1299, 11);
+                                                                                                                                            rt::lean_inc(x_1309);
+                                                                                                                                            let x_1310: Obj = rt::lean_ctor_get(x_1299, 12);
+                                                                                                                                            rt::lean_inc(x_1310);
+                                                                                                                                            let x_1311: Obj = rt::lean_ctor_get(x_1299, 13);
+                                                                                                                                            rt::lean_inc(x_1311);
+                                                                                                                                            let x_1312: Obj = rt::lean_ctor_get(x_1299, 14);
+                                                                                                                                            rt::lean_inc(x_1312);
+                                                                                                                                            let x_1313: Obj = rt::lean_ctor_get(x_1299, 16);
+                                                                                                                                            rt::lean_inc(x_1313);
+                                                                                                                                            let x_1314: Obj = rt::lean_ctor_get(x_1299, 17);
+                                                                                                                                            rt::lean_inc(x_1314);
+                                                                                                                                            let x_1315: Obj = rt::lean_ctor_get(x_1299, 18);
+                                                                                                                                            rt::lean_inc(x_1315);
+                                                                                                                                            let x_1316: Obj = rt::lean_ctor_get(x_1299, 19);
+                                                                                                                                            rt::lean_inc(x_1316);
+                                                                                                                                            let x_1317: Obj = rt::lean_ctor_get(x_1299, 20);
+                                                                                                                                            rt::lean_inc(x_1317);
+                                                                                                                                            let x_1318: Obj = l_Sand2_dChemistry_dmass(x_1299);
+                                                                                                                                            let x_1319: u8 = l_Nat_ddecEq(x_1300, x_1267);
+                                                                                                                                            match x_1319 {
+                                                                                                                                                0 => {
+                                                                                                                                                    let x_1320: Obj = l_Sand2_dgasPacket_d__closed__51();
+                                                                                                                                                    rt::lean_inc(x_1300);
+                                                                                                                                                    let x_1321: Obj = l_Int_dofNat(x_1300);
+                                                                                                                                                    let x_1322: Obj = l_Int_dmul(x_1320, x_1321);
+                                                                                                                                                    rt::lean_dec(x_1321);
+                                                                                                                                                    let x_1323: Obj = l_Int_dadd(x_1264, x_1322);
+                                                                                                                                                    rt::lean_dec(x_1322);
+                                                                                                                                                    x_1215 = x_1257;
+                                                                                                                                                    x_1216 = x_1295;
+                                                                                                                                                    x_1217 = x_1262;
+                                                                                                                                                    x_1218 = x_1264;
+                                                                                                                                                    x_1219 = x_1291;
+                                                                                                                                                    x_1220 = x_1265;
+                                                                                                                                                    x_1221 = x_1266;
+                                                                                                                                                    x_1222 = x_1267;
+                                                                                                                                                    x_1223 = x_1269;
+                                                                                                                                                    x_1224 = x_1283;
+                                                                                                                                                    x_1225 = x_1298;
+                                                                                                                                                    x_1226 = x_1271;
+                                                                                                                                                    x_1227 = x_1270;
+                                                                                                                                                    x_1228 = x_1272;
+                                                                                                                                                    x_1229 = x_1299;
+                                                                                                                                                    x_1230 = x_1301;
+                                                                                                                                                    x_1231 = x_1302;
+                                                                                                                                                    x_1232 = x_1303;
+                                                                                                                                                    x_1233 = x_1304;
+                                                                                                                                                    x_1234 = x_1305;
+                                                                                                                                                    x_1235 = x_1306;
+                                                                                                                                                    x_1236 = x_1307;
+                                                                                                                                                    x_1237 = x_1308;
+                                                                                                                                                    x_1238 = x_1309;
+                                                                                                                                                    x_1239 = x_1310;
+                                                                                                                                                    x_1240 = x_1311;
+                                                                                                                                                    x_1241 = x_1312;
+                                                                                                                                                    x_1242 = x_1313;
+                                                                                                                                                    x_1243 = x_1314;
+                                                                                                                                                    x_1244 = x_1315;
+                                                                                                                                                    x_1245 = x_1316;
+                                                                                                                                                    x_1246 = x_1317;
+                                                                                                                                                    x_1247 = x_1276;
+                                                                                                                                                    x_1248 = x_1285;
+                                                                                                                                                    x_1249 = x_1318;
+                                                                                                                                                    x_1250 = x_1323;
+                                                                                                                                                    break 'b1214;
+                                                                                                                                                }
+                                                                                                                                                _ => {
+                                                                                                                                                    rt::lean_inc(x_1264);
+                                                                                                                                                    x_1215 = x_1257;
+                                                                                                                                                    x_1216 = x_1295;
+                                                                                                                                                    x_1217 = x_1262;
+                                                                                                                                                    x_1218 = x_1264;
+                                                                                                                                                    x_1219 = x_1291;
+                                                                                                                                                    x_1220 = x_1265;
+                                                                                                                                                    x_1221 = x_1266;
+                                                                                                                                                    x_1222 = x_1267;
+                                                                                                                                                    x_1223 = x_1269;
+                                                                                                                                                    x_1224 = x_1283;
+                                                                                                                                                    x_1225 = x_1298;
+                                                                                                                                                    x_1226 = x_1271;
+                                                                                                                                                    x_1227 = x_1270;
+                                                                                                                                                    x_1228 = x_1272;
+                                                                                                                                                    x_1229 = x_1299;
+                                                                                                                                                    x_1230 = x_1301;
+                                                                                                                                                    x_1231 = x_1302;
+                                                                                                                                                    x_1232 = x_1303;
+                                                                                                                                                    x_1233 = x_1304;
+                                                                                                                                                    x_1234 = x_1305;
+                                                                                                                                                    x_1235 = x_1306;
+                                                                                                                                                    x_1236 = x_1307;
+                                                                                                                                                    x_1237 = x_1308;
+                                                                                                                                                    x_1238 = x_1309;
+                                                                                                                                                    x_1239 = x_1310;
+                                                                                                                                                    x_1240 = x_1311;
+                                                                                                                                                    x_1241 = x_1312;
+                                                                                                                                                    x_1242 = x_1313;
+                                                                                                                                                    x_1243 = x_1314;
+                                                                                                                                                    x_1244 = x_1315;
+                                                                                                                                                    x_1245 = x_1316;
+                                                                                                                                                    x_1246 = x_1317;
+                                                                                                                                                    x_1247 = x_1276;
+                                                                                                                                                    x_1248 = x_1285;
+                                                                                                                                                    x_1249 = x_1318;
+                                                                                                                                                    x_1250 = x_1264;
+                                                                                                                                                    break 'b1214;
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                        let x_1251: u8 = l_Nat_ddecEq(x_1230, x_1222);
+                                                                                                                                        match x_1251 {
+                                                                                                                                            0 => {
+                                                                                                                                                let x_1252: Obj = l_Sand2_dgasPacket_d__closed__49();
+                                                                                                                                                let x_1253: Obj = l_Int_dofNat(x_1230);
+                                                                                                                                                let x_1254: Obj = l_Int_dmul(x_1252, x_1253);
+                                                                                                                                                rt::lean_dec(x_1253);
+                                                                                                                                                let x_1255: Obj = l_Int_dadd(x_1250, x_1254);
+                                                                                                                                                rt::lean_dec(x_1254);
+                                                                                                                                                rt::lean_dec(x_1250);
+                                                                                                                                                x_1174 = x_1215;
+                                                                                                                                                x_1175 = x_1216;
+                                                                                                                                                x_1176 = x_1217;
+                                                                                                                                                x_1177 = x_1218;
+                                                                                                                                                x_1178 = x_1219;
+                                                                                                                                                x_1179 = x_1220;
+                                                                                                                                                x_1180 = x_1221;
+                                                                                                                                                x_1181 = x_1222;
+                                                                                                                                                x_1182 = x_1223;
+                                                                                                                                                x_1183 = x_1224;
+                                                                                                                                                x_1184 = x_1225;
+                                                                                                                                                x_1185 = x_1227;
+                                                                                                                                                x_1186 = x_1226;
+                                                                                                                                                x_1187 = x_1228;
+                                                                                                                                                x_1188 = x_1229;
+                                                                                                                                                x_1189 = x_1231;
+                                                                                                                                                x_1190 = x_1232;
+                                                                                                                                                x_1191 = x_1233;
+                                                                                                                                                x_1192 = x_1234;
+                                                                                                                                                x_1193 = x_1235;
+                                                                                                                                                x_1194 = x_1236;
+                                                                                                                                                x_1195 = x_1237;
+                                                                                                                                                x_1196 = x_1238;
+                                                                                                                                                x_1197 = x_1239;
+                                                                                                                                                x_1198 = x_1240;
+                                                                                                                                                x_1199 = x_1241;
+                                                                                                                                                x_1200 = x_1242;
+                                                                                                                                                x_1201 = x_1243;
+                                                                                                                                                x_1202 = x_1244;
+                                                                                                                                                x_1203 = x_1245;
+                                                                                                                                                x_1204 = x_1246;
+                                                                                                                                                x_1205 = x_1249;
+                                                                                                                                                x_1206 = x_1248;
+                                                                                                                                                x_1207 = x_1247;
+                                                                                                                                                x_1208 = x_1255;
+                                                                                                                                                break 'b1173;
+                                                                                                                                            }
+                                                                                                                                            _ => {
+                                                                                                                                                rt::lean_dec(x_1230);
+                                                                                                                                                x_1174 = x_1215;
+                                                                                                                                                x_1175 = x_1216;
+                                                                                                                                                x_1176 = x_1217;
+                                                                                                                                                x_1177 = x_1218;
+                                                                                                                                                x_1178 = x_1219;
+                                                                                                                                                x_1179 = x_1220;
+                                                                                                                                                x_1180 = x_1221;
+                                                                                                                                                x_1181 = x_1222;
+                                                                                                                                                x_1182 = x_1223;
+                                                                                                                                                x_1183 = x_1224;
+                                                                                                                                                x_1184 = x_1225;
+                                                                                                                                                x_1185 = x_1227;
+                                                                                                                                                x_1186 = x_1226;
+                                                                                                                                                x_1187 = x_1228;
+                                                                                                                                                x_1188 = x_1229;
+                                                                                                                                                x_1189 = x_1231;
+                                                                                                                                                x_1190 = x_1232;
+                                                                                                                                                x_1191 = x_1233;
+                                                                                                                                                x_1192 = x_1234;
+                                                                                                                                                x_1193 = x_1235;
+                                                                                                                                                x_1194 = x_1236;
+                                                                                                                                                x_1195 = x_1237;
+                                                                                                                                                x_1196 = x_1238;
+                                                                                                                                                x_1197 = x_1239;
+                                                                                                                                                x_1198 = x_1240;
+                                                                                                                                                x_1199 = x_1241;
+                                                                                                                                                x_1200 = x_1242;
+                                                                                                                                                x_1201 = x_1243;
+                                                                                                                                                x_1202 = x_1244;
+                                                                                                                                                x_1203 = x_1245;
+                                                                                                                                                x_1204 = x_1246;
+                                                                                                                                                x_1205 = x_1249;
+                                                                                                                                                x_1206 = x_1248;
+                                                                                                                                                x_1207 = x_1247;
+                                                                                                                                                x_1208 = x_1250;
+                                                                                                                                                break 'b1173;
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                    let x_1209: u8 = l_Nat_ddecEq(x_1189, x_1181);
+                                                                                                                                    match x_1209 {
+                                                                                                                                        0 => {
+                                                                                                                                            let x_1210: Obj = l_Sand2_dgasPacket_d__closed__47();
+                                                                                                                                            rt::lean_inc(x_1189);
+                                                                                                                                            let x_1211: Obj = l_Int_dofNat(x_1189);
+                                                                                                                                            let x_1212: Obj = l_Int_dmul(x_1210, x_1211);
+                                                                                                                                            rt::lean_dec(x_1211);
+                                                                                                                                            let x_1213: Obj = l_Int_dadd(x_1208, x_1212);
+                                                                                                                                            rt::lean_dec(x_1212);
+                                                                                                                                            rt::lean_dec(x_1208);
+                                                                                                                                            x_1133 = x_1174;
+                                                                                                                                            x_1134 = x_1175;
+                                                                                                                                            x_1135 = x_1176;
+                                                                                                                                            x_1136 = x_1177;
+                                                                                                                                            x_1137 = x_1178;
+                                                                                                                                            x_1138 = x_1179;
+                                                                                                                                            x_1139 = x_1180;
+                                                                                                                                            x_1140 = x_1181;
+                                                                                                                                            x_1141 = x_1182;
+                                                                                                                                            x_1142 = x_1183;
+                                                                                                                                            x_1143 = x_1184;
+                                                                                                                                            x_1144 = x_1186;
+                                                                                                                                            x_1145 = x_1185;
+                                                                                                                                            x_1146 = x_1187;
+                                                                                                                                            x_1147 = x_1188;
+                                                                                                                                            x_1148 = x_1189;
+                                                                                                                                            x_1149 = x_1190;
+                                                                                                                                            x_1150 = x_1191;
+                                                                                                                                            x_1151 = x_1192;
+                                                                                                                                            x_1152 = x_1193;
+                                                                                                                                            x_1153 = x_1194;
+                                                                                                                                            x_1154 = x_1195;
+                                                                                                                                            x_1155 = x_1196;
+                                                                                                                                            x_1156 = x_1197;
+                                                                                                                                            x_1157 = x_1198;
+                                                                                                                                            x_1158 = x_1199;
+                                                                                                                                            x_1159 = x_1200;
+                                                                                                                                            x_1160 = x_1201;
+                                                                                                                                            x_1161 = x_1202;
+                                                                                                                                            x_1162 = x_1203;
+                                                                                                                                            x_1163 = x_1204;
+                                                                                                                                            x_1164 = x_1207;
+                                                                                                                                            x_1165 = x_1206;
+                                                                                                                                            x_1166 = x_1205;
+                                                                                                                                            x_1167 = x_1213;
+                                                                                                                                            break 'b1132;
+                                                                                                                                        }
+                                                                                                                                        _ => {
+                                                                                                                                            x_1133 = x_1174;
+                                                                                                                                            x_1134 = x_1175;
+                                                                                                                                            x_1135 = x_1176;
+                                                                                                                                            x_1136 = x_1177;
+                                                                                                                                            x_1137 = x_1178;
+                                                                                                                                            x_1138 = x_1179;
+                                                                                                                                            x_1139 = x_1180;
+                                                                                                                                            x_1140 = x_1181;
+                                                                                                                                            x_1141 = x_1182;
+                                                                                                                                            x_1142 = x_1183;
+                                                                                                                                            x_1143 = x_1184;
+                                                                                                                                            x_1144 = x_1186;
+                                                                                                                                            x_1145 = x_1185;
+                                                                                                                                            x_1146 = x_1187;
+                                                                                                                                            x_1147 = x_1188;
+                                                                                                                                            x_1148 = x_1189;
+                                                                                                                                            x_1149 = x_1190;
+                                                                                                                                            x_1150 = x_1191;
+                                                                                                                                            x_1151 = x_1192;
+                                                                                                                                            x_1152 = x_1193;
+                                                                                                                                            x_1153 = x_1194;
+                                                                                                                                            x_1154 = x_1195;
+                                                                                                                                            x_1155 = x_1196;
+                                                                                                                                            x_1156 = x_1197;
+                                                                                                                                            x_1157 = x_1198;
+                                                                                                                                            x_1158 = x_1199;
+                                                                                                                                            x_1159 = x_1200;
+                                                                                                                                            x_1160 = x_1201;
+                                                                                                                                            x_1161 = x_1202;
+                                                                                                                                            x_1162 = x_1203;
+                                                                                                                                            x_1163 = x_1204;
+                                                                                                                                            x_1164 = x_1207;
+                                                                                                                                            x_1165 = x_1206;
+                                                                                                                                            x_1166 = x_1205;
+                                                                                                                                            x_1167 = x_1208;
+                                                                                                                                            break 'b1132;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                                let x_1168: u8 = l_Nat_ddecEq(x_1149, x_1140);
+                                                                                                                                match x_1168 {
+                                                                                                                                    0 => {
+                                                                                                                                        let x_1169: Obj = l_Sand2_dgasPacket_d__closed__45();
+                                                                                                                                        rt::lean_inc(x_1149);
+                                                                                                                                        let x_1170: Obj = l_Int_dofNat(x_1149);
+                                                                                                                                        let x_1171: Obj = l_Int_dmul(x_1169, x_1170);
+                                                                                                                                        rt::lean_dec(x_1170);
+                                                                                                                                        let x_1172: Obj = l_Int_dadd(x_1167, x_1171);
+                                                                                                                                        rt::lean_dec(x_1171);
+                                                                                                                                        rt::lean_dec(x_1167);
+                                                                                                                                        x_1092 = x_1133;
+                                                                                                                                        x_1093 = x_1134;
+                                                                                                                                        x_1094 = x_1135;
+                                                                                                                                        x_1095 = x_1136;
+                                                                                                                                        x_1096 = x_1137;
+                                                                                                                                        x_1097 = x_1138;
+                                                                                                                                        x_1098 = x_1139;
+                                                                                                                                        x_1099 = x_1140;
+                                                                                                                                        x_1100 = x_1141;
+                                                                                                                                        x_1101 = x_1142;
+                                                                                                                                        x_1102 = x_1143;
+                                                                                                                                        x_1103 = x_1145;
+                                                                                                                                        x_1104 = x_1144;
+                                                                                                                                        x_1105 = x_1146;
+                                                                                                                                        x_1106 = x_1147;
+                                                                                                                                        x_1107 = x_1148;
+                                                                                                                                        x_1108 = x_1149;
+                                                                                                                                        x_1109 = x_1150;
+                                                                                                                                        x_1110 = x_1151;
+                                                                                                                                        x_1111 = x_1152;
+                                                                                                                                        x_1112 = x_1153;
+                                                                                                                                        x_1113 = x_1154;
+                                                                                                                                        x_1114 = x_1155;
+                                                                                                                                        x_1115 = x_1156;
+                                                                                                                                        x_1116 = x_1157;
+                                                                                                                                        x_1117 = x_1158;
+                                                                                                                                        x_1118 = x_1159;
+                                                                                                                                        x_1119 = x_1160;
+                                                                                                                                        x_1120 = x_1161;
+                                                                                                                                        x_1121 = x_1162;
+                                                                                                                                        x_1122 = x_1163;
+                                                                                                                                        x_1123 = x_1166;
+                                                                                                                                        x_1124 = x_1165;
+                                                                                                                                        x_1125 = x_1164;
+                                                                                                                                        x_1126 = x_1172;
+                                                                                                                                        break 'b1091;
+                                                                                                                                    }
+                                                                                                                                    _ => {
+                                                                                                                                        x_1092 = x_1133;
+                                                                                                                                        x_1093 = x_1134;
+                                                                                                                                        x_1094 = x_1135;
+                                                                                                                                        x_1095 = x_1136;
+                                                                                                                                        x_1096 = x_1137;
+                                                                                                                                        x_1097 = x_1138;
+                                                                                                                                        x_1098 = x_1139;
+                                                                                                                                        x_1099 = x_1140;
+                                                                                                                                        x_1100 = x_1141;
+                                                                                                                                        x_1101 = x_1142;
+                                                                                                                                        x_1102 = x_1143;
+                                                                                                                                        x_1103 = x_1145;
+                                                                                                                                        x_1104 = x_1144;
+                                                                                                                                        x_1105 = x_1146;
+                                                                                                                                        x_1106 = x_1147;
+                                                                                                                                        x_1107 = x_1148;
+                                                                                                                                        x_1108 = x_1149;
+                                                                                                                                        x_1109 = x_1150;
+                                                                                                                                        x_1110 = x_1151;
+                                                                                                                                        x_1111 = x_1152;
+                                                                                                                                        x_1112 = x_1153;
+                                                                                                                                        x_1113 = x_1154;
+                                                                                                                                        x_1114 = x_1155;
+                                                                                                                                        x_1115 = x_1156;
+                                                                                                                                        x_1116 = x_1157;
+                                                                                                                                        x_1117 = x_1158;
+                                                                                                                                        x_1118 = x_1159;
+                                                                                                                                        x_1119 = x_1160;
+                                                                                                                                        x_1120 = x_1161;
+                                                                                                                                        x_1121 = x_1162;
+                                                                                                                                        x_1122 = x_1163;
+                                                                                                                                        x_1123 = x_1166;
+                                                                                                                                        x_1124 = x_1165;
+                                                                                                                                        x_1125 = x_1164;
+                                                                                                                                        x_1126 = x_1167;
+                                                                                                                                        break 'b1091;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            let x_1127: u8 = l_Nat_ddecEq(x_1110, x_1099);
+                                                                                                                            match x_1127 {
+                                                                                                                                0 => {
+                                                                                                                                    let x_1128: Obj = l_Sand2_dgasPacket_d__closed__43();
+                                                                                                                                    rt::lean_inc(x_1110);
+                                                                                                                                    let x_1129: Obj = l_Int_dofNat(x_1110);
+                                                                                                                                    let x_1130: Obj = l_Int_dmul(x_1128, x_1129);
+                                                                                                                                    rt::lean_dec(x_1129);
+                                                                                                                                    let x_1131: Obj = l_Int_dadd(x_1126, x_1130);
+                                                                                                                                    rt::lean_dec(x_1130);
+                                                                                                                                    rt::lean_dec(x_1126);
+                                                                                                                                    x_1051 = x_1092;
+                                                                                                                                    x_1052 = x_1093;
+                                                                                                                                    x_1053 = x_1094;
+                                                                                                                                    x_1054 = x_1095;
+                                                                                                                                    x_1055 = x_1096;
+                                                                                                                                    x_1056 = x_1097;
+                                                                                                                                    x_1057 = x_1098;
+                                                                                                                                    x_1058 = x_1099;
+                                                                                                                                    x_1059 = x_1100;
+                                                                                                                                    x_1060 = x_1101;
+                                                                                                                                    x_1061 = x_1102;
+                                                                                                                                    x_1062 = x_1104;
+                                                                                                                                    x_1063 = x_1103;
+                                                                                                                                    x_1064 = x_1105;
+                                                                                                                                    x_1065 = x_1106;
+                                                                                                                                    x_1066 = x_1107;
+                                                                                                                                    x_1067 = x_1108;
+                                                                                                                                    x_1068 = x_1109;
+                                                                                                                                    x_1069 = x_1110;
+                                                                                                                                    x_1070 = x_1111;
+                                                                                                                                    x_1071 = x_1112;
+                                                                                                                                    x_1072 = x_1113;
+                                                                                                                                    x_1073 = x_1114;
+                                                                                                                                    x_1074 = x_1115;
+                                                                                                                                    x_1075 = x_1116;
+                                                                                                                                    x_1076 = x_1117;
+                                                                                                                                    x_1077 = x_1118;
+                                                                                                                                    x_1078 = x_1119;
+                                                                                                                                    x_1079 = x_1120;
+                                                                                                                                    x_1080 = x_1121;
+                                                                                                                                    x_1081 = x_1122;
+                                                                                                                                    x_1082 = x_1125;
+                                                                                                                                    x_1083 = x_1124;
+                                                                                                                                    x_1084 = x_1123;
+                                                                                                                                    x_1085 = x_1131;
+                                                                                                                                    break 'b1050;
+                                                                                                                                }
+                                                                                                                                _ => {
+                                                                                                                                    x_1051 = x_1092;
+                                                                                                                                    x_1052 = x_1093;
+                                                                                                                                    x_1053 = x_1094;
+                                                                                                                                    x_1054 = x_1095;
+                                                                                                                                    x_1055 = x_1096;
+                                                                                                                                    x_1056 = x_1097;
+                                                                                                                                    x_1057 = x_1098;
+                                                                                                                                    x_1058 = x_1099;
+                                                                                                                                    x_1059 = x_1100;
+                                                                                                                                    x_1060 = x_1101;
+                                                                                                                                    x_1061 = x_1102;
+                                                                                                                                    x_1062 = x_1104;
+                                                                                                                                    x_1063 = x_1103;
+                                                                                                                                    x_1064 = x_1105;
+                                                                                                                                    x_1065 = x_1106;
+                                                                                                                                    x_1066 = x_1107;
+                                                                                                                                    x_1067 = x_1108;
+                                                                                                                                    x_1068 = x_1109;
+                                                                                                                                    x_1069 = x_1110;
+                                                                                                                                    x_1070 = x_1111;
+                                                                                                                                    x_1071 = x_1112;
+                                                                                                                                    x_1072 = x_1113;
+                                                                                                                                    x_1073 = x_1114;
+                                                                                                                                    x_1074 = x_1115;
+                                                                                                                                    x_1075 = x_1116;
+                                                                                                                                    x_1076 = x_1117;
+                                                                                                                                    x_1077 = x_1118;
+                                                                                                                                    x_1078 = x_1119;
+                                                                                                                                    x_1079 = x_1120;
+                                                                                                                                    x_1080 = x_1121;
+                                                                                                                                    x_1081 = x_1122;
+                                                                                                                                    x_1082 = x_1125;
+                                                                                                                                    x_1083 = x_1124;
+                                                                                                                                    x_1084 = x_1123;
+                                                                                                                                    x_1085 = x_1126;
+                                                                                                                                    break 'b1050;
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        let x_1086: u8 = l_Nat_ddecEq(x_1070, x_1058);
+                                                                                                                        match x_1086 {
+                                                                                                                            0 => {
+                                                                                                                                let x_1087: Obj = l_Sand2_dgasPacket_d__closed__41();
+                                                                                                                                rt::lean_inc(x_1070);
+                                                                                                                                let x_1088: Obj = l_Int_dofNat(x_1070);
+                                                                                                                                let x_1089: Obj = l_Int_dmul(x_1087, x_1088);
+                                                                                                                                rt::lean_dec(x_1088);
+                                                                                                                                let x_1090: Obj = l_Int_dadd(x_1085, x_1089);
+                                                                                                                                rt::lean_dec(x_1089);
+                                                                                                                                rt::lean_dec(x_1085);
+                                                                                                                                x_1010 = x_1051;
+                                                                                                                                x_1011 = x_1052;
+                                                                                                                                x_1012 = x_1053;
+                                                                                                                                x_1013 = x_1054;
+                                                                                                                                x_1014 = x_1055;
+                                                                                                                                x_1015 = x_1056;
+                                                                                                                                x_1016 = x_1057;
+                                                                                                                                x_1017 = x_1058;
+                                                                                                                                x_1018 = x_1059;
+                                                                                                                                x_1019 = x_1060;
+                                                                                                                                x_1020 = x_1061;
+                                                                                                                                x_1021 = x_1063;
+                                                                                                                                x_1022 = x_1062;
+                                                                                                                                x_1023 = x_1064;
+                                                                                                                                x_1024 = x_1065;
+                                                                                                                                x_1025 = x_1066;
+                                                                                                                                x_1026 = x_1067;
+                                                                                                                                x_1027 = x_1068;
+                                                                                                                                x_1028 = x_1069;
+                                                                                                                                x_1029 = x_1070;
+                                                                                                                                x_1030 = x_1071;
+                                                                                                                                x_1031 = x_1072;
+                                                                                                                                x_1032 = x_1073;
+                                                                                                                                x_1033 = x_1074;
+                                                                                                                                x_1034 = x_1075;
+                                                                                                                                x_1035 = x_1076;
+                                                                                                                                x_1036 = x_1077;
+                                                                                                                                x_1037 = x_1078;
+                                                                                                                                x_1038 = x_1079;
+                                                                                                                                x_1039 = x_1080;
+                                                                                                                                x_1040 = x_1081;
+                                                                                                                                x_1041 = x_1084;
+                                                                                                                                x_1042 = x_1083;
+                                                                                                                                x_1043 = x_1082;
+                                                                                                                                x_1044 = x_1090;
+                                                                                                                                break 'b1009;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                x_1010 = x_1051;
+                                                                                                                                x_1011 = x_1052;
+                                                                                                                                x_1012 = x_1053;
+                                                                                                                                x_1013 = x_1054;
+                                                                                                                                x_1014 = x_1055;
+                                                                                                                                x_1015 = x_1056;
+                                                                                                                                x_1016 = x_1057;
+                                                                                                                                x_1017 = x_1058;
+                                                                                                                                x_1018 = x_1059;
+                                                                                                                                x_1019 = x_1060;
+                                                                                                                                x_1020 = x_1061;
+                                                                                                                                x_1021 = x_1063;
+                                                                                                                                x_1022 = x_1062;
+                                                                                                                                x_1023 = x_1064;
+                                                                                                                                x_1024 = x_1065;
+                                                                                                                                x_1025 = x_1066;
+                                                                                                                                x_1026 = x_1067;
+                                                                                                                                x_1027 = x_1068;
+                                                                                                                                x_1028 = x_1069;
+                                                                                                                                x_1029 = x_1070;
+                                                                                                                                x_1030 = x_1071;
+                                                                                                                                x_1031 = x_1072;
+                                                                                                                                x_1032 = x_1073;
+                                                                                                                                x_1033 = x_1074;
+                                                                                                                                x_1034 = x_1075;
+                                                                                                                                x_1035 = x_1076;
+                                                                                                                                x_1036 = x_1077;
+                                                                                                                                x_1037 = x_1078;
+                                                                                                                                x_1038 = x_1079;
+                                                                                                                                x_1039 = x_1080;
+                                                                                                                                x_1040 = x_1081;
+                                                                                                                                x_1041 = x_1084;
+                                                                                                                                x_1042 = x_1083;
+                                                                                                                                x_1043 = x_1082;
+                                                                                                                                x_1044 = x_1085;
+                                                                                                                                break 'b1009;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    let x_1045: u8 = l_Nat_ddecEq(x_1030, x_1017);
+                                                                                                                    match x_1045 {
+                                                                                                                        0 => {
+                                                                                                                            let x_1046: Obj = l_Sand2_dgasPacket_d__closed__39();
+                                                                                                                            rt::lean_inc(x_1030);
+                                                                                                                            let x_1047: Obj = l_Int_dofNat(x_1030);
+                                                                                                                            let x_1048: Obj = l_Int_dmul(x_1046, x_1047);
+                                                                                                                            rt::lean_dec(x_1047);
+                                                                                                                            let x_1049: Obj = l_Int_dadd(x_1044, x_1048);
+                                                                                                                            rt::lean_dec(x_1048);
+                                                                                                                            rt::lean_dec(x_1044);
+                                                                                                                            x_969 = x_1010;
+                                                                                                                            x_970 = x_1011;
+                                                                                                                            x_971 = x_1012;
+                                                                                                                            x_972 = x_1013;
+                                                                                                                            x_973 = x_1014;
+                                                                                                                            x_974 = x_1015;
+                                                                                                                            x_975 = x_1016;
+                                                                                                                            x_976 = x_1017;
+                                                                                                                            x_977 = x_1018;
+                                                                                                                            x_978 = x_1019;
+                                                                                                                            x_979 = x_1020;
+                                                                                                                            x_980 = x_1022;
+                                                                                                                            x_981 = x_1021;
+                                                                                                                            x_982 = x_1023;
+                                                                                                                            x_983 = x_1024;
+                                                                                                                            x_984 = x_1025;
+                                                                                                                            x_985 = x_1026;
+                                                                                                                            x_986 = x_1027;
+                                                                                                                            x_987 = x_1028;
+                                                                                                                            x_988 = x_1029;
+                                                                                                                            x_989 = x_1030;
+                                                                                                                            x_990 = x_1031;
+                                                                                                                            x_991 = x_1032;
+                                                                                                                            x_992 = x_1033;
+                                                                                                                            x_993 = x_1034;
+                                                                                                                            x_994 = x_1035;
+                                                                                                                            x_995 = x_1036;
+                                                                                                                            x_996 = x_1037;
+                                                                                                                            x_997 = x_1038;
+                                                                                                                            x_998 = x_1039;
+                                                                                                                            x_999 = x_1040;
+                                                                                                                            x_1000 = x_1043;
+                                                                                                                            x_1001 = x_1042;
+                                                                                                                            x_1002 = x_1041;
+                                                                                                                            x_1003 = x_1049;
+                                                                                                                            break 'b968;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            x_969 = x_1010;
+                                                                                                                            x_970 = x_1011;
+                                                                                                                            x_971 = x_1012;
+                                                                                                                            x_972 = x_1013;
+                                                                                                                            x_973 = x_1014;
+                                                                                                                            x_974 = x_1015;
+                                                                                                                            x_975 = x_1016;
+                                                                                                                            x_976 = x_1017;
+                                                                                                                            x_977 = x_1018;
+                                                                                                                            x_978 = x_1019;
+                                                                                                                            x_979 = x_1020;
+                                                                                                                            x_980 = x_1022;
+                                                                                                                            x_981 = x_1021;
+                                                                                                                            x_982 = x_1023;
+                                                                                                                            x_983 = x_1024;
+                                                                                                                            x_984 = x_1025;
+                                                                                                                            x_985 = x_1026;
+                                                                                                                            x_986 = x_1027;
+                                                                                                                            x_987 = x_1028;
+                                                                                                                            x_988 = x_1029;
+                                                                                                                            x_989 = x_1030;
+                                                                                                                            x_990 = x_1031;
+                                                                                                                            x_991 = x_1032;
+                                                                                                                            x_992 = x_1033;
+                                                                                                                            x_993 = x_1034;
+                                                                                                                            x_994 = x_1035;
+                                                                                                                            x_995 = x_1036;
+                                                                                                                            x_996 = x_1037;
+                                                                                                                            x_997 = x_1038;
+                                                                                                                            x_998 = x_1039;
+                                                                                                                            x_999 = x_1040;
+                                                                                                                            x_1000 = x_1043;
+                                                                                                                            x_1001 = x_1042;
+                                                                                                                            x_1002 = x_1041;
+                                                                                                                            x_1003 = x_1044;
+                                                                                                                            break 'b968;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                let x_1004: u8 = l_Nat_ddecEq(x_990, x_976);
+                                                                                                                match x_1004 {
+                                                                                                                    0 => {
+                                                                                                                        let x_1005: Obj = l_Sand2_dgasPacket_d__closed__37();
+                                                                                                                        rt::lean_inc(x_990);
+                                                                                                                        let x_1006: Obj = l_Int_dofNat(x_990);
+                                                                                                                        let x_1007: Obj = l_Int_dmul(x_1005, x_1006);
+                                                                                                                        rt::lean_dec(x_1006);
+                                                                                                                        let x_1008: Obj = l_Int_dadd(x_1003, x_1007);
+                                                                                                                        rt::lean_dec(x_1007);
+                                                                                                                        rt::lean_dec(x_1003);
+                                                                                                                        x_928 = x_969;
+                                                                                                                        x_929 = x_970;
+                                                                                                                        x_930 = x_971;
+                                                                                                                        x_931 = x_972;
+                                                                                                                        x_932 = x_973;
+                                                                                                                        x_933 = x_974;
+                                                                                                                        x_934 = x_975;
+                                                                                                                        x_935 = x_976;
+                                                                                                                        x_936 = x_977;
+                                                                                                                        x_937 = x_978;
+                                                                                                                        x_938 = x_979;
+                                                                                                                        x_939 = x_981;
+                                                                                                                        x_940 = x_980;
+                                                                                                                        x_941 = x_982;
+                                                                                                                        x_942 = x_983;
+                                                                                                                        x_943 = x_984;
+                                                                                                                        x_944 = x_985;
+                                                                                                                        x_945 = x_986;
+                                                                                                                        x_946 = x_987;
+                                                                                                                        x_947 = x_988;
+                                                                                                                        x_948 = x_989;
+                                                                                                                        x_949 = x_990;
+                                                                                                                        x_950 = x_991;
+                                                                                                                        x_951 = x_992;
+                                                                                                                        x_952 = x_993;
+                                                                                                                        x_953 = x_994;
+                                                                                                                        x_954 = x_995;
+                                                                                                                        x_955 = x_996;
+                                                                                                                        x_956 = x_997;
+                                                                                                                        x_957 = x_998;
+                                                                                                                        x_958 = x_999;
+                                                                                                                        x_959 = x_1002;
+                                                                                                                        x_960 = x_1001;
+                                                                                                                        x_961 = x_1000;
+                                                                                                                        x_962 = x_1008;
+                                                                                                                        break 'b927;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        x_928 = x_969;
+                                                                                                                        x_929 = x_970;
+                                                                                                                        x_930 = x_971;
+                                                                                                                        x_931 = x_972;
+                                                                                                                        x_932 = x_973;
+                                                                                                                        x_933 = x_974;
+                                                                                                                        x_934 = x_975;
+                                                                                                                        x_935 = x_976;
+                                                                                                                        x_936 = x_977;
+                                                                                                                        x_937 = x_978;
+                                                                                                                        x_938 = x_979;
+                                                                                                                        x_939 = x_981;
+                                                                                                                        x_940 = x_980;
+                                                                                                                        x_941 = x_982;
+                                                                                                                        x_942 = x_983;
+                                                                                                                        x_943 = x_984;
+                                                                                                                        x_944 = x_985;
+                                                                                                                        x_945 = x_986;
+                                                                                                                        x_946 = x_987;
+                                                                                                                        x_947 = x_988;
+                                                                                                                        x_948 = x_989;
+                                                                                                                        x_949 = x_990;
+                                                                                                                        x_950 = x_991;
+                                                                                                                        x_951 = x_992;
+                                                                                                                        x_952 = x_993;
+                                                                                                                        x_953 = x_994;
+                                                                                                                        x_954 = x_995;
+                                                                                                                        x_955 = x_996;
+                                                                                                                        x_956 = x_997;
+                                                                                                                        x_957 = x_998;
+                                                                                                                        x_958 = x_999;
+                                                                                                                        x_959 = x_1002;
+                                                                                                                        x_960 = x_1001;
+                                                                                                                        x_961 = x_1000;
+                                                                                                                        x_962 = x_1003;
+                                                                                                                        break 'b927;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            let x_963: u8 = l_Nat_ddecEq(x_950, x_935);
+                                                                                                            match x_963 {
+                                                                                                                0 => {
+                                                                                                                    let x_964: Obj = l_Sand2_dgasPacket_d__closed__35();
+                                                                                                                    rt::lean_inc(x_950);
+                                                                                                                    let x_965: Obj = l_Int_dofNat(x_950);
+                                                                                                                    let x_966: Obj = l_Int_dmul(x_964, x_965);
+                                                                                                                    rt::lean_dec(x_965);
+                                                                                                                    let x_967: Obj = l_Int_dadd(x_962, x_966);
+                                                                                                                    rt::lean_dec(x_966);
+                                                                                                                    rt::lean_dec(x_962);
+                                                                                                                    x_887 = x_928;
+                                                                                                                    x_888 = x_929;
+                                                                                                                    x_889 = x_930;
+                                                                                                                    x_890 = x_931;
+                                                                                                                    x_891 = x_932;
+                                                                                                                    x_892 = x_933;
+                                                                                                                    x_893 = x_934;
+                                                                                                                    x_894 = x_935;
+                                                                                                                    x_895 = x_936;
+                                                                                                                    x_896 = x_937;
+                                                                                                                    x_897 = x_938;
+                                                                                                                    x_898 = x_940;
+                                                                                                                    x_899 = x_939;
+                                                                                                                    x_900 = x_941;
+                                                                                                                    x_901 = x_942;
+                                                                                                                    x_902 = x_943;
+                                                                                                                    x_903 = x_944;
+                                                                                                                    x_904 = x_945;
+                                                                                                                    x_905 = x_946;
+                                                                                                                    x_906 = x_947;
+                                                                                                                    x_907 = x_948;
+                                                                                                                    x_908 = x_949;
+                                                                                                                    x_909 = x_950;
+                                                                                                                    x_910 = x_951;
+                                                                                                                    x_911 = x_952;
+                                                                                                                    x_912 = x_953;
+                                                                                                                    x_913 = x_954;
+                                                                                                                    x_914 = x_955;
+                                                                                                                    x_915 = x_956;
+                                                                                                                    x_916 = x_957;
+                                                                                                                    x_917 = x_958;
+                                                                                                                    x_918 = x_961;
+                                                                                                                    x_919 = x_960;
+                                                                                                                    x_920 = x_959;
+                                                                                                                    x_921 = x_967;
+                                                                                                                    break 'b886;
+                                                                                                                }
+                                                                                                                _ => {
+                                                                                                                    x_887 = x_928;
+                                                                                                                    x_888 = x_929;
+                                                                                                                    x_889 = x_930;
+                                                                                                                    x_890 = x_931;
+                                                                                                                    x_891 = x_932;
+                                                                                                                    x_892 = x_933;
+                                                                                                                    x_893 = x_934;
+                                                                                                                    x_894 = x_935;
+                                                                                                                    x_895 = x_936;
+                                                                                                                    x_896 = x_937;
+                                                                                                                    x_897 = x_938;
+                                                                                                                    x_898 = x_940;
+                                                                                                                    x_899 = x_939;
+                                                                                                                    x_900 = x_941;
+                                                                                                                    x_901 = x_942;
+                                                                                                                    x_902 = x_943;
+                                                                                                                    x_903 = x_944;
+                                                                                                                    x_904 = x_945;
+                                                                                                                    x_905 = x_946;
+                                                                                                                    x_906 = x_947;
+                                                                                                                    x_907 = x_948;
+                                                                                                                    x_908 = x_949;
+                                                                                                                    x_909 = x_950;
+                                                                                                                    x_910 = x_951;
+                                                                                                                    x_911 = x_952;
+                                                                                                                    x_912 = x_953;
+                                                                                                                    x_913 = x_954;
+                                                                                                                    x_914 = x_955;
+                                                                                                                    x_915 = x_956;
+                                                                                                                    x_916 = x_957;
+                                                                                                                    x_917 = x_958;
+                                                                                                                    x_918 = x_961;
+                                                                                                                    x_919 = x_960;
+                                                                                                                    x_920 = x_959;
+                                                                                                                    x_921 = x_962;
+                                                                                                                    break 'b886;
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        let x_922: u8 = l_Nat_ddecEq(x_911, x_894);
+                                                                                                        match x_922 {
+                                                                                                            0 => {
+                                                                                                                let x_923: Obj = l_Sand2_dgasPacket_d__closed__33();
+                                                                                                                rt::lean_inc(x_911);
+                                                                                                                let x_924: Obj = l_Int_dofNat(x_911);
+                                                                                                                let x_925: Obj = l_Int_dmul(x_923, x_924);
+                                                                                                                rt::lean_dec(x_924);
+                                                                                                                let x_926: Obj = l_Int_dadd(x_921, x_925);
+                                                                                                                rt::lean_dec(x_925);
+                                                                                                                rt::lean_dec(x_921);
+                                                                                                                x_846 = x_887;
+                                                                                                                x_847 = x_888;
+                                                                                                                x_848 = x_889;
+                                                                                                                x_849 = x_890;
+                                                                                                                x_850 = x_891;
+                                                                                                                x_851 = x_892;
+                                                                                                                x_852 = x_893;
+                                                                                                                x_853 = x_894;
+                                                                                                                x_854 = x_895;
+                                                                                                                x_855 = x_896;
+                                                                                                                x_856 = x_897;
+                                                                                                                x_857 = x_899;
+                                                                                                                x_858 = x_898;
+                                                                                                                x_859 = x_900;
+                                                                                                                x_860 = x_901;
+                                                                                                                x_861 = x_902;
+                                                                                                                x_862 = x_903;
+                                                                                                                x_863 = x_904;
+                                                                                                                x_864 = x_905;
+                                                                                                                x_865 = x_906;
+                                                                                                                x_866 = x_907;
+                                                                                                                x_867 = x_908;
+                                                                                                                x_868 = x_909;
+                                                                                                                x_869 = x_910;
+                                                                                                                x_870 = x_911;
+                                                                                                                x_871 = x_912;
+                                                                                                                x_872 = x_913;
+                                                                                                                x_873 = x_914;
+                                                                                                                x_874 = x_915;
+                                                                                                                x_875 = x_916;
+                                                                                                                x_876 = x_917;
+                                                                                                                x_877 = x_920;
+                                                                                                                x_878 = x_919;
+                                                                                                                x_879 = x_918;
+                                                                                                                x_880 = x_926;
+                                                                                                                break 'b845;
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                x_846 = x_887;
+                                                                                                                x_847 = x_888;
+                                                                                                                x_848 = x_889;
+                                                                                                                x_849 = x_890;
+                                                                                                                x_850 = x_891;
+                                                                                                                x_851 = x_892;
+                                                                                                                x_852 = x_893;
+                                                                                                                x_853 = x_894;
+                                                                                                                x_854 = x_895;
+                                                                                                                x_855 = x_896;
+                                                                                                                x_856 = x_897;
+                                                                                                                x_857 = x_899;
+                                                                                                                x_858 = x_898;
+                                                                                                                x_859 = x_900;
+                                                                                                                x_860 = x_901;
+                                                                                                                x_861 = x_902;
+                                                                                                                x_862 = x_903;
+                                                                                                                x_863 = x_904;
+                                                                                                                x_864 = x_905;
+                                                                                                                x_865 = x_906;
+                                                                                                                x_866 = x_907;
+                                                                                                                x_867 = x_908;
+                                                                                                                x_868 = x_909;
+                                                                                                                x_869 = x_910;
+                                                                                                                x_870 = x_911;
+                                                                                                                x_871 = x_912;
+                                                                                                                x_872 = x_913;
+                                                                                                                x_873 = x_914;
+                                                                                                                x_874 = x_915;
+                                                                                                                x_875 = x_916;
+                                                                                                                x_876 = x_917;
+                                                                                                                x_877 = x_920;
+                                                                                                                x_878 = x_919;
+                                                                                                                x_879 = x_918;
+                                                                                                                x_880 = x_921;
+                                                                                                                break 'b845;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    let x_881: u8 = l_Nat_ddecEq(x_871, x_853);
+                                                                                                    match x_881 {
+                                                                                                        0 => {
+                                                                                                            let x_882: Obj = l_Sand2_dgasPacket_d__closed__31();
+                                                                                                            rt::lean_inc(x_871);
+                                                                                                            let x_883: Obj = l_Int_dofNat(x_871);
+                                                                                                            let x_884: Obj = l_Int_dmul(x_882, x_883);
+                                                                                                            rt::lean_dec(x_883);
+                                                                                                            let x_885: Obj = l_Int_dadd(x_880, x_884);
+                                                                                                            rt::lean_dec(x_884);
+                                                                                                            rt::lean_dec(x_880);
+                                                                                                            x_805 = x_846;
+                                                                                                            x_806 = x_847;
+                                                                                                            x_807 = x_848;
+                                                                                                            x_808 = x_849;
+                                                                                                            x_809 = x_850;
+                                                                                                            x_810 = x_851;
+                                                                                                            x_811 = x_852;
+                                                                                                            x_812 = x_853;
+                                                                                                            x_813 = x_854;
+                                                                                                            x_814 = x_855;
+                                                                                                            x_815 = x_856;
+                                                                                                            x_816 = x_858;
+                                                                                                            x_817 = x_857;
+                                                                                                            x_818 = x_859;
+                                                                                                            x_819 = x_860;
+                                                                                                            x_820 = x_861;
+                                                                                                            x_821 = x_862;
+                                                                                                            x_822 = x_863;
+                                                                                                            x_823 = x_864;
+                                                                                                            x_824 = x_865;
+                                                                                                            x_825 = x_866;
+                                                                                                            x_826 = x_867;
+                                                                                                            x_827 = x_868;
+                                                                                                            x_828 = x_869;
+                                                                                                            x_829 = x_870;
+                                                                                                            x_830 = x_871;
+                                                                                                            x_831 = x_872;
+                                                                                                            x_832 = x_873;
+                                                                                                            x_833 = x_874;
+                                                                                                            x_834 = x_875;
+                                                                                                            x_835 = x_876;
+                                                                                                            x_836 = x_879;
+                                                                                                            x_837 = x_878;
+                                                                                                            x_838 = x_877;
+                                                                                                            x_839 = x_885;
+                                                                                                            break 'b804;
+                                                                                                        }
+                                                                                                        _ => {
+                                                                                                            x_805 = x_846;
+                                                                                                            x_806 = x_847;
+                                                                                                            x_807 = x_848;
+                                                                                                            x_808 = x_849;
+                                                                                                            x_809 = x_850;
+                                                                                                            x_810 = x_851;
+                                                                                                            x_811 = x_852;
+                                                                                                            x_812 = x_853;
+                                                                                                            x_813 = x_854;
+                                                                                                            x_814 = x_855;
+                                                                                                            x_815 = x_856;
+                                                                                                            x_816 = x_858;
+                                                                                                            x_817 = x_857;
+                                                                                                            x_818 = x_859;
+                                                                                                            x_819 = x_860;
+                                                                                                            x_820 = x_861;
+                                                                                                            x_821 = x_862;
+                                                                                                            x_822 = x_863;
+                                                                                                            x_823 = x_864;
+                                                                                                            x_824 = x_865;
+                                                                                                            x_825 = x_866;
+                                                                                                            x_826 = x_867;
+                                                                                                            x_827 = x_868;
+                                                                                                            x_828 = x_869;
+                                                                                                            x_829 = x_870;
+                                                                                                            x_830 = x_871;
+                                                                                                            x_831 = x_872;
+                                                                                                            x_832 = x_873;
+                                                                                                            x_833 = x_874;
+                                                                                                            x_834 = x_875;
+                                                                                                            x_835 = x_876;
+                                                                                                            x_836 = x_879;
+                                                                                                            x_837 = x_878;
+                                                                                                            x_838 = x_877;
+                                                                                                            x_839 = x_880;
+                                                                                                            break 'b804;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                                let x_840: u8 = l_Nat_ddecEq(x_831, x_812);
+                                                                                                match x_840 {
+                                                                                                    0 => {
+                                                                                                        let x_841: Obj = l_Sand2_dgasPacket_d__closed__29();
+                                                                                                        rt::lean_inc(x_831);
+                                                                                                        let x_842: Obj = l_Int_dofNat(x_831);
+                                                                                                        let x_843: Obj = l_Int_dmul(x_841, x_842);
+                                                                                                        rt::lean_dec(x_842);
+                                                                                                        let x_844: Obj = l_Int_dadd(x_839, x_843);
+                                                                                                        rt::lean_dec(x_843);
+                                                                                                        rt::lean_dec(x_839);
+                                                                                                        x_764 = x_805;
+                                                                                                        x_765 = x_806;
+                                                                                                        x_766 = x_807;
+                                                                                                        x_767 = x_808;
+                                                                                                        x_768 = x_809;
+                                                                                                        x_769 = x_810;
+                                                                                                        x_770 = x_811;
+                                                                                                        x_771 = x_812;
+                                                                                                        x_772 = x_813;
+                                                                                                        x_773 = x_814;
+                                                                                                        x_774 = x_815;
+                                                                                                        x_775 = x_817;
+                                                                                                        x_776 = x_816;
+                                                                                                        x_777 = x_818;
+                                                                                                        x_778 = x_819;
+                                                                                                        x_779 = x_820;
+                                                                                                        x_780 = x_821;
+                                                                                                        x_781 = x_822;
+                                                                                                        x_782 = x_823;
+                                                                                                        x_783 = x_824;
+                                                                                                        x_784 = x_825;
+                                                                                                        x_785 = x_826;
+                                                                                                        x_786 = x_827;
+                                                                                                        x_787 = x_828;
+                                                                                                        x_788 = x_829;
+                                                                                                        x_789 = x_830;
+                                                                                                        x_790 = x_831;
+                                                                                                        x_791 = x_832;
+                                                                                                        x_792 = x_833;
+                                                                                                        x_793 = x_834;
+                                                                                                        x_794 = x_835;
+                                                                                                        x_795 = x_838;
+                                                                                                        x_796 = x_837;
+                                                                                                        x_797 = x_836;
+                                                                                                        x_798 = x_844;
+                                                                                                        break 'b763;
+                                                                                                    }
+                                                                                                    _ => {
+                                                                                                        x_764 = x_805;
+                                                                                                        x_765 = x_806;
+                                                                                                        x_766 = x_807;
+                                                                                                        x_767 = x_808;
+                                                                                                        x_768 = x_809;
+                                                                                                        x_769 = x_810;
+                                                                                                        x_770 = x_811;
+                                                                                                        x_771 = x_812;
+                                                                                                        x_772 = x_813;
+                                                                                                        x_773 = x_814;
+                                                                                                        x_774 = x_815;
+                                                                                                        x_775 = x_817;
+                                                                                                        x_776 = x_816;
+                                                                                                        x_777 = x_818;
+                                                                                                        x_778 = x_819;
+                                                                                                        x_779 = x_820;
+                                                                                                        x_780 = x_821;
+                                                                                                        x_781 = x_822;
+                                                                                                        x_782 = x_823;
+                                                                                                        x_783 = x_824;
+                                                                                                        x_784 = x_825;
+                                                                                                        x_785 = x_826;
+                                                                                                        x_786 = x_827;
+                                                                                                        x_787 = x_828;
+                                                                                                        x_788 = x_829;
+                                                                                                        x_789 = x_830;
+                                                                                                        x_790 = x_831;
+                                                                                                        x_791 = x_832;
+                                                                                                        x_792 = x_833;
+                                                                                                        x_793 = x_834;
+                                                                                                        x_794 = x_835;
+                                                                                                        x_795 = x_838;
+                                                                                                        x_796 = x_837;
+                                                                                                        x_797 = x_836;
+                                                                                                        x_798 = x_839;
+                                                                                                        break 'b763;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            let x_799: u8 = l_Nat_ddecEq(x_792, x_771);
+                                                                                            match x_799 {
+                                                                                                0 => {
+                                                                                                    let x_800: Obj = l_Sand2_dgasPacket_d__closed__27();
+                                                                                                    rt::lean_inc(x_792);
+                                                                                                    let x_801: Obj = l_Int_dofNat(x_792);
+                                                                                                    let x_802: Obj = l_Int_dmul(x_800, x_801);
+                                                                                                    rt::lean_dec(x_801);
+                                                                                                    let x_803: Obj = l_Int_dadd(x_798, x_802);
+                                                                                                    rt::lean_dec(x_802);
+                                                                                                    rt::lean_dec(x_798);
+                                                                                                    x_723 = x_764;
+                                                                                                    x_724 = x_765;
+                                                                                                    x_725 = x_766;
+                                                                                                    x_726 = x_767;
+                                                                                                    x_727 = x_768;
+                                                                                                    x_728 = x_769;
+                                                                                                    x_729 = x_770;
+                                                                                                    x_730 = x_771;
+                                                                                                    x_731 = x_772;
+                                                                                                    x_732 = x_773;
+                                                                                                    x_733 = x_774;
+                                                                                                    x_734 = x_776;
+                                                                                                    x_735 = x_775;
+                                                                                                    x_736 = x_777;
+                                                                                                    x_737 = x_778;
+                                                                                                    x_738 = x_779;
+                                                                                                    x_739 = x_780;
+                                                                                                    x_740 = x_781;
+                                                                                                    x_741 = x_782;
+                                                                                                    x_742 = x_783;
+                                                                                                    x_743 = x_784;
+                                                                                                    x_744 = x_785;
+                                                                                                    x_745 = x_786;
+                                                                                                    x_746 = x_787;
+                                                                                                    x_747 = x_788;
+                                                                                                    x_748 = x_789;
+                                                                                                    x_749 = x_790;
+                                                                                                    x_750 = x_791;
+                                                                                                    x_751 = x_792;
+                                                                                                    x_752 = x_793;
+                                                                                                    x_753 = x_794;
+                                                                                                    x_754 = x_797;
+                                                                                                    x_755 = x_796;
+                                                                                                    x_756 = x_795;
+                                                                                                    x_757 = x_803;
+                                                                                                    break 'b722;
+                                                                                                }
+                                                                                                _ => {
+                                                                                                    x_723 = x_764;
+                                                                                                    x_724 = x_765;
+                                                                                                    x_725 = x_766;
+                                                                                                    x_726 = x_767;
+                                                                                                    x_727 = x_768;
+                                                                                                    x_728 = x_769;
+                                                                                                    x_729 = x_770;
+                                                                                                    x_730 = x_771;
+                                                                                                    x_731 = x_772;
+                                                                                                    x_732 = x_773;
+                                                                                                    x_733 = x_774;
+                                                                                                    x_734 = x_776;
+                                                                                                    x_735 = x_775;
+                                                                                                    x_736 = x_777;
+                                                                                                    x_737 = x_778;
+                                                                                                    x_738 = x_779;
+                                                                                                    x_739 = x_780;
+                                                                                                    x_740 = x_781;
+                                                                                                    x_741 = x_782;
+                                                                                                    x_742 = x_783;
+                                                                                                    x_743 = x_784;
+                                                                                                    x_744 = x_785;
+                                                                                                    x_745 = x_786;
+                                                                                                    x_746 = x_787;
+                                                                                                    x_747 = x_788;
+                                                                                                    x_748 = x_789;
+                                                                                                    x_749 = x_790;
+                                                                                                    x_750 = x_791;
+                                                                                                    x_751 = x_792;
+                                                                                                    x_752 = x_793;
+                                                                                                    x_753 = x_794;
+                                                                                                    x_754 = x_797;
+                                                                                                    x_755 = x_796;
+                                                                                                    x_756 = x_795;
+                                                                                                    x_757 = x_798;
+                                                                                                    break 'b722;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        let x_758: u8 = l_Nat_ddecEq(x_752, x_730);
+                                                                                        match x_758 {
+                                                                                            0 => {
+                                                                                                let x_759: Obj = l_Sand2_dgasPacket_d__closed__25();
+                                                                                                let x_760: Obj = l_Int_dofNat(x_752);
+                                                                                                let x_761: Obj = l_Int_dmul(x_759, x_760);
+                                                                                                rt::lean_dec(x_760);
+                                                                                                let x_762: Obj = l_Int_dadd(x_757, x_761);
+                                                                                                rt::lean_dec(x_761);
+                                                                                                rt::lean_dec(x_757);
+                                                                                                x_683 = x_723;
+                                                                                                x_684 = x_724;
+                                                                                                x_685 = x_725;
+                                                                                                x_686 = x_726;
+                                                                                                x_687 = x_727;
+                                                                                                x_688 = x_728;
+                                                                                                x_689 = x_729;
+                                                                                                x_690 = x_730;
+                                                                                                x_691 = x_731;
+                                                                                                x_692 = x_732;
+                                                                                                x_693 = x_733;
+                                                                                                x_694 = x_735;
+                                                                                                x_695 = x_734;
+                                                                                                x_696 = x_736;
+                                                                                                x_697 = x_737;
+                                                                                                x_698 = x_738;
+                                                                                                x_699 = x_739;
+                                                                                                x_700 = x_740;
+                                                                                                x_701 = x_741;
+                                                                                                x_702 = x_742;
+                                                                                                x_703 = x_743;
+                                                                                                x_704 = x_744;
+                                                                                                x_705 = x_745;
+                                                                                                x_706 = x_746;
+                                                                                                x_707 = x_747;
+                                                                                                x_708 = x_748;
+                                                                                                x_709 = x_749;
+                                                                                                x_710 = x_750;
+                                                                                                x_711 = x_751;
+                                                                                                x_712 = x_753;
+                                                                                                x_713 = x_756;
+                                                                                                x_714 = x_755;
+                                                                                                x_715 = x_754;
+                                                                                                x_716 = x_762;
+                                                                                                break 'b682;
+                                                                                            }
+                                                                                            _ => {
+                                                                                                rt::lean_dec(x_752);
+                                                                                                x_683 = x_723;
+                                                                                                x_684 = x_724;
+                                                                                                x_685 = x_725;
+                                                                                                x_686 = x_726;
+                                                                                                x_687 = x_727;
+                                                                                                x_688 = x_728;
+                                                                                                x_689 = x_729;
+                                                                                                x_690 = x_730;
+                                                                                                x_691 = x_731;
+                                                                                                x_692 = x_732;
+                                                                                                x_693 = x_733;
+                                                                                                x_694 = x_735;
+                                                                                                x_695 = x_734;
+                                                                                                x_696 = x_736;
+                                                                                                x_697 = x_737;
+                                                                                                x_698 = x_738;
+                                                                                                x_699 = x_739;
+                                                                                                x_700 = x_740;
+                                                                                                x_701 = x_741;
+                                                                                                x_702 = x_742;
+                                                                                                x_703 = x_743;
+                                                                                                x_704 = x_744;
+                                                                                                x_705 = x_745;
+                                                                                                x_706 = x_746;
+                                                                                                x_707 = x_747;
+                                                                                                x_708 = x_748;
+                                                                                                x_709 = x_749;
+                                                                                                x_710 = x_750;
+                                                                                                x_711 = x_751;
+                                                                                                x_712 = x_753;
+                                                                                                x_713 = x_756;
+                                                                                                x_714 = x_755;
+                                                                                                x_715 = x_754;
+                                                                                                x_716 = x_757;
+                                                                                                break 'b682;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    let x_717: u8 = l_Nat_ddecEq(x_712, x_690);
+                                                                                    match x_717 {
+                                                                                        0 => {
+                                                                                            let x_718: Obj = l_Sand2_dgasPacket_d__closed__23();
+                                                                                            let x_719: Obj = l_Int_dofNat(x_712);
+                                                                                            let x_720: Obj = l_Int_dmul(x_718, x_719);
+                                                                                            rt::lean_dec(x_719);
+                                                                                            let x_721: Obj = l_Int_dadd(x_716, x_720);
+                                                                                            rt::lean_dec(x_720);
+                                                                                            rt::lean_dec(x_716);
+                                                                                            x_637 = x_683;
+                                                                                            x_638 = x_684;
+                                                                                            x_639 = x_685;
+                                                                                            x_640 = x_686;
+                                                                                            x_641 = x_687;
+                                                                                            x_642 = x_688;
+                                                                                            x_643 = x_689;
+                                                                                            x_644 = x_690;
+                                                                                            x_645 = x_691;
+                                                                                            x_646 = x_692;
+                                                                                            x_647 = x_693;
+                                                                                            x_648 = x_695;
+                                                                                            x_649 = x_694;
+                                                                                            x_650 = x_696;
+                                                                                            x_651 = x_697;
+                                                                                            x_652 = x_698;
+                                                                                            x_653 = x_699;
+                                                                                            x_654 = x_700;
+                                                                                            x_655 = x_701;
+                                                                                            x_656 = x_702;
+                                                                                            x_657 = x_703;
+                                                                                            x_658 = x_704;
+                                                                                            x_659 = x_705;
+                                                                                            x_660 = x_706;
+                                                                                            x_661 = x_707;
+                                                                                            x_662 = x_708;
+                                                                                            x_663 = x_709;
+                                                                                            x_664 = x_710;
+                                                                                            x_665 = x_711;
+                                                                                            x_666 = x_715;
+                                                                                            x_667 = x_714;
+                                                                                            x_668 = x_713;
+                                                                                            x_669 = x_721;
+                                                                                            break 'b636;
+                                                                                        }
+                                                                                        _ => {
+                                                                                            rt::lean_dec(x_712);
+                                                                                            x_637 = x_683;
+                                                                                            x_638 = x_684;
+                                                                                            x_639 = x_685;
+                                                                                            x_640 = x_686;
+                                                                                            x_641 = x_687;
+                                                                                            x_642 = x_688;
+                                                                                            x_643 = x_689;
+                                                                                            x_644 = x_690;
+                                                                                            x_645 = x_691;
+                                                                                            x_646 = x_692;
+                                                                                            x_647 = x_693;
+                                                                                            x_648 = x_695;
+                                                                                            x_649 = x_694;
+                                                                                            x_650 = x_696;
+                                                                                            x_651 = x_697;
+                                                                                            x_652 = x_698;
+                                                                                            x_653 = x_699;
+                                                                                            x_654 = x_700;
+                                                                                            x_655 = x_701;
+                                                                                            x_656 = x_702;
+                                                                                            x_657 = x_703;
+                                                                                            x_658 = x_704;
+                                                                                            x_659 = x_705;
+                                                                                            x_660 = x_706;
+                                                                                            x_661 = x_707;
+                                                                                            x_662 = x_708;
+                                                                                            x_663 = x_709;
+                                                                                            x_664 = x_710;
+                                                                                            x_665 = x_711;
+                                                                                            x_666 = x_715;
+                                                                                            x_667 = x_714;
+                                                                                            x_668 = x_713;
+                                                                                            x_669 = x_716;
+                                                                                            break 'b636;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                let x_670: Obj = l_Int_dmul(x_669, x_643);
+                                                                                rt::lean_dec(x_669);
+                                                                                let x_671: Obj = l_Sand2_dChemistry_ddryGasMoles(x_651);
+                                                                                rt::lean_inc(x_671);
+                                                                                let x_672: Obj = l_Int_dofNat(x_671);
+                                                                                let x_673: Obj = l_Int_dmul(x_649, x_672);
+                                                                                rt::lean_dec(x_672);
+                                                                                let x_674: Obj = l_Int_dsub(x_670, x_673);
+                                                                                rt::lean_dec(x_673);
+                                                                                rt::lean_dec(x_670);
+                                                                                let x_675: Obj = l_Sand2_dChemistry_dgasCv(x_651);
+                                                                                let x_676: Obj = l_Int_dofNat(x_675);
+                                                                                let x_677: u8 = l_Nat_ddecEq(x_652, x_644);
+                                                                                match x_677 {
+                                                                                    0 => {
+                                                                                        let x_678: Obj = l_Sand2_dgasPacket_d__closed__21();
+                                                                                        let x_679: Obj = l_Int_dofNat(x_652);
+                                                                                        let x_680: Obj = l_Int_dmul(x_678, x_679);
+                                                                                        rt::lean_dec(x_679);
+                                                                                        let x_681: Obj = l_Int_dadd(x_676, x_680);
+                                                                                        rt::lean_dec(x_680);
+                                                                                        rt::lean_dec(x_676);
+                                                                                        x_599 = x_637;
+                                                                                        x_600 = x_638;
+                                                                                        x_601 = x_639;
+                                                                                        x_602 = x_640;
+                                                                                        x_603 = x_641;
+                                                                                        x_604 = x_642;
+                                                                                        x_605 = x_671;
+                                                                                        x_606 = x_644;
+                                                                                        x_607 = x_674;
+                                                                                        x_608 = x_645;
+                                                                                        x_609 = x_646;
+                                                                                        x_610 = x_647;
+                                                                                        x_611 = x_648;
+                                                                                        x_612 = x_650;
+                                                                                        x_613 = x_651;
+                                                                                        x_614 = x_653;
+                                                                                        x_615 = x_654;
+                                                                                        x_616 = x_655;
+                                                                                        x_617 = x_656;
+                                                                                        x_618 = x_657;
+                                                                                        x_619 = x_658;
+                                                                                        x_620 = x_659;
+                                                                                        x_621 = x_660;
+                                                                                        x_622 = x_661;
+                                                                                        x_623 = x_662;
+                                                                                        x_624 = x_663;
+                                                                                        x_625 = x_664;
+                                                                                        x_626 = x_665;
+                                                                                        x_627 = x_666;
+                                                                                        x_628 = x_667;
+                                                                                        x_629 = x_668;
+                                                                                        x_630 = x_681;
+                                                                                        break 'b598;
+                                                                                    }
+                                                                                    _ => {
+                                                                                        rt::lean_dec(x_652);
+                                                                                        x_599 = x_637;
+                                                                                        x_600 = x_638;
+                                                                                        x_601 = x_639;
+                                                                                        x_602 = x_640;
+                                                                                        x_603 = x_641;
+                                                                                        x_604 = x_642;
+                                                                                        x_605 = x_671;
+                                                                                        x_606 = x_644;
+                                                                                        x_607 = x_674;
+                                                                                        x_608 = x_645;
+                                                                                        x_609 = x_646;
+                                                                                        x_610 = x_647;
+                                                                                        x_611 = x_648;
+                                                                                        x_612 = x_650;
+                                                                                        x_613 = x_651;
+                                                                                        x_614 = x_653;
+                                                                                        x_615 = x_654;
+                                                                                        x_616 = x_655;
+                                                                                        x_617 = x_656;
+                                                                                        x_618 = x_657;
+                                                                                        x_619 = x_658;
+                                                                                        x_620 = x_659;
+                                                                                        x_621 = x_660;
+                                                                                        x_622 = x_661;
+                                                                                        x_623 = x_662;
+                                                                                        x_624 = x_663;
+                                                                                        x_625 = x_664;
+                                                                                        x_626 = x_665;
+                                                                                        x_627 = x_666;
+                                                                                        x_628 = x_667;
+                                                                                        x_629 = x_668;
+                                                                                        x_630 = x_676;
+                                                                                        break 'b598;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            let x_631: u8 = l_Nat_ddecEq(x_614, x_606);
+                                                                            match x_631 {
+                                                                                0 => {
+                                                                                    let x_632: Obj = l_Sand2_dgasPacket_d__closed__16();
+                                                                                    let x_633: Obj = l_Int_dofNat(x_614);
+                                                                                    let x_634: Obj = l_Int_dmul(x_632, x_633);
+                                                                                    rt::lean_dec(x_633);
+                                                                                    let x_635: Obj = l_Int_dadd(x_630, x_634);
+                                                                                    rt::lean_dec(x_634);
+                                                                                    rt::lean_dec(x_630);
+                                                                                    x_562 = x_599;
+                                                                                    x_563 = x_600;
+                                                                                    x_564 = x_601;
+                                                                                    x_565 = x_602;
+                                                                                    x_566 = x_603;
+                                                                                    x_567 = x_604;
+                                                                                    x_568 = x_605;
+                                                                                    x_569 = x_606;
+                                                                                    x_570 = x_607;
+                                                                                    x_571 = x_608;
+                                                                                    x_572 = x_609;
+                                                                                    x_573 = x_610;
+                                                                                    x_574 = x_611;
+                                                                                    x_575 = x_612;
+                                                                                    x_576 = x_613;
+                                                                                    x_577 = x_615;
+                                                                                    x_578 = x_616;
+                                                                                    x_579 = x_617;
+                                                                                    x_580 = x_618;
+                                                                                    x_581 = x_619;
+                                                                                    x_582 = x_620;
+                                                                                    x_583 = x_621;
+                                                                                    x_584 = x_622;
+                                                                                    x_585 = x_623;
+                                                                                    x_586 = x_624;
+                                                                                    x_587 = x_625;
+                                                                                    x_588 = x_626;
+                                                                                    x_589 = x_629;
+                                                                                    x_590 = x_628;
+                                                                                    x_591 = x_627;
+                                                                                    x_592 = x_635;
+                                                                                    break 'b561;
+                                                                                }
+                                                                                _ => {
+                                                                                    rt::lean_dec(x_614);
+                                                                                    x_562 = x_599;
+                                                                                    x_563 = x_600;
+                                                                                    x_564 = x_601;
+                                                                                    x_565 = x_602;
+                                                                                    x_566 = x_603;
+                                                                                    x_567 = x_604;
+                                                                                    x_568 = x_605;
+                                                                                    x_569 = x_606;
+                                                                                    x_570 = x_607;
+                                                                                    x_571 = x_608;
+                                                                                    x_572 = x_609;
+                                                                                    x_573 = x_610;
+                                                                                    x_574 = x_611;
+                                                                                    x_575 = x_612;
+                                                                                    x_576 = x_613;
+                                                                                    x_577 = x_615;
+                                                                                    x_578 = x_616;
+                                                                                    x_579 = x_617;
+                                                                                    x_580 = x_618;
+                                                                                    x_581 = x_619;
+                                                                                    x_582 = x_620;
+                                                                                    x_583 = x_621;
+                                                                                    x_584 = x_622;
+                                                                                    x_585 = x_623;
+                                                                                    x_586 = x_624;
+                                                                                    x_587 = x_625;
+                                                                                    x_588 = x_626;
+                                                                                    x_589 = x_629;
+                                                                                    x_590 = x_628;
+                                                                                    x_591 = x_627;
+                                                                                    x_592 = x_630;
+                                                                                    break 'b561;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        let x_593: u8 = l_Nat_ddecEq(x_577, x_569);
+                                                                        match x_593 {
+                                                                            0 => {
+                                                                                let x_594: Obj = l_Sand2_dgasPacket_d__closed__15();
+                                                                                let x_595: Obj = l_Int_dofNat(x_577);
+                                                                                let x_596: Obj = l_Int_dmul(x_594, x_595);
+                                                                                rt::lean_dec(x_595);
+                                                                                let x_597: Obj = l_Int_dadd(x_592, x_596);
+                                                                                rt::lean_dec(x_596);
+                                                                                rt::lean_dec(x_592);
+                                                                                x_526 = x_562;
+                                                                                x_527 = x_563;
+                                                                                x_528 = x_564;
+                                                                                x_529 = x_565;
+                                                                                x_530 = x_566;
+                                                                                x_531 = x_567;
+                                                                                x_532 = x_568;
+                                                                                x_533 = x_569;
+                                                                                x_534 = x_570;
+                                                                                x_535 = x_571;
+                                                                                x_536 = x_572;
+                                                                                x_537 = x_573;
+                                                                                x_538 = x_574;
+                                                                                x_539 = x_575;
+                                                                                x_540 = x_576;
+                                                                                x_541 = x_578;
+                                                                                x_542 = x_579;
+                                                                                x_543 = x_580;
+                                                                                x_544 = x_581;
+                                                                                x_545 = x_582;
+                                                                                x_546 = x_583;
+                                                                                x_547 = x_584;
+                                                                                x_548 = x_585;
+                                                                                x_549 = x_586;
+                                                                                x_550 = x_587;
+                                                                                x_551 = x_588;
+                                                                                x_552 = x_591;
+                                                                                x_553 = x_590;
+                                                                                x_554 = x_589;
+                                                                                x_555 = x_597;
+                                                                                break 'b525;
+                                                                            }
+                                                                            _ => {
+                                                                                rt::lean_dec(x_577);
+                                                                                x_526 = x_562;
+                                                                                x_527 = x_563;
+                                                                                x_528 = x_564;
+                                                                                x_529 = x_565;
+                                                                                x_530 = x_566;
+                                                                                x_531 = x_567;
+                                                                                x_532 = x_568;
+                                                                                x_533 = x_569;
+                                                                                x_534 = x_570;
+                                                                                x_535 = x_571;
+                                                                                x_536 = x_572;
+                                                                                x_537 = x_573;
+                                                                                x_538 = x_574;
+                                                                                x_539 = x_575;
+                                                                                x_540 = x_576;
+                                                                                x_541 = x_578;
+                                                                                x_542 = x_579;
+                                                                                x_543 = x_580;
+                                                                                x_544 = x_581;
+                                                                                x_545 = x_582;
+                                                                                x_546 = x_583;
+                                                                                x_547 = x_584;
+                                                                                x_548 = x_585;
+                                                                                x_549 = x_586;
+                                                                                x_550 = x_587;
+                                                                                x_551 = x_588;
+                                                                                x_552 = x_591;
+                                                                                x_553 = x_590;
+                                                                                x_554 = x_589;
+                                                                                x_555 = x_592;
+                                                                                break 'b525;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    let x_556: u8 = l_Nat_ddecEq(x_541, x_533);
+                                                                    match x_556 {
+                                                                        0 => {
+                                                                            let x_557: Obj = l_Sand2_dgasPacket_d__closed__14();
+                                                                            let x_558: Obj = l_Int_dofNat(x_541);
+                                                                            let x_559: Obj = l_Int_dmul(x_557, x_558);
+                                                                            rt::lean_dec(x_558);
+                                                                            let x_560: Obj = l_Int_dadd(x_555, x_559);
+                                                                            rt::lean_dec(x_559);
+                                                                            rt::lean_dec(x_555);
+                                                                            x_491 = x_526;
+                                                                            x_492 = x_527;
+                                                                            x_493 = x_528;
+                                                                            x_494 = x_529;
+                                                                            x_495 = x_530;
+                                                                            x_496 = x_531;
+                                                                            x_497 = x_532;
+                                                                            x_498 = x_533;
+                                                                            x_499 = x_534;
+                                                                            x_500 = x_535;
+                                                                            x_501 = x_536;
+                                                                            x_502 = x_537;
+                                                                            x_503 = x_538;
+                                                                            x_504 = x_539;
+                                                                            x_505 = x_540;
+                                                                            x_506 = x_542;
+                                                                            x_507 = x_543;
+                                                                            x_508 = x_544;
+                                                                            x_509 = x_545;
+                                                                            x_510 = x_546;
+                                                                            x_511 = x_547;
+                                                                            x_512 = x_548;
+                                                                            x_513 = x_549;
+                                                                            x_514 = x_550;
+                                                                            x_515 = x_551;
+                                                                            x_516 = x_554;
+                                                                            x_517 = x_553;
+                                                                            x_518 = x_552;
+                                                                            x_519 = x_560;
+                                                                            break 'b490;
+                                                                        }
+                                                                        _ => {
+                                                                            rt::lean_dec(x_541);
+                                                                            x_491 = x_526;
+                                                                            x_492 = x_527;
+                                                                            x_493 = x_528;
+                                                                            x_494 = x_529;
+                                                                            x_495 = x_530;
+                                                                            x_496 = x_531;
+                                                                            x_497 = x_532;
+                                                                            x_498 = x_533;
+                                                                            x_499 = x_534;
+                                                                            x_500 = x_535;
+                                                                            x_501 = x_536;
+                                                                            x_502 = x_537;
+                                                                            x_503 = x_538;
+                                                                            x_504 = x_539;
+                                                                            x_505 = x_540;
+                                                                            x_506 = x_542;
+                                                                            x_507 = x_543;
+                                                                            x_508 = x_544;
+                                                                            x_509 = x_545;
+                                                                            x_510 = x_546;
+                                                                            x_511 = x_547;
+                                                                            x_512 = x_548;
+                                                                            x_513 = x_549;
+                                                                            x_514 = x_550;
+                                                                            x_515 = x_551;
+                                                                            x_516 = x_554;
+                                                                            x_517 = x_553;
+                                                                            x_518 = x_552;
+                                                                            x_519 = x_555;
+                                                                            break 'b490;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                let x_520: u8 = l_Nat_ddecEq(x_506, x_498);
+                                                                match x_520 {
+                                                                    0 => {
+                                                                        let x_521: Obj = l_Sand2_dgasPacket_d__closed__13();
+                                                                        let x_522: Obj = l_Int_dofNat(x_506);
+                                                                        let x_523: Obj = l_Int_dmul(x_521, x_522);
+                                                                        rt::lean_dec(x_522);
+                                                                        let x_524: Obj = l_Int_dadd(x_519, x_523);
+                                                                        rt::lean_dec(x_523);
+                                                                        rt::lean_dec(x_519);
+                                                                        x_457 = x_491;
+                                                                        x_458 = x_492;
+                                                                        x_459 = x_493;
+                                                                        x_460 = x_494;
+                                                                        x_461 = x_495;
+                                                                        x_462 = x_496;
+                                                                        x_463 = x_497;
+                                                                        x_464 = x_498;
+                                                                        x_465 = x_499;
+                                                                        x_466 = x_500;
+                                                                        x_467 = x_501;
+                                                                        x_468 = x_502;
+                                                                        x_469 = x_503;
+                                                                        x_470 = x_504;
+                                                                        x_471 = x_505;
+                                                                        x_472 = x_507;
+                                                                        x_473 = x_508;
+                                                                        x_474 = x_509;
+                                                                        x_475 = x_510;
+                                                                        x_476 = x_511;
+                                                                        x_477 = x_512;
+                                                                        x_478 = x_513;
+                                                                        x_479 = x_514;
+                                                                        x_480 = x_515;
+                                                                        x_481 = x_518;
+                                                                        x_482 = x_517;
+                                                                        x_483 = x_516;
+                                                                        x_484 = x_524;
+                                                                        break 'b456;
+                                                                    }
+                                                                    _ => {
+                                                                        rt::lean_dec(x_506);
+                                                                        x_457 = x_491;
+                                                                        x_458 = x_492;
+                                                                        x_459 = x_493;
+                                                                        x_460 = x_494;
+                                                                        x_461 = x_495;
+                                                                        x_462 = x_496;
+                                                                        x_463 = x_497;
+                                                                        x_464 = x_498;
+                                                                        x_465 = x_499;
+                                                                        x_466 = x_500;
+                                                                        x_467 = x_501;
+                                                                        x_468 = x_502;
+                                                                        x_469 = x_503;
+                                                                        x_470 = x_504;
+                                                                        x_471 = x_505;
+                                                                        x_472 = x_507;
+                                                                        x_473 = x_508;
+                                                                        x_474 = x_509;
+                                                                        x_475 = x_510;
+                                                                        x_476 = x_511;
+                                                                        x_477 = x_512;
+                                                                        x_478 = x_513;
+                                                                        x_479 = x_514;
+                                                                        x_480 = x_515;
+                                                                        x_481 = x_518;
+                                                                        x_482 = x_517;
+                                                                        x_483 = x_516;
+                                                                        x_484 = x_519;
+                                                                        break 'b456;
+                                                                    }
+                                                                }
+                                                            }
+                                                            let x_485: u8 = l_Nat_ddecEq(x_472, x_464);
+                                                            match x_485 {
+                                                                0 => {
+                                                                    let x_486: Obj = l_Sand2_dgasPacket_d__closed__12();
+                                                                    let x_487: Obj = l_Int_dofNat(x_472);
+                                                                    let x_488: Obj = l_Int_dmul(x_486, x_487);
+                                                                    rt::lean_dec(x_487);
+                                                                    let x_489: Obj = l_Int_dadd(x_484, x_488);
+                                                                    rt::lean_dec(x_488);
+                                                                    rt::lean_dec(x_484);
+                                                                    x_424 = x_457;
+                                                                    x_425 = x_458;
+                                                                    x_426 = x_459;
+                                                                    x_427 = x_460;
+                                                                    x_428 = x_461;
+                                                                    x_429 = x_462;
+                                                                    x_430 = x_463;
+                                                                    x_431 = x_464;
+                                                                    x_432 = x_465;
+                                                                    x_433 = x_466;
+                                                                    x_434 = x_467;
+                                                                    x_435 = x_468;
+                                                                    x_436 = x_469;
+                                                                    x_437 = x_470;
+                                                                    x_438 = x_471;
+                                                                    x_439 = x_473;
+                                                                    x_440 = x_474;
+                                                                    x_441 = x_475;
+                                                                    x_442 = x_476;
+                                                                    x_443 = x_477;
+                                                                    x_444 = x_478;
+                                                                    x_445 = x_479;
+                                                                    x_446 = x_480;
+                                                                    x_447 = x_483;
+                                                                    x_448 = x_482;
+                                                                    x_449 = x_481;
+                                                                    x_450 = x_489;
+                                                                    break 'b423;
+                                                                }
+                                                                _ => {
+                                                                    rt::lean_dec(x_472);
+                                                                    x_424 = x_457;
+                                                                    x_425 = x_458;
+                                                                    x_426 = x_459;
+                                                                    x_427 = x_460;
+                                                                    x_428 = x_461;
+                                                                    x_429 = x_462;
+                                                                    x_430 = x_463;
+                                                                    x_431 = x_464;
+                                                                    x_432 = x_465;
+                                                                    x_433 = x_466;
+                                                                    x_434 = x_467;
+                                                                    x_435 = x_468;
+                                                                    x_436 = x_469;
+                                                                    x_437 = x_470;
+                                                                    x_438 = x_471;
+                                                                    x_439 = x_473;
+                                                                    x_440 = x_474;
+                                                                    x_441 = x_475;
+                                                                    x_442 = x_476;
+                                                                    x_443 = x_477;
+                                                                    x_444 = x_478;
+                                                                    x_445 = x_479;
+                                                                    x_446 = x_480;
+                                                                    x_447 = x_483;
+                                                                    x_448 = x_482;
+                                                                    x_449 = x_481;
+                                                                    x_450 = x_484;
+                                                                    break 'b423;
+                                                                }
+                                                            }
+                                                        }
+                                                        let x_451: u8 = l_Nat_ddecEq(x_439, x_431);
+                                                        match x_451 {
+                                                            0 => {
+                                                                let x_452: Obj = l_Sand2_dgasPacket_d__closed__11();
+                                                                let x_453: Obj = l_Int_dofNat(x_439);
+                                                                let x_454: Obj = l_Int_dmul(x_452, x_453);
+                                                                rt::lean_dec(x_453);
+                                                                let x_455: Obj = l_Int_dadd(x_450, x_454);
+                                                                rt::lean_dec(x_454);
+                                                                rt::lean_dec(x_450);
+                                                                x_392 = x_424;
+                                                                x_393 = x_425;
+                                                                x_394 = x_426;
+                                                                x_395 = x_427;
+                                                                x_396 = x_428;
+                                                                x_397 = x_429;
+                                                                x_398 = x_430;
+                                                                x_399 = x_431;
+                                                                x_400 = x_432;
+                                                                x_401 = x_433;
+                                                                x_402 = x_434;
+                                                                x_403 = x_435;
+                                                                x_404 = x_436;
+                                                                x_405 = x_437;
+                                                                x_406 = x_438;
+                                                                x_407 = x_440;
+                                                                x_408 = x_441;
+                                                                x_409 = x_442;
+                                                                x_410 = x_443;
+                                                                x_411 = x_444;
+                                                                x_412 = x_445;
+                                                                x_413 = x_446;
+                                                                x_414 = x_449;
+                                                                x_415 = x_448;
+                                                                x_416 = x_447;
+                                                                x_417 = x_455;
+                                                                break 'b391;
+                                                            }
+                                                            _ => {
+                                                                rt::lean_dec(x_439);
+                                                                x_392 = x_424;
+                                                                x_393 = x_425;
+                                                                x_394 = x_426;
+                                                                x_395 = x_427;
+                                                                x_396 = x_428;
+                                                                x_397 = x_429;
+                                                                x_398 = x_430;
+                                                                x_399 = x_431;
+                                                                x_400 = x_432;
+                                                                x_401 = x_433;
+                                                                x_402 = x_434;
+                                                                x_403 = x_435;
+                                                                x_404 = x_436;
+                                                                x_405 = x_437;
+                                                                x_406 = x_438;
+                                                                x_407 = x_440;
+                                                                x_408 = x_441;
+                                                                x_409 = x_442;
+                                                                x_410 = x_443;
+                                                                x_411 = x_444;
+                                                                x_412 = x_445;
+                                                                x_413 = x_446;
+                                                                x_414 = x_449;
+                                                                x_415 = x_448;
+                                                                x_416 = x_447;
+                                                                x_417 = x_450;
+                                                                break 'b391;
+                                                            }
+                                                        }
+                                                    }
+                                                    let x_418: u8 = l_Nat_ddecEq(x_407, x_399);
+                                                    match x_418 {
+                                                        0 => {
+                                                            let x_419: Obj = l_Sand2_dgasPacket_d__closed__10();
+                                                            let x_420: Obj = l_Int_dofNat(x_407);
+                                                            let x_421: Obj = l_Int_dmul(x_419, x_420);
+                                                            rt::lean_dec(x_420);
+                                                            let x_422: Obj = l_Int_dadd(x_417, x_421);
+                                                            rt::lean_dec(x_421);
+                                                            rt::lean_dec(x_417);
+                                                            x_361 = x_392;
+                                                            x_362 = x_393;
+                                                            x_363 = x_394;
+                                                            x_364 = x_395;
+                                                            x_365 = x_396;
+                                                            x_366 = x_397;
+                                                            x_367 = x_398;
+                                                            x_368 = x_399;
+                                                            x_369 = x_400;
+                                                            x_370 = x_401;
+                                                            x_371 = x_402;
+                                                            x_372 = x_403;
+                                                            x_373 = x_404;
+                                                            x_374 = x_405;
+                                                            x_375 = x_406;
+                                                            x_376 = x_408;
+                                                            x_377 = x_409;
+                                                            x_378 = x_410;
+                                                            x_379 = x_411;
+                                                            x_380 = x_412;
+                                                            x_381 = x_413;
+                                                            x_382 = x_416;
+                                                            x_383 = x_415;
+                                                            x_384 = x_414;
+                                                            x_385 = x_422;
+                                                            break 'b360;
+                                                        }
+                                                        _ => {
+                                                            rt::lean_dec(x_407);
+                                                            x_361 = x_392;
+                                                            x_362 = x_393;
+                                                            x_363 = x_394;
+                                                            x_364 = x_395;
+                                                            x_365 = x_396;
+                                                            x_366 = x_397;
+                                                            x_367 = x_398;
+                                                            x_368 = x_399;
+                                                            x_369 = x_400;
+                                                            x_370 = x_401;
+                                                            x_371 = x_402;
+                                                            x_372 = x_403;
+                                                            x_373 = x_404;
+                                                            x_374 = x_405;
+                                                            x_375 = x_406;
+                                                            x_376 = x_408;
+                                                            x_377 = x_409;
+                                                            x_378 = x_410;
+                                                            x_379 = x_411;
+                                                            x_380 = x_412;
+                                                            x_381 = x_413;
+                                                            x_382 = x_416;
+                                                            x_383 = x_415;
+                                                            x_384 = x_414;
+                                                            x_385 = x_417;
+                                                            break 'b360;
+                                                        }
+                                                    }
+                                                }
+                                                let x_386: u8 = l_Nat_ddecEq(x_376, x_368);
+                                                match x_386 {
+                                                    0 => {
+                                                        let x_387: Obj = l_Sand2_dgasPacket_d__closed__9();
+                                                        let x_388: Obj = l_Int_dofNat(x_376);
+                                                        let x_389: Obj = l_Int_dmul(x_387, x_388);
+                                                        rt::lean_dec(x_388);
+                                                        let x_390: Obj = l_Int_dadd(x_385, x_389);
+                                                        rt::lean_dec(x_389);
+                                                        rt::lean_dec(x_385);
+                                                        x_331 = x_361;
+                                                        x_332 = x_362;
+                                                        x_333 = x_363;
+                                                        x_334 = x_364;
+                                                        x_335 = x_365;
+                                                        x_336 = x_366;
+                                                        x_337 = x_367;
+                                                        x_338 = x_368;
+                                                        x_339 = x_369;
+                                                        x_340 = x_370;
+                                                        x_341 = x_371;
+                                                        x_342 = x_372;
+                                                        x_343 = x_373;
+                                                        x_344 = x_374;
+                                                        x_345 = x_375;
+                                                        x_346 = x_377;
+                                                        x_347 = x_378;
+                                                        x_348 = x_379;
+                                                        x_349 = x_380;
+                                                        x_350 = x_381;
+                                                        x_351 = x_384;
+                                                        x_352 = x_383;
+                                                        x_353 = x_382;
+                                                        x_354 = x_390;
+                                                        break 'b330;
+                                                    }
+                                                    _ => {
+                                                        rt::lean_dec(x_376);
+                                                        x_331 = x_361;
+                                                        x_332 = x_362;
+                                                        x_333 = x_363;
+                                                        x_334 = x_364;
+                                                        x_335 = x_365;
+                                                        x_336 = x_366;
+                                                        x_337 = x_367;
+                                                        x_338 = x_368;
+                                                        x_339 = x_369;
+                                                        x_340 = x_370;
+                                                        x_341 = x_371;
+                                                        x_342 = x_372;
+                                                        x_343 = x_373;
+                                                        x_344 = x_374;
+                                                        x_345 = x_375;
+                                                        x_346 = x_377;
+                                                        x_347 = x_378;
+                                                        x_348 = x_379;
+                                                        x_349 = x_380;
+                                                        x_350 = x_381;
+                                                        x_351 = x_384;
+                                                        x_352 = x_383;
+                                                        x_353 = x_382;
+                                                        x_354 = x_385;
+                                                        break 'b330;
+                                                    }
+                                                }
+                                            }
+                                            let x_355: u8 = l_Nat_ddecEq(x_346, x_338);
+                                            match x_355 {
+                                                0 => {
+                                                    let x_356: Obj = l_Sand2_dgasPacket_d__closed__8();
+                                                    let x_357: Obj = l_Int_dofNat(x_346);
+                                                    let x_358: Obj = l_Int_dmul(x_356, x_357);
+                                                    rt::lean_dec(x_357);
+                                                    let x_359: Obj = l_Int_dadd(x_354, x_358);
+                                                    rt::lean_dec(x_358);
+                                                    rt::lean_dec(x_354);
+                                                    x_302 = x_331;
+                                                    x_303 = x_332;
+                                                    x_304 = x_333;
+                                                    x_305 = x_334;
+                                                    x_306 = x_335;
+                                                    x_307 = x_336;
+                                                    x_308 = x_337;
+                                                    x_309 = x_338;
+                                                    x_310 = x_339;
+                                                    x_311 = x_340;
+                                                    x_312 = x_341;
+                                                    x_313 = x_342;
+                                                    x_314 = x_343;
+                                                    x_315 = x_344;
+                                                    x_316 = x_345;
+                                                    x_317 = x_347;
+                                                    x_318 = x_348;
+                                                    x_319 = x_349;
+                                                    x_320 = x_350;
+                                                    x_321 = x_353;
+                                                    x_322 = x_352;
+                                                    x_323 = x_351;
+                                                    x_324 = x_359;
+                                                    break 'b301;
+                                                }
+                                                _ => {
+                                                    rt::lean_dec(x_346);
+                                                    x_302 = x_331;
+                                                    x_303 = x_332;
+                                                    x_304 = x_333;
+                                                    x_305 = x_334;
+                                                    x_306 = x_335;
+                                                    x_307 = x_336;
+                                                    x_308 = x_337;
+                                                    x_309 = x_338;
+                                                    x_310 = x_339;
+                                                    x_311 = x_340;
+                                                    x_312 = x_341;
+                                                    x_313 = x_342;
+                                                    x_314 = x_343;
+                                                    x_315 = x_344;
+                                                    x_316 = x_345;
+                                                    x_317 = x_347;
+                                                    x_318 = x_348;
+                                                    x_319 = x_349;
+                                                    x_320 = x_350;
+                                                    x_321 = x_353;
+                                                    x_322 = x_352;
+                                                    x_323 = x_351;
+                                                    x_324 = x_354;
+                                                    break 'b301;
+                                                }
+                                            }
+                                        }
+                                        let x_325: u8 = l_Nat_ddecEq(x_317, x_309);
+                                        match x_325 {
+                                            0 => {
+                                                let x_326: Obj = l_Sand2_dgasPacket_d__closed__7();
+                                                let x_327: Obj = l_Int_dofNat(x_317);
+                                                let x_328: Obj = l_Int_dmul(x_326, x_327);
+                                                rt::lean_dec(x_327);
+                                                let x_329: Obj = l_Int_dadd(x_324, x_328);
+                                                rt::lean_dec(x_328);
+                                                rt::lean_dec(x_324);
+                                                x_274 = x_302;
+                                                x_275 = x_303;
+                                                x_276 = x_304;
+                                                x_277 = x_305;
+                                                x_278 = x_306;
+                                                x_279 = x_307;
+                                                x_280 = x_308;
+                                                x_281 = x_309;
+                                                x_282 = x_310;
+                                                x_283 = x_311;
+                                                x_284 = x_312;
+                                                x_285 = x_313;
+                                                x_286 = x_314;
+                                                x_287 = x_315;
+                                                x_288 = x_316;
+                                                x_289 = x_318;
+                                                x_290 = x_319;
+                                                x_291 = x_320;
+                                                x_292 = x_323;
+                                                x_293 = x_322;
+                                                x_294 = x_321;
+                                                x_295 = x_329;
+                                                break 'b273;
+                                            }
+                                            _ => {
+                                                rt::lean_dec(x_317);
+                                                x_274 = x_302;
+                                                x_275 = x_303;
+                                                x_276 = x_304;
+                                                x_277 = x_305;
+                                                x_278 = x_306;
+                                                x_279 = x_307;
+                                                x_280 = x_308;
+                                                x_281 = x_309;
+                                                x_282 = x_310;
+                                                x_283 = x_311;
+                                                x_284 = x_312;
+                                                x_285 = x_313;
+                                                x_286 = x_314;
+                                                x_287 = x_315;
+                                                x_288 = x_316;
+                                                x_289 = x_318;
+                                                x_290 = x_319;
+                                                x_291 = x_320;
+                                                x_292 = x_323;
+                                                x_293 = x_322;
+                                                x_294 = x_321;
+                                                x_295 = x_324;
+                                                break 'b273;
+                                            }
+                                        }
+                                    }
+                                    let x_296: u8 = l_Nat_ddecEq(x_289, x_281);
+                                    match x_296 {
+                                        0 => {
+                                            let x_297: Obj = l_Sand2_dgasPacket_d__closed__6();
+                                            let x_298: Obj = l_Int_dofNat(x_289);
+                                            let x_299: Obj = l_Int_dmul(x_297, x_298);
+                                            rt::lean_dec(x_298);
+                                            let x_300: Obj = l_Int_dadd(x_295, x_299);
+                                            rt::lean_dec(x_299);
+                                            rt::lean_dec(x_295);
+                                            x_247 = x_274;
+                                            x_248 = x_275;
+                                            x_249 = x_276;
+                                            x_250 = x_277;
+                                            x_251 = x_278;
+                                            x_252 = x_279;
+                                            x_253 = x_280;
+                                            x_254 = x_281;
+                                            x_255 = x_282;
+                                            x_256 = x_283;
+                                            x_257 = x_284;
+                                            x_258 = x_285;
+                                            x_259 = x_286;
+                                            x_260 = x_287;
+                                            x_261 = x_288;
+                                            x_262 = x_290;
+                                            x_263 = x_291;
+                                            x_264 = x_294;
+                                            x_265 = x_293;
+                                            x_266 = x_292;
+                                            x_267 = x_300;
+                                            break 'b246;
+                                        }
+                                        _ => {
+                                            rt::lean_dec(x_289);
+                                            x_247 = x_274;
+                                            x_248 = x_275;
+                                            x_249 = x_276;
+                                            x_250 = x_277;
+                                            x_251 = x_278;
+                                            x_252 = x_279;
+                                            x_253 = x_280;
+                                            x_254 = x_281;
+                                            x_255 = x_282;
+                                            x_256 = x_283;
+                                            x_257 = x_284;
+                                            x_258 = x_285;
+                                            x_259 = x_286;
+                                            x_260 = x_287;
+                                            x_261 = x_288;
+                                            x_262 = x_290;
+                                            x_263 = x_291;
+                                            x_264 = x_294;
+                                            x_265 = x_293;
+                                            x_266 = x_292;
+                                            x_267 = x_295;
+                                            break 'b246;
+                                        }
+                                    }
+                                }
+                                let x_268: u8 = l_Nat_ddecEq(x_262, x_254);
+                                match x_268 {
+                                    0 => {
+                                        let x_269: Obj = l_Sand2_dgasPacket_d__closed__5();
+                                        let x_270: Obj = l_Int_dofNat(x_262);
+                                        let x_271: Obj = l_Int_dmul(x_269, x_270);
+                                        rt::lean_dec(x_270);
+                                        let x_272: Obj = l_Int_dadd(x_267, x_271);
+                                        rt::lean_dec(x_271);
+                                        rt::lean_dec(x_267);
+                                        x_221 = x_247;
+                                        x_222 = x_248;
+                                        x_223 = x_249;
+                                        x_224 = x_250;
+                                        x_225 = x_251;
+                                        x_226 = x_252;
+                                        x_227 = x_253;
+                                        x_228 = x_254;
+                                        x_229 = x_255;
+                                        x_230 = x_256;
+                                        x_231 = x_257;
+                                        x_232 = x_258;
+                                        x_233 = x_259;
+                                        x_234 = x_260;
+                                        x_235 = x_261;
+                                        x_236 = x_263;
+                                        x_237 = x_266;
+                                        x_238 = x_265;
+                                        x_239 = x_264;
+                                        x_240 = x_272;
+                                        break 'b220;
+                                    }
+                                    _ => {
+                                        rt::lean_dec(x_262);
+                                        x_221 = x_247;
+                                        x_222 = x_248;
+                                        x_223 = x_249;
+                                        x_224 = x_250;
+                                        x_225 = x_251;
+                                        x_226 = x_252;
+                                        x_227 = x_253;
+                                        x_228 = x_254;
+                                        x_229 = x_255;
+                                        x_230 = x_256;
+                                        x_231 = x_257;
+                                        x_232 = x_258;
+                                        x_233 = x_259;
+                                        x_234 = x_260;
+                                        x_235 = x_261;
+                                        x_236 = x_263;
+                                        x_237 = x_266;
+                                        x_238 = x_265;
+                                        x_239 = x_264;
+                                        x_240 = x_267;
+                                        break 'b220;
+                                    }
+                                }
+                            }
+                            let x_241: u8 = l_Nat_ddecEq(x_236, x_228);
+                            match x_241 {
+                                0 => {
+                                    let x_242: Obj = l_Sand2_dgasPacket_d__closed__4();
+                                    let x_243: Obj = l_Int_dofNat(x_236);
+                                    let x_244: Obj = l_Int_dmul(x_242, x_243);
+                                    rt::lean_dec(x_243);
+                                    let x_245: Obj = l_Int_dadd(x_240, x_244);
+                                    rt::lean_dec(x_244);
+                                    rt::lean_dec(x_240);
+                                    x_198 = x_221;
+                                    x_199 = x_222;
+                                    x_200 = x_223;
+                                    x_201 = x_224;
+                                    x_202 = x_225;
+                                    x_203 = x_226;
+                                    x_204 = x_227;
+                                    x_205 = x_228;
+                                    x_206 = x_229;
+                                    x_207 = x_230;
+                                    x_208 = x_231;
+                                    x_209 = x_232;
+                                    x_210 = x_233;
+                                    x_211 = x_234;
+                                    x_212 = x_235;
+                                    x_213 = x_239;
+                                    x_214 = x_238;
+                                    x_215 = x_237;
+                                    x_216 = x_245;
+                                    break 'b197;
+                                }
+                                _ => {
+                                    rt::lean_dec(x_236);
+                                    x_198 = x_221;
+                                    x_199 = x_222;
+                                    x_200 = x_223;
+                                    x_201 = x_224;
+                                    x_202 = x_225;
+                                    x_203 = x_226;
+                                    x_204 = x_227;
+                                    x_205 = x_228;
+                                    x_206 = x_229;
+                                    x_207 = x_230;
+                                    x_208 = x_231;
+                                    x_209 = x_232;
+                                    x_210 = x_233;
+                                    x_211 = x_234;
+                                    x_212 = x_235;
+                                    x_213 = x_239;
+                                    x_214 = x_238;
+                                    x_215 = x_237;
+                                    x_216 = x_240;
+                                    break 'b197;
+                                }
+                            }
+                        }
+                        let x_217: Obj = l_Sand2_dnonWaterCondensedMass(x_212);
+                        let x_218: Obj = rt::nat::lean_usize_to_nat(1);
+                        let x_219: u8 = l_Nat_ddecLe(x_218, x_13);
+                        match x_219 {
+                            0 => {
+                                x_170 = x_198;
+                                x_171 = x_199;
+                                x_172 = x_200;
+                                x_173 = x_201;
+                                x_174 = x_202;
+                                x_175 = x_203;
+                                x_176 = x_204;
+                                x_177 = x_205;
+                                x_178 = x_217;
+                                x_179 = x_216;
+                                x_180 = x_206;
+                                x_181 = x_207;
+                                x_182 = x_208;
+                                x_183 = x_209;
+                                x_184 = x_210;
+                                x_185 = x_211;
+                                x_186 = x_212;
+                                x_187 = x_215;
+                                x_188 = x_214;
+                                x_189 = x_213;
+                                x_190 = x_218;
+                                break 'b169;
+                            }
+                            _ => {
+                                rt::lean_inc(x_13);
+                                x_170 = x_198;
+                                x_171 = x_199;
+                                x_172 = x_200;
+                                x_173 = x_201;
+                                x_174 = x_202;
+                                x_175 = x_203;
+                                x_176 = x_204;
+                                x_177 = x_205;
+                                x_178 = x_217;
+                                x_179 = x_216;
+                                x_180 = x_206;
+                                x_181 = x_207;
+                                x_182 = x_208;
+                                x_183 = x_209;
+                                x_184 = x_210;
+                                x_185 = x_211;
+                                x_186 = x_212;
+                                x_187 = x_215;
+                                x_188 = x_214;
+                                x_189 = x_213;
+                                x_190 = x_13;
+                                break 'b169;
+                            }
+                        }
+                    }
+                    let x_191: Obj = l_Int_dofNat(x_190);
+                    let x_192: Obj = l_Int_dediv(x_14, x_191);
+                    rt::lean_dec(x_191);
+                    rt::lean_inc(x_189);
+                    let x_193: Obj = l_Int_dofNat(x_189);
+                    let x_194: Obj = l_Int_dmul(x_192, x_193);
+                    rt::lean_dec(x_192);
+                    let x_195: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_196: u8 = l_Nat_ddecLe(x_195, x_13);
+                    match x_196 {
+                        0 => {
+                            x_131 = x_170;
+                            x_132 = x_171;
+                            x_133 = x_194;
+                            x_134 = x_172;
+                            x_135 = x_173;
+                            x_136 = x_174;
+                            x_137 = x_175;
+                            x_138 = x_176;
+                            x_139 = x_177;
+                            x_140 = x_178;
+                            x_141 = x_179;
+                            x_142 = x_193;
+                            x_143 = x_182;
+                            x_144 = x_183;
+                            x_145 = x_181;
+                            x_146 = x_180;
+                            x_147 = x_184;
+                            x_148 = x_186;
+                            x_149 = x_185;
+                            x_150 = x_189;
+                            x_151 = x_188;
+                            x_152 = x_187;
+                            x_153 = x_195;
+                            break 'b130;
+                        }
+                        _ => {
+                            rt::lean_inc(x_13);
+                            x_131 = x_170;
+                            x_132 = x_171;
+                            x_133 = x_194;
+                            x_134 = x_172;
+                            x_135 = x_173;
+                            x_136 = x_174;
+                            x_137 = x_175;
+                            x_138 = x_176;
+                            x_139 = x_177;
+                            x_140 = x_178;
+                            x_141 = x_179;
+                            x_142 = x_193;
+                            x_143 = x_182;
+                            x_144 = x_183;
+                            x_145 = x_181;
+                            x_146 = x_180;
+                            x_147 = x_184;
+                            x_148 = x_186;
+                            x_149 = x_185;
+                            x_150 = x_189;
+                            x_151 = x_188;
+                            x_152 = x_187;
+                            x_153 = x_13;
+                            break 'b130;
+                        }
+                    }
+                }
+                let x_154: Obj = rt::lean_ctor_get(x_148, 0);
+                let x_155: Obj = l_Int_dofNat(x_153);
+                let x_156: Obj = l_Int_dediv(x_15, x_155);
+                rt::lean_dec(x_155);
+                let x_157: Obj = l_Int_dmul(x_156, x_142);
+                rt::lean_dec(x_156);
+                rt::lean_inc_ref(x_6);
+                let x_158: Obj = l_Sand2_dtemperature(x_1, x_2, x_4, x_6);
+                rt::lean_inc_ref(x_148);
+                let x_159: Obj = l_Sand2_dinternalEnergyAt(x_148, x_149, x_158);
+                let x_160: Obj = l_Nat_dadd(x_138, x_154);
+                rt::lean_dec(x_138);
+                let x_161: Obj = l_Int_dofNat(x_160);
+                let x_162: Obj = l_Int_dmul(x_161, x_147);
+                rt::lean_dec(x_161);
+                let x_163: Obj = l_Int_dadd(x_158, x_145);
+                rt::lean_dec(x_158);
+                let x_164: Obj = l_Int_dmul(x_162, x_163);
+                rt::lean_dec(x_163);
+                rt::lean_dec(x_162);
+                let x_165: Obj = l_Int_dadd(x_146, x_159);
+                rt::lean_dec(x_159);
+                let x_166: Obj = l_Int_dadd(x_165, x_164);
+                rt::lean_dec(x_164);
+                rt::lean_dec(x_165);
+                let x_167: u8 = l_Int_ddecEq(x_133, x_135);
+                match x_167 {
+                    0 => {
+                        x_104 = x_133;
+                        x_105 = x_132;
+                        x_106 = x_131;
+                        x_107 = x_157;
+                        x_108 = x_134;
+                        x_109 = x_166;
+                        x_110 = x_135;
+                        x_111 = x_137;
+                        x_112 = x_136;
+                        x_113 = x_139;
+                        x_114 = x_140;
+                        x_115 = x_141;
+                        x_116 = x_142;
+                        x_117 = x_144;
+                        x_118 = x_143;
+                        x_119 = x_146;
+                        x_120 = x_148;
+                        x_121 = x_152;
+                        x_122 = x_151;
+                        x_123 = x_150;
+                        x_124 = x_167;
+                        break 'b103;
+                    }
+                    _ => {
+                        let x_168: u8 = l_Int_ddecEq(x_157, x_135);
+                        x_104 = x_133;
+                        x_105 = x_132;
+                        x_106 = x_131;
+                        x_107 = x_157;
+                        x_108 = x_134;
+                        x_109 = x_166;
+                        x_110 = x_135;
+                        x_111 = x_137;
+                        x_112 = x_136;
+                        x_113 = x_139;
+                        x_114 = x_140;
+                        x_115 = x_141;
+                        x_116 = x_142;
+                        x_117 = x_144;
+                        x_118 = x_143;
+                        x_119 = x_146;
+                        x_120 = x_148;
+                        x_121 = x_152;
+                        x_122 = x_151;
+                        x_123 = x_150;
+                        x_124 = x_168;
+                        break 'b103;
+                    }
+                }
+            }
+            match x_124 {
+                0 => {
+                    let x_125: Obj = l_Int_dmul(x_104, x_104);
+                    let x_126: Obj = l_Int_dmul(x_107, x_107);
+                    let x_127: Obj = l_Int_dadd(x_125, x_126);
+                    rt::lean_dec(x_126);
+                    rt::lean_dec(x_125);
+                    let x_128: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_129: u8 = l_Nat_ddecLe(x_128, x_123);
+                    match x_129 {
+                        0 => {
+                            x_76 = x_105;
+                            x_77 = x_106;
+                            x_78 = x_104;
+                            x_79 = x_108;
+                            x_80 = x_107;
+                            x_81 = x_109;
+                            x_82 = x_110;
+                            x_83 = x_111;
+                            x_84 = x_112;
+                            x_85 = x_127;
+                            x_86 = x_113;
+                            x_87 = x_114;
+                            x_88 = x_115;
+                            x_89 = x_116;
+                            x_90 = x_119;
+                            x_91 = x_118;
+                            x_92 = x_117;
+                            x_93 = x_120;
+                            x_94 = x_123;
+                            x_95 = x_122;
+                            x_96 = x_121;
+                            x_97 = x_128;
+                            break 'b75;
+                        }
+                        _ => {
+                            rt::lean_inc(x_123);
+                            x_76 = x_105;
+                            x_77 = x_106;
+                            x_78 = x_104;
+                            x_79 = x_108;
+                            x_80 = x_107;
+                            x_81 = x_109;
+                            x_82 = x_110;
+                            x_83 = x_111;
+                            x_84 = x_112;
+                            x_85 = x_127;
+                            x_86 = x_113;
+                            x_87 = x_114;
+                            x_88 = x_115;
+                            x_89 = x_116;
+                            x_90 = x_119;
+                            x_91 = x_118;
+                            x_92 = x_117;
+                            x_93 = x_120;
+                            x_94 = x_123;
+                            x_95 = x_122;
+                            x_96 = x_121;
+                            x_97 = x_123;
+                            break 'b75;
+                        }
+                    }
+                }
+                _ => {
+                    rt::lean_inc(x_110);
+                    x_43 = x_106;
+                    x_44 = x_105;
+                    x_45 = x_104;
+                    x_46 = x_108;
+                    x_47 = x_107;
+                    x_48 = x_109;
+                    x_49 = x_110;
+                    x_50 = x_111;
+                    x_51 = x_112;
+                    x_52 = x_113;
+                    x_53 = x_114;
+                    x_54 = x_115;
+                    x_55 = x_116;
+                    x_56 = x_117;
+                    x_57 = x_118;
+                    x_58 = x_119;
+                    x_59 = x_120;
+                    x_60 = x_121;
+                    x_61 = x_122;
+                    x_62 = x_123;
+                    x_63 = x_110;
+                    break 'b42;
+                }
+            }
+        }
+        let x_98: Obj = l_Int_dofNat(x_97);
+        let x_99: Obj = l_Int_dmul(x_76, x_98);
+        rt::lean_dec(x_98);
+        let x_100: Obj = l_Sand2_dgasPacket_d__closed__0();
+        let x_101: Obj = l_Int_dmul(x_99, x_100);
+        rt::lean_dec(x_99);
+        let x_102: Obj = l_Int_dediv(x_85, x_101);
+        rt::lean_dec(x_101);
+        rt::lean_dec(x_85);
+        x_43 = x_77;
+        x_44 = x_76;
+        x_45 = x_78;
+        x_46 = x_79;
+        x_47 = x_80;
+        x_48 = x_81;
+        x_49 = x_82;
+        x_50 = x_83;
+        x_51 = x_84;
+        x_52 = x_86;
+        x_53 = x_87;
+        x_54 = x_88;
+        x_55 = x_89;
+        x_56 = x_92;
+        x_57 = x_91;
+        x_58 = x_90;
+        x_59 = x_93;
+        x_60 = x_96;
+        x_61 = x_95;
+        x_62 = x_94;
+        x_63 = x_102;
+        break 'b42;
+    }
+    let x_64: Obj = l_Int_dadd(x_48, x_63);
+    rt::lean_dec(x_63);
+    rt::lean_dec(x_48);
+    let x_65: Obj = l_Int_dmul(x_55, x_60);
+    rt::lean_dec(x_55);
+    let x_66: Obj = l_Int_dmul(x_65, x_51);
+    rt::lean_dec(x_51);
+    let x_67: Obj = l_Int_dediv(x_66, x_61);
+    rt::lean_dec(x_66);
+    let x_68: Obj = l_Int_dmul(x_65, x_57);
+    rt::lean_dec(x_57);
+    rt::lean_dec(x_65);
+    let x_69: Obj = l_Int_dediv(x_68, x_61);
+    rt::lean_dec(x_68);
+    let x_70: Obj = l_Int_dadd(x_67, x_69);
+    rt::lean_dec(x_69);
+    rt::lean_dec(x_67);
+    let x_71: Obj = l_Int_dediv(x_70, x_44);
+    rt::lean_dec(x_70);
+    let x_72: Obj = l_Int_dadd(x_64, x_71);
+    rt::lean_dec(x_71);
+    rt::lean_dec(x_64);
+    rt::lean_inc(x_52);
+    rt::lean_inc(x_50);
+    rt::lean_inc(x_46);
+    rt::lean_inc(x_43);
+    rt::lean_inc_n(x_49, 2);
+    let x_73: Obj = rt::lean_alloc_ctor(0, 16, 3);
+    rt::lean_ctor_set(x_73, 0, x_59);
+    rt::lean_ctor_set(x_73, 1, x_62);
+    rt::lean_ctor_set(x_73, 2, x_58);
+    rt::lean_ctor_set(x_73, 3, x_54);
+    rt::lean_ctor_set(x_73, 4, x_53);
+    rt::lean_ctor_set(x_73, 5, x_72);
+    rt::lean_ctor_set(x_73, 6, x_45);
+    rt::lean_ctor_set(x_73, 7, x_47);
+    rt::lean_ctor_set(x_73, 8, x_49);
+    rt::lean_ctor_set(x_73, 9, x_49);
+    rt::lean_ctor_set(x_73, 10, x_43);
+    rt::lean_ctor_set(x_73, 11, x_43);
+    rt::lean_ctor_set(x_73, 12, x_46);
+    rt::lean_ctor_set(x_73, 13, x_50);
+    rt::lean_ctor_set(x_73, 14, x_52);
+    rt::lean_ctor_set(x_73, 15, x_52);
+    rt::lean_ctor_set_uint8(x_73, 16 * ::core::mem::size_of::<usize>(), x_40);
+    rt::lean_ctor_set_uint8(x_73, 16 * ::core::mem::size_of::<usize>() + 1, x_41);
+    rt::lean_ctor_set_uint8(x_73, 16 * ::core::mem::size_of::<usize>() + 2, x_41);
+    let x_74: Obj = l_Sand2_dportionEditCached_d__redArg(x_5, x_6, x_56, x_73, x_17, x_38);
+    rt::lean_dec_ref(x_38);
+    rt::lean_dec_ref(x_17);
+    rt::lean_dec_ref(x_5);
+    return x_74;
 }
 
 // Lean: Sand2.gasDiffusionEdit._boxed
@@ -134,30 +5325,1447 @@ pub(crate) unsafe extern "C" fn l_Sand2_dgasDiffusionEdit_d__boxed(x_1: Obj, x_2
 // Source: lean/Sand2/Transport.lean:23:1
 pub(crate) unsafe extern "C" fn l_Sand2_dgasFlowEdit(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj) -> Obj {
     let x_8: Obj = rt::lean_ctor_get(x_5, 0);
-    rt::lean_inc_ref_n(x_5, 2);
-    let x_9: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_5);
+    let x_9: Obj = rt::lean_ctor_get(x_5, 1);
+    let x_10: Obj = rt::lean_ctor_get(x_5, 6);
+    let x_11: Obj = rt::lean_ctor_get(x_5, 7);
+    rt::lean_inc_ref(x_5);
+    let x_12: Obj = l_Sand2_dvaporWaterMoles(x_1, x_2, x_3, x_5);
     rt::lean_inc_ref(x_8);
-    let x_10: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_8, x_7, x_9);
-    rt::lean_dec(x_9);
-    let x_11: Obj = rt::lean_ctor_get(x_10, 0);
-    rt::lean_inc_ref(x_11);
-    let x_12: Obj = rt::lean_ctor_get(x_6, 0);
-    let x_13: Obj = l_Sand2_dgasPacket(x_1, x_2, x_3, x_4, x_5, x_11);
-    let x_14: Obj = rt::lean_ctor_get(x_13, 5);
-    rt::lean_inc(x_14);
-    let x_15: Obj = rt::lean_ctor_get(x_13, 6);
-    rt::lean_inc(x_15);
-    let x_16: Obj = rt::lean_ctor_get(x_13, 7);
-    rt::lean_inc(x_16);
+    let x_13: Obj = l_Sand2_dChemistry_dpartialGasPortion(x_8, x_7, x_12);
+    rt::lean_dec(x_12);
+    let x_14: Obj = rt::lean_ctor_get(x_13, 0);
+    rt::lean_inc_ref(x_14);
+    let x_15: Obj = rt::lean_ctor_get(x_14, 0);
+    let x_16: Obj = rt::lean_ctor_get(x_14, 3);
+    let x_17: Obj = rt::lean_ctor_get(x_14, 4);
+    let x_18: Obj = rt::lean_ctor_get(x_14, 5);
+    let x_19: Obj = rt::lean_ctor_get(x_14, 6);
+    let x_20: Obj = rt::lean_ctor_get(x_14, 7);
+    let x_21: Obj = rt::lean_ctor_get(x_14, 8);
+    let x_22: Obj = rt::lean_ctor_get(x_14, 9);
+    let x_23: Obj = rt::lean_ctor_get(x_14, 10);
+    let x_24: Obj = rt::lean_ctor_get(x_14, 11);
+    let x_25: Obj = rt::lean_ctor_get(x_14, 12);
+    let x_26: Obj = rt::lean_ctor_get(x_14, 13);
+    let x_27: Obj = rt::lean_ctor_get(x_14, 14);
+    let x_28: Obj = rt::lean_ctor_get(x_14, 16);
+    let x_29: Obj = rt::lean_ctor_get(x_14, 17);
+    let x_30: Obj = rt::lean_ctor_get(x_14, 18);
+    let x_31: Obj = rt::lean_ctor_get(x_14, 19);
+    let x_32: Obj = rt::lean_ctor_get(x_14, 20);
+    let x_33: Obj = l_Sand2_dChemistry_dmass(x_14);
+    let x_34: u8 = 0u8;
+    let x_35: u8 = 0u8;
+    let mut x_37: Obj;
+    let mut x_38: Obj;
+    let mut x_39: Obj;
+    let mut x_40: Obj;
+    let mut x_41: Obj;
+    let mut x_42: Obj;
+    let mut x_43: Obj;
+    let mut x_44: Obj;
+    let mut x_45: Obj;
+    let mut x_46: Obj;
+    let mut x_47: Obj;
+    let mut x_48: Obj;
+    let mut x_49: Obj;
+    let mut x_50: Obj;
+    let mut x_51: Obj;
+    'b36: {
+        let mut x_91: Obj;
+        let mut x_92: Obj;
+        let mut x_93: Obj;
+        let mut x_94: Obj;
+        let mut x_95: Obj;
+        let mut x_96: Obj;
+        let mut x_97: Obj;
+        let mut x_98: Obj;
+        let mut x_99: Obj;
+        let mut x_100: Obj;
+        let mut x_101: Obj;
+        let mut x_102: Obj;
+        let mut x_103: Obj;
+        let mut x_104: Obj;
+        let mut x_105: Obj;
+        let mut x_106: Obj;
+        let mut x_107: Obj;
+        'b90: {
+            let mut x_114: Obj;
+            let mut x_115: Obj;
+            let mut x_116: Obj;
+            let mut x_117: Obj;
+            let mut x_118: Obj;
+            let mut x_119: Obj;
+            let mut x_120: Obj;
+            let mut x_121: Obj;
+            let mut x_122: Obj;
+            let mut x_123: Obj;
+            let mut x_124: Obj;
+            let mut x_125: Obj;
+            let mut x_126: Obj;
+            let mut x_127: Obj;
+            let mut x_128: u8;
+            'b113: {
+                let mut x_136: Obj;
+                let mut x_137: Obj;
+                let mut x_138: Obj;
+                let mut x_139: Obj;
+                let mut x_140: Obj;
+                let mut x_141: Obj;
+                let mut x_142: Obj;
+                let mut x_143: Obj;
+                let mut x_144: Obj;
+                let mut x_145: Obj;
+                let mut x_146: Obj;
+                let mut x_147: Obj;
+                let mut x_148: Obj;
+                let mut x_149: Obj;
+                let mut x_150: Obj;
+                let mut x_151: Obj;
+                'b135: {
+                    let mut x_168: Obj;
+                    let mut x_169: Obj;
+                    let mut x_170: Obj;
+                    let mut x_171: Obj;
+                    let mut x_172: Obj;
+                    let mut x_173: Obj;
+                    let mut x_174: Obj;
+                    let mut x_175: Obj;
+                    let mut x_176: Obj;
+                    let mut x_177: Obj;
+                    let mut x_178: Obj;
+                    let mut x_179: Obj;
+                    let mut x_180: Obj;
+                    let mut x_181: Obj;
+                    'b167: {
+                        let mut x_189: Obj;
+                        let mut x_190: Obj;
+                        let mut x_191: Obj;
+                        let mut x_192: Obj;
+                        let mut x_193: Obj;
+                        let mut x_194: Obj;
+                        let mut x_195: Obj;
+                        'b188: {
+                            let mut x_205: Obj;
+                            let mut x_206: Obj;
+                            let mut x_207: Obj;
+                            let mut x_208: Obj;
+                            let mut x_209: Obj;
+                            let mut x_210: Obj;
+                            let mut x_211: Obj;
+                            'b204: {
+                                let mut x_219: Obj;
+                                let mut x_220: Obj;
+                                let mut x_221: Obj;
+                                let mut x_222: Obj;
+                                let mut x_223: Obj;
+                                let mut x_224: Obj;
+                                let mut x_225: Obj;
+                                'b218: {
+                                    let mut x_233: Obj;
+                                    let mut x_234: Obj;
+                                    let mut x_235: Obj;
+                                    let mut x_236: Obj;
+                                    let mut x_237: Obj;
+                                    let mut x_238: Obj;
+                                    let mut x_239: Obj;
+                                    'b232: {
+                                        let mut x_247: Obj;
+                                        let mut x_248: Obj;
+                                        let mut x_249: Obj;
+                                        let mut x_250: Obj;
+                                        let mut x_251: Obj;
+                                        let mut x_252: Obj;
+                                        let mut x_253: Obj;
+                                        'b246: {
+                                            let mut x_261: Obj;
+                                            let mut x_262: Obj;
+                                            let mut x_263: Obj;
+                                            let mut x_264: Obj;
+                                            let mut x_265: Obj;
+                                            let mut x_266: Obj;
+                                            let mut x_267: Obj;
+                                            'b260: {
+                                                let mut x_275: Obj;
+                                                let mut x_276: Obj;
+                                                let mut x_277: Obj;
+                                                let mut x_278: Obj;
+                                                let mut x_279: Obj;
+                                                let mut x_280: Obj;
+                                                let mut x_281: Obj;
+                                                'b274: {
+                                                    let mut x_289: Obj;
+                                                    let mut x_290: Obj;
+                                                    let mut x_291: Obj;
+                                                    let mut x_292: Obj;
+                                                    let mut x_293: Obj;
+                                                    let mut x_294: Obj;
+                                                    let mut x_295: Obj;
+                                                    'b288: {
+                                                        let mut x_303: Obj;
+                                                        let mut x_304: Obj;
+                                                        let mut x_305: Obj;
+                                                        let mut x_306: Obj;
+                                                        let mut x_307: Obj;
+                                                        let mut x_308: Obj;
+                                                        let mut x_309: Obj;
+                                                        'b302: {
+                                                            let mut x_317: Obj;
+                                                            let mut x_318: Obj;
+                                                            let mut x_319: Obj;
+                                                            let mut x_320: Obj;
+                                                            let mut x_321: Obj;
+                                                            let mut x_322: Obj;
+                                                            let mut x_323: Obj;
+                                                            'b316: {
+                                                                let mut x_331: Obj;
+                                                                let mut x_332: Obj;
+                                                                let mut x_333: Obj;
+                                                                let mut x_334: Obj;
+                                                                let mut x_335: Obj;
+                                                                let mut x_336: Obj;
+                                                                let mut x_337: Obj;
+                                                                'b330: {
+                                                                    let mut x_345: Obj;
+                                                                    let mut x_346: Obj;
+                                                                    let mut x_347: Obj;
+                                                                    let mut x_348: Obj;
+                                                                    let mut x_349: Obj;
+                                                                    let mut x_350: Obj;
+                                                                    let mut x_351: Obj;
+                                                                    'b344: {
+                                                                        let mut x_359: Obj;
+                                                                        let mut x_360: Obj;
+                                                                        let mut x_361: Obj;
+                                                                        let mut x_362: Obj;
+                                                                        let mut x_363: Obj;
+                                                                        let mut x_364: Obj;
+                                                                        let mut x_365: Obj;
+                                                                        'b358: {
+                                                                            let mut x_373: Obj;
+                                                                            let mut x_374: Obj;
+                                                                            let mut x_375: Obj;
+                                                                            let mut x_376: Obj;
+                                                                            let mut x_377: Obj;
+                                                                            let mut x_378: Obj;
+                                                                            let mut x_379: Obj;
+                                                                            'b372: {
+                                                                                let mut x_387: Obj;
+                                                                                'b386: {
+                                                                                    let mut x_406: Obj;
+                                                                                    'b405: {
+                                                                                        let mut x_414: Obj;
+                                                                                        'b413: {
+                                                                                            let mut x_422: Obj;
+                                                                                            'b421: {
+                                                                                                let mut x_430: Obj;
+                                                                                                'b429: {
+                                                                                                    let mut x_438: Obj;
+                                                                                                    'b437: {
+                                                                                                        let mut x_446: Obj;
+                                                                                                        'b445: {
+                                                                                                            let mut x_454: Obj;
+                                                                                                            'b453: {
+                                                                                                                let mut x_462: Obj;
+                                                                                                                'b461: {
+                                                                                                                    let mut x_470: Obj;
+                                                                                                                    'b469: {
+                                                                                                                        let mut x_478: Obj;
+                                                                                                                        'b477: {
+                                                                                                                            let mut x_486: Obj;
+                                                                                                                            'b485: {
+                                                                                                                                let mut x_494: Obj;
+                                                                                                                                'b493: {
+                                                                                                                                    let mut x_502: Obj;
+                                                                                                                                    'b501: {
+                                                                                                                                        let mut x_510: Obj;
+                                                                                                                                        'b509: {
+                                                                                                                                            let x_517: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                            let x_518: Obj = l_Sand2_dgasPacket_d__closed__1();
+                                                                                                                                            let x_519: u8 = l_Nat_ddecEq(x_15, x_517);
+                                                                                                                                            match x_519 {
+                                                                                                                                                0 => {
+                                                                                                                                                    let x_520: Obj = l_Sand2_dgasPacket_d__closed__51();
+                                                                                                                                                    rt::lean_inc(x_15);
+                                                                                                                                                    let x_521: Obj = l_Int_dofNat(x_15);
+                                                                                                                                                    let x_522: Obj = l_Int_dmul(x_520, x_521);
+                                                                                                                                                    rt::lean_dec(x_521);
+                                                                                                                                                    let x_523: Obj = l_Int_dadd(x_518, x_522);
+                                                                                                                                                    rt::lean_dec(x_522);
+                                                                                                                                                    x_510 = x_523;
+                                                                                                                                                    break 'b509;
+                                                                                                                                                }
+                                                                                                                                                _ => {
+                                                                                                                                                    x_510 = x_518;
+                                                                                                                                                    break 'b509;
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                        let x_511: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                        let x_512: u8 = l_Nat_ddecEq(x_16, x_511);
+                                                                                                                                        match x_512 {
+                                                                                                                                            0 => {
+                                                                                                                                                let x_513: Obj = l_Sand2_dgasPacket_d__closed__49();
+                                                                                                                                                rt::lean_inc(x_16);
+                                                                                                                                                let x_514: Obj = l_Int_dofNat(x_16);
+                                                                                                                                                let x_515: Obj = l_Int_dmul(x_513, x_514);
+                                                                                                                                                rt::lean_dec(x_514);
+                                                                                                                                                let x_516: Obj = l_Int_dadd(x_510, x_515);
+                                                                                                                                                rt::lean_dec(x_515);
+                                                                                                                                                rt::lean_dec(x_510);
+                                                                                                                                                x_502 = x_516;
+                                                                                                                                                break 'b501;
+                                                                                                                                            }
+                                                                                                                                            _ => {
+                                                                                                                                                x_502 = x_510;
+                                                                                                                                                break 'b501;
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                    let x_503: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                    let x_504: u8 = l_Nat_ddecEq(x_17, x_503);
+                                                                                                                                    match x_504 {
+                                                                                                                                        0 => {
+                                                                                                                                            let x_505: Obj = l_Sand2_dgasPacket_d__closed__47();
+                                                                                                                                            rt::lean_inc(x_17);
+                                                                                                                                            let x_506: Obj = l_Int_dofNat(x_17);
+                                                                                                                                            let x_507: Obj = l_Int_dmul(x_505, x_506);
+                                                                                                                                            rt::lean_dec(x_506);
+                                                                                                                                            let x_508: Obj = l_Int_dadd(x_502, x_507);
+                                                                                                                                            rt::lean_dec(x_507);
+                                                                                                                                            rt::lean_dec(x_502);
+                                                                                                                                            x_494 = x_508;
+                                                                                                                                            break 'b493;
+                                                                                                                                        }
+                                                                                                                                        _ => {
+                                                                                                                                            x_494 = x_502;
+                                                                                                                                            break 'b493;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                                let x_495: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                let x_496: u8 = l_Nat_ddecEq(x_18, x_495);
+                                                                                                                                match x_496 {
+                                                                                                                                    0 => {
+                                                                                                                                        let x_497: Obj = l_Sand2_dgasPacket_d__closed__45();
+                                                                                                                                        rt::lean_inc(x_18);
+                                                                                                                                        let x_498: Obj = l_Int_dofNat(x_18);
+                                                                                                                                        let x_499: Obj = l_Int_dmul(x_497, x_498);
+                                                                                                                                        rt::lean_dec(x_498);
+                                                                                                                                        let x_500: Obj = l_Int_dadd(x_494, x_499);
+                                                                                                                                        rt::lean_dec(x_499);
+                                                                                                                                        rt::lean_dec(x_494);
+                                                                                                                                        x_486 = x_500;
+                                                                                                                                        break 'b485;
+                                                                                                                                    }
+                                                                                                                                    _ => {
+                                                                                                                                        x_486 = x_494;
+                                                                                                                                        break 'b485;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            let x_487: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                            let x_488: u8 = l_Nat_ddecEq(x_20, x_487);
+                                                                                                                            match x_488 {
+                                                                                                                                0 => {
+                                                                                                                                    let x_489: Obj = l_Sand2_dgasPacket_d__closed__43();
+                                                                                                                                    rt::lean_inc(x_20);
+                                                                                                                                    let x_490: Obj = l_Int_dofNat(x_20);
+                                                                                                                                    let x_491: Obj = l_Int_dmul(x_489, x_490);
+                                                                                                                                    rt::lean_dec(x_490);
+                                                                                                                                    let x_492: Obj = l_Int_dadd(x_486, x_491);
+                                                                                                                                    rt::lean_dec(x_491);
+                                                                                                                                    rt::lean_dec(x_486);
+                                                                                                                                    x_478 = x_492;
+                                                                                                                                    break 'b477;
+                                                                                                                                }
+                                                                                                                                _ => {
+                                                                                                                                    x_478 = x_486;
+                                                                                                                                    break 'b477;
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        let x_479: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                        let x_480: u8 = l_Nat_ddecEq(x_21, x_479);
+                                                                                                                        match x_480 {
+                                                                                                                            0 => {
+                                                                                                                                let x_481: Obj = l_Sand2_dgasPacket_d__closed__41();
+                                                                                                                                rt::lean_inc(x_21);
+                                                                                                                                let x_482: Obj = l_Int_dofNat(x_21);
+                                                                                                                                let x_483: Obj = l_Int_dmul(x_481, x_482);
+                                                                                                                                rt::lean_dec(x_482);
+                                                                                                                                let x_484: Obj = l_Int_dadd(x_478, x_483);
+                                                                                                                                rt::lean_dec(x_483);
+                                                                                                                                rt::lean_dec(x_478);
+                                                                                                                                x_470 = x_484;
+                                                                                                                                break 'b469;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                x_470 = x_478;
+                                                                                                                                break 'b469;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    let x_471: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                    let x_472: u8 = l_Nat_ddecEq(x_22, x_471);
+                                                                                                                    match x_472 {
+                                                                                                                        0 => {
+                                                                                                                            let x_473: Obj = l_Sand2_dgasPacket_d__closed__39();
+                                                                                                                            rt::lean_inc(x_22);
+                                                                                                                            let x_474: Obj = l_Int_dofNat(x_22);
+                                                                                                                            let x_475: Obj = l_Int_dmul(x_473, x_474);
+                                                                                                                            rt::lean_dec(x_474);
+                                                                                                                            let x_476: Obj = l_Int_dadd(x_470, x_475);
+                                                                                                                            rt::lean_dec(x_475);
+                                                                                                                            rt::lean_dec(x_470);
+                                                                                                                            x_462 = x_476;
+                                                                                                                            break 'b461;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            x_462 = x_470;
+                                                                                                                            break 'b461;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                let x_463: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                let x_464: u8 = l_Nat_ddecEq(x_23, x_463);
+                                                                                                                match x_464 {
+                                                                                                                    0 => {
+                                                                                                                        let x_465: Obj = l_Sand2_dgasPacket_d__closed__37();
+                                                                                                                        rt::lean_inc(x_23);
+                                                                                                                        let x_466: Obj = l_Int_dofNat(x_23);
+                                                                                                                        let x_467: Obj = l_Int_dmul(x_465, x_466);
+                                                                                                                        rt::lean_dec(x_466);
+                                                                                                                        let x_468: Obj = l_Int_dadd(x_462, x_467);
+                                                                                                                        rt::lean_dec(x_467);
+                                                                                                                        rt::lean_dec(x_462);
+                                                                                                                        x_454 = x_468;
+                                                                                                                        break 'b453;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        x_454 = x_462;
+                                                                                                                        break 'b453;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            let x_455: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                            let x_456: u8 = l_Nat_ddecEq(x_24, x_455);
+                                                                                                            match x_456 {
+                                                                                                                0 => {
+                                                                                                                    let x_457: Obj = l_Sand2_dgasPacket_d__closed__35();
+                                                                                                                    rt::lean_inc(x_24);
+                                                                                                                    let x_458: Obj = l_Int_dofNat(x_24);
+                                                                                                                    let x_459: Obj = l_Int_dmul(x_457, x_458);
+                                                                                                                    rt::lean_dec(x_458);
+                                                                                                                    let x_460: Obj = l_Int_dadd(x_454, x_459);
+                                                                                                                    rt::lean_dec(x_459);
+                                                                                                                    rt::lean_dec(x_454);
+                                                                                                                    x_446 = x_460;
+                                                                                                                    break 'b445;
+                                                                                                                }
+                                                                                                                _ => {
+                                                                                                                    x_446 = x_454;
+                                                                                                                    break 'b445;
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        let x_447: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                        let x_448: u8 = l_Nat_ddecEq(x_26, x_447);
+                                                                                                        match x_448 {
+                                                                                                            0 => {
+                                                                                                                let x_449: Obj = l_Sand2_dgasPacket_d__closed__33();
+                                                                                                                rt::lean_inc(x_26);
+                                                                                                                let x_450: Obj = l_Int_dofNat(x_26);
+                                                                                                                let x_451: Obj = l_Int_dmul(x_449, x_450);
+                                                                                                                rt::lean_dec(x_450);
+                                                                                                                let x_452: Obj = l_Int_dadd(x_446, x_451);
+                                                                                                                rt::lean_dec(x_451);
+                                                                                                                rt::lean_dec(x_446);
+                                                                                                                x_438 = x_452;
+                                                                                                                break 'b437;
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                x_438 = x_446;
+                                                                                                                break 'b437;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    let x_439: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                    let x_440: u8 = l_Nat_ddecEq(x_27, x_439);
+                                                                                                    match x_440 {
+                                                                                                        0 => {
+                                                                                                            let x_441: Obj = l_Sand2_dgasPacket_d__closed__31();
+                                                                                                            rt::lean_inc(x_27);
+                                                                                                            let x_442: Obj = l_Int_dofNat(x_27);
+                                                                                                            let x_443: Obj = l_Int_dmul(x_441, x_442);
+                                                                                                            rt::lean_dec(x_442);
+                                                                                                            let x_444: Obj = l_Int_dadd(x_438, x_443);
+                                                                                                            rt::lean_dec(x_443);
+                                                                                                            rt::lean_dec(x_438);
+                                                                                                            x_430 = x_444;
+                                                                                                            break 'b429;
+                                                                                                        }
+                                                                                                        _ => {
+                                                                                                            x_430 = x_438;
+                                                                                                            break 'b429;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                                let x_431: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                let x_432: u8 = l_Nat_ddecEq(x_28, x_431);
+                                                                                                match x_432 {
+                                                                                                    0 => {
+                                                                                                        let x_433: Obj = l_Sand2_dgasPacket_d__closed__29();
+                                                                                                        rt::lean_inc(x_28);
+                                                                                                        let x_434: Obj = l_Int_dofNat(x_28);
+                                                                                                        let x_435: Obj = l_Int_dmul(x_433, x_434);
+                                                                                                        rt::lean_dec(x_434);
+                                                                                                        let x_436: Obj = l_Int_dadd(x_430, x_435);
+                                                                                                        rt::lean_dec(x_435);
+                                                                                                        rt::lean_dec(x_430);
+                                                                                                        x_422 = x_436;
+                                                                                                        break 'b421;
+                                                                                                    }
+                                                                                                    _ => {
+                                                                                                        x_422 = x_430;
+                                                                                                        break 'b421;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            let x_423: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                            let x_424: u8 = l_Nat_ddecEq(x_30, x_423);
+                                                                                            match x_424 {
+                                                                                                0 => {
+                                                                                                    let x_425: Obj = l_Sand2_dgasPacket_d__closed__27();
+                                                                                                    rt::lean_inc(x_30);
+                                                                                                    let x_426: Obj = l_Int_dofNat(x_30);
+                                                                                                    let x_427: Obj = l_Int_dmul(x_425, x_426);
+                                                                                                    rt::lean_dec(x_426);
+                                                                                                    let x_428: Obj = l_Int_dadd(x_422, x_427);
+                                                                                                    rt::lean_dec(x_427);
+                                                                                                    rt::lean_dec(x_422);
+                                                                                                    x_414 = x_428;
+                                                                                                    break 'b413;
+                                                                                                }
+                                                                                                _ => {
+                                                                                                    x_414 = x_422;
+                                                                                                    break 'b413;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        let x_415: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                        let x_416: u8 = l_Nat_ddecEq(x_31, x_415);
+                                                                                        match x_416 {
+                                                                                            0 => {
+                                                                                                let x_417: Obj = l_Sand2_dgasPacket_d__closed__25();
+                                                                                                rt::lean_inc(x_31);
+                                                                                                let x_418: Obj = l_Int_dofNat(x_31);
+                                                                                                let x_419: Obj = l_Int_dmul(x_417, x_418);
+                                                                                                rt::lean_dec(x_418);
+                                                                                                let x_420: Obj = l_Int_dadd(x_414, x_419);
+                                                                                                rt::lean_dec(x_419);
+                                                                                                rt::lean_dec(x_414);
+                                                                                                x_406 = x_420;
+                                                                                                break 'b405;
+                                                                                            }
+                                                                                            _ => {
+                                                                                                x_406 = x_414;
+                                                                                                break 'b405;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    let x_407: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                    let x_408: u8 = l_Nat_ddecEq(x_32, x_407);
+                                                                                    match x_408 {
+                                                                                        0 => {
+                                                                                            let x_409: Obj = l_Sand2_dgasPacket_d__closed__23();
+                                                                                            rt::lean_inc(x_32);
+                                                                                            let x_410: Obj = l_Int_dofNat(x_32);
+                                                                                            let x_411: Obj = l_Int_dmul(x_409, x_410);
+                                                                                            rt::lean_dec(x_410);
+                                                                                            let x_412: Obj = l_Int_dadd(x_406, x_411);
+                                                                                            rt::lean_dec(x_411);
+                                                                                            rt::lean_dec(x_406);
+                                                                                            x_387 = x_412;
+                                                                                            break 'b386;
+                                                                                        }
+                                                                                        _ => {
+                                                                                            x_387 = x_406;
+                                                                                            break 'b386;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                let x_388: Obj = l_Sand2_dgasPacket_d__closed__17();
+                                                                                let x_389: Obj = l_Int_dmul(x_387, x_388);
+                                                                                rt::lean_dec(x_387);
+                                                                                let x_390: Obj = l_Sand2_dgasPacket_d__closed__18();
+                                                                                let x_391: Obj = l_Sand2_dgasPacket_d__closed__19();
+                                                                                let x_392: Obj = l_Sand2_dgasPacket_d__closed__20();
+                                                                                let x_393: Obj = l_Sand2_dChemistry_ddryGasMoles(x_14);
+                                                                                rt::lean_inc(x_393);
+                                                                                let x_394: Obj = l_Int_dofNat(x_393);
+                                                                                let x_395: Obj = l_Int_dmul(x_392, x_394);
+                                                                                rt::lean_dec(x_394);
+                                                                                let x_396: Obj = l_Int_dsub(x_389, x_395);
+                                                                                rt::lean_dec(x_395);
+                                                                                rt::lean_dec(x_389);
+                                                                                let x_397: Obj = l_Sand2_dChemistry_dgasCv(x_14);
+                                                                                let x_398: Obj = l_Int_dofNat(x_397);
+                                                                                let x_399: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                let x_400: u8 = l_Nat_ddecEq(x_17, x_399);
+                                                                                match x_400 {
+                                                                                    0 => {
+                                                                                        let x_401: Obj = l_Sand2_dgasPacket_d__closed__21();
+                                                                                        rt::lean_inc(x_17);
+                                                                                        let x_402: Obj = l_Int_dofNat(x_17);
+                                                                                        let x_403: Obj = l_Int_dmul(x_401, x_402);
+                                                                                        rt::lean_dec(x_402);
+                                                                                        let x_404: Obj = l_Int_dadd(x_398, x_403);
+                                                                                        rt::lean_dec(x_403);
+                                                                                        rt::lean_dec(x_398);
+                                                                                        x_373 = x_388;
+                                                                                        x_374 = x_391;
+                                                                                        x_375 = x_396;
+                                                                                        x_376 = x_392;
+                                                                                        x_377 = x_393;
+                                                                                        x_378 = x_390;
+                                                                                        x_379 = x_404;
+                                                                                        break 'b372;
+                                                                                    }
+                                                                                    _ => {
+                                                                                        x_373 = x_388;
+                                                                                        x_374 = x_391;
+                                                                                        x_375 = x_396;
+                                                                                        x_376 = x_392;
+                                                                                        x_377 = x_393;
+                                                                                        x_378 = x_390;
+                                                                                        x_379 = x_398;
+                                                                                        break 'b372;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            let x_380: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                            let x_381: u8 = l_Nat_ddecEq(x_18, x_380);
+                                                                            match x_381 {
+                                                                                0 => {
+                                                                                    let x_382: Obj = l_Sand2_dgasPacket_d__closed__16();
+                                                                                    rt::lean_inc(x_18);
+                                                                                    let x_383: Obj = l_Int_dofNat(x_18);
+                                                                                    let x_384: Obj = l_Int_dmul(x_382, x_383);
+                                                                                    rt::lean_dec(x_383);
+                                                                                    let x_385: Obj = l_Int_dadd(x_379, x_384);
+                                                                                    rt::lean_dec(x_384);
+                                                                                    rt::lean_dec(x_379);
+                                                                                    x_359 = x_373;
+                                                                                    x_360 = x_375;
+                                                                                    x_361 = x_374;
+                                                                                    x_362 = x_376;
+                                                                                    x_363 = x_378;
+                                                                                    x_364 = x_377;
+                                                                                    x_365 = x_385;
+                                                                                    break 'b358;
+                                                                                }
+                                                                                _ => {
+                                                                                    x_359 = x_373;
+                                                                                    x_360 = x_375;
+                                                                                    x_361 = x_374;
+                                                                                    x_362 = x_376;
+                                                                                    x_363 = x_378;
+                                                                                    x_364 = x_377;
+                                                                                    x_365 = x_379;
+                                                                                    break 'b358;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        let x_366: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                        let x_367: u8 = l_Nat_ddecEq(x_19, x_366);
+                                                                        match x_367 {
+                                                                            0 => {
+                                                                                let x_368: Obj = l_Sand2_dgasPacket_d__closed__15();
+                                                                                rt::lean_inc(x_19);
+                                                                                let x_369: Obj = l_Int_dofNat(x_19);
+                                                                                let x_370: Obj = l_Int_dmul(x_368, x_369);
+                                                                                rt::lean_dec(x_369);
+                                                                                let x_371: Obj = l_Int_dadd(x_365, x_370);
+                                                                                rt::lean_dec(x_370);
+                                                                                rt::lean_dec(x_365);
+                                                                                x_345 = x_359;
+                                                                                x_346 = x_361;
+                                                                                x_347 = x_360;
+                                                                                x_348 = x_362;
+                                                                                x_349 = x_364;
+                                                                                x_350 = x_363;
+                                                                                x_351 = x_371;
+                                                                                break 'b344;
+                                                                            }
+                                                                            _ => {
+                                                                                x_345 = x_359;
+                                                                                x_346 = x_361;
+                                                                                x_347 = x_360;
+                                                                                x_348 = x_362;
+                                                                                x_349 = x_364;
+                                                                                x_350 = x_363;
+                                                                                x_351 = x_365;
+                                                                                break 'b344;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    let x_352: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                    let x_353: u8 = l_Nat_ddecEq(x_20, x_352);
+                                                                    match x_353 {
+                                                                        0 => {
+                                                                            let x_354: Obj = l_Sand2_dgasPacket_d__closed__14();
+                                                                            rt::lean_inc(x_20);
+                                                                            let x_355: Obj = l_Int_dofNat(x_20);
+                                                                            let x_356: Obj = l_Int_dmul(x_354, x_355);
+                                                                            rt::lean_dec(x_355);
+                                                                            let x_357: Obj = l_Int_dadd(x_351, x_356);
+                                                                            rt::lean_dec(x_356);
+                                                                            rt::lean_dec(x_351);
+                                                                            x_331 = x_345;
+                                                                            x_332 = x_347;
+                                                                            x_333 = x_346;
+                                                                            x_334 = x_348;
+                                                                            x_335 = x_350;
+                                                                            x_336 = x_349;
+                                                                            x_337 = x_357;
+                                                                            break 'b330;
+                                                                        }
+                                                                        _ => {
+                                                                            x_331 = x_345;
+                                                                            x_332 = x_347;
+                                                                            x_333 = x_346;
+                                                                            x_334 = x_348;
+                                                                            x_335 = x_350;
+                                                                            x_336 = x_349;
+                                                                            x_337 = x_351;
+                                                                            break 'b330;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                let x_338: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                let x_339: u8 = l_Nat_ddecEq(x_21, x_338);
+                                                                match x_339 {
+                                                                    0 => {
+                                                                        let x_340: Obj = l_Sand2_dgasPacket_d__closed__13();
+                                                                        rt::lean_inc(x_21);
+                                                                        let x_341: Obj = l_Int_dofNat(x_21);
+                                                                        let x_342: Obj = l_Int_dmul(x_340, x_341);
+                                                                        rt::lean_dec(x_341);
+                                                                        let x_343: Obj = l_Int_dadd(x_337, x_342);
+                                                                        rt::lean_dec(x_342);
+                                                                        rt::lean_dec(x_337);
+                                                                        x_317 = x_331;
+                                                                        x_318 = x_333;
+                                                                        x_319 = x_332;
+                                                                        x_320 = x_334;
+                                                                        x_321 = x_336;
+                                                                        x_322 = x_335;
+                                                                        x_323 = x_343;
+                                                                        break 'b316;
+                                                                    }
+                                                                    _ => {
+                                                                        x_317 = x_331;
+                                                                        x_318 = x_333;
+                                                                        x_319 = x_332;
+                                                                        x_320 = x_334;
+                                                                        x_321 = x_336;
+                                                                        x_322 = x_335;
+                                                                        x_323 = x_337;
+                                                                        break 'b316;
+                                                                    }
+                                                                }
+                                                            }
+                                                            let x_324: Obj = rt::nat::lean_usize_to_nat(0);
+                                                            let x_325: u8 = l_Nat_ddecEq(x_22, x_324);
+                                                            match x_325 {
+                                                                0 => {
+                                                                    let x_326: Obj = l_Sand2_dgasPacket_d__closed__12();
+                                                                    rt::lean_inc(x_22);
+                                                                    let x_327: Obj = l_Int_dofNat(x_22);
+                                                                    let x_328: Obj = l_Int_dmul(x_326, x_327);
+                                                                    rt::lean_dec(x_327);
+                                                                    let x_329: Obj = l_Int_dadd(x_323, x_328);
+                                                                    rt::lean_dec(x_328);
+                                                                    rt::lean_dec(x_323);
+                                                                    x_303 = x_317;
+                                                                    x_304 = x_319;
+                                                                    x_305 = x_318;
+                                                                    x_306 = x_320;
+                                                                    x_307 = x_322;
+                                                                    x_308 = x_321;
+                                                                    x_309 = x_329;
+                                                                    break 'b302;
+                                                                }
+                                                                _ => {
+                                                                    x_303 = x_317;
+                                                                    x_304 = x_319;
+                                                                    x_305 = x_318;
+                                                                    x_306 = x_320;
+                                                                    x_307 = x_322;
+                                                                    x_308 = x_321;
+                                                                    x_309 = x_323;
+                                                                    break 'b302;
+                                                                }
+                                                            }
+                                                        }
+                                                        let x_310: Obj = rt::nat::lean_usize_to_nat(0);
+                                                        let x_311: u8 = l_Nat_ddecEq(x_23, x_310);
+                                                        match x_311 {
+                                                            0 => {
+                                                                let x_312: Obj = l_Sand2_dgasPacket_d__closed__11();
+                                                                rt::lean_inc(x_23);
+                                                                let x_313: Obj = l_Int_dofNat(x_23);
+                                                                let x_314: Obj = l_Int_dmul(x_312, x_313);
+                                                                rt::lean_dec(x_313);
+                                                                let x_315: Obj = l_Int_dadd(x_309, x_314);
+                                                                rt::lean_dec(x_314);
+                                                                rt::lean_dec(x_309);
+                                                                x_289 = x_303;
+                                                                x_290 = x_305;
+                                                                x_291 = x_304;
+                                                                x_292 = x_306;
+                                                                x_293 = x_308;
+                                                                x_294 = x_307;
+                                                                x_295 = x_315;
+                                                                break 'b288;
+                                                            }
+                                                            _ => {
+                                                                x_289 = x_303;
+                                                                x_290 = x_305;
+                                                                x_291 = x_304;
+                                                                x_292 = x_306;
+                                                                x_293 = x_308;
+                                                                x_294 = x_307;
+                                                                x_295 = x_309;
+                                                                break 'b288;
+                                                            }
+                                                        }
+                                                    }
+                                                    let x_296: Obj = rt::nat::lean_usize_to_nat(0);
+                                                    let x_297: u8 = l_Nat_ddecEq(x_24, x_296);
+                                                    match x_297 {
+                                                        0 => {
+                                                            let x_298: Obj = l_Sand2_dgasPacket_d__closed__10();
+                                                            rt::lean_inc(x_24);
+                                                            let x_299: Obj = l_Int_dofNat(x_24);
+                                                            let x_300: Obj = l_Int_dmul(x_298, x_299);
+                                                            rt::lean_dec(x_299);
+                                                            let x_301: Obj = l_Int_dadd(x_295, x_300);
+                                                            rt::lean_dec(x_300);
+                                                            rt::lean_dec(x_295);
+                                                            x_275 = x_289;
+                                                            x_276 = x_291;
+                                                            x_277 = x_290;
+                                                            x_278 = x_292;
+                                                            x_279 = x_294;
+                                                            x_280 = x_293;
+                                                            x_281 = x_301;
+                                                            break 'b274;
+                                                        }
+                                                        _ => {
+                                                            x_275 = x_289;
+                                                            x_276 = x_291;
+                                                            x_277 = x_290;
+                                                            x_278 = x_292;
+                                                            x_279 = x_294;
+                                                            x_280 = x_293;
+                                                            x_281 = x_295;
+                                                            break 'b274;
+                                                        }
+                                                    }
+                                                }
+                                                let x_282: Obj = rt::nat::lean_usize_to_nat(0);
+                                                let x_283: u8 = l_Nat_ddecEq(x_25, x_282);
+                                                match x_283 {
+                                                    0 => {
+                                                        let x_284: Obj = l_Sand2_dgasPacket_d__closed__9();
+                                                        rt::lean_inc(x_25);
+                                                        let x_285: Obj = l_Int_dofNat(x_25);
+                                                        let x_286: Obj = l_Int_dmul(x_284, x_285);
+                                                        rt::lean_dec(x_285);
+                                                        let x_287: Obj = l_Int_dadd(x_281, x_286);
+                                                        rt::lean_dec(x_286);
+                                                        rt::lean_dec(x_281);
+                                                        x_261 = x_275;
+                                                        x_262 = x_277;
+                                                        x_263 = x_276;
+                                                        x_264 = x_278;
+                                                        x_265 = x_280;
+                                                        x_266 = x_279;
+                                                        x_267 = x_287;
+                                                        break 'b260;
+                                                    }
+                                                    _ => {
+                                                        x_261 = x_275;
+                                                        x_262 = x_277;
+                                                        x_263 = x_276;
+                                                        x_264 = x_278;
+                                                        x_265 = x_280;
+                                                        x_266 = x_279;
+                                                        x_267 = x_281;
+                                                        break 'b260;
+                                                    }
+                                                }
+                                            }
+                                            let x_268: Obj = rt::nat::lean_usize_to_nat(0);
+                                            let x_269: u8 = l_Nat_ddecEq(x_26, x_268);
+                                            match x_269 {
+                                                0 => {
+                                                    let x_270: Obj = l_Sand2_dgasPacket_d__closed__8();
+                                                    rt::lean_inc(x_26);
+                                                    let x_271: Obj = l_Int_dofNat(x_26);
+                                                    let x_272: Obj = l_Int_dmul(x_270, x_271);
+                                                    rt::lean_dec(x_271);
+                                                    let x_273: Obj = l_Int_dadd(x_267, x_272);
+                                                    rt::lean_dec(x_272);
+                                                    rt::lean_dec(x_267);
+                                                    x_247 = x_261;
+                                                    x_248 = x_263;
+                                                    x_249 = x_262;
+                                                    x_250 = x_264;
+                                                    x_251 = x_266;
+                                                    x_252 = x_265;
+                                                    x_253 = x_273;
+                                                    break 'b246;
+                                                }
+                                                _ => {
+                                                    x_247 = x_261;
+                                                    x_248 = x_263;
+                                                    x_249 = x_262;
+                                                    x_250 = x_264;
+                                                    x_251 = x_266;
+                                                    x_252 = x_265;
+                                                    x_253 = x_267;
+                                                    break 'b246;
+                                                }
+                                            }
+                                        }
+                                        let x_254: Obj = rt::nat::lean_usize_to_nat(0);
+                                        let x_255: u8 = l_Nat_ddecEq(x_27, x_254);
+                                        match x_255 {
+                                            0 => {
+                                                let x_256: Obj = l_Sand2_dgasPacket_d__closed__7();
+                                                rt::lean_inc(x_27);
+                                                let x_257: Obj = l_Int_dofNat(x_27);
+                                                let x_258: Obj = l_Int_dmul(x_256, x_257);
+                                                rt::lean_dec(x_257);
+                                                let x_259: Obj = l_Int_dadd(x_253, x_258);
+                                                rt::lean_dec(x_258);
+                                                rt::lean_dec(x_253);
+                                                x_233 = x_247;
+                                                x_234 = x_249;
+                                                x_235 = x_248;
+                                                x_236 = x_250;
+                                                x_237 = x_252;
+                                                x_238 = x_251;
+                                                x_239 = x_259;
+                                                break 'b232;
+                                            }
+                                            _ => {
+                                                x_233 = x_247;
+                                                x_234 = x_249;
+                                                x_235 = x_248;
+                                                x_236 = x_250;
+                                                x_237 = x_252;
+                                                x_238 = x_251;
+                                                x_239 = x_253;
+                                                break 'b232;
+                                            }
+                                        }
+                                    }
+                                    let x_240: Obj = rt::nat::lean_usize_to_nat(0);
+                                    let x_241: u8 = l_Nat_ddecEq(x_28, x_240);
+                                    match x_241 {
+                                        0 => {
+                                            let x_242: Obj = l_Sand2_dgasPacket_d__closed__6();
+                                            rt::lean_inc(x_28);
+                                            let x_243: Obj = l_Int_dofNat(x_28);
+                                            let x_244: Obj = l_Int_dmul(x_242, x_243);
+                                            rt::lean_dec(x_243);
+                                            let x_245: Obj = l_Int_dadd(x_239, x_244);
+                                            rt::lean_dec(x_244);
+                                            rt::lean_dec(x_239);
+                                            x_219 = x_233;
+                                            x_220 = x_235;
+                                            x_221 = x_234;
+                                            x_222 = x_236;
+                                            x_223 = x_238;
+                                            x_224 = x_237;
+                                            x_225 = x_245;
+                                            break 'b218;
+                                        }
+                                        _ => {
+                                            x_219 = x_233;
+                                            x_220 = x_235;
+                                            x_221 = x_234;
+                                            x_222 = x_236;
+                                            x_223 = x_238;
+                                            x_224 = x_237;
+                                            x_225 = x_239;
+                                            break 'b218;
+                                        }
+                                    }
+                                }
+                                let x_226: Obj = rt::nat::lean_usize_to_nat(0);
+                                let x_227: u8 = l_Nat_ddecEq(x_29, x_226);
+                                match x_227 {
+                                    0 => {
+                                        let x_228: Obj = l_Sand2_dgasPacket_d__closed__5();
+                                        rt::lean_inc(x_29);
+                                        let x_229: Obj = l_Int_dofNat(x_29);
+                                        let x_230: Obj = l_Int_dmul(x_228, x_229);
+                                        rt::lean_dec(x_229);
+                                        let x_231: Obj = l_Int_dadd(x_225, x_230);
+                                        rt::lean_dec(x_230);
+                                        rt::lean_dec(x_225);
+                                        x_205 = x_219;
+                                        x_206 = x_221;
+                                        x_207 = x_220;
+                                        x_208 = x_222;
+                                        x_209 = x_224;
+                                        x_210 = x_223;
+                                        x_211 = x_231;
+                                        break 'b204;
+                                    }
+                                    _ => {
+                                        x_205 = x_219;
+                                        x_206 = x_221;
+                                        x_207 = x_220;
+                                        x_208 = x_222;
+                                        x_209 = x_224;
+                                        x_210 = x_223;
+                                        x_211 = x_225;
+                                        break 'b204;
+                                    }
+                                }
+                            }
+                            let x_212: Obj = rt::nat::lean_usize_to_nat(0);
+                            let x_213: u8 = l_Nat_ddecEq(x_30, x_212);
+                            match x_213 {
+                                0 => {
+                                    let x_214: Obj = l_Sand2_dgasPacket_d__closed__4();
+                                    rt::lean_inc(x_30);
+                                    let x_215: Obj = l_Int_dofNat(x_30);
+                                    let x_216: Obj = l_Int_dmul(x_214, x_215);
+                                    rt::lean_dec(x_215);
+                                    let x_217: Obj = l_Int_dadd(x_211, x_216);
+                                    rt::lean_dec(x_216);
+                                    rt::lean_dec(x_211);
+                                    x_189 = x_205;
+                                    x_190 = x_207;
+                                    x_191 = x_206;
+                                    x_192 = x_208;
+                                    x_193 = x_210;
+                                    x_194 = x_209;
+                                    x_195 = x_217;
+                                    break 'b188;
+                                }
+                                _ => {
+                                    x_189 = x_205;
+                                    x_190 = x_207;
+                                    x_191 = x_206;
+                                    x_192 = x_208;
+                                    x_193 = x_210;
+                                    x_194 = x_209;
+                                    x_195 = x_211;
+                                    break 'b188;
+                                }
+                            }
+                        }
+                        let x_196: Obj = l_Sand2_dnonWaterCondensedMass(x_14);
+                        let x_197: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_198: Obj = l_Sand2_dgasPacket_d__closed__1();
+                        let x_199: Obj = rt::nat::lean_usize_to_nat(101325000);
+                        let x_200: Obj = l_Sand2_dgasPacket_d__closed__2();
+                        let x_201: Obj = l_Sand2_dgasPacket_d__closed__3();
+                        let x_202: Obj = rt::nat::lean_usize_to_nat(1);
+                        let x_203: u8 = l_Nat_ddecLe(x_202, x_9);
+                        match x_203 {
+                            0 => {
+                                x_168 = x_201;
+                                x_169 = x_197;
+                                x_170 = x_195;
+                                x_171 = x_194;
+                                x_172 = x_198;
+                                x_173 = x_189;
+                                x_174 = x_191;
+                                x_175 = x_190;
+                                x_176 = x_192;
+                                x_177 = x_196;
+                                x_178 = x_193;
+                                x_179 = x_200;
+                                x_180 = x_199;
+                                x_181 = x_202;
+                                break 'b167;
+                            }
+                            _ => {
+                                rt::lean_inc(x_9);
+                                x_168 = x_201;
+                                x_169 = x_197;
+                                x_170 = x_195;
+                                x_171 = x_194;
+                                x_172 = x_198;
+                                x_173 = x_189;
+                                x_174 = x_191;
+                                x_175 = x_190;
+                                x_176 = x_192;
+                                x_177 = x_196;
+                                x_178 = x_193;
+                                x_179 = x_200;
+                                x_180 = x_199;
+                                x_181 = x_9;
+                                break 'b167;
+                            }
+                        }
+                    }
+                    let x_182: Obj = l_Int_dofNat(x_181);
+                    let x_183: Obj = l_Int_dediv(x_10, x_182);
+                    rt::lean_dec(x_182);
+                    rt::lean_inc(x_33);
+                    let x_184: Obj = l_Int_dofNat(x_33);
+                    let x_185: Obj = l_Int_dmul(x_183, x_184);
+                    rt::lean_dec(x_183);
+                    let x_186: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_187: u8 = l_Nat_ddecLe(x_186, x_9);
+                    match x_187 {
+                        0 => {
+                            x_136 = x_168;
+                            x_137 = x_169;
+                            x_138 = x_170;
+                            x_139 = x_171;
+                            x_140 = x_172;
+                            x_141 = x_173;
+                            x_142 = x_185;
+                            x_143 = x_174;
+                            x_144 = x_175;
+                            x_145 = x_176;
+                            x_146 = x_177;
+                            x_147 = x_184;
+                            x_148 = x_178;
+                            x_149 = x_179;
+                            x_150 = x_180;
+                            x_151 = x_186;
+                            break 'b135;
+                        }
+                        _ => {
+                            rt::lean_inc(x_9);
+                            x_136 = x_168;
+                            x_137 = x_169;
+                            x_138 = x_170;
+                            x_139 = x_171;
+                            x_140 = x_172;
+                            x_141 = x_173;
+                            x_142 = x_185;
+                            x_143 = x_174;
+                            x_144 = x_175;
+                            x_145 = x_176;
+                            x_146 = x_177;
+                            x_147 = x_184;
+                            x_148 = x_178;
+                            x_149 = x_179;
+                            x_150 = x_180;
+                            x_151 = x_9;
+                            break 'b135;
+                        }
+                    }
+                }
+                let x_152: Obj = l_Int_dofNat(x_151);
+                let x_153: Obj = l_Int_dediv(x_11, x_152);
+                rt::lean_dec(x_152);
+                let x_154: Obj = l_Int_dmul(x_153, x_147);
+                rt::lean_dec(x_153);
+                let x_155: u8 = 6u8;
+                rt::lean_inc_ref(x_5);
+                let x_156: Obj = l_Sand2_dtemperature(x_1, x_2, x_3, x_5);
+                rt::lean_inc_ref(x_14);
+                let x_157: Obj = l_Sand2_dinternalEnergyAt(x_14, x_155, x_156);
+                let x_158: Obj = l_Nat_dadd(x_139, x_15);
+                rt::lean_dec(x_139);
+                let x_159: Obj = l_Int_dofNat(x_158);
+                let x_160: Obj = l_Int_dmul(x_159, x_148);
+                rt::lean_dec(x_159);
+                let x_161: Obj = l_Int_dadd(x_156, x_143);
+                rt::lean_dec(x_156);
+                let x_162: Obj = l_Int_dmul(x_160, x_161);
+                rt::lean_dec(x_161);
+                rt::lean_dec(x_160);
+                let x_163: Obj = l_Int_dadd(x_144, x_157);
+                rt::lean_dec(x_157);
+                let x_164: Obj = l_Int_dadd(x_163, x_162);
+                rt::lean_dec(x_162);
+                rt::lean_dec(x_163);
+                let x_165: u8 = l_Int_ddecEq(x_142, x_140);
+                match x_165 {
+                    0 => {
+                        x_114 = x_136;
+                        x_115 = x_137;
+                        x_116 = x_164;
+                        x_117 = x_138;
+                        x_118 = x_154;
+                        x_119 = x_140;
+                        x_120 = x_141;
+                        x_121 = x_142;
+                        x_122 = x_144;
+                        x_123 = x_145;
+                        x_124 = x_146;
+                        x_125 = x_147;
+                        x_126 = x_150;
+                        x_127 = x_149;
+                        x_128 = x_165;
+                        break 'b113;
+                    }
+                    _ => {
+                        let x_166: u8 = l_Int_ddecEq(x_154, x_140);
+                        x_114 = x_136;
+                        x_115 = x_137;
+                        x_116 = x_164;
+                        x_117 = x_138;
+                        x_118 = x_154;
+                        x_119 = x_140;
+                        x_120 = x_141;
+                        x_121 = x_142;
+                        x_122 = x_144;
+                        x_123 = x_145;
+                        x_124 = x_146;
+                        x_125 = x_147;
+                        x_126 = x_150;
+                        x_127 = x_149;
+                        x_128 = x_166;
+                        break 'b113;
+                    }
+                }
+            }
+            match x_128 {
+                0 => {
+                    let x_129: Obj = l_Int_dmul(x_121, x_121);
+                    let x_130: Obj = l_Int_dmul(x_118, x_118);
+                    let x_131: Obj = l_Int_dadd(x_129, x_130);
+                    rt::lean_dec(x_130);
+                    rt::lean_dec(x_129);
+                    let x_132: Obj = l_Sand2_dfacePotential_d__closed__4();
+                    let x_133: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_134: u8 = l_Nat_ddecLe(x_133, x_33);
+                    match x_134 {
+                        0 => {
+                            x_91 = x_132;
+                            x_92 = x_114;
+                            x_93 = x_115;
+                            x_94 = x_116;
+                            x_95 = x_117;
+                            x_96 = x_118;
+                            x_97 = x_119;
+                            x_98 = x_120;
+                            x_99 = x_121;
+                            x_100 = x_122;
+                            x_101 = x_123;
+                            x_102 = x_124;
+                            x_103 = x_125;
+                            x_104 = x_127;
+                            x_105 = x_126;
+                            x_106 = x_131;
+                            x_107 = x_133;
+                            break 'b90;
+                        }
+                        _ => {
+                            rt::lean_inc(x_33);
+                            x_91 = x_132;
+                            x_92 = x_114;
+                            x_93 = x_115;
+                            x_94 = x_116;
+                            x_95 = x_117;
+                            x_96 = x_118;
+                            x_97 = x_119;
+                            x_98 = x_120;
+                            x_99 = x_121;
+                            x_100 = x_122;
+                            x_101 = x_123;
+                            x_102 = x_124;
+                            x_103 = x_125;
+                            x_104 = x_127;
+                            x_105 = x_126;
+                            x_106 = x_131;
+                            x_107 = x_33;
+                            break 'b90;
+                        }
+                    }
+                }
+                _ => {
+                    rt::lean_inc(x_119);
+                    x_37 = x_114;
+                    x_38 = x_115;
+                    x_39 = x_116;
+                    x_40 = x_117;
+                    x_41 = x_118;
+                    x_42 = x_119;
+                    x_43 = x_120;
+                    x_44 = x_121;
+                    x_45 = x_122;
+                    x_46 = x_123;
+                    x_47 = x_124;
+                    x_48 = x_125;
+                    x_49 = x_126;
+                    x_50 = x_127;
+                    x_51 = x_119;
+                    break 'b36;
+                }
+            }
+        }
+        let x_108: Obj = l_Int_dofNat(x_107);
+        let x_109: Obj = l_Int_dmul(x_91, x_108);
+        rt::lean_dec(x_108);
+        let x_110: Obj = l_Sand2_dgasPacket_d__closed__0();
+        let x_111: Obj = l_Int_dmul(x_109, x_110);
+        rt::lean_dec(x_109);
+        let x_112: Obj = l_Int_dediv(x_106, x_111);
+        rt::lean_dec(x_111);
+        rt::lean_dec(x_106);
+        x_37 = x_92;
+        x_38 = x_93;
+        x_39 = x_94;
+        x_40 = x_95;
+        x_41 = x_96;
+        x_42 = x_97;
+        x_43 = x_98;
+        x_44 = x_99;
+        x_45 = x_100;
+        x_46 = x_101;
+        x_47 = x_102;
+        x_48 = x_103;
+        x_49 = x_105;
+        x_50 = x_104;
+        x_51 = x_112;
+        break 'b36;
+    }
+    let x_52: Obj = l_Int_dadd(x_39, x_51);
+    rt::lean_dec(x_51);
+    rt::lean_dec(x_39);
+    let x_53: Obj = l_Sand2_dfacePotential_d__closed__0();
+    let x_54: Obj = l_Int_dmul(x_48, x_53);
+    rt::lean_dec(x_48);
+    let x_55: Obj = l_Nat_ddiv(x_3, x_2);
+    let x_56: Obj = l_Nat_dsub(x_1, x_55);
+    rt::lean_dec(x_55);
+    let x_57: Obj = l_Int_dofNat(x_56);
+    let x_58: Obj = l_Sand2_dfacePotential_d__closed__1();
+    let x_59: Obj = l_Int_dmul(x_57, x_58);
+    rt::lean_dec(x_57);
+    let x_60: Obj = l_Int_dsub(x_59, x_42);
+    rt::lean_dec(x_59);
+    let x_61: Obj = l_Int_dmul(x_54, x_60);
+    rt::lean_dec(x_60);
+    let x_62: Obj = l_Sand2_dfacePotential_d__closed__3();
+    let x_63: Obj = l_Int_dediv(x_61, x_62);
+    rt::lean_dec(x_61);
+    let x_64: Obj = l_Nat_ddiv(x_4, x_2);
+    let x_65: Obj = l_Nat_dsub(x_1, x_64);
+    rt::lean_dec(x_64);
+    let x_66: Obj = l_Int_dofNat(x_65);
+    let x_67: Obj = l_Int_dmul(x_66, x_58);
+    rt::lean_dec(x_66);
+    let x_68: Obj = l_Int_dsub(x_67, x_42);
+    rt::lean_dec(x_67);
+    let x_69: Obj = l_Int_dmul(x_54, x_68);
+    rt::lean_dec(x_68);
+    rt::lean_dec(x_54);
+    let x_70: Obj = l_Int_dediv(x_69, x_62);
+    rt::lean_dec(x_69);
+    let x_71: Obj = l_Int_dadd(x_63, x_70);
+    rt::lean_dec(x_70);
+    rt::lean_dec(x_63);
+    let x_72: Obj = l_Sand2_dfacePotential_d__closed__4();
+    let x_73: Obj = l_Int_dediv(x_71, x_72);
+    rt::lean_dec(x_71);
+    let x_74: Obj = l_Int_dadd(x_52, x_73);
+    rt::lean_dec(x_73);
+    rt::lean_dec(x_52);
+    rt::lean_inc_n(x_38, 24);
+    rt::lean_inc_n(x_37, 2);
+    rt::lean_inc_n(x_50, 2);
+    rt::lean_inc_n(x_49, 3);
+    rt::lean_inc_n(x_42, 7);
+    let x_75: Obj = rt::lean_alloc_ctor(0, 16, 3);
+    rt::lean_ctor_set(x_75, 0, x_14);
+    rt::lean_ctor_set(x_75, 1, x_33);
+    rt::lean_ctor_set(x_75, 2, x_45);
+    rt::lean_ctor_set(x_75, 3, x_40);
+    rt::lean_ctor_set(x_75, 4, x_47);
+    rt::lean_ctor_set(x_75, 5, x_74);
+    rt::lean_ctor_set(x_75, 6, x_44);
+    rt::lean_ctor_set(x_75, 7, x_41);
+    rt::lean_ctor_set(x_75, 8, x_42);
+    rt::lean_ctor_set(x_75, 9, x_42);
+    rt::lean_ctor_set(x_75, 10, x_49);
+    rt::lean_ctor_set(x_75, 11, x_49);
+    rt::lean_ctor_set(x_75, 12, x_50);
+    rt::lean_ctor_set(x_75, 13, x_37);
+    rt::lean_ctor_set(x_75, 14, x_38);
+    rt::lean_ctor_set(x_75, 15, x_38);
+    rt::lean_ctor_set_uint8(x_75, 16 * ::core::mem::size_of::<usize>(), x_34);
+    rt::lean_ctor_set_uint8(x_75, 16 * ::core::mem::size_of::<usize>() + 1, x_35);
+    rt::lean_ctor_set_uint8(x_75, 16 * ::core::mem::size_of::<usize>() + 2, x_35);
+    let x_76: Obj = rt::lean_alloc_ctor(0, 21, 0);
+    rt::lean_ctor_set(x_76, 0, x_38);
+    rt::lean_ctor_set(x_76, 1, x_38);
+    rt::lean_ctor_set(x_76, 2, x_38);
+    rt::lean_ctor_set(x_76, 3, x_38);
+    rt::lean_ctor_set(x_76, 4, x_38);
+    rt::lean_ctor_set(x_76, 5, x_38);
+    rt::lean_ctor_set(x_76, 6, x_38);
+    rt::lean_ctor_set(x_76, 7, x_38);
+    rt::lean_ctor_set(x_76, 8, x_38);
+    rt::lean_ctor_set(x_76, 9, x_38);
+    rt::lean_ctor_set(x_76, 10, x_38);
+    rt::lean_ctor_set(x_76, 11, x_38);
+    rt::lean_ctor_set(x_76, 12, x_38);
+    rt::lean_ctor_set(x_76, 13, x_38);
+    rt::lean_ctor_set(x_76, 14, x_38);
+    rt::lean_ctor_set(x_76, 15, x_38);
+    rt::lean_ctor_set(x_76, 16, x_38);
+    rt::lean_ctor_set(x_76, 17, x_38);
+    rt::lean_ctor_set(x_76, 18, x_38);
+    rt::lean_ctor_set(x_76, 19, x_38);
+    rt::lean_ctor_set(x_76, 20, x_38);
+    let x_77: Obj = l_Sand2_dChemistry_dmass(x_76);
+    let x_78: Obj = l_Int_dmul(x_42, x_43);
+    let x_79: Obj = l_Sand2_dChemistry_ddryGasMoles(x_76);
+    let x_80: Obj = l_Int_dofNat(x_79);
+    let x_81: Obj = l_Int_dmul(x_46, x_80);
+    rt::lean_dec(x_80);
+    let x_82: Obj = l_Int_dsub(x_78, x_81);
+    rt::lean_dec(x_81);
+    rt::lean_dec(x_78);
+    let x_83: Obj = l_Sand2_dChemistry_dgasCv(x_76);
+    let x_84: Obj = l_Int_dofNat(x_83);
+    let x_85: Obj = l_Sand2_dnonWaterCondensedMass(x_76);
+    let x_86: Obj = rt::lean_alloc_ctor(0, 16, 3);
+    rt::lean_ctor_set(x_86, 0, x_76);
+    rt::lean_ctor_set(x_86, 1, x_77);
+    rt::lean_ctor_set(x_86, 2, x_82);
+    rt::lean_ctor_set(x_86, 3, x_84);
+    rt::lean_ctor_set(x_86, 4, x_85);
+    rt::lean_ctor_set(x_86, 5, x_42);
+    rt::lean_ctor_set(x_86, 6, x_42);
+    rt::lean_ctor_set(x_86, 7, x_42);
+    rt::lean_ctor_set(x_86, 8, x_42);
+    rt::lean_ctor_set(x_86, 9, x_42);
+    rt::lean_ctor_set(x_86, 10, x_49);
+    rt::lean_ctor_set(x_86, 11, x_49);
+    rt::lean_ctor_set(x_86, 12, x_50);
+    rt::lean_ctor_set(x_86, 13, x_37);
+    rt::lean_ctor_set(x_86, 14, x_38);
+    rt::lean_ctor_set(x_86, 15, x_38);
+    rt::lean_ctor_set_uint8(x_86, 16 * ::core::mem::size_of::<usize>(), x_34);
+    rt::lean_ctor_set_uint8(x_86, 16 * ::core::mem::size_of::<usize>() + 1, x_35);
+    rt::lean_ctor_set_uint8(x_86, 16 * ::core::mem::size_of::<usize>() + 2, x_35);
+    let x_87: Obj = rt::lean_ctor_get(x_6, 0);
+    rt::lean_inc_ref(x_87);
+    let x_88: Obj = l_Sand2_dChemistry_demptyPortion(x_87);
+    let x_89: Obj = l_Sand2_dportionEditCached_d__redArg(x_5, x_6, x_75, x_86, x_13, x_88);
+    rt::lean_dec_ref(x_88);
     rt::lean_dec_ref(x_13);
-    rt::lean_inc_ref(x_12);
-    let x_17: Obj = l_Sand2_dChemistry_demptyPortion(x_12);
-    let x_18: Obj = l_Sand2_dgasPacket_d__closed__0();
-    let x_19: Obj = l_Sand2_dportionEdit(x_5, x_6, x_10, x_17, x_14, x_18, x_15, x_18, x_16, x_18);
-    rt::lean_dec(x_16);
-    rt::lean_dec(x_15);
-    rt::lean_dec(x_14);
-    return x_19;
+    rt::lean_dec_ref(x_5);
+    return x_89;
 }
 
 // Lean: Sand2.gasFlowEdit._boxed
@@ -176,180 +6784,1283 @@ pub(crate) unsafe extern "C" fn l_Sand2_dgasFlowEdit_d__boxed(x_1: Obj, x_2: Obj
 // Lean: Sand2.gasPacket
 // Source: lean/Sand2/Transport.lean:13:1
 pub(crate) unsafe extern "C" fn l_Sand2_dgasPacket(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj) -> Obj {
-    let x_7: Obj = l_Sand2_dChemistry_dmass(x_6);
-    let x_8: Obj = rt::nat::lean_usize_to_nat(0);
-    let x_9: Obj = l_Sand2_dgasPacket_d__closed__0();
-    let x_10: u8 = 0u8;
-    let x_11: u8 = 0u8;
-    rt::lean_inc_ref(x_6);
-    let x_12: Obj = l_Sand2_dmakeParticle(x_6, x_9, x_10, x_11);
-    let x_13: Obj = rt::lean_ctor_get(x_12, 0);
-    let x_14: Obj = rt::lean_ctor_get(x_12, 1);
-    let x_15: Obj = rt::lean_ctor_get(x_12, 2);
-    let x_16: Obj = rt::lean_ctor_get(x_12, 3);
-    let x_17: Obj = rt::lean_ctor_get(x_12, 4);
-    let x_18: Obj = rt::lean_ctor_get(x_12, 5);
-    let x_19: Obj = rt::lean_ctor_get(x_12, 8);
-    let x_20: Obj = rt::lean_ctor_get(x_12, 9);
-    let x_21: Obj = rt::lean_ctor_get(x_12, 10);
-    let x_22: Obj = rt::lean_ctor_get(x_12, 11);
-    let x_23: Obj = rt::lean_ctor_get(x_12, 12);
-    let x_24: Obj = rt::lean_ctor_get(x_12, 13);
-    let x_25: u8 = rt::lean_ctor_get_uint8(x_12, 16 * ::core::mem::size_of::<usize>());
-    let x_26: u8 = rt::lean_ctor_get_uint8(x_12, 16 * ::core::mem::size_of::<usize>() + 1);
-    let mut x_28: Obj;
-    let mut x_29: u8;
-    'b27: {
-        let x_57: u8 = (!rt::lean_is_exclusive(x_12)) as u8;
-        match x_57 {
-            0 => {
-                let x_58: Obj = rt::lean_ctor_get(x_12, 15);
-                rt::lean_dec(x_58);
-                let x_59: Obj = rt::lean_ctor_get(x_12, 14);
-                rt::lean_dec(x_59);
-                let x_60: Obj = rt::lean_ctor_get(x_12, 7);
-                rt::lean_dec(x_60);
-                let x_61: Obj = rt::lean_ctor_get(x_12, 6);
-                rt::lean_dec(x_61);
-                x_28 = x_12;
-                x_29 = x_57;
-                break 'b27;
-            }
-            _ => {
-                rt::lean_inc(x_24);
-                rt::lean_inc(x_23);
-                rt::lean_inc(x_22);
-                rt::lean_inc(x_21);
-                rt::lean_inc(x_20);
-                rt::lean_inc(x_19);
-                rt::lean_inc(x_18);
-                rt::lean_inc(x_17);
-                rt::lean_inc(x_16);
-                rt::lean_inc(x_15);
-                rt::lean_inc(x_14);
-                rt::lean_inc(x_13);
-                rt::lean_dec(x_12);
-                x_28 = rt::lean_box(0);
-                x_29 = x_57;
-                break 'b27;
-            }
-        }
-    }
-    rt::lean_inc_ref_n(x_5, 2);
-    let x_30: Obj = l_Sand2_dParticle_dvx(x_5);
-    let x_31: Obj = rt::lean_ctor_get(x_6, 0);
-    rt::lean_inc(x_31);
-    let x_32: Obj = l_Sand2_dParticle_dvy(x_5);
-    let x_33: Obj = l_Int_dofNat(x_7);
-    let x_34: Obj = l_Int_dmul(x_30, x_33);
-    rt::lean_dec(x_30);
-    let x_35: Obj = l_Int_dmul(x_32, x_33);
-    rt::lean_dec(x_33);
-    rt::lean_dec(x_32);
-    rt::lean_inc(x_24);
-    rt::lean_inc(x_23);
-    rt::lean_inc(x_22);
-    rt::lean_inc(x_21);
-    rt::lean_inc(x_20);
-    rt::lean_inc(x_19);
-    rt::lean_inc(x_35);
-    rt::lean_inc(x_34);
-    rt::lean_inc(x_17);
-    rt::lean_inc(x_16);
-    rt::lean_inc(x_15);
-    rt::lean_inc(x_14);
-    rt::lean_inc_ref(x_13);
+    let x_7: Obj = rt::lean_ctor_get(x_6, 0);
+    let x_8: Obj = rt::lean_ctor_get(x_6, 3);
+    let x_9: Obj = rt::lean_ctor_get(x_6, 4);
+    let x_10: Obj = rt::lean_ctor_get(x_6, 5);
+    let x_11: Obj = rt::lean_ctor_get(x_6, 6);
+    let x_12: Obj = rt::lean_ctor_get(x_6, 7);
+    let x_13: Obj = rt::lean_ctor_get(x_6, 8);
+    let x_14: Obj = rt::lean_ctor_get(x_6, 9);
+    let x_15: Obj = rt::lean_ctor_get(x_6, 10);
+    let x_16: Obj = rt::lean_ctor_get(x_6, 11);
+    let x_17: Obj = rt::lean_ctor_get(x_6, 12);
+    let x_18: Obj = rt::lean_ctor_get(x_6, 13);
+    let x_19: Obj = rt::lean_ctor_get(x_6, 14);
+    let x_20: Obj = rt::lean_ctor_get(x_6, 16);
+    let x_21: Obj = rt::lean_ctor_get(x_6, 17);
+    let x_22: Obj = rt::lean_ctor_get(x_6, 18);
+    let x_23: Obj = rt::lean_ctor_get(x_6, 19);
+    let x_24: Obj = rt::lean_ctor_get(x_6, 20);
+    let x_25: Obj = l_Sand2_dChemistry_dmass(x_6);
+    let x_26: u8 = 0u8;
+    let x_27: u8 = 0u8;
+    let mut x_29: Obj;
+    let mut x_30: Obj;
+    let mut x_31: Obj;
+    let mut x_32: Obj;
+    let mut x_33: Obj;
+    let mut x_34: Obj;
+    let mut x_35: Obj;
+    let mut x_36: Obj;
     let mut x_37: Obj;
-    'b36: {
-        match x_29 {
-            0 => {
-                rt::lean_ctor_set(x_28, 15, x_8);
-                rt::lean_ctor_set(x_28, 14, x_8);
-                rt::lean_ctor_set(x_28, 7, x_35);
-                rt::lean_ctor_set(x_28, 6, x_34);
-                x_37 = x_28;
-                break 'b36;
+    let mut x_38: Obj;
+    let mut x_39: Obj;
+    let mut x_40: Obj;
+    let mut x_41: Obj;
+    'b28: {
+        let mut x_67: Obj;
+        let mut x_68: Obj;
+        let mut x_69: Obj;
+        let mut x_70: Obj;
+        let mut x_71: Obj;
+        let mut x_72: Obj;
+        let mut x_73: Obj;
+        let mut x_74: Obj;
+        let mut x_75: Obj;
+        let mut x_76: Obj;
+        let mut x_77: Obj;
+        let mut x_78: Obj;
+        let mut x_79: Obj;
+        let mut x_80: Obj;
+        let mut x_81: Obj;
+        'b66: {
+            let mut x_88: Obj;
+            let mut x_89: Obj;
+            let mut x_90: Obj;
+            let mut x_91: Obj;
+            let mut x_92: Obj;
+            let mut x_93: Obj;
+            let mut x_94: Obj;
+            let mut x_95: Obj;
+            let mut x_96: Obj;
+            let mut x_97: Obj;
+            let mut x_98: Obj;
+            let mut x_99: Obj;
+            let mut x_100: u8;
+            'b87: {
+                let mut x_108: Obj;
+                let mut x_109: Obj;
+                let mut x_110: Obj;
+                let mut x_111: Obj;
+                let mut x_112: Obj;
+                let mut x_113: Obj;
+                let mut x_114: Obj;
+                let mut x_115: Obj;
+                let mut x_116: Obj;
+                let mut x_117: Obj;
+                let mut x_118: Obj;
+                let mut x_119: Obj;
+                let mut x_120: Obj;
+                let mut x_121: Obj;
+                let mut x_122: Obj;
+                'b107: {
+                    let mut x_139: Obj;
+                    let mut x_140: Obj;
+                    let mut x_141: Obj;
+                    let mut x_142: Obj;
+                    let mut x_143: Obj;
+                    let mut x_144: Obj;
+                    let mut x_145: Obj;
+                    let mut x_146: Obj;
+                    let mut x_147: Obj;
+                    let mut x_148: Obj;
+                    let mut x_149: Obj;
+                    let mut x_150: Obj;
+                    let mut x_151: Obj;
+                    let mut x_152: Obj;
+                    let mut x_153: Obj;
+                    'b138: {
+                        let mut x_161: Obj;
+                        let mut x_162: Obj;
+                        let mut x_163: Obj;
+                        let mut x_164: Obj;
+                        let mut x_165: Obj;
+                        'b160: {
+                            let mut x_178: Obj;
+                            let mut x_179: Obj;
+                            let mut x_180: Obj;
+                            let mut x_181: Obj;
+                            let mut x_182: Obj;
+                            'b177: {
+                                let mut x_190: Obj;
+                                let mut x_191: Obj;
+                                let mut x_192: Obj;
+                                let mut x_193: Obj;
+                                let mut x_194: Obj;
+                                'b189: {
+                                    let mut x_202: Obj;
+                                    let mut x_203: Obj;
+                                    let mut x_204: Obj;
+                                    let mut x_205: Obj;
+                                    let mut x_206: Obj;
+                                    'b201: {
+                                        let mut x_214: Obj;
+                                        let mut x_215: Obj;
+                                        let mut x_216: Obj;
+                                        let mut x_217: Obj;
+                                        let mut x_218: Obj;
+                                        'b213: {
+                                            let mut x_226: Obj;
+                                            let mut x_227: Obj;
+                                            let mut x_228: Obj;
+                                            let mut x_229: Obj;
+                                            let mut x_230: Obj;
+                                            'b225: {
+                                                let mut x_238: Obj;
+                                                let mut x_239: Obj;
+                                                let mut x_240: Obj;
+                                                let mut x_241: Obj;
+                                                let mut x_242: Obj;
+                                                'b237: {
+                                                    let mut x_250: Obj;
+                                                    let mut x_251: Obj;
+                                                    let mut x_252: Obj;
+                                                    let mut x_253: Obj;
+                                                    let mut x_254: Obj;
+                                                    'b249: {
+                                                        let mut x_262: Obj;
+                                                        let mut x_263: Obj;
+                                                        let mut x_264: Obj;
+                                                        let mut x_265: Obj;
+                                                        let mut x_266: Obj;
+                                                        'b261: {
+                                                            let mut x_274: Obj;
+                                                            let mut x_275: Obj;
+                                                            let mut x_276: Obj;
+                                                            let mut x_277: Obj;
+                                                            let mut x_278: Obj;
+                                                            'b273: {
+                                                                let mut x_286: Obj;
+                                                                let mut x_287: Obj;
+                                                                let mut x_288: Obj;
+                                                                let mut x_289: Obj;
+                                                                let mut x_290: Obj;
+                                                                'b285: {
+                                                                    let mut x_298: Obj;
+                                                                    let mut x_299: Obj;
+                                                                    let mut x_300: Obj;
+                                                                    let mut x_301: Obj;
+                                                                    let mut x_302: Obj;
+                                                                    'b297: {
+                                                                        let mut x_310: Obj;
+                                                                        let mut x_311: Obj;
+                                                                        let mut x_312: Obj;
+                                                                        let mut x_313: Obj;
+                                                                        let mut x_314: Obj;
+                                                                        'b309: {
+                                                                            let mut x_322: Obj;
+                                                                            let mut x_323: Obj;
+                                                                            let mut x_324: Obj;
+                                                                            let mut x_325: Obj;
+                                                                            let mut x_326: Obj;
+                                                                            'b321: {
+                                                                                let mut x_334: Obj;
+                                                                                'b333: {
+                                                                                    let mut x_353: Obj;
+                                                                                    'b352: {
+                                                                                        let mut x_361: Obj;
+                                                                                        'b360: {
+                                                                                            let mut x_369: Obj;
+                                                                                            'b368: {
+                                                                                                let mut x_377: Obj;
+                                                                                                'b376: {
+                                                                                                    let mut x_385: Obj;
+                                                                                                    'b384: {
+                                                                                                        let mut x_393: Obj;
+                                                                                                        'b392: {
+                                                                                                            let mut x_401: Obj;
+                                                                                                            'b400: {
+                                                                                                                let mut x_409: Obj;
+                                                                                                                'b408: {
+                                                                                                                    let mut x_417: Obj;
+                                                                                                                    'b416: {
+                                                                                                                        let mut x_425: Obj;
+                                                                                                                        'b424: {
+                                                                                                                            let mut x_433: Obj;
+                                                                                                                            'b432: {
+                                                                                                                                let mut x_441: Obj;
+                                                                                                                                'b440: {
+                                                                                                                                    let mut x_449: Obj;
+                                                                                                                                    'b448: {
+                                                                                                                                        let mut x_457: Obj;
+                                                                                                                                        'b456: {
+                                                                                                                                            let x_464: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                            let x_465: Obj = l_Sand2_dgasPacket_d__closed__1();
+                                                                                                                                            let x_466: u8 = l_Nat_ddecEq(x_7, x_464);
+                                                                                                                                            match x_466 {
+                                                                                                                                                0 => {
+                                                                                                                                                    let x_467: Obj = l_Sand2_dgasPacket_d__closed__51();
+                                                                                                                                                    rt::lean_inc(x_7);
+                                                                                                                                                    let x_468: Obj = l_Int_dofNat(x_7);
+                                                                                                                                                    let x_469: Obj = l_Int_dmul(x_467, x_468);
+                                                                                                                                                    rt::lean_dec(x_468);
+                                                                                                                                                    let x_470: Obj = l_Int_dadd(x_465, x_469);
+                                                                                                                                                    rt::lean_dec(x_469);
+                                                                                                                                                    x_457 = x_470;
+                                                                                                                                                    break 'b456;
+                                                                                                                                                }
+                                                                                                                                                _ => {
+                                                                                                                                                    x_457 = x_465;
+                                                                                                                                                    break 'b456;
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                        let x_458: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                        let x_459: u8 = l_Nat_ddecEq(x_8, x_458);
+                                                                                                                                        match x_459 {
+                                                                                                                                            0 => {
+                                                                                                                                                let x_460: Obj = l_Sand2_dgasPacket_d__closed__49();
+                                                                                                                                                rt::lean_inc(x_8);
+                                                                                                                                                let x_461: Obj = l_Int_dofNat(x_8);
+                                                                                                                                                let x_462: Obj = l_Int_dmul(x_460, x_461);
+                                                                                                                                                rt::lean_dec(x_461);
+                                                                                                                                                let x_463: Obj = l_Int_dadd(x_457, x_462);
+                                                                                                                                                rt::lean_dec(x_462);
+                                                                                                                                                rt::lean_dec(x_457);
+                                                                                                                                                x_449 = x_463;
+                                                                                                                                                break 'b448;
+                                                                                                                                            }
+                                                                                                                                            _ => {
+                                                                                                                                                x_449 = x_457;
+                                                                                                                                                break 'b448;
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                    let x_450: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                    let x_451: u8 = l_Nat_ddecEq(x_9, x_450);
+                                                                                                                                    match x_451 {
+                                                                                                                                        0 => {
+                                                                                                                                            let x_452: Obj = l_Sand2_dgasPacket_d__closed__47();
+                                                                                                                                            rt::lean_inc(x_9);
+                                                                                                                                            let x_453: Obj = l_Int_dofNat(x_9);
+                                                                                                                                            let x_454: Obj = l_Int_dmul(x_452, x_453);
+                                                                                                                                            rt::lean_dec(x_453);
+                                                                                                                                            let x_455: Obj = l_Int_dadd(x_449, x_454);
+                                                                                                                                            rt::lean_dec(x_454);
+                                                                                                                                            rt::lean_dec(x_449);
+                                                                                                                                            x_441 = x_455;
+                                                                                                                                            break 'b440;
+                                                                                                                                        }
+                                                                                                                                        _ => {
+                                                                                                                                            x_441 = x_449;
+                                                                                                                                            break 'b440;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                                let x_442: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                                let x_443: u8 = l_Nat_ddecEq(x_10, x_442);
+                                                                                                                                match x_443 {
+                                                                                                                                    0 => {
+                                                                                                                                        let x_444: Obj = l_Sand2_dgasPacket_d__closed__45();
+                                                                                                                                        rt::lean_inc(x_10);
+                                                                                                                                        let x_445: Obj = l_Int_dofNat(x_10);
+                                                                                                                                        let x_446: Obj = l_Int_dmul(x_444, x_445);
+                                                                                                                                        rt::lean_dec(x_445);
+                                                                                                                                        let x_447: Obj = l_Int_dadd(x_441, x_446);
+                                                                                                                                        rt::lean_dec(x_446);
+                                                                                                                                        rt::lean_dec(x_441);
+                                                                                                                                        x_433 = x_447;
+                                                                                                                                        break 'b432;
+                                                                                                                                    }
+                                                                                                                                    _ => {
+                                                                                                                                        x_433 = x_441;
+                                                                                                                                        break 'b432;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            let x_434: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                            let x_435: u8 = l_Nat_ddecEq(x_12, x_434);
+                                                                                                                            match x_435 {
+                                                                                                                                0 => {
+                                                                                                                                    let x_436: Obj = l_Sand2_dgasPacket_d__closed__43();
+                                                                                                                                    rt::lean_inc(x_12);
+                                                                                                                                    let x_437: Obj = l_Int_dofNat(x_12);
+                                                                                                                                    let x_438: Obj = l_Int_dmul(x_436, x_437);
+                                                                                                                                    rt::lean_dec(x_437);
+                                                                                                                                    let x_439: Obj = l_Int_dadd(x_433, x_438);
+                                                                                                                                    rt::lean_dec(x_438);
+                                                                                                                                    rt::lean_dec(x_433);
+                                                                                                                                    x_425 = x_439;
+                                                                                                                                    break 'b424;
+                                                                                                                                }
+                                                                                                                                _ => {
+                                                                                                                                    x_425 = x_433;
+                                                                                                                                    break 'b424;
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        let x_426: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                        let x_427: u8 = l_Nat_ddecEq(x_13, x_426);
+                                                                                                                        match x_427 {
+                                                                                                                            0 => {
+                                                                                                                                let x_428: Obj = l_Sand2_dgasPacket_d__closed__41();
+                                                                                                                                rt::lean_inc(x_13);
+                                                                                                                                let x_429: Obj = l_Int_dofNat(x_13);
+                                                                                                                                let x_430: Obj = l_Int_dmul(x_428, x_429);
+                                                                                                                                rt::lean_dec(x_429);
+                                                                                                                                let x_431: Obj = l_Int_dadd(x_425, x_430);
+                                                                                                                                rt::lean_dec(x_430);
+                                                                                                                                rt::lean_dec(x_425);
+                                                                                                                                x_417 = x_431;
+                                                                                                                                break 'b416;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                x_417 = x_425;
+                                                                                                                                break 'b416;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    let x_418: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                    let x_419: u8 = l_Nat_ddecEq(x_14, x_418);
+                                                                                                                    match x_419 {
+                                                                                                                        0 => {
+                                                                                                                            let x_420: Obj = l_Sand2_dgasPacket_d__closed__39();
+                                                                                                                            rt::lean_inc(x_14);
+                                                                                                                            let x_421: Obj = l_Int_dofNat(x_14);
+                                                                                                                            let x_422: Obj = l_Int_dmul(x_420, x_421);
+                                                                                                                            rt::lean_dec(x_421);
+                                                                                                                            let x_423: Obj = l_Int_dadd(x_417, x_422);
+                                                                                                                            rt::lean_dec(x_422);
+                                                                                                                            rt::lean_dec(x_417);
+                                                                                                                            x_409 = x_423;
+                                                                                                                            break 'b408;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            x_409 = x_417;
+                                                                                                                            break 'b408;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                let x_410: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                                let x_411: u8 = l_Nat_ddecEq(x_15, x_410);
+                                                                                                                match x_411 {
+                                                                                                                    0 => {
+                                                                                                                        let x_412: Obj = l_Sand2_dgasPacket_d__closed__37();
+                                                                                                                        rt::lean_inc(x_15);
+                                                                                                                        let x_413: Obj = l_Int_dofNat(x_15);
+                                                                                                                        let x_414: Obj = l_Int_dmul(x_412, x_413);
+                                                                                                                        rt::lean_dec(x_413);
+                                                                                                                        let x_415: Obj = l_Int_dadd(x_409, x_414);
+                                                                                                                        rt::lean_dec(x_414);
+                                                                                                                        rt::lean_dec(x_409);
+                                                                                                                        x_401 = x_415;
+                                                                                                                        break 'b400;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        x_401 = x_409;
+                                                                                                                        break 'b400;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            let x_402: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                            let x_403: u8 = l_Nat_ddecEq(x_16, x_402);
+                                                                                                            match x_403 {
+                                                                                                                0 => {
+                                                                                                                    let x_404: Obj = l_Sand2_dgasPacket_d__closed__35();
+                                                                                                                    rt::lean_inc(x_16);
+                                                                                                                    let x_405: Obj = l_Int_dofNat(x_16);
+                                                                                                                    let x_406: Obj = l_Int_dmul(x_404, x_405);
+                                                                                                                    rt::lean_dec(x_405);
+                                                                                                                    let x_407: Obj = l_Int_dadd(x_401, x_406);
+                                                                                                                    rt::lean_dec(x_406);
+                                                                                                                    rt::lean_dec(x_401);
+                                                                                                                    x_393 = x_407;
+                                                                                                                    break 'b392;
+                                                                                                                }
+                                                                                                                _ => {
+                                                                                                                    x_393 = x_401;
+                                                                                                                    break 'b392;
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        let x_394: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                        let x_395: u8 = l_Nat_ddecEq(x_18, x_394);
+                                                                                                        match x_395 {
+                                                                                                            0 => {
+                                                                                                                let x_396: Obj = l_Sand2_dgasPacket_d__closed__33();
+                                                                                                                rt::lean_inc(x_18);
+                                                                                                                let x_397: Obj = l_Int_dofNat(x_18);
+                                                                                                                let x_398: Obj = l_Int_dmul(x_396, x_397);
+                                                                                                                rt::lean_dec(x_397);
+                                                                                                                let x_399: Obj = l_Int_dadd(x_393, x_398);
+                                                                                                                rt::lean_dec(x_398);
+                                                                                                                rt::lean_dec(x_393);
+                                                                                                                x_385 = x_399;
+                                                                                                                break 'b384;
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                x_385 = x_393;
+                                                                                                                break 'b384;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    let x_386: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                    let x_387: u8 = l_Nat_ddecEq(x_19, x_386);
+                                                                                                    match x_387 {
+                                                                                                        0 => {
+                                                                                                            let x_388: Obj = l_Sand2_dgasPacket_d__closed__31();
+                                                                                                            rt::lean_inc(x_19);
+                                                                                                            let x_389: Obj = l_Int_dofNat(x_19);
+                                                                                                            let x_390: Obj = l_Int_dmul(x_388, x_389);
+                                                                                                            rt::lean_dec(x_389);
+                                                                                                            let x_391: Obj = l_Int_dadd(x_385, x_390);
+                                                                                                            rt::lean_dec(x_390);
+                                                                                                            rt::lean_dec(x_385);
+                                                                                                            x_377 = x_391;
+                                                                                                            break 'b376;
+                                                                                                        }
+                                                                                                        _ => {
+                                                                                                            x_377 = x_385;
+                                                                                                            break 'b376;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                                let x_378: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                                let x_379: u8 = l_Nat_ddecEq(x_20, x_378);
+                                                                                                match x_379 {
+                                                                                                    0 => {
+                                                                                                        let x_380: Obj = l_Sand2_dgasPacket_d__closed__29();
+                                                                                                        rt::lean_inc(x_20);
+                                                                                                        let x_381: Obj = l_Int_dofNat(x_20);
+                                                                                                        let x_382: Obj = l_Int_dmul(x_380, x_381);
+                                                                                                        rt::lean_dec(x_381);
+                                                                                                        let x_383: Obj = l_Int_dadd(x_377, x_382);
+                                                                                                        rt::lean_dec(x_382);
+                                                                                                        rt::lean_dec(x_377);
+                                                                                                        x_369 = x_383;
+                                                                                                        break 'b368;
+                                                                                                    }
+                                                                                                    _ => {
+                                                                                                        x_369 = x_377;
+                                                                                                        break 'b368;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            let x_370: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                            let x_371: u8 = l_Nat_ddecEq(x_22, x_370);
+                                                                                            match x_371 {
+                                                                                                0 => {
+                                                                                                    let x_372: Obj = l_Sand2_dgasPacket_d__closed__27();
+                                                                                                    rt::lean_inc(x_22);
+                                                                                                    let x_373: Obj = l_Int_dofNat(x_22);
+                                                                                                    let x_374: Obj = l_Int_dmul(x_372, x_373);
+                                                                                                    rt::lean_dec(x_373);
+                                                                                                    let x_375: Obj = l_Int_dadd(x_369, x_374);
+                                                                                                    rt::lean_dec(x_374);
+                                                                                                    rt::lean_dec(x_369);
+                                                                                                    x_361 = x_375;
+                                                                                                    break 'b360;
+                                                                                                }
+                                                                                                _ => {
+                                                                                                    x_361 = x_369;
+                                                                                                    break 'b360;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        let x_362: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                        let x_363: u8 = l_Nat_ddecEq(x_23, x_362);
+                                                                                        match x_363 {
+                                                                                            0 => {
+                                                                                                let x_364: Obj = l_Sand2_dgasPacket_d__closed__25();
+                                                                                                rt::lean_inc(x_23);
+                                                                                                let x_365: Obj = l_Int_dofNat(x_23);
+                                                                                                let x_366: Obj = l_Int_dmul(x_364, x_365);
+                                                                                                rt::lean_dec(x_365);
+                                                                                                let x_367: Obj = l_Int_dadd(x_361, x_366);
+                                                                                                rt::lean_dec(x_366);
+                                                                                                rt::lean_dec(x_361);
+                                                                                                x_353 = x_367;
+                                                                                                break 'b352;
+                                                                                            }
+                                                                                            _ => {
+                                                                                                x_353 = x_361;
+                                                                                                break 'b352;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    let x_354: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                    let x_355: u8 = l_Nat_ddecEq(x_24, x_354);
+                                                                                    match x_355 {
+                                                                                        0 => {
+                                                                                            let x_356: Obj = l_Sand2_dgasPacket_d__closed__23();
+                                                                                            rt::lean_inc(x_24);
+                                                                                            let x_357: Obj = l_Int_dofNat(x_24);
+                                                                                            let x_358: Obj = l_Int_dmul(x_356, x_357);
+                                                                                            rt::lean_dec(x_357);
+                                                                                            let x_359: Obj = l_Int_dadd(x_353, x_358);
+                                                                                            rt::lean_dec(x_358);
+                                                                                            rt::lean_dec(x_353);
+                                                                                            x_334 = x_359;
+                                                                                            break 'b333;
+                                                                                        }
+                                                                                        _ => {
+                                                                                            x_334 = x_353;
+                                                                                            break 'b333;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                let x_335: Obj = l_Sand2_dgasPacket_d__closed__17();
+                                                                                let x_336: Obj = l_Int_dmul(x_334, x_335);
+                                                                                rt::lean_dec(x_334);
+                                                                                let x_337: Obj = l_Sand2_dgasPacket_d__closed__18();
+                                                                                let x_338: Obj = l_Sand2_dgasPacket_d__closed__19();
+                                                                                let x_339: Obj = l_Sand2_dgasPacket_d__closed__20();
+                                                                                let x_340: Obj = l_Sand2_dChemistry_ddryGasMoles(x_6);
+                                                                                rt::lean_inc(x_340);
+                                                                                let x_341: Obj = l_Int_dofNat(x_340);
+                                                                                let x_342: Obj = l_Int_dmul(x_339, x_341);
+                                                                                rt::lean_dec(x_341);
+                                                                                let x_343: Obj = l_Int_dsub(x_336, x_342);
+                                                                                rt::lean_dec(x_342);
+                                                                                rt::lean_dec(x_336);
+                                                                                let x_344: Obj = l_Sand2_dChemistry_dgasCv(x_6);
+                                                                                let x_345: Obj = l_Int_dofNat(x_344);
+                                                                                let x_346: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                                let x_347: u8 = l_Nat_ddecEq(x_9, x_346);
+                                                                                match x_347 {
+                                                                                    0 => {
+                                                                                        let x_348: Obj = l_Sand2_dgasPacket_d__closed__21();
+                                                                                        rt::lean_inc(x_9);
+                                                                                        let x_349: Obj = l_Int_dofNat(x_9);
+                                                                                        let x_350: Obj = l_Int_dmul(x_348, x_349);
+                                                                                        rt::lean_dec(x_349);
+                                                                                        let x_351: Obj = l_Int_dadd(x_345, x_350);
+                                                                                        rt::lean_dec(x_350);
+                                                                                        rt::lean_dec(x_345);
+                                                                                        x_322 = x_343;
+                                                                                        x_323 = x_338;
+                                                                                        x_324 = x_340;
+                                                                                        x_325 = x_337;
+                                                                                        x_326 = x_351;
+                                                                                        break 'b321;
+                                                                                    }
+                                                                                    _ => {
+                                                                                        x_322 = x_343;
+                                                                                        x_323 = x_338;
+                                                                                        x_324 = x_340;
+                                                                                        x_325 = x_337;
+                                                                                        x_326 = x_345;
+                                                                                        break 'b321;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            let x_327: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                            let x_328: u8 = l_Nat_ddecEq(x_10, x_327);
+                                                                            match x_328 {
+                                                                                0 => {
+                                                                                    let x_329: Obj = l_Sand2_dgasPacket_d__closed__16();
+                                                                                    rt::lean_inc(x_10);
+                                                                                    let x_330: Obj = l_Int_dofNat(x_10);
+                                                                                    let x_331: Obj = l_Int_dmul(x_329, x_330);
+                                                                                    rt::lean_dec(x_330);
+                                                                                    let x_332: Obj = l_Int_dadd(x_326, x_331);
+                                                                                    rt::lean_dec(x_331);
+                                                                                    rt::lean_dec(x_326);
+                                                                                    x_310 = x_322;
+                                                                                    x_311 = x_323;
+                                                                                    x_312 = x_325;
+                                                                                    x_313 = x_324;
+                                                                                    x_314 = x_332;
+                                                                                    break 'b309;
+                                                                                }
+                                                                                _ => {
+                                                                                    x_310 = x_322;
+                                                                                    x_311 = x_323;
+                                                                                    x_312 = x_325;
+                                                                                    x_313 = x_324;
+                                                                                    x_314 = x_326;
+                                                                                    break 'b309;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        let x_315: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                        let x_316: u8 = l_Nat_ddecEq(x_11, x_315);
+                                                                        match x_316 {
+                                                                            0 => {
+                                                                                let x_317: Obj = l_Sand2_dgasPacket_d__closed__15();
+                                                                                rt::lean_inc(x_11);
+                                                                                let x_318: Obj = l_Int_dofNat(x_11);
+                                                                                let x_319: Obj = l_Int_dmul(x_317, x_318);
+                                                                                rt::lean_dec(x_318);
+                                                                                let x_320: Obj = l_Int_dadd(x_314, x_319);
+                                                                                rt::lean_dec(x_319);
+                                                                                rt::lean_dec(x_314);
+                                                                                x_298 = x_310;
+                                                                                x_299 = x_311;
+                                                                                x_300 = x_313;
+                                                                                x_301 = x_312;
+                                                                                x_302 = x_320;
+                                                                                break 'b297;
+                                                                            }
+                                                                            _ => {
+                                                                                x_298 = x_310;
+                                                                                x_299 = x_311;
+                                                                                x_300 = x_313;
+                                                                                x_301 = x_312;
+                                                                                x_302 = x_314;
+                                                                                break 'b297;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    let x_303: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                    let x_304: u8 = l_Nat_ddecEq(x_12, x_303);
+                                                                    match x_304 {
+                                                                        0 => {
+                                                                            let x_305: Obj = l_Sand2_dgasPacket_d__closed__14();
+                                                                            rt::lean_inc(x_12);
+                                                                            let x_306: Obj = l_Int_dofNat(x_12);
+                                                                            let x_307: Obj = l_Int_dmul(x_305, x_306);
+                                                                            rt::lean_dec(x_306);
+                                                                            let x_308: Obj = l_Int_dadd(x_302, x_307);
+                                                                            rt::lean_dec(x_307);
+                                                                            rt::lean_dec(x_302);
+                                                                            x_286 = x_298;
+                                                                            x_287 = x_299;
+                                                                            x_288 = x_301;
+                                                                            x_289 = x_300;
+                                                                            x_290 = x_308;
+                                                                            break 'b285;
+                                                                        }
+                                                                        _ => {
+                                                                            x_286 = x_298;
+                                                                            x_287 = x_299;
+                                                                            x_288 = x_301;
+                                                                            x_289 = x_300;
+                                                                            x_290 = x_302;
+                                                                            break 'b285;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                let x_291: Obj = rt::nat::lean_usize_to_nat(0);
+                                                                let x_292: u8 = l_Nat_ddecEq(x_13, x_291);
+                                                                match x_292 {
+                                                                    0 => {
+                                                                        let x_293: Obj = l_Sand2_dgasPacket_d__closed__13();
+                                                                        rt::lean_inc(x_13);
+                                                                        let x_294: Obj = l_Int_dofNat(x_13);
+                                                                        let x_295: Obj = l_Int_dmul(x_293, x_294);
+                                                                        rt::lean_dec(x_294);
+                                                                        let x_296: Obj = l_Int_dadd(x_290, x_295);
+                                                                        rt::lean_dec(x_295);
+                                                                        rt::lean_dec(x_290);
+                                                                        x_274 = x_286;
+                                                                        x_275 = x_287;
+                                                                        x_276 = x_289;
+                                                                        x_277 = x_288;
+                                                                        x_278 = x_296;
+                                                                        break 'b273;
+                                                                    }
+                                                                    _ => {
+                                                                        x_274 = x_286;
+                                                                        x_275 = x_287;
+                                                                        x_276 = x_289;
+                                                                        x_277 = x_288;
+                                                                        x_278 = x_290;
+                                                                        break 'b273;
+                                                                    }
+                                                                }
+                                                            }
+                                                            let x_279: Obj = rt::nat::lean_usize_to_nat(0);
+                                                            let x_280: u8 = l_Nat_ddecEq(x_14, x_279);
+                                                            match x_280 {
+                                                                0 => {
+                                                                    let x_281: Obj = l_Sand2_dgasPacket_d__closed__12();
+                                                                    rt::lean_inc(x_14);
+                                                                    let x_282: Obj = l_Int_dofNat(x_14);
+                                                                    let x_283: Obj = l_Int_dmul(x_281, x_282);
+                                                                    rt::lean_dec(x_282);
+                                                                    let x_284: Obj = l_Int_dadd(x_278, x_283);
+                                                                    rt::lean_dec(x_283);
+                                                                    rt::lean_dec(x_278);
+                                                                    x_262 = x_274;
+                                                                    x_263 = x_275;
+                                                                    x_264 = x_277;
+                                                                    x_265 = x_276;
+                                                                    x_266 = x_284;
+                                                                    break 'b261;
+                                                                }
+                                                                _ => {
+                                                                    x_262 = x_274;
+                                                                    x_263 = x_275;
+                                                                    x_264 = x_277;
+                                                                    x_265 = x_276;
+                                                                    x_266 = x_278;
+                                                                    break 'b261;
+                                                                }
+                                                            }
+                                                        }
+                                                        let x_267: Obj = rt::nat::lean_usize_to_nat(0);
+                                                        let x_268: u8 = l_Nat_ddecEq(x_15, x_267);
+                                                        match x_268 {
+                                                            0 => {
+                                                                let x_269: Obj = l_Sand2_dgasPacket_d__closed__11();
+                                                                rt::lean_inc(x_15);
+                                                                let x_270: Obj = l_Int_dofNat(x_15);
+                                                                let x_271: Obj = l_Int_dmul(x_269, x_270);
+                                                                rt::lean_dec(x_270);
+                                                                let x_272: Obj = l_Int_dadd(x_266, x_271);
+                                                                rt::lean_dec(x_271);
+                                                                rt::lean_dec(x_266);
+                                                                x_250 = x_262;
+                                                                x_251 = x_263;
+                                                                x_252 = x_265;
+                                                                x_253 = x_264;
+                                                                x_254 = x_272;
+                                                                break 'b249;
+                                                            }
+                                                            _ => {
+                                                                x_250 = x_262;
+                                                                x_251 = x_263;
+                                                                x_252 = x_265;
+                                                                x_253 = x_264;
+                                                                x_254 = x_266;
+                                                                break 'b249;
+                                                            }
+                                                        }
+                                                    }
+                                                    let x_255: Obj = rt::nat::lean_usize_to_nat(0);
+                                                    let x_256: u8 = l_Nat_ddecEq(x_16, x_255);
+                                                    match x_256 {
+                                                        0 => {
+                                                            let x_257: Obj = l_Sand2_dgasPacket_d__closed__10();
+                                                            rt::lean_inc(x_16);
+                                                            let x_258: Obj = l_Int_dofNat(x_16);
+                                                            let x_259: Obj = l_Int_dmul(x_257, x_258);
+                                                            rt::lean_dec(x_258);
+                                                            let x_260: Obj = l_Int_dadd(x_254, x_259);
+                                                            rt::lean_dec(x_259);
+                                                            rt::lean_dec(x_254);
+                                                            x_238 = x_250;
+                                                            x_239 = x_251;
+                                                            x_240 = x_253;
+                                                            x_241 = x_252;
+                                                            x_242 = x_260;
+                                                            break 'b237;
+                                                        }
+                                                        _ => {
+                                                            x_238 = x_250;
+                                                            x_239 = x_251;
+                                                            x_240 = x_253;
+                                                            x_241 = x_252;
+                                                            x_242 = x_254;
+                                                            break 'b237;
+                                                        }
+                                                    }
+                                                }
+                                                let x_243: Obj = rt::nat::lean_usize_to_nat(0);
+                                                let x_244: u8 = l_Nat_ddecEq(x_17, x_243);
+                                                match x_244 {
+                                                    0 => {
+                                                        let x_245: Obj = l_Sand2_dgasPacket_d__closed__9();
+                                                        rt::lean_inc(x_17);
+                                                        let x_246: Obj = l_Int_dofNat(x_17);
+                                                        let x_247: Obj = l_Int_dmul(x_245, x_246);
+                                                        rt::lean_dec(x_246);
+                                                        let x_248: Obj = l_Int_dadd(x_242, x_247);
+                                                        rt::lean_dec(x_247);
+                                                        rt::lean_dec(x_242);
+                                                        x_226 = x_238;
+                                                        x_227 = x_239;
+                                                        x_228 = x_241;
+                                                        x_229 = x_240;
+                                                        x_230 = x_248;
+                                                        break 'b225;
+                                                    }
+                                                    _ => {
+                                                        x_226 = x_238;
+                                                        x_227 = x_239;
+                                                        x_228 = x_241;
+                                                        x_229 = x_240;
+                                                        x_230 = x_242;
+                                                        break 'b225;
+                                                    }
+                                                }
+                                            }
+                                            let x_231: Obj = rt::nat::lean_usize_to_nat(0);
+                                            let x_232: u8 = l_Nat_ddecEq(x_18, x_231);
+                                            match x_232 {
+                                                0 => {
+                                                    let x_233: Obj = l_Sand2_dgasPacket_d__closed__8();
+                                                    rt::lean_inc(x_18);
+                                                    let x_234: Obj = l_Int_dofNat(x_18);
+                                                    let x_235: Obj = l_Int_dmul(x_233, x_234);
+                                                    rt::lean_dec(x_234);
+                                                    let x_236: Obj = l_Int_dadd(x_230, x_235);
+                                                    rt::lean_dec(x_235);
+                                                    rt::lean_dec(x_230);
+                                                    x_214 = x_226;
+                                                    x_215 = x_227;
+                                                    x_216 = x_229;
+                                                    x_217 = x_228;
+                                                    x_218 = x_236;
+                                                    break 'b213;
+                                                }
+                                                _ => {
+                                                    x_214 = x_226;
+                                                    x_215 = x_227;
+                                                    x_216 = x_229;
+                                                    x_217 = x_228;
+                                                    x_218 = x_230;
+                                                    break 'b213;
+                                                }
+                                            }
+                                        }
+                                        let x_219: Obj = rt::nat::lean_usize_to_nat(0);
+                                        let x_220: u8 = l_Nat_ddecEq(x_19, x_219);
+                                        match x_220 {
+                                            0 => {
+                                                let x_221: Obj = l_Sand2_dgasPacket_d__closed__7();
+                                                rt::lean_inc(x_19);
+                                                let x_222: Obj = l_Int_dofNat(x_19);
+                                                let x_223: Obj = l_Int_dmul(x_221, x_222);
+                                                rt::lean_dec(x_222);
+                                                let x_224: Obj = l_Int_dadd(x_218, x_223);
+                                                rt::lean_dec(x_223);
+                                                rt::lean_dec(x_218);
+                                                x_202 = x_214;
+                                                x_203 = x_215;
+                                                x_204 = x_217;
+                                                x_205 = x_216;
+                                                x_206 = x_224;
+                                                break 'b201;
+                                            }
+                                            _ => {
+                                                x_202 = x_214;
+                                                x_203 = x_215;
+                                                x_204 = x_217;
+                                                x_205 = x_216;
+                                                x_206 = x_218;
+                                                break 'b201;
+                                            }
+                                        }
+                                    }
+                                    let x_207: Obj = rt::nat::lean_usize_to_nat(0);
+                                    let x_208: u8 = l_Nat_ddecEq(x_20, x_207);
+                                    match x_208 {
+                                        0 => {
+                                            let x_209: Obj = l_Sand2_dgasPacket_d__closed__6();
+                                            rt::lean_inc(x_20);
+                                            let x_210: Obj = l_Int_dofNat(x_20);
+                                            let x_211: Obj = l_Int_dmul(x_209, x_210);
+                                            rt::lean_dec(x_210);
+                                            let x_212: Obj = l_Int_dadd(x_206, x_211);
+                                            rt::lean_dec(x_211);
+                                            rt::lean_dec(x_206);
+                                            x_190 = x_202;
+                                            x_191 = x_203;
+                                            x_192 = x_205;
+                                            x_193 = x_204;
+                                            x_194 = x_212;
+                                            break 'b189;
+                                        }
+                                        _ => {
+                                            x_190 = x_202;
+                                            x_191 = x_203;
+                                            x_192 = x_205;
+                                            x_193 = x_204;
+                                            x_194 = x_206;
+                                            break 'b189;
+                                        }
+                                    }
+                                }
+                                let x_195: Obj = rt::nat::lean_usize_to_nat(0);
+                                let x_196: u8 = l_Nat_ddecEq(x_21, x_195);
+                                match x_196 {
+                                    0 => {
+                                        let x_197: Obj = l_Sand2_dgasPacket_d__closed__5();
+                                        rt::lean_inc(x_21);
+                                        let x_198: Obj = l_Int_dofNat(x_21);
+                                        let x_199: Obj = l_Int_dmul(x_197, x_198);
+                                        rt::lean_dec(x_198);
+                                        let x_200: Obj = l_Int_dadd(x_194, x_199);
+                                        rt::lean_dec(x_199);
+                                        rt::lean_dec(x_194);
+                                        x_178 = x_190;
+                                        x_179 = x_191;
+                                        x_180 = x_193;
+                                        x_181 = x_192;
+                                        x_182 = x_200;
+                                        break 'b177;
+                                    }
+                                    _ => {
+                                        x_178 = x_190;
+                                        x_179 = x_191;
+                                        x_180 = x_193;
+                                        x_181 = x_192;
+                                        x_182 = x_194;
+                                        break 'b177;
+                                    }
+                                }
+                            }
+                            let x_183: Obj = rt::nat::lean_usize_to_nat(0);
+                            let x_184: u8 = l_Nat_ddecEq(x_22, x_183);
+                            match x_184 {
+                                0 => {
+                                    let x_185: Obj = l_Sand2_dgasPacket_d__closed__4();
+                                    rt::lean_inc(x_22);
+                                    let x_186: Obj = l_Int_dofNat(x_22);
+                                    let x_187: Obj = l_Int_dmul(x_185, x_186);
+                                    rt::lean_dec(x_186);
+                                    let x_188: Obj = l_Int_dadd(x_182, x_187);
+                                    rt::lean_dec(x_187);
+                                    rt::lean_dec(x_182);
+                                    x_161 = x_178;
+                                    x_162 = x_179;
+                                    x_163 = x_181;
+                                    x_164 = x_180;
+                                    x_165 = x_188;
+                                    break 'b160;
+                                }
+                                _ => {
+                                    x_161 = x_178;
+                                    x_162 = x_179;
+                                    x_163 = x_181;
+                                    x_164 = x_180;
+                                    x_165 = x_182;
+                                    break 'b160;
+                                }
+                            }
+                        }
+                        let x_166: Obj = rt::lean_ctor_get(x_5, 1);
+                        let x_167: Obj = rt::lean_ctor_get(x_5, 6);
+                        let x_168: Obj = rt::lean_ctor_get(x_5, 7);
+                        let x_169: Obj = l_Sand2_dnonWaterCondensedMass(x_6);
+                        let x_170: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_171: Obj = l_Sand2_dgasPacket_d__closed__1();
+                        let x_172: Obj = rt::nat::lean_usize_to_nat(101325000);
+                        let x_173: Obj = l_Sand2_dgasPacket_d__closed__2();
+                        let x_174: Obj = l_Sand2_dgasPacket_d__closed__3();
+                        let x_175: Obj = rt::nat::lean_usize_to_nat(1);
+                        let x_176: u8 = l_Nat_ddecLe(x_175, x_166);
+                        match x_176 {
+                            0 => {
+                                rt::lean_inc(x_167);
+                                rt::lean_inc(x_166);
+                                rt::lean_inc(x_168);
+                                x_139 = x_168;
+                                x_140 = x_166;
+                                x_141 = x_171;
+                                x_142 = x_162;
+                                x_143 = x_164;
+                                x_144 = x_172;
+                                x_145 = x_169;
+                                x_146 = x_161;
+                                x_147 = x_170;
+                                x_148 = x_173;
+                                x_149 = x_167;
+                                x_150 = x_163;
+                                x_151 = x_174;
+                                x_152 = x_165;
+                                x_153 = x_175;
+                                break 'b138;
+                            }
+                            _ => {
+                                rt::lean_inc(x_167);
+                                rt::lean_inc_n(x_166, 2);
+                                rt::lean_inc(x_168);
+                                x_139 = x_168;
+                                x_140 = x_166;
+                                x_141 = x_171;
+                                x_142 = x_162;
+                                x_143 = x_164;
+                                x_144 = x_172;
+                                x_145 = x_169;
+                                x_146 = x_161;
+                                x_147 = x_170;
+                                x_148 = x_173;
+                                x_149 = x_167;
+                                x_150 = x_163;
+                                x_151 = x_174;
+                                x_152 = x_165;
+                                x_153 = x_166;
+                                break 'b138;
+                            }
+                        }
+                    }
+                    let x_154: Obj = l_Int_dofNat(x_153);
+                    let x_155: Obj = l_Int_dediv(x_149, x_154);
+                    rt::lean_dec(x_154);
+                    rt::lean_dec(x_149);
+                    rt::lean_inc(x_25);
+                    let x_156: Obj = l_Int_dofNat(x_25);
+                    let x_157: Obj = l_Int_dmul(x_155, x_156);
+                    rt::lean_dec(x_155);
+                    let x_158: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_159: u8 = l_Nat_ddecLe(x_158, x_140);
+                    match x_159 {
+                        0 => {
+                            rt::lean_dec(x_140);
+                            x_108 = x_139;
+                            x_109 = x_141;
+                            x_110 = x_142;
+                            x_111 = x_143;
+                            x_112 = x_144;
+                            x_113 = x_145;
+                            x_114 = x_157;
+                            x_115 = x_146;
+                            x_116 = x_156;
+                            x_117 = x_147;
+                            x_118 = x_148;
+                            x_119 = x_150;
+                            x_120 = x_151;
+                            x_121 = x_152;
+                            x_122 = x_158;
+                            break 'b107;
+                        }
+                        _ => {
+                            x_108 = x_139;
+                            x_109 = x_141;
+                            x_110 = x_142;
+                            x_111 = x_143;
+                            x_112 = x_144;
+                            x_113 = x_145;
+                            x_114 = x_157;
+                            x_115 = x_146;
+                            x_116 = x_156;
+                            x_117 = x_147;
+                            x_118 = x_148;
+                            x_119 = x_150;
+                            x_120 = x_151;
+                            x_121 = x_152;
+                            x_122 = x_140;
+                            break 'b107;
+                        }
+                    }
+                }
+                let x_123: Obj = l_Int_dofNat(x_122);
+                let x_124: Obj = l_Int_dediv(x_108, x_123);
+                rt::lean_dec(x_123);
+                rt::lean_dec(x_108);
+                let x_125: Obj = l_Int_dmul(x_124, x_116);
+                rt::lean_dec(x_124);
+                let x_126: u8 = 6u8;
+                let x_127: Obj = l_Sand2_dtemperature(x_1, x_2, x_3, x_5);
+                rt::lean_inc_ref(x_6);
+                let x_128: Obj = l_Sand2_dinternalEnergyAt(x_6, x_126, x_127);
+                let x_129: Obj = l_Nat_dadd(x_111, x_7);
+                rt::lean_dec(x_111);
+                let x_130: Obj = l_Int_dofNat(x_129);
+                let x_131: Obj = l_Int_dmul(x_130, x_119);
+                rt::lean_dec(x_130);
+                let x_132: Obj = l_Int_dadd(x_127, x_110);
+                rt::lean_dec(x_127);
+                let x_133: Obj = l_Int_dmul(x_131, x_132);
+                rt::lean_dec(x_132);
+                rt::lean_dec(x_131);
+                let x_134: Obj = l_Int_dadd(x_115, x_128);
+                rt::lean_dec(x_128);
+                let x_135: Obj = l_Int_dadd(x_134, x_133);
+                rt::lean_dec(x_133);
+                rt::lean_dec(x_134);
+                let x_136: u8 = l_Int_ddecEq(x_114, x_109);
+                match x_136 {
+                    0 => {
+                        x_88 = x_115;
+                        x_89 = x_109;
+                        x_90 = x_116;
+                        x_91 = x_117;
+                        x_92 = x_135;
+                        x_93 = x_118;
+                        x_94 = x_125;
+                        x_95 = x_120;
+                        x_96 = x_112;
+                        x_97 = x_113;
+                        x_98 = x_121;
+                        x_99 = x_114;
+                        x_100 = x_136;
+                        break 'b87;
+                    }
+                    _ => {
+                        let x_137: u8 = l_Int_ddecEq(x_125, x_109);
+                        x_88 = x_115;
+                        x_89 = x_109;
+                        x_90 = x_116;
+                        x_91 = x_117;
+                        x_92 = x_135;
+                        x_93 = x_118;
+                        x_94 = x_125;
+                        x_95 = x_120;
+                        x_96 = x_112;
+                        x_97 = x_113;
+                        x_98 = x_121;
+                        x_99 = x_114;
+                        x_100 = x_137;
+                        break 'b87;
+                    }
+                }
             }
-            _ => {
-                let x_56: Obj = rt::lean_alloc_ctor(0, 16, 3);
-                rt::lean_ctor_set(x_56, 0, x_13);
-                rt::lean_ctor_set(x_56, 1, x_14);
-                rt::lean_ctor_set(x_56, 2, x_15);
-                rt::lean_ctor_set(x_56, 3, x_16);
-                rt::lean_ctor_set(x_56, 4, x_17);
-                rt::lean_ctor_set(x_56, 5, x_18);
-                rt::lean_ctor_set(x_56, 6, x_34);
-                rt::lean_ctor_set(x_56, 7, x_35);
-                rt::lean_ctor_set(x_56, 8, x_19);
-                rt::lean_ctor_set(x_56, 9, x_20);
-                rt::lean_ctor_set(x_56, 10, x_21);
-                rt::lean_ctor_set(x_56, 11, x_22);
-                rt::lean_ctor_set(x_56, 12, x_23);
-                rt::lean_ctor_set(x_56, 13, x_24);
-                rt::lean_ctor_set(x_56, 14, x_8);
-                rt::lean_ctor_set(x_56, 15, x_8);
-                rt::lean_ctor_set_uint8(x_56, 16 * ::core::mem::size_of::<usize>(), x_25);
-                rt::lean_ctor_set_uint8(x_56, 16 * ::core::mem::size_of::<usize>() + 1, x_26);
-                x_37 = x_56;
-                break 'b36;
+            match x_100 {
+                0 => {
+                    let x_101: Obj = l_Int_dmul(x_99, x_99);
+                    let x_102: Obj = l_Int_dmul(x_94, x_94);
+                    let x_103: Obj = l_Int_dadd(x_101, x_102);
+                    rt::lean_dec(x_102);
+                    rt::lean_dec(x_101);
+                    let x_104: Obj = l_Sand2_dfacePotential_d__closed__4();
+                    let x_105: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_106: u8 = l_Nat_ddecLe(x_105, x_25);
+                    match x_106 {
+                        0 => {
+                            x_67 = x_89;
+                            x_68 = x_103;
+                            x_69 = x_96;
+                            x_70 = x_97;
+                            x_71 = x_104;
+                            x_72 = x_99;
+                            x_73 = x_88;
+                            x_74 = x_91;
+                            x_75 = x_90;
+                            x_76 = x_92;
+                            x_77 = x_93;
+                            x_78 = x_94;
+                            x_79 = x_95;
+                            x_80 = x_98;
+                            x_81 = x_105;
+                            break 'b66;
+                        }
+                        _ => {
+                            rt::lean_inc(x_25);
+                            x_67 = x_89;
+                            x_68 = x_103;
+                            x_69 = x_96;
+                            x_70 = x_97;
+                            x_71 = x_104;
+                            x_72 = x_99;
+                            x_73 = x_88;
+                            x_74 = x_91;
+                            x_75 = x_90;
+                            x_76 = x_92;
+                            x_77 = x_93;
+                            x_78 = x_94;
+                            x_79 = x_95;
+                            x_80 = x_98;
+                            x_81 = x_25;
+                            break 'b66;
+                        }
+                    }
+                }
+                _ => {
+                    rt::lean_inc(x_89);
+                    x_29 = x_88;
+                    x_30 = x_89;
+                    x_31 = x_91;
+                    x_32 = x_90;
+                    x_33 = x_92;
+                    x_34 = x_93;
+                    x_35 = x_94;
+                    x_36 = x_95;
+                    x_37 = x_96;
+                    x_38 = x_97;
+                    x_39 = x_99;
+                    x_40 = x_98;
+                    x_41 = x_89;
+                    break 'b28;
+                }
             }
         }
+        let x_82: Obj = l_Int_dofNat(x_81);
+        let x_83: Obj = l_Int_dmul(x_71, x_82);
+        rt::lean_dec(x_82);
+        let x_84: Obj = l_Sand2_dgasPacket_d__closed__0();
+        let x_85: Obj = l_Int_dmul(x_83, x_84);
+        rt::lean_dec(x_83);
+        let x_86: Obj = l_Int_dediv(x_68, x_85);
+        rt::lean_dec(x_85);
+        rt::lean_dec(x_68);
+        x_29 = x_73;
+        x_30 = x_67;
+        x_31 = x_74;
+        x_32 = x_75;
+        x_33 = x_76;
+        x_34 = x_77;
+        x_35 = x_78;
+        x_36 = x_79;
+        x_37 = x_69;
+        x_38 = x_70;
+        x_39 = x_72;
+        x_40 = x_80;
+        x_41 = x_86;
+        break 'b28;
     }
-    rt::lean_ctor_set_uint8(x_37, 16 * ::core::mem::size_of::<usize>() + 2, x_11);
-    let x_38: u8 = 6u8;
-    let x_39: Obj = l_Sand2_dtemperature(x_1, x_2, x_3, x_5);
-    rt::lean_inc_ref(x_6);
-    let x_40: Obj = l_Sand2_dinternalEnergyAt(x_6, x_38, x_39);
-    let x_41: Obj = l_Sand2_dChemistry_ddryGasMoles(x_6);
-    rt::lean_dec_ref(x_6);
-    let x_42: Obj = l_Nat_dadd(x_41, x_31);
-    rt::lean_dec(x_31);
+    let x_42: Obj = l_Int_dadd(x_33, x_41);
     rt::lean_dec(x_41);
-    let x_43: Obj = l_Int_dofNat(x_42);
-    let x_44: Obj = l_Sand2_dgasPacket_d__closed__1();
-    let x_45: Obj = l_Int_dmul(x_43, x_44);
-    rt::lean_dec(x_43);
-    let x_46: Obj = l_Sand2_dgasPacket_d__closed__2();
-    let x_47: Obj = l_Int_dadd(x_39, x_46);
-    rt::lean_dec(x_39);
-    let x_48: Obj = l_Int_dmul(x_45, x_47);
-    rt::lean_dec(x_47);
+    rt::lean_dec(x_33);
+    let x_43: Obj = l_Sand2_dfacePotential_d__closed__0();
+    let x_44: Obj = l_Int_dmul(x_32, x_43);
+    rt::lean_dec(x_32);
+    let x_45: Obj = l_Nat_ddiv(x_3, x_2);
+    let x_46: Obj = l_Nat_dsub(x_1, x_45);
     rt::lean_dec(x_45);
-    let x_49: Obj = l_Int_dadd(x_15, x_40);
-    rt::lean_dec(x_40);
-    let x_50: Obj = l_Int_dadd(x_49, x_48);
-    rt::lean_dec(x_48);
+    let x_47: Obj = l_Int_dofNat(x_46);
+    let x_48: Obj = l_Sand2_dfacePotential_d__closed__1();
+    let x_49: Obj = l_Int_dmul(x_47, x_48);
+    rt::lean_dec(x_47);
+    let x_50: Obj = l_Int_dsub(x_49, x_30);
     rt::lean_dec(x_49);
-    rt::lean_inc_ref(x_37);
-    let x_51: Obj = l_Sand2_dkineticEnergy(x_37);
-    let x_52: Obj = l_Int_dadd(x_50, x_51);
-    rt::lean_dec(x_51);
+    let x_51: Obj = l_Int_dmul(x_44, x_50);
     rt::lean_dec(x_50);
-    let x_53: Obj = l_Sand2_dfacePotential(x_1, x_2, x_3, x_4, x_37);
-    let x_54: Obj = l_Int_dadd(x_52, x_53);
+    let x_52: Obj = l_Sand2_dfacePotential_d__closed__3();
+    let x_53: Obj = l_Int_dediv(x_51, x_52);
+    rt::lean_dec(x_51);
+    let x_54: Obj = l_Nat_ddiv(x_4, x_2);
+    let x_55: Obj = l_Nat_dsub(x_1, x_54);
+    rt::lean_dec(x_54);
+    let x_56: Obj = l_Int_dofNat(x_55);
+    let x_57: Obj = l_Int_dmul(x_56, x_48);
+    rt::lean_dec(x_56);
+    let x_58: Obj = l_Int_dsub(x_57, x_30);
+    rt::lean_dec(x_57);
+    let x_59: Obj = l_Int_dmul(x_44, x_58);
+    rt::lean_dec(x_58);
+    rt::lean_dec(x_44);
+    let x_60: Obj = l_Int_dediv(x_59, x_52);
+    rt::lean_dec(x_59);
+    let x_61: Obj = l_Int_dadd(x_53, x_60);
+    rt::lean_dec(x_60);
     rt::lean_dec(x_53);
-    rt::lean_dec(x_52);
-    let x_55: Obj = rt::lean_alloc_ctor(0, 16, 3);
-    rt::lean_ctor_set(x_55, 0, x_13);
-    rt::lean_ctor_set(x_55, 1, x_14);
-    rt::lean_ctor_set(x_55, 2, x_15);
-    rt::lean_ctor_set(x_55, 3, x_16);
-    rt::lean_ctor_set(x_55, 4, x_17);
-    rt::lean_ctor_set(x_55, 5, x_54);
-    rt::lean_ctor_set(x_55, 6, x_34);
-    rt::lean_ctor_set(x_55, 7, x_35);
-    rt::lean_ctor_set(x_55, 8, x_19);
-    rt::lean_ctor_set(x_55, 9, x_20);
-    rt::lean_ctor_set(x_55, 10, x_21);
-    rt::lean_ctor_set(x_55, 11, x_22);
-    rt::lean_ctor_set(x_55, 12, x_23);
-    rt::lean_ctor_set(x_55, 13, x_24);
-    rt::lean_ctor_set(x_55, 14, x_8);
-    rt::lean_ctor_set(x_55, 15, x_8);
-    rt::lean_ctor_set_uint8(x_55, 16 * ::core::mem::size_of::<usize>(), x_25);
-    rt::lean_ctor_set_uint8(x_55, 16 * ::core::mem::size_of::<usize>() + 1, x_26);
-    rt::lean_ctor_set_uint8(x_55, 16 * ::core::mem::size_of::<usize>() + 2, x_11);
-    return x_55;
+    let x_62: Obj = l_Sand2_dfacePotential_d__closed__4();
+    let x_63: Obj = l_Int_dediv(x_61, x_62);
+    rt::lean_dec(x_61);
+    let x_64: Obj = l_Int_dadd(x_42, x_63);
+    rt::lean_dec(x_63);
+    rt::lean_dec(x_42);
+    rt::lean_inc(x_31);
+    rt::lean_inc(x_36);
+    rt::lean_inc(x_34);
+    rt::lean_inc(x_37);
+    rt::lean_inc_n(x_30, 2);
+    let x_65: Obj = rt::lean_alloc_ctor(0, 16, 3);
+    rt::lean_ctor_set(x_65, 0, x_6);
+    rt::lean_ctor_set(x_65, 1, x_25);
+    rt::lean_ctor_set(x_65, 2, x_29);
+    rt::lean_ctor_set(x_65, 3, x_40);
+    rt::lean_ctor_set(x_65, 4, x_38);
+    rt::lean_ctor_set(x_65, 5, x_64);
+    rt::lean_ctor_set(x_65, 6, x_39);
+    rt::lean_ctor_set(x_65, 7, x_35);
+    rt::lean_ctor_set(x_65, 8, x_30);
+    rt::lean_ctor_set(x_65, 9, x_30);
+    rt::lean_ctor_set(x_65, 10, x_37);
+    rt::lean_ctor_set(x_65, 11, x_37);
+    rt::lean_ctor_set(x_65, 12, x_34);
+    rt::lean_ctor_set(x_65, 13, x_36);
+    rt::lean_ctor_set(x_65, 14, x_31);
+    rt::lean_ctor_set(x_65, 15, x_31);
+    rt::lean_ctor_set_uint8(x_65, 16 * ::core::mem::size_of::<usize>(), x_26);
+    rt::lean_ctor_set_uint8(x_65, 16 * ::core::mem::size_of::<usize>() + 1, x_27);
+    rt::lean_ctor_set_uint8(x_65, 16 * ::core::mem::size_of::<usize>() + 2, x_27);
+    return x_65;
 }
 
 // Lean: Sand2.gasPacket._boxed
@@ -369,7 +8080,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dgasPacket_d__boxed(x_1: Obj, x_2: Obj, 
 // Source: lean/Sand2/Transport.lean:13:1
 static C_l_Sand2_dgasPacket_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dgasPacket_d__closed__0__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_1: Obj = __sand2_nat_literal_53616e64322d5472616e73706f72742e7273_10000000000();
     let x_2: Obj = l_Int_dofNat(x_1);
     return x_2;
 }
@@ -383,7 +8094,7 @@ pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__0() -> Obj {
 // Source: lean/Sand2/Transport.lean:13:1
 static C_l_Sand2_dgasPacket_d__closed__1: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dgasPacket_d__closed__1__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(8314);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(0);
     let x_2: Obj = l_Int_dofNat(x_1);
     return x_2;
 }
@@ -392,13 +8103,153 @@ pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__1() -> Obj {
     C_l_Sand2_dgasPacket_d__closed__1.get(l_Sand2_dgasPacket_d__closed__1__init)
 }
 
+// Lean: Sand2.gasPacket._closed_10
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__10: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__10__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(93500);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__10() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__10.get(l_Sand2_dgasPacket_d__closed__10__init)
+}
+
+// Lean: Sand2.gasPacket._closed_11
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__11: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__11__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(84000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__11() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__11.get(l_Sand2_dgasPacket_d__closed__11__init)
+}
+
+// Lean: Sand2.gasPacket._closed_12
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__12: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__12__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(126000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__12() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__12.get(l_Sand2_dgasPacket_d__closed__12__init)
+}
+
+// Lean: Sand2.gasPacket._closed_13
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__13: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__13__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(49300);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__13() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__13.get(l_Sand2_dgasPacket_d__closed__13__init)
+}
+
+// Lean: Sand2.gasPacket._closed_14
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__14: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__14__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(43800);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__14() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__14.get(l_Sand2_dgasPacket_d__closed__14__init)
+}
+
+// Lean: Sand2.gasPacket._closed_15
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__15: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__15__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(8520);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__15() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__15.get(l_Sand2_dgasPacket_d__closed__15__init)
+}
+
+// Lean: Sand2.gasPacket._closed_16
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__16: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__16__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(28000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__16() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__16.get(l_Sand2_dgasPacket_d__closed__16__init)
+}
+
+// Lean: Sand2.gasPacket._closed_17
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__17: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__17__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(100000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__17() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__17.get(l_Sand2_dgasPacket_d__closed__17__init)
+}
+
+// Lean: Sand2.gasPacket._closed_18
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__18: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__18__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(8314);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__18() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__18.get(l_Sand2_dgasPacket_d__closed__18__init)
+}
+
+// Lean: Sand2.gasPacket._closed_19
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__19: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__19__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(27315);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__19() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__19.get(l_Sand2_dgasPacket_d__closed__19__init)
+}
+
 // Lean: Sand2.gasPacket._closed_2
 // Compiled from: Sand2.gasPacket
 // Source: lean/Sand2/Transport.lean:13:1
 static C_l_Sand2_dgasPacket_d__closed__2: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dgasPacket_d__closed__2__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(27315);
-    let x_2: Obj = l_Int_dofNat(x_1);
+    let x_1: Obj = rt::nat::lean_usize_to_nat(101325000);
+    let x_2: Obj = l_Sand2_dsaturationTemperature(x_1);
     return x_2;
 }
 #[inline]
@@ -406,3 +8257,558 @@ pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__2() -> Obj {
     C_l_Sand2_dgasPacket_d__closed__2.get(l_Sand2_dgasPacket_d__closed__2__init)
 }
 
+// Lean: Sand2.gasPacket._closed_20
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__20: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__20__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__19();
+    let x_2: Obj = l_Sand2_dgasPacket_d__closed__18();
+    let x_3: Obj = l_Int_dmul(x_2, x_1);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__20() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__20.get(l_Sand2_dgasPacket_d__closed__20__init)
+}
+
+// Lean: Sand2.gasPacket._closed_21
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__21: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__21__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(51000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__21() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__21.get(l_Sand2_dgasPacket_d__closed__21__init)
+}
+
+// Lean: Sand2.gasPacket._closed_22
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__22: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__22__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(110530);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__22() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__22.get(l_Sand2_dgasPacket_d__closed__22__init)
+}
+
+// Lean: Sand2.gasPacket._closed_23
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__23: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__23__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__22();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__23() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__23.get(l_Sand2_dgasPacket_d__closed__23__init)
+}
+
+// Lean: Sand2.gasPacket._closed_24
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__24: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__24__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(74870);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__24() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__24.get(l_Sand2_dgasPacket_d__closed__24__init)
+}
+
+// Lean: Sand2.gasPacket._closed_25
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__25: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__25__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__24();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__25() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__25.get(l_Sand2_dgasPacket_d__closed__25__init)
+}
+
+// Lean: Sand2.gasPacket._closed_26
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__26: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__26__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(414000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__26() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__26.get(l_Sand2_dgasPacket_d__closed__26__init)
+}
+
+// Lean: Sand2.gasPacket._closed_27
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__27: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__27__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__26();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__27() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__27.get(l_Sand2_dgasPacket_d__closed__27__init)
+}
+
+// Lean: Sand2.gasPacket._closed_28
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__28: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__28__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(494600);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__28() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__28.get(l_Sand2_dgasPacket_d__closed__28__init)
+}
+
+// Lean: Sand2.gasPacket._closed_29
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__29: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__29__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__28();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__29() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__29.get(l_Sand2_dgasPacket_d__closed__29__init)
+}
+
+// Lean: Sand2.gasPacket._closed_3
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__3: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__3__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(101325000);
+    let x_2: Obj = l_Sand2_dsaturationTemperatureFine(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__3() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__3.get(l_Sand2_dgasPacket_d__closed__3__init)
+}
+
+// Lean: Sand2.gasPacket._closed_30
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__30: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__30__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(341800);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__30() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__30.get(l_Sand2_dgasPacket_d__closed__30__init)
+}
+
+// Lean: Sand2.gasPacket._closed_31
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__31: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__31__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__30();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__31() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__31.get(l_Sand2_dgasPacket_d__closed__31__init)
+}
+
+// Lean: Sand2.gasPacket._closed_32
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__32: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__32__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(824200);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__32() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__32.get(l_Sand2_dgasPacket_d__closed__32__init)
+}
+
+// Lean: Sand2.gasPacket._closed_33
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__33: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__33__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__32();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__33() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__33.get(l_Sand2_dgasPacket_d__closed__33__init)
+}
+
+// Lean: Sand2.gasPacket._closed_34
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__34: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__34__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(877000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__34() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__34.get(l_Sand2_dgasPacket_d__closed__34__init)
+}
+
+// Lean: Sand2.gasPacket._closed_35
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__35: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__35__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__34();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__35() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__35.get(l_Sand2_dgasPacket_d__closed__35__init)
+}
+
+// Lean: Sand2.gasPacket._closed_36
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__36: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__36__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(1206900);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__36() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__36.get(l_Sand2_dgasPacket_d__closed__36__init)
+}
+
+// Lean: Sand2.gasPacket._closed_37
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__37: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__37__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__36();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__37() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__37.get(l_Sand2_dgasPacket_d__closed__37__init)
+}
+
+// Lean: Sand2.gasPacket._closed_38
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__38: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__38__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(167160);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__38() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__38.get(l_Sand2_dgasPacket_d__closed__38__init)
+}
+
+// Lean: Sand2.gasPacket._closed_39
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__39: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__39__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__38();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__39() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__39.get(l_Sand2_dgasPacket_d__closed__39__init)
+}
+
+// Lean: Sand2.gasPacket._closed_4
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__4: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__4__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(110000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__4() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__4.get(l_Sand2_dgasPacket_d__closed__4__init)
+}
+
+// Lean: Sand2.gasPacket._closed_40
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__40: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__40__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(411120);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__40() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__40.get(l_Sand2_dgasPacket_d__closed__40__init)
+}
+
+// Lean: Sand2.gasPacket._closed_41
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__41: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__41__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__40();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__41() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__41.get(l_Sand2_dgasPacket_d__closed__41__init)
+}
+
+// Lean: Sand2.gasPacket._closed_42
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__42: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__42__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(910900);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__42() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__42.get(l_Sand2_dgasPacket_d__closed__42__init)
+}
+
+// Lean: Sand2.gasPacket._closed_43
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__43: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__43__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__42();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__43() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__43.get(l_Sand2_dgasPacket_d__closed__43__init)
+}
+
+// Lean: Sand2.gasPacket._closed_44
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__44: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__44__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(20000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__44() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__44.get(l_Sand2_dgasPacket_d__closed__44__init)
+}
+
+// Lean: Sand2.gasPacket._closed_45
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__45: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__45__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__44();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__45() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__45.get(l_Sand2_dgasPacket_d__closed__45__init)
+}
+
+// Lean: Sand2.gasPacket._closed_46
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__46: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__46__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(115900);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__46() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__46.get(l_Sand2_dgasPacket_d__closed__46__init)
+}
+
+// Lean: Sand2.gasPacket._closed_47
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__47: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__47__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__46();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__47() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__47.get(l_Sand2_dgasPacket_d__closed__47__init)
+}
+
+// Lean: Sand2.gasPacket._closed_48
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__48: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__48__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(393510);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__48() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__48.get(l_Sand2_dgasPacket_d__closed__48__init)
+}
+
+// Lean: Sand2.gasPacket._closed_49
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__49: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__49__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__48();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__49() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__49.get(l_Sand2_dgasPacket_d__closed__49__init)
+}
+
+// Lean: Sand2.gasPacket._closed_5
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__5: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__5__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(32000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__5() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__5.get(l_Sand2_dgasPacket_d__closed__5__init)
+}
+
+// Lean: Sand2.gasPacket._closed_50
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__50: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__50__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(291830);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__50() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__50.get(l_Sand2_dgasPacket_d__closed__50__init)
+}
+
+// Lean: Sand2.gasPacket._closed_51
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__51: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__51__init() -> Obj {
+    let x_1: Obj = l_Sand2_dgasPacket_d__closed__50();
+    let x_2: Obj = l_Int_dneg(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__51() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__51.get(l_Sand2_dgasPacket_d__closed__51__init)
+}
+
+// Lean: Sand2.gasPacket._closed_6
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__6: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__6__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(101000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__6() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__6.get(l_Sand2_dgasPacket_d__closed__6__init)
+}
+
+// Lean: Sand2.gasPacket._closed_7
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__7: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__7__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(81900);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__7() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__7.get(l_Sand2_dgasPacket_d__closed__7__init)
+}
+
+// Lean: Sand2.gasPacket._closed_8
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__8: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__8__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(104000);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__8() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__8.get(l_Sand2_dgasPacket_d__closed__8__init)
+}
+
+// Lean: Sand2.gasPacket._closed_9
+// Compiled from: Sand2.gasPacket
+// Source: lean/Sand2/Transport.lean:13:1
+static C_l_Sand2_dgasPacket_d__closed__9: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dgasPacket_d__closed__9__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(25200);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dgasPacket_d__closed__9() -> Obj {
+    C_l_Sand2_dgasPacket_d__closed__9.get(l_Sand2_dgasPacket_d__closed__9__init)
+}
+
+
+// Sand2 automatic persistent Nat literal normalization v1
+static __SAND2_NAT_LITERAL_53616E64322D5472616E73706F72742E7273_10000000000: rt::LazyObj = rt::LazyObj::new();
+#[inline]
+unsafe fn __sand2_nat_literal_53616e64322d5472616e73706f72742e7273_10000000000() -> Obj {
+unsafe fn initialize() -> Obj { rt::nat::lean_cstr_to_nat("10000000000") }
+__SAND2_NAT_LITERAL_53616E64322D5472616E73706F72742E7273_10000000000.get(initialize)
+}

@@ -202,44 +202,6 @@ pub(crate) unsafe extern "C" fn l_Sand2_dFusionPhase_dsolid_delim_d__redArg_d__b
     return x_2;
 }
 
-// Lean: Sand2.fusionPhase
-// Source: lean/Sand2/Fusion.lean:21:1
-pub(crate) unsafe extern "C" fn l_Sand2_dfusionPhase(x_1: Obj, x_2: Obj) -> u8 {
-    let x_3: Obj = rt::lean_ctor_get(x_1, 0);
-    let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-    let x_5: u8 = l_Int_ddecLt(x_2, x_3);
-    match x_5 {
-        0 => {
-            let x_6: u8 = l_Int_ddecLt(x_2, x_4);
-            match x_6 {
-                0 => {
-                    let x_7: u8 = 2u8;
-                    return x_7;
-                }
-                _ => {
-                    let x_8: u8 = 1u8;
-                    return x_8;
-                }
-            }
-        }
-        _ => {
-            let x_9: u8 = 0u8;
-            return x_9;
-        }
-    }
-}
-
-// Lean: Sand2.fusionPhase._boxed
-// Compiled from: Sand2.fusionPhase
-// Source: lean/Sand2/Fusion.lean:21:1
-pub(crate) unsafe extern "C" fn l_Sand2_dfusionPhase_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
-    let x_3: u8 = l_Sand2_dfusionPhase(x_1, x_2);
-    rt::lean_dec(x_2);
-    rt::lean_dec_ref(x_1);
-    let x_4: Obj = rt::lean_box(x_3 as usize);
-    return x_4;
-}
-
 // Lean: Sand2.fusionRank
 // Source: lean/Sand2/Fusion.lean:49:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfusionRank(x_1: u8) -> Obj {

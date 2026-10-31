@@ -123,14 +123,18 @@ structure FluidGeometry where
   let mut compressibility := floats n
   for i in [:n] do
     let p := read w i
-    if fluidObstacle height width i p then continue
+    if p.anchored then continue
+    let h := thermalEnergy height width i p
+    let liquid := liquidMatterFromInternalEnergy p h
+    let vapor := vaporWaterFromEnthalpy p h
+    if !(p.matter.water == 0 && p.dryMass == 0) &&
+        p.dryMass+18*(p.matter.water-vapor) > Chemistry.mass liquid+10000000 then continue
     active := active.set! i true
-    let liquid := liquidMatter height width i p
     let reference := referenceLiquidVolume liquid
     let referenceFraction := floatNat reference/floatNat cellVolume
-    let moles := gasCount height width i p
+    let moles := dryGasMoles p.matter+vapor
     let priorNat := if moles == 0 then quantizedLiquidPressure reference p.mechanicalPressure
-      else mechanicalEOSPressure reference moles (temperature height width i p)
+      else mechanicalEOSPressure reference moles (temperatureFromEnthalpy p h)
     let prior := finiteClamp 0 1000000000000 (floatNat priorNat/1000)
     let fraction := finiteClamp 0 1 (referenceFraction*2200000000/(2200000000+prior-101325))
     fill := fill.set! i fraction
@@ -139,7 +143,8 @@ structure FluidGeometry where
     vx := vx.set! i (finiteClamp (-3) 3 (floatInt p.vx/1000000))
     vy := vy.set! i (finiteClamp (-3) 3 (floatInt p.vy/1000000))
     pressure := pressure.set! i prior
-    let beta := fraction/2200000000+(1-fraction)/(gasGamma height width i p*floatMax 101325 prior)
+    let gamma := 1+8314*floatNat moles/floatNat (max 1 (gasCv p.matter+27686*vapor))
+    let beta := fraction/2200000000+(1-fraction)/(gamma*floatMax 101325 prior)
     compressibility := compressibility.set! i beta
   return {width,height,active,fill,density,viscosity,vx,vy,pressure,compressibility}
 

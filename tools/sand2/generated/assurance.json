@@ -58,11 +58,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 186,
+          "line": 194,
           "column": 1
         },
         "end": {
-          "line": 187,
+          "line": 195,
           "column": 82
         }
       }
@@ -211,11 +211,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 155,
+          "line": 163,
           "column": 1
         },
         "end": {
-          "line": 159,
+          "line": 167,
           "column": 20
         }
       }
@@ -267,11 +267,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 191,
+          "line": 199,
           "column": 1
         },
         "end": {
-          "line": 205,
+          "line": 213,
           "column": 11
         }
       }
@@ -328,11 +328,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 171,
+          "line": 179,
           "column": 1
         },
         "end": {
-          "line": 181,
+          "line": 189,
           "column": 59
         }
       }
@@ -380,11 +380,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 216,
+          "line": 224,
           "column": 1
         },
         "end": {
-          "line": 219,
+          "line": 227,
           "column": 26
         }
       }
@@ -461,14 +461,12 @@
           "lean_array_get_size",
           "lean_array_push",
           "lean_array_set",
-          "lean_byte_array_fget",
+          "lean_byte_array_get",
           "lean_byte_array_mk",
-          "lean_byte_array_size",
           "lean_float_add",
-          "lean_float_array_fget",
+          "lean_float_array_get",
           "lean_float_array_push",
           "lean_float_array_set",
-          "lean_float_array_size",
           "lean_float_decLe",
           "lean_float_decLt",
           "lean_float_div",
@@ -530,11 +528,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 223,
+          "line": 231,
           "column": 1
         },
         "end": {
-          "line": 249,
+          "line": 257,
           "column": 105
         }
       }
@@ -560,14 +558,12 @@
           "lean_array_push",
           "lean_array_set",
           "lean_array_to_list",
-          "lean_byte_array_fget",
+          "lean_byte_array_get",
           "lean_byte_array_mk",
-          "lean_byte_array_size",
           "lean_float_add",
-          "lean_float_array_fget",
+          "lean_float_array_get",
           "lean_float_array_push",
           "lean_float_array_set",
-          "lean_float_array_size",
           "lean_float_decLe",
           "lean_float_decLt",
           "lean_float_div",
@@ -632,11 +628,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 256,
+          "line": 264,
           "column": 1
         },
         "end": {
-          "line": 259,
+          "line": 267,
           "column": 67
         }
       }
@@ -752,11 +748,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 127,
+          "line": 135,
           "column": 1
         },
         "end": {
-          "line": 153,
+          "line": 161,
           "column": 16
         }
       }
@@ -837,11 +833,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 221,
+          "line": 229,
           "column": 1
         },
         "end": {
-          "line": 221,
+          "line": 229,
           "column": 97
         }
       }
@@ -867,11 +863,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 251,
+          "line": 259,
           "column": 1
         },
         "end": {
-          "line": 251,
+          "line": 259,
           "column": 81
         }
       }
@@ -895,14 +891,12 @@
           "lean_array_get_size",
           "lean_array_push",
           "lean_array_set",
-          "lean_byte_array_fget",
+          "lean_byte_array_get",
           "lean_byte_array_mk",
-          "lean_byte_array_size",
           "lean_float_add",
-          "lean_float_array_fget",
+          "lean_float_array_get",
           "lean_float_array_push",
           "lean_float_array_set",
-          "lean_float_array_size",
           "lean_float_decLe",
           "lean_float_decLt",
           "lean_float_div",
@@ -990,11 +984,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 253,
+          "line": 261,
           "column": 1
         },
         "end": {
-          "line": 254,
+          "line": 262,
           "column": 52
         }
       }
@@ -1043,11 +1037,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 207,
+          "line": 215,
           "column": 1
         },
         "end": {
-          "line": 214,
+          "line": 222,
           "column": 24
         }
       }

@@ -4,7 +4,7 @@
 // Source: <lean>/Init/Data/Int/Basic.lean:152:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_dadd(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_int_add(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_int_add(x_1, x_2);
     r
 }
 
@@ -20,7 +20,7 @@ pub(crate) unsafe extern "C" fn l_Int_ddecEq(x_1: Obj, x_2: Obj) -> u8 {
 // Source: <lean>/Init/Data/Int/Basic.lean:290:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_ddecLe(x_1: Obj, x_2: Obj) -> u8 {
-    let r: u8 = rt::intrinsics::lean_int_dec_le(x_1, x_2);
+    let r: u8 = crate::runtime_arithmetic::lean_int_dec_le(x_1, x_2);
     r
 }
 
@@ -28,7 +28,7 @@ pub(crate) unsafe extern "C" fn l_Int_ddecLe(x_1: Obj, x_2: Obj) -> u8 {
 // Source: <lean>/Init/Data/Int/Basic.lean:303:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_ddecLt(x_1: Obj, x_2: Obj) -> u8 {
-    let r: u8 = rt::intrinsics::lean_int_dec_lt(x_1, x_2);
+    let r: u8 = crate::runtime_arithmetic::lean_int_dec_lt(x_1, x_2);
     r
 }
 
@@ -50,7 +50,7 @@ pub(crate) unsafe fn l_Int_dinstInhabited_d__closed__0() -> Obj {
 // Source: <lean>/Init/Data/Int/Basic.lean:174:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_dmul(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_int_mul(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_int_mul(x_1, x_2);
     r
 }
 
@@ -150,7 +150,7 @@ pub(crate) unsafe extern "C" fn l_Int_dpow(x_1: Obj, x_2: Obj) -> Obj {
 // Source: <lean>/Init/Data/Int/Basic.lean:197:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_dsub(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_int_sub(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_int_sub(x_1, x_2);
     r
 }
 

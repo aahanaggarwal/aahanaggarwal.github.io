@@ -63,15 +63,15 @@ structure Physics (width height : Nat) (α : Type) where
 namespace Physics
 variable {width height : Nat}
 
-@[always_inline, inline] def pure (a : α) : Physics width height α := ⟨fun w => (a,w),by intro w q; rfl⟩
+@[always_inline, macro_inline] def pure (a : α) : Physics width height α := ⟨fun w => (a,w),by intro w q; rfl⟩
 
-@[always_inline, inline] def bind (f : Physics width height α) (g : α → Physics width height β) : Physics width height β where
+@[always_inline, macro_inline] def bind (f : Physics width height α) (g : α → Physics width height β) : Physics width height β where
   run := fun w => let (a,w') := f.run w; (g a).run w'
   preserves := by
     intro w q
     exact ((g (f.run w).1).preserves (f.run w).2 q).trans (f.preserves w q)
 
-@[always_inline, inline] def map (f : α → β) (x : Physics width height α) : Physics width height β where
+@[always_inline, macro_inline] def map (f : α → β) (x : Physics width height α) : Physics width height β where
   run := fun w => let (a,w') := x.run w; (f a,w')
   preserves := x.preserves
 
@@ -80,11 +80,11 @@ variable {width height : Nat}
   bind := Physics.bind
   map := Physics.map
 
-@[always_inline, inline] def getWorld : Physics width height (World width height) := ⟨fun w => (w,w),by intro w q; rfl⟩
+@[always_inline, macro_inline] def getWorld : Physics width height (World width height) := ⟨fun w => (w,w),by intro w q; rfl⟩
 
-@[always_inline, inline] def getParticle (i : Nat) : Physics width height Particle := do return read (← getWorld) i
+@[always_inline, macro_inline] def getParticle (i : Nat) : Physics width height Particle := do return read (← getWorld) i
 
-@[always_inline, inline] def single (i : Nat) (edit : (p : Particle) → SingleEdit p) : Physics width height Unit where
+@[always_inline, macro_inline] def single (i : Nat) (edit : (p : Particle) → SingleEdit p) : Physics width height Unit where
   run := fun w =>
     if hi : i < w.cells.size then
       let p := w.cells[i]
@@ -98,7 +98,7 @@ variable {width height : Nat}
       exact single_update_conserves (measure q) w.cells i _ hi ((edit w.cells[i]).measures q)
     · rfl
 
-@[always_inline, inline] def pair (i j : Nat) (edit : (a b : Particle) → PairEdit a b) : Physics width height Unit where
+@[always_inline, macro_inline] def pair (i j : Nat) (edit : (a b : Particle) → PairEdit a b) : Physics width height Unit where
   run := fun w =>
     if hi : i < w.cells.size then
       if hj : j < w.cells.size then
@@ -123,13 +123,13 @@ variable {width height : Nat}
       · rfl
     · rfl
 
-@[always_inline, inline] def metadata (f : World width height → World width height)
+@[always_inline, macro_inline] def metadata (f : World width height → World width height)
     (unchanged : ∀ w, (f w).cells = w.cells) : Physics width height Unit :=
   ⟨fun w => ((),f w),by intro w q; simp [inventory,unchanged]⟩
 
 /-- Accept a complete conservative candidate atomically. Numerical guards
     cannot drop one face of an otherwise simultaneous liquid flux plan. -/
-@[always_inline, inline] def transaction (program : Physics width height Unit)
+@[always_inline, macro_inline] def transaction (program : Physics width height Unit)
     (accept : World width height → World width height → Bool) : Physics width height Bool where
   run := fun w =>
     let candidate := (program.run w).2
@@ -177,7 +177,7 @@ theorem runList_conserves (f : α → β → Physics width height (ForInStep β)
         intro q
         simpa only [runList,result] using (ih value w' q).trans (hw q)
 
-@[always_inline, inline] def forList (xs : List α) (init : β)
+@[always_inline, macro_inline] def forList (xs : List α) (init : β)
     (f : α → β → Physics width height (ForInStep β)) : Physics width height β :=
   ⟨runList f xs init,runList_conserves f xs init⟩
 

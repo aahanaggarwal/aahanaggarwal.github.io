@@ -11,6 +11,9 @@ fi
 if [ -x "$ROOT/.tools/cc" ] && ! command -v cc >/dev/null; then
     export CC="$ROOT/.tools/cc" CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="$ROOT/.tools/cc"
 fi
+if [ "${1:-}" = "--sand2-profile" ]; then
+    exec "$ROOT/tools/sand2/profile.sh" "${@:2}"
+fi
 if [ "${1:-}" = "--sand2-only" ]; then
     "$ROOT/tools/sand2/build.sh"
     if [ "${2:-}" = "--no-serve" ]; then exit 0; fi

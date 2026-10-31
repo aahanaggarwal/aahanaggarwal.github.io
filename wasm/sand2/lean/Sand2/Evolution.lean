@@ -31,6 +31,28 @@ def conductivitySI : Material → Int
   | .wood | .plant | .ember => 120 | .lava => 1500
   | .salt => 6000 | .gunpowder | .ash => 100 | _ => 26
 
+/-- Volume-weighted parallel conductivity for a homogeneous water/air cell.
+    A tiny wet fraction must not conduct as a full cubic centimetre of water. -/
+def waterAirConductivity (liquid : Nat) : Int :=
+  26+(574*min cellVolume liquid/cellVolume : Nat)
+
+theorem water_air_conductivity_bounded (liquid : Nat) :
+    26 <= waterAirConductivity liquid ∧ waterAirConductivity liquid <= 600 := by
+  have bound := Nat.min_le_left cellVolume liquid
+  dsimp [waterAirConductivity,cellVolume] at *
+  omega
+
+def particleConductivity (height width i : Nat) (p : Particle) : Int :=
+  if p.dryMass == 0 && p.matter.water > 0 && !fluidObstacle height width i p then
+    waterAirConductivity (occupiedLiquidVolume height width i p)
+  else conductivitySI (labelAt height width i p)
+
+theorem other_condensed_species_retain_their_conductivity (p : Particle)
+    (condensed : p.dryMass > 0) :
+    particleConductivity height width i p = conductivitySI (labelAt height width i p) := by
+  have present : p.dryMass ≠ 0 := by omega
+  simp [particleConductivity,present]
+
 def sensibleCapacity (p : Particle) : Int := max 1 (p.capacity+(p.matter.water : Int)*27686)
 
 /-- The executed Fourier flux has the sign of the temperature difference and
@@ -65,7 +87,7 @@ theorem conduction_flux_bounded (ta tb ca cb k : Int) :
   if ta != tb then
     let ca := sensibleCapacity a
     let cb := sensibleCapacity b
-    let k := min (conductivitySI (labelAt height width i a)) (conductivitySI (labelAt height width j b))
+    let k := min (particleConductivity height width i a) (particleConductivity height width j b)
     let flux := conductionFlux ta tb ca cb k
     if flux != 0 then Physics.pair i j fun a b => safePair height width i j a b (heatEdit a b flux)
 
@@ -265,8 +287,8 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
 @[noinline] def moveCell (start : Nat) : Physics width height Unit := do
   let w ← Physics.getWorld
   let p := read w start
-  if p.stamp == w.generation || !mobile height width start p || gasCell height width start p ||
-      liquidVolume height width start p > cellVolume/1000000 then return
+  if p.stamp == w.generation || p.anchored || gasCell height width start p ||
+      liquidVolume height width start p > cellVolume/1000000 || !mobile height width start p then return
   Physics.single start fun p =>
     let vx := p.vx*(10*(ticksPerSecond : Int)-3)/(10*(ticksPerSecond : Int))
     let vy := gravityVelocity p.vy

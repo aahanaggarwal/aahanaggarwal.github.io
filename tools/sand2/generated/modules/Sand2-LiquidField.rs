@@ -3,7 +3,7 @@
 // Lean: List.forIn'.loop._at_.Sand2.viscositySystem.spec_0
 // Compiled from: List.forIn'.loop
 // Source: <lean>/Init/Data/List/Control.lean:448:25
-pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0(x_1: Obj, x_2: Obj, x_3: f64, x_4: f64, x_5: u8, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0(x_1: Obj, x_2: Obj, x_3: Obj, x_4: f64, x_5: f64, x_6: u8, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
     let x_13: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_10, x_11);
     return x_13;
 }
@@ -12,17 +12,17 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
 // Compiled from: List.forIn'.loop
 // Source: <lean>/Init/Data/List/Control.lean:448:25
 pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
-    let x_13: f64 = rt::lean_unbox_float(x_3);
-    rt::lean_dec_ref(x_3);
-    let x_14: f64 = rt::lean_unbox_float(x_4);
+    let x_13: f64 = rt::lean_unbox_float(x_4);
     rt::lean_dec_ref(x_4);
-    let x_15: u8 = rt::lean_unbox(x_5) as u8;
-    let x_16: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0(x_1, x_2, x_13, x_14, x_15, x_6, x_7, x_8, x_9, x_10, x_11, x_12);
+    let x_14: f64 = rt::lean_unbox_float(x_5);
+    rt::lean_dec_ref(x_5);
+    let x_15: u8 = rt::lean_unbox(x_6) as u8;
+    let x_16: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0(x_1, x_2, x_3, x_13, x_14, x_15, x_7, x_8, x_9, x_10, x_11, x_12);
     rt::lean_dec(x_10);
     rt::lean_dec(x_9);
     rt::lean_dec_ref(x_8);
     rt::lean_dec(x_7);
-    rt::lean_dec_ref(x_6);
+    rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
     rt::lean_dec(x_1);
     return x_16;
@@ -31,7 +31,7 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
 // Lean: List.forIn'.loop._at_.Sand2.viscositySystem.spec_0._redArg
 // Compiled from: List.forIn'.loop
 // Source: <lean>/Init/Data/List/Control.lean:448:25
-pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: f64, mut x_4: f64, mut x_5: u8, mut x_6: Obj, mut x_7: Obj, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: f64, mut x_5: f64, mut x_6: u8, mut x_7: Obj, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_9) {
             0 => {
@@ -46,20 +46,20 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                 let mut x_16: Obj;
                 let mut x_17: u8;
                 'b15: {
-                    let x_81: u8 = (!rt::lean_is_exclusive(x_10)) as u8;
-                    match x_81 {
+                    let x_76: u8 = (!rt::lean_is_exclusive(x_10)) as u8;
+                    match x_76 {
                         0 => {
-                            let x_82: Obj = rt::lean_ctor_get(x_10, 1);
-                            rt::lean_dec(x_82);
+                            let x_77: Obj = rt::lean_ctor_get(x_10, 1);
+                            rt::lean_dec(x_77);
                             x_16 = x_10;
-                            x_17 = x_81;
+                            x_17 = x_76;
                             break 'b15;
                         }
                         _ => {
                             rt::lean_inc(x_14);
                             rt::lean_dec(x_10);
                             x_16 = rt::lean_box(0);
-                            x_17 = x_81;
+                            x_17 = x_76;
                             break 'b15;
                         }
                     }
@@ -69,11 +69,11 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                 let mut x_21: Obj;
                 let mut x_22: u8;
                 'b20: {
-                    let x_80: u8 = (!rt::lean_is_exclusive(x_11)) as u8;
-                    match x_80 {
+                    let x_75: u8 = (!rt::lean_is_exclusive(x_11)) as u8;
+                    match x_75 {
                         0 => {
                             x_21 = x_11;
-                            x_22 = x_80;
+                            x_22 = x_75;
                             break 'b20;
                         }
                         _ => {
@@ -81,7 +81,7 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                             rt::lean_inc(x_18);
                             rt::lean_dec(x_11);
                             x_21 = rt::lean_box(0);
-                            x_22 = x_80;
+                            x_22 = x_75;
                             break 'b20;
                         }
                     }
@@ -93,83 +93,67 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                     let x_46: Obj = rt::nat::lean_usize_to_nat(1);
                     let mut x_48: f64;
                     'b47: {
-                        let mut x_55: f64;
+                        let mut x_55: u8;
                         'b54: {
-                            let mut x_62: u8;
-                            'b61: {
-                                let x_73: u8 = l_Nat_ddecLe(x_7, x_12);
-                                let mut x_75: u8;
-                                'b74: {
-                                    match x_73 {
-                                        0 => {
-                                            let x_76: Obj = l_Array_dsize(rt::lean_box(0), x_8);
-                                            let x_77: u8 = l_Nat_ddecLt(x_12, x_76);
-                                            match x_77 {
-                                                0 => {
-                                                    x_75 = x_73;
-                                                    break 'b74;
-                                                }
-                                                _ => {
-                                                    let x_78: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_8, x_12, rt::lean_box(0));
-                                                    let x_79: u8 = rt::lean_unbox(x_78) as u8;
-                                                    x_75 = x_79;
-                                                    break 'b74;
-                                                }
+                            let x_68: u8 = l_Nat_ddecLe(x_7, x_12);
+                            let mut x_70: u8;
+                            'b69: {
+                                match x_68 {
+                                    0 => {
+                                        let x_71: Obj = l_Array_dsize(rt::lean_box(0), x_8);
+                                        let x_72: u8 = l_Nat_ddecLt(x_12, x_71);
+                                        match x_72 {
+                                            0 => {
+                                                x_70 = x_68;
+                                                break 'b69;
+                                            }
+                                            _ => {
+                                                let x_73: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_8, x_12, rt::lean_box(0));
+                                                let x_74: u8 = rt::lean_unbox(x_73) as u8;
+                                                x_70 = x_74;
+                                                break 'b69;
                                             }
                                         }
-                                        _ => {
-                                            x_62 = x_5;
-                                            break 'b61;
-                                        }
-                                    }
-                                }
-                                match x_75 {
-                                    0 => {
-                                        x_62 = x_5;
-                                        break 'b61;
                                     }
                                     _ => {
-                                        x_62 = x_73;
-                                        break 'b61;
+                                        x_55 = x_6;
+                                        break 'b54;
                                     }
                                 }
                             }
-                            match x_62 {
+                            match x_70 {
                                 0 => {
-                                    let x_63: Obj = l_FloatArray_dsize(x_6);
-                                    let x_64: u8 = l_Nat_ddecLt(x_12, x_63);
-                                    match x_64 {
-                                        0 => {
-                                            let x_65: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                            x_55 = x_65;
-                                            break 'b54;
-                                        }
-                                        _ => {
-                                            let x_66: f64 = l_FloatArray_dget(x_6, x_12, rt::lean_box(0));
-                                            x_55 = x_66;
-                                            break 'b54;
-                                        }
-                                    }
+                                    x_55 = x_6;
+                                    break 'b54;
                                 }
                                 _ => {
-                                    let x_67: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
-                                    let x_68: f64 = l_Float_dmul(x_67, x_3);
-                                    let x_69: f64 = l_Float_dmul(x_68, x_4);
-                                    let x_70: Obj = rt::nat::lean_usize_to_nat(4);
-                                    let x_71: f64 = l_Float_dofScientific(x_46, x_5, x_70);
-                                    let x_72: f64 = l_Float_ddiv(x_69, x_71);
-                                    x_48 = x_72;
-                                    break 'b47;
+                                    x_55 = x_68;
+                                    break 'b54;
                                 }
                             }
                         }
-                        let x_56: f64 = l_Sand2_dharmonic(x_3, x_55);
-                        let x_57: f64 = l_Float_dmul(x_56, x_4);
-                        let x_58: Obj = rt::nat::lean_usize_to_nat(4);
-                        let x_59: f64 = l_Float_dofScientific(x_46, x_5, x_58);
-                        let x_60: f64 = l_Float_ddiv(x_57, x_59);
-                        x_48 = x_60;
-                        break 'b47;
+                        match x_55 {
+                            0 => {
+                                let x_56: f64 = l_FloatArray_dget_x21_(x_3, x_12);
+                                let x_57: f64 = l_Sand2_dharmonic(x_4, x_56);
+                                let x_58: f64 = l_Float_dmul(x_57, x_5);
+                                let x_59: Obj = rt::nat::lean_usize_to_nat(4);
+                                let x_60: f64 = l_Float_dofScientific(x_46, x_6, x_59);
+                                let x_61: f64 = l_Float_ddiv(x_58, x_60);
+                                x_48 = x_61;
+                                break 'b47;
+                            }
+                            _ => {
+                                let x_62: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
+                                let x_63: f64 = l_Float_dmul(x_62, x_4);
+                                let x_64: f64 = l_Float_dmul(x_63, x_5);
+                                let x_65: Obj = rt::nat::lean_usize_to_nat(4);
+                                let x_66: f64 = l_Float_dofScientific(x_46, x_6, x_65);
+                                let x_67: f64 = l_Float_ddiv(x_64, x_66);
+                                x_48 = x_67;
+                                break 'b47;
+                            }
+                        }
                     }
                     let x_49: f64 = rt::lean_unbox_float(x_19);
                     rt::lean_dec(x_19);
@@ -236,10 +220,10 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                         }
                         let t_0: Obj = x_1;
                         let t_1: Obj = x_2;
-                        let t_2: f64 = x_3;
+                        let t_2: Obj = x_3;
                         let t_3: f64 = x_4;
-                        let t_4: u8 = x_5;
-                        let t_5: Obj = x_6;
+                        let t_4: f64 = x_5;
+                        let t_5: u8 = x_6;
                         let t_6: Obj = x_7;
                         let t_7: Obj = x_8;
                         let t_8: Obj = x_13;
@@ -297,10 +281,10 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
                         }
                         let t_0: Obj = x_1;
                         let t_1: Obj = x_2;
-                        let t_2: f64 = x_3;
+                        let t_2: Obj = x_3;
                         let t_3: f64 = x_4;
-                        let t_4: u8 = x_5;
-                        let t_5: Obj = x_6;
+                        let t_4: f64 = x_5;
+                        let t_5: u8 = x_6;
                         let t_6: Obj = x_7;
                         let t_7: Obj = x_8;
                         let t_8: Obj = x_13;
@@ -327,16 +311,16 @@ pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscosi
 // Compiled from: List.forIn'.loop
 // Source: <lean>/Init/Data/List/Control.lean:448:25
 pub(crate) unsafe extern "C" fn l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj) -> Obj {
-    let x_11: f64 = rt::lean_unbox_float(x_3);
-    rt::lean_dec_ref(x_3);
-    let x_12: f64 = rt::lean_unbox_float(x_4);
+    let x_11: f64 = rt::lean_unbox_float(x_4);
     rt::lean_dec_ref(x_4);
-    let x_13: u8 = rt::lean_unbox(x_5) as u8;
-    let x_14: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_1, x_2, x_11, x_12, x_13, x_6, x_7, x_8, x_9, x_10);
+    let x_12: f64 = rt::lean_unbox_float(x_5);
+    rt::lean_dec_ref(x_5);
+    let x_13: u8 = rt::lean_unbox(x_6) as u8;
+    let x_14: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_1, x_2, x_3, x_11, x_12, x_13, x_7, x_8, x_9, x_10);
     rt::lean_dec(x_9);
     rt::lean_dec_ref(x_8);
     rt::lean_dec(x_7);
-    rt::lean_dec_ref(x_6);
+    rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
     rt::lean_dec(x_1);
     return x_14;
@@ -371,7 +355,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfieldBool_d__boxed(x_1: Obj, x_2: Obj) 
 }
 
 // Lean: Sand2.fluidFace
-// Source: lean/Sand2/LiquidField.lean:174:1
+// Source: lean/Sand2/LiquidField.lean:179:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace(x_1: Obj, x_2: Obj, x_3: Obj) -> f64 {
     'b4: {
         let x_6: Obj = rt::lean_ctor_get(x_1, 2);
@@ -408,53 +392,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace(x_1: Obj, x_2: Obj, x_3: Obj)
                                         let x_17: Obj = rt::nat::lean_usize_to_nat(3);
                                         let x_18: u8 = rt::lean_unbox(x_10) as u8;
                                         let x_19: f64 = l_Float_dofScientific(x_16, x_18, x_17);
-                                        let mut x_21: f64;
-                                        let mut x_22: f64;
-                                        'b20: {
-                                            let mut x_28: f64;
-                                            'b27: {
-                                                let x_33: Obj = l_FloatArray_dsize(x_7);
-                                                let x_34: u8 = l_Nat_ddecLt(x_2, x_33);
-                                                match x_34 {
-                                                    0 => {
-                                                        let x_35: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                        x_28 = x_35;
-                                                        break 'b27;
-                                                    }
-                                                    _ => {
-                                                        let x_36: f64 = l_FloatArray_dget(x_7, x_2, rt::lean_box(0));
-                                                        x_28 = x_36;
-                                                        break 'b27;
-                                                    }
-                                                }
-                                            }
-                                            let x_29: Obj = l_FloatArray_dsize(x_7);
-                                            let x_30: u8 = l_Nat_ddecLt(x_3, x_29);
-                                            match x_30 {
-                                                0 => {
-                                                    let x_31: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                    x_21 = x_28;
-                                                    x_22 = x_31;
-                                                    break 'b20;
-                                                }
-                                                _ => {
-                                                    let x_32: f64 = l_FloatArray_dget(x_7, x_3, rt::lean_box(0));
-                                                    x_21 = x_28;
-                                                    x_22 = x_32;
-                                                    break 'b20;
-                                                }
-                                            }
-                                        }
-                                        let x_23: f64 = l_Float_dadd(x_21, x_22);
-                                        let x_24: u8 = l_Float_ddecLt(x_19, x_23);
-                                        match x_24 {
+                                        let x_20: f64 = l_FloatArray_dget_x21_(x_7, x_2);
+                                        let x_21: f64 = l_FloatArray_dget_x21_(x_7, x_3);
+                                        let x_22: f64 = l_Float_dadd(x_20, x_21);
+                                        let x_23: u8 = l_Float_ddecLt(x_19, x_22);
+                                        match x_23 {
                                             0 => {
-                                                let x_25: f64 = l_Float_ddiv(x_15, x_19);
-                                                return x_25;
+                                                let x_24: f64 = l_Float_ddiv(x_15, x_19);
+                                                return x_24;
                                             }
                                             _ => {
-                                                let x_26: f64 = l_Float_ddiv(x_15, x_23);
-                                                return x_26;
+                                                let x_25: f64 = l_Float_ddiv(x_15, x_22);
+                                                return x_25;
                                             }
                                         }
                                     }
@@ -472,7 +421,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace(x_1: Obj, x_2: Obj, x_3: Obj)
 
 // Lean: Sand2.fluidFace._boxed
 // Compiled from: Sand2.fluidFace
-// Source: lean/Sand2/LiquidField.lean:174:1
+// Source: lean/Sand2/LiquidField.lean:179:1
 pub(crate) unsafe extern "C" fn l_Sand2_dfluidFace_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: f64 = l_Sand2_dfluidFace(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -822,7 +771,7 @@ pub(crate) unsafe fn l_Sand2_dgasGamma_d__closed__1() -> f64 {
 }
 
 // Lean: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:146:1
+// Source: lean/Sand2/LiquidField.lean:151:1
 pub(crate) unsafe extern "C" fn l_Sand2_dharmonic(x_1: f64, x_2: f64) -> f64 {
     let x_3: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
     let x_4: f64 = l_Float_dmul(x_3, x_1);
@@ -844,7 +793,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dharmonic(x_1: f64, x_2: f64) -> f64 {
 
 // Lean: Sand2.harmonic._boxed
 // Compiled from: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:146:1
+// Source: lean/Sand2/LiquidField.lean:151:1
 pub(crate) unsafe extern "C" fn l_Sand2_dharmonic_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: f64 = rt::lean_unbox_float(x_1);
     rt::lean_dec_ref(x_1);
@@ -857,7 +806,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dharmonic_d__boxed(x_1: Obj, x_2: Obj) -
 
 // Lean: Sand2.harmonic._closed_0
 // Compiled from: Sand2.harmonic
-// Source: lean/Sand2/LiquidField.lean:146:1
+// Source: lean/Sand2/LiquidField.lean:151:1
 static C_l_Sand2_dharmonic_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dharmonic_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(12);
@@ -1199,7 +1148,7 @@ pub(crate) unsafe fn l_Sand2_dmechanicalEOSPressure_d__closed__3() -> Obj {
 // Source: lean/Sand2/LiquidField.lean:92:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmechanicalPressureFromInternalEnergy(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
-    let x_4: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_1, x_2);
+    let x_4: Obj = l_Sand2_dvaporWaterFast(x_1, x_2);
     let x_5: Obj = l_Sand2_dChemistry_ddryGasMoles(x_3);
     let x_6: Obj = l_Nat_dadd(x_5, x_4);
     rt::lean_dec(x_4);
@@ -1399,7 +1348,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_doccupiedLiquidVolume_d__boxed(x_1: Obj,
 }
 
 // Lean: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:190:1
+// Source: lean/Sand2/LiquidField.lean:195:1
 pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
     rt::lean_inc(x_3);
@@ -1505,7 +1454,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj
             }
         }
     }
-    let x_45: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(x_1, x_3, x_2, x_37, x_36, x_41, x_40, x_22, x_23, x_19);
+    let x_45: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(x_1, x_3, x_40, x_41, x_36, x_37, x_2, x_22, x_23, x_19);
     let x_46: Obj = rt::lean_ctor_get(x_45, 0);
     let x_47: Obj = rt::lean_ctor_get(x_45, 1);
     let mut x_49: Obj;
@@ -1584,13 +1533,13 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj
             }
         }
     }
-    let x_59: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(x_2, x_54, x_3, x_37, x_4, x_36, x_5, x_6, x_22, x_58, x_19);
+    let x_59: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(x_3, x_4, x_37, x_2, x_54, x_36, x_5, x_6, x_22, x_58, x_19);
     rt::lean_dec_ref(x_22);
     rt::lean_dec_ref(x_6);
     rt::lean_dec_ref(x_5);
     rt::lean_dec(x_36);
-    rt::lean_dec(x_4);
     rt::lean_dec(x_37);
+    rt::lean_dec(x_4);
     rt::lean_dec(x_3);
     let x_60: Obj = rt::lean_ctor_get(x_59, 1);
     rt::lean_inc(x_60);
@@ -1639,7 +1588,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid(x_1: Obj, x_2: f64) -> Obj
 
 // Lean: Sand2.projectFluid._boxed
 // Compiled from: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:190:1
+// Source: lean/Sand2/LiquidField.lean:195:1
 pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: f64 = rt::lean_unbox_float(x_2);
     rt::lean_dec_ref(x_2);
@@ -1649,7 +1598,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dprojectFluid_d__boxed(x_1: Obj, x_2: Ob
 
 // Lean: Sand2.projectFluid._closed_0
 // Compiled from: Sand2.projectFluid
-// Source: lean/Sand2/LiquidField.lean:190:1
+// Source: lean/Sand2/LiquidField.lean:195:1
 static C_l_Sand2_dprojectFluid_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
 unsafe fn l_Sand2_dprojectFluid_d__closed__0__init() -> f64 {
     let x_1: Obj = rt::nat::lean_usize_to_nat(8);
@@ -1704,7 +1653,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dquantizedLiquidPressure_d__boxed(x_1: O
 }
 
 // Lean: Sand2.viscositySystem
-// Source: lean/Sand2/LiquidField.lean:148:1
+// Source: lean/Sand2/LiquidField.lean:153:1
 pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem(x_1: Obj, x_2: f64, x_3: u8) -> Obj {
     let x_4: Obj = rt::lean_ctor_get(x_1, 0);
     rt::lean_inc_n(x_4, 2);
@@ -1765,7 +1714,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem(x_1: Obj, x_2: f64, x_3
 
 // Lean: Sand2.viscositySystem._boxed
 // Compiled from: Sand2.viscositySystem
-// Source: lean/Sand2/LiquidField.lean:148:1
+// Source: lean/Sand2/LiquidField.lean:153:1
 pub(crate) unsafe extern "C" fn l_Sand2_dviscositySystem_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: f64 = rt::lean_unbox_float(x_2);
     rt::lean_dec_ref(x_2);
@@ -1847,6 +1796,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj) -> Obj {
     let x_9: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0(x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8);
+    rt::lean_dec(x_6);
     rt::lean_dec_ref(x_4);
     rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
@@ -1857,1305 +1807,1615 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0._redArg
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
-pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj, mut x_5: Obj, mut x_6: Obj) -> Obj {
-    'tail: loop {
-        let x_7: Obj = rt::lean_ctor_get(x_4, 1);
-        let x_8: Obj = rt::lean_ctor_get(x_4, 2);
-        let mut x_10: Obj;
-        'b9: {
-            let x_13: u8 = l_Nat_ddecLt(x_6, x_7);
-            match x_13 {
-                0 => {
-                    rt::lean_dec(x_6);
-                    return x_5;
-                }
-                _ => {
-                    let x_14: Obj = rt::lean_ctor_get(x_5, 1);
-                    rt::lean_inc(x_14);
-                    let x_15: Obj = rt::lean_ctor_get(x_14, 1);
-                    rt::lean_inc(x_15);
-                    let x_16: Obj = rt::lean_ctor_get(x_15, 1);
-                    rt::lean_inc(x_16);
-                    let x_17: Obj = rt::lean_ctor_get(x_16, 1);
-                    rt::lean_inc(x_17);
-                    let x_18: Obj = rt::lean_ctor_get(x_17, 1);
-                    rt::lean_inc(x_18);
-                    let x_19: Obj = rt::lean_ctor_get(x_18, 1);
-                    rt::lean_inc(x_19);
-                    let x_20: Obj = rt::lean_ctor_get(x_5, 0);
-                    let mut x_22: Obj;
-                    let mut x_23: u8;
-                    'b21: {
-                        let x_378: u8 = (!rt::lean_is_exclusive(x_5)) as u8;
-                        match x_378 {
-                            0 => {
-                                let x_379: Obj = rt::lean_ctor_get(x_5, 1);
-                                rt::lean_dec(x_379);
-                                x_22 = x_5;
-                                x_23 = x_378;
-                                break 'b21;
-                            }
-                            _ => {
-                                rt::lean_inc(x_20);
-                                rt::lean_dec(x_5);
-                                x_22 = rt::lean_box(0);
-                                x_23 = x_378;
-                                break 'b21;
-                            }
-                        }
-                    }
-                    let x_24: Obj = rt::lean_ctor_get(x_14, 0);
-                    let mut x_26: Obj;
-                    let mut x_27: u8;
-                    'b25: {
-                        let x_376: u8 = (!rt::lean_is_exclusive(x_14)) as u8;
-                        match x_376 {
-                            0 => {
-                                let x_377: Obj = rt::lean_ctor_get(x_14, 1);
-                                rt::lean_dec(x_377);
-                                x_26 = x_14;
-                                x_27 = x_376;
-                                break 'b25;
-                            }
-                            _ => {
-                                rt::lean_inc(x_24);
-                                rt::lean_dec(x_14);
-                                x_26 = rt::lean_box(0);
-                                x_27 = x_376;
-                                break 'b25;
-                            }
-                        }
-                    }
-                    let x_28: Obj = rt::lean_ctor_get(x_15, 0);
-                    let mut x_30: Obj;
-                    let mut x_31: u8;
-                    'b29: {
-                        let x_374: u8 = (!rt::lean_is_exclusive(x_15)) as u8;
-                        match x_374 {
-                            0 => {
-                                let x_375: Obj = rt::lean_ctor_get(x_15, 1);
-                                rt::lean_dec(x_375);
-                                x_30 = x_15;
-                                x_31 = x_374;
-                                break 'b29;
-                            }
-                            _ => {
-                                rt::lean_inc(x_28);
-                                rt::lean_dec(x_15);
-                                x_30 = rt::lean_box(0);
-                                x_31 = x_374;
-                                break 'b29;
-                            }
-                        }
-                    }
-                    let x_32: Obj = rt::lean_ctor_get(x_16, 0);
-                    let mut x_34: Obj;
-                    let mut x_35: u8;
-                    'b33: {
-                        let x_372: u8 = (!rt::lean_is_exclusive(x_16)) as u8;
-                        match x_372 {
-                            0 => {
-                                let x_373: Obj = rt::lean_ctor_get(x_16, 1);
-                                rt::lean_dec(x_373);
-                                x_34 = x_16;
-                                x_35 = x_372;
-                                break 'b33;
-                            }
-                            _ => {
-                                rt::lean_inc(x_32);
-                                rt::lean_dec(x_16);
-                                x_34 = rt::lean_box(0);
-                                x_35 = x_372;
-                                break 'b33;
-                            }
-                        }
-                    }
-                    let x_36: Obj = rt::lean_ctor_get(x_17, 0);
-                    let mut x_38: Obj;
-                    let mut x_39: u8;
-                    'b37: {
-                        let x_370: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
-                        match x_370 {
-                            0 => {
-                                let x_371: Obj = rt::lean_ctor_get(x_17, 1);
-                                rt::lean_dec(x_371);
-                                x_38 = x_17;
-                                x_39 = x_370;
-                                break 'b37;
-                            }
-                            _ => {
-                                rt::lean_inc(x_36);
-                                rt::lean_dec(x_17);
-                                x_38 = rt::lean_box(0);
-                                x_39 = x_370;
-                                break 'b37;
-                            }
-                        }
-                    }
-                    let x_40: Obj = rt::lean_ctor_get(x_18, 0);
-                    let mut x_42: Obj;
-                    let mut x_43: u8;
-                    'b41: {
-                        let x_368: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
-                        match x_368 {
-                            0 => {
-                                let x_369: Obj = rt::lean_ctor_get(x_18, 1);
-                                rt::lean_dec(x_369);
-                                x_42 = x_18;
-                                x_43 = x_368;
-                                break 'b41;
-                            }
-                            _ => {
-                                rt::lean_inc(x_40);
-                                rt::lean_dec(x_18);
-                                x_42 = rt::lean_box(0);
-                                x_43 = x_368;
-                                break 'b41;
-                            }
-                        }
-                    }
-                    let x_44: Obj = rt::lean_ctor_get(x_19, 0);
-                    let x_45: Obj = rt::lean_ctor_get(x_19, 1);
-                    let mut x_47: Obj;
-                    let mut x_48: u8;
-                    'b46: {
-                        let x_367: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
-                        match x_367 {
-                            0 => {
-                                x_47 = x_19;
-                                x_48 = x_367;
-                                break 'b46;
-                            }
-                            _ => {
-                                rt::lean_inc(x_45);
-                                rt::lean_inc(x_44);
-                                rt::lean_dec(x_19);
-                                x_47 = rt::lean_box(0);
-                                x_48 = x_367;
-                                break 'b46;
-                            }
-                        }
-                    }
-                    let x_49: Obj = l_Sand2_dread(x_1, x_2, x_3, x_6);
-                    rt::lean_inc_ref(x_49);
-                    let x_50: u8 = l_Sand2_dfluidObstacle(x_2, x_1, x_6, x_49);
-                    match x_50 {
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj) -> Obj {
+    let x_7: Obj = rt::lean_ctor_get(x_4, 1);
+    let x_8: Obj = rt::lean_ctor_get(x_4, 2);
+    let mut x_10: Obj;
+    'b9: {
+        let x_13: u8 = l_Nat_ddecLt(x_6, x_7);
+        match x_13 {
+            0 => {
+                return x_5;
+            }
+            _ => {
+                let x_14: Obj = rt::lean_ctor_get(x_5, 1);
+                rt::lean_inc(x_14);
+                let x_15: Obj = rt::lean_ctor_get(x_14, 1);
+                rt::lean_inc(x_15);
+                let x_16: Obj = rt::lean_ctor_get(x_15, 1);
+                rt::lean_inc(x_16);
+                let x_17: Obj = rt::lean_ctor_get(x_16, 1);
+                rt::lean_inc(x_17);
+                let x_18: Obj = rt::lean_ctor_get(x_17, 1);
+                rt::lean_inc(x_18);
+                let x_19: Obj = rt::lean_ctor_get(x_18, 1);
+                rt::lean_inc(x_19);
+                let x_20: Obj = rt::lean_ctor_get(x_5, 0);
+                let mut x_22: Obj;
+                let mut x_23: u8;
+                'b21: {
+                    let x_493: u8 = (!rt::lean_is_exclusive(x_5)) as u8;
+                    match x_493 {
                         0 => {
-                            let x_51: Obj = rt::nat::lean_usize_to_nat(1);
-                            let x_52: f64 = l_Sand2_dgasGamma_d__closed__0();
-                            let x_53: Obj = rt::nat::lean_usize_to_nat(18);
-                            let x_54: Obj = rt::nat::lean_usize_to_nat(6);
-                            let x_55: f64 = l_Float_dofScientific(x_53, x_13, x_54);
-                            let x_56: Obj = rt::nat::lean_usize_to_nat(0);
-                            let x_57: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                            let x_58: Obj = rt::lean_box(x_13 as usize);
-                            let x_59: Obj = l_Array_dset_x21_(rt::lean_box(0), x_20, x_6, x_58);
-                            let mut x_61: Obj;
-                            let mut x_62: f64;
-                            let mut x_63: Obj;
-                            let mut x_64: Obj;
-                            let mut x_65: Obj;
-                            let mut x_66: Obj;
-                            let mut x_67: Obj;
-                            let mut x_68: f64;
-                            let mut x_69: f64;
-                            let mut x_70: f64;
-                            'b60: {
-                                let mut x_97: Obj;
-                                let mut x_98: Obj;
-                                let mut x_99: Obj;
-                                let mut x_100: f64;
-                                let mut x_101: Obj;
-                                let mut x_102: f64;
-                                let mut x_103: f64;
-                                let mut x_104: f64;
-                                let mut x_105: f64;
-                                let mut x_106: f64;
-                                'b96: {
-                                    let mut x_113: Obj;
-                                    let mut x_114: Obj;
-                                    let mut x_115: f64;
-                                    let mut x_116: Obj;
-                                    let mut x_117: Obj;
-                                    let mut x_118: f64;
-                                    let mut x_119: f64;
-                                    let mut x_120: f64;
-                                    let mut x_121: f64;
-                                    let mut x_122: f64;
-                                    let mut x_123: f64;
-                                    'b112: {
-                                        let mut x_126: f64;
-                                        let mut x_127: Obj;
-                                        let mut x_128: f64;
-                                        let mut x_129: Obj;
-                                        let mut x_130: Obj;
-                                        let mut x_131: f64;
-                                        let mut x_132: Obj;
-                                        let mut x_133: f64;
-                                        let mut x_134: f64;
-                                        let mut x_135: f64;
-                                        let mut x_136: f64;
-                                        let mut x_137: f64;
-                                        let mut x_138: u8;
-                                        'b125: {
-                                            let mut x_141: f64;
-                                            let mut x_142: Obj;
-                                            let mut x_143: Obj;
-                                            let mut x_144: f64;
-                                            let mut x_145: Obj;
-                                            let mut x_146: Obj;
-                                            let mut x_147: f64;
-                                            let mut x_148: f64;
-                                            let mut x_149: f64;
-                                            let mut x_150: f64;
-                                            let mut x_151: f64;
-                                            let mut x_152: f64;
-                                            let mut x_153: f64;
-                                            'b140: {
-                                                let mut x_158: f64;
-                                                let mut x_159: Obj;
-                                                let mut x_160: f64;
-                                                let mut x_161: Obj;
-                                                let mut x_162: Obj;
-                                                let mut x_163: f64;
-                                                let mut x_164: f64;
-                                                let mut x_165: f64;
-                                                let mut x_166: f64;
-                                                let mut x_167: f64;
-                                                let mut x_168: f64;
-                                                let mut x_169: f64;
-                                                'b157: {
-                                                    let mut x_182: f64;
-                                                    let mut x_183: Obj;
-                                                    let mut x_184: f64;
-                                                    let mut x_185: Obj;
-                                                    let mut x_186: f64;
-                                                    let mut x_187: Obj;
-                                                    let mut x_188: f64;
-                                                    let mut x_189: f64;
-                                                    let mut x_190: f64;
-                                                    let mut x_191: f64;
-                                                    let mut x_192: f64;
-                                                    let mut x_193: f64;
-                                                    'b181: {
-                                                        let mut x_196: f64;
-                                                        let mut x_197: Obj;
-                                                        let mut x_198: f64;
-                                                        let mut x_199: Obj;
-                                                        let mut x_200: Obj;
-                                                        let mut x_201: f64;
-                                                        let mut x_202: f64;
-                                                        let mut x_203: f64;
-                                                        let mut x_204: f64;
-                                                        let mut x_205: f64;
-                                                        let mut x_206: f64;
-                                                        let mut x_207: f64;
-                                                        let mut x_208: u8;
-                                                        'b195: {
-                                                            let mut x_211: f64;
-                                                            let mut x_212: Obj;
-                                                            let mut x_213: f64;
-                                                            let mut x_214: Obj;
-                                                            let mut x_215: f64;
-                                                            let mut x_216: Obj;
-                                                            let mut x_217: f64;
-                                                            let mut x_218: f64;
-                                                            let mut x_219: f64;
-                                                            let mut x_220: f64;
-                                                            let mut x_221: f64;
-                                                            let mut x_222: f64;
-                                                            'b210: {
-                                                                rt::lean_inc_ref_n(x_49, 2);
-                                                                let x_226: Obj = l_Sand2_dliquidMatter(x_2, x_1, x_6, x_49);
-                                                                let mut x_228: Obj;
-                                                                let mut x_229: Obj;
-                                                                let mut x_230: f64;
-                                                                let mut x_231: f64;
-                                                                let mut x_232: f64;
-                                                                let mut x_233: f64;
-                                                                let mut x_234: f64;
-                                                                let mut x_235: f64;
-                                                                'b227: {
-                                                                    let mut x_256: Obj;
-                                                                    let mut x_257: f64;
-                                                                    let mut x_258: Obj;
-                                                                    let mut x_259: f64;
-                                                                    let mut x_260: f64;
-                                                                    let mut x_261: f64;
-                                                                    let mut x_262: f64;
-                                                                    let mut x_263: f64;
-                                                                    let mut x_264: f64;
-                                                                    'b255: {
-                                                                        let mut x_267: Obj;
-                                                                        let mut x_268: f64;
-                                                                        let mut x_269: Obj;
-                                                                        let mut x_270: f64;
-                                                                        let mut x_271: f64;
-                                                                        let mut x_272: f64;
-                                                                        let mut x_273: f64;
-                                                                        let mut x_274: f64;
-                                                                        let mut x_275: f64;
-                                                                        let mut x_276: f64;
-                                                                        let mut x_277: u8;
-                                                                        'b266: {
-                                                                            let mut x_280: f64;
-                                                                            let mut x_281: f64;
-                                                                            let mut x_282: f64;
-                                                                            let mut x_283: f64;
-                                                                            'b279: {
-                                                                                let mut x_296: f64;
-                                                                                let mut x_297: f64;
-                                                                                let mut x_298: f64;
-                                                                                let mut x_299: f64;
-                                                                                'b295: {
-                                                                                    let mut x_302: f64;
-                                                                                    let mut x_303: f64;
-                                                                                    let mut x_304: f64;
-                                                                                    let mut x_305: f64;
-                                                                                    let mut x_306: u8;
-                                                                                    'b301: {
-                                                                                        let x_308: Obj = l_Sand2_dreferenceLiquidVolume(x_226);
-                                                                                        let x_309: u64 = l_UInt64_dofNat(x_308);
-                                                                                        let x_310: f64 = l_UInt64_dtoFloat(x_309);
-                                                                                        let x_311: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__2();
-                                                                                        let x_312: f64 = l_Float_ddiv(x_310, x_311);
-                                                                                        let mut x_314: f64;
-                                                                                        'b313: {
-                                                                                            let mut x_324: f64;
-                                                                                            'b323: {
-                                                                                                let mut x_327: f64;
-                                                                                                let mut x_328: f64;
-                                                                                                let mut x_329: u8;
-                                                                                                'b326: {
-                                                                                                    let mut x_332: Obj;
-                                                                                                    'b331: {
-                                                                                                        let x_340: Obj = l_Sand2_dgasCount(x_2, x_1, x_6, x_49);
-                                                                                                        let x_341: u8 = l_Nat_ddecEq(x_340, x_56);
-                                                                                                        match x_341 {
+                            let x_494: Obj = rt::lean_ctor_get(x_5, 1);
+                            rt::lean_dec(x_494);
+                            x_22 = x_5;
+                            x_23 = x_493;
+                            break 'b21;
+                        }
+                        _ => {
+                            rt::lean_inc(x_20);
+                            rt::lean_dec(x_5);
+                            x_22 = rt::lean_box(0);
+                            x_23 = x_493;
+                            break 'b21;
+                        }
+                    }
+                }
+                let x_24: Obj = rt::lean_ctor_get(x_14, 0);
+                let mut x_26: Obj;
+                let mut x_27: u8;
+                'b25: {
+                    let x_491: u8 = (!rt::lean_is_exclusive(x_14)) as u8;
+                    match x_491 {
+                        0 => {
+                            let x_492: Obj = rt::lean_ctor_get(x_14, 1);
+                            rt::lean_dec(x_492);
+                            x_26 = x_14;
+                            x_27 = x_491;
+                            break 'b25;
+                        }
+                        _ => {
+                            rt::lean_inc(x_24);
+                            rt::lean_dec(x_14);
+                            x_26 = rt::lean_box(0);
+                            x_27 = x_491;
+                            break 'b25;
+                        }
+                    }
+                }
+                let x_28: Obj = rt::lean_ctor_get(x_15, 0);
+                let mut x_30: Obj;
+                let mut x_31: u8;
+                'b29: {
+                    let x_489: u8 = (!rt::lean_is_exclusive(x_15)) as u8;
+                    match x_489 {
+                        0 => {
+                            let x_490: Obj = rt::lean_ctor_get(x_15, 1);
+                            rt::lean_dec(x_490);
+                            x_30 = x_15;
+                            x_31 = x_489;
+                            break 'b29;
+                        }
+                        _ => {
+                            rt::lean_inc(x_28);
+                            rt::lean_dec(x_15);
+                            x_30 = rt::lean_box(0);
+                            x_31 = x_489;
+                            break 'b29;
+                        }
+                    }
+                }
+                let x_32: Obj = rt::lean_ctor_get(x_16, 0);
+                let mut x_34: Obj;
+                let mut x_35: u8;
+                'b33: {
+                    let x_487: u8 = (!rt::lean_is_exclusive(x_16)) as u8;
+                    match x_487 {
+                        0 => {
+                            let x_488: Obj = rt::lean_ctor_get(x_16, 1);
+                            rt::lean_dec(x_488);
+                            x_34 = x_16;
+                            x_35 = x_487;
+                            break 'b33;
+                        }
+                        _ => {
+                            rt::lean_inc(x_32);
+                            rt::lean_dec(x_16);
+                            x_34 = rt::lean_box(0);
+                            x_35 = x_487;
+                            break 'b33;
+                        }
+                    }
+                }
+                let x_36: Obj = rt::lean_ctor_get(x_17, 0);
+                let mut x_38: Obj;
+                let mut x_39: u8;
+                'b37: {
+                    let x_485: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
+                    match x_485 {
+                        0 => {
+                            let x_486: Obj = rt::lean_ctor_get(x_17, 1);
+                            rt::lean_dec(x_486);
+                            x_38 = x_17;
+                            x_39 = x_485;
+                            break 'b37;
+                        }
+                        _ => {
+                            rt::lean_inc(x_36);
+                            rt::lean_dec(x_17);
+                            x_38 = rt::lean_box(0);
+                            x_39 = x_485;
+                            break 'b37;
+                        }
+                    }
+                }
+                let x_40: Obj = rt::lean_ctor_get(x_18, 0);
+                let mut x_42: Obj;
+                let mut x_43: u8;
+                'b41: {
+                    let x_483: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
+                    match x_483 {
+                        0 => {
+                            let x_484: Obj = rt::lean_ctor_get(x_18, 1);
+                            rt::lean_dec(x_484);
+                            x_42 = x_18;
+                            x_43 = x_483;
+                            break 'b41;
+                        }
+                        _ => {
+                            rt::lean_inc(x_40);
+                            rt::lean_dec(x_18);
+                            x_42 = rt::lean_box(0);
+                            x_43 = x_483;
+                            break 'b41;
+                        }
+                    }
+                }
+                let x_44: Obj = rt::lean_ctor_get(x_19, 0);
+                let x_45: Obj = rt::lean_ctor_get(x_19, 1);
+                let mut x_47: Obj;
+                let mut x_48: u8;
+                'b46: {
+                    let x_482: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
+                    match x_482 {
+                        0 => {
+                            x_47 = x_19;
+                            x_48 = x_482;
+                            break 'b46;
+                        }
+                        _ => {
+                            rt::lean_inc(x_45);
+                            rt::lean_inc(x_44);
+                            rt::lean_dec(x_19);
+                            x_47 = rt::lean_box(0);
+                            x_48 = x_482;
+                            break 'b46;
+                        }
+                    }
+                }
+                let mut x_50: Obj;
+                let mut x_51: f64;
+                let mut x_52: Obj;
+                let mut x_53: Obj;
+                let mut x_54: Obj;
+                let mut x_55: f64;
+                let mut x_56: Obj;
+                let mut x_57: Obj;
+                let mut x_58: Obj;
+                let mut x_59: f64;
+                let mut x_60: f64;
+                'b49: {
+                    let x_86: Obj = l_Sand2_dread(x_1, x_2, x_3, x_6);
+                    let x_87: u8 = rt::lean_ctor_get_uint8(x_86, 16 * ::core::mem::size_of::<usize>() + 1);
+                    match x_87 {
+                        0 => {
+                            let x_88: Obj = rt::lean_ctor_get(x_86, 0);
+                            rt::lean_inc_ref(x_88);
+                            let x_89: Obj = rt::lean_ctor_get(x_86, 1);
+                            rt::lean_inc(x_89);
+                            let x_90: Obj = rt::lean_ctor_get(x_86, 4);
+                            rt::lean_inc(x_90);
+                            let x_91: Obj = rt::lean_ctor_get(x_86, 6);
+                            rt::lean_inc(x_91);
+                            let x_92: Obj = rt::lean_ctor_get(x_86, 7);
+                            rt::lean_inc(x_92);
+                            let x_93: Obj = rt::lean_ctor_get(x_86, 10);
+                            rt::lean_inc(x_93);
+                            let x_94: Obj = rt::lean_ctor_get(x_88, 0);
+                            rt::lean_inc_ref_n(x_86, 2);
+                            let x_95: Obj = l_Sand2_dthermalEnergy(x_2, x_1, x_6, x_86);
+                            let x_96: Obj = rt::nat::lean_usize_to_nat(1);
+                            let x_97: f64 = l_Sand2_dgasGamma_d__closed__0();
+                            let mut x_99: Obj;
+                            let mut x_100: f64;
+                            let mut x_101: Obj;
+                            let mut x_102: Obj;
+                            let mut x_103: Obj;
+                            let mut x_104: f64;
+                            let mut x_105: f64;
+                            let mut x_106: Obj;
+                            let mut x_107: f64;
+                            let mut x_108: f64;
+                            let mut x_109: Obj;
+                            let mut x_110: Obj;
+                            let mut x_111: f64;
+                            let mut x_112: Obj;
+                            'b98: {
+                                let x_119: Obj = rt::nat::lean_usize_to_nat(18);
+                                let x_120: Obj = rt::nat::lean_usize_to_nat(6);
+                                let x_121: f64 = l_Float_dofScientific(x_119, x_13, x_120);
+                                let x_122: Obj = rt::nat::lean_usize_to_nat(0);
+                                let x_123: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
+                                let x_124: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_86, x_95);
+                                let x_125: Obj = l_Sand2_dvaporWaterFast(x_86, x_95);
+                                let mut x_127: f64;
+                                let mut x_128: f64;
+                                let mut x_129: Obj;
+                                let mut x_130: Obj;
+                                let mut x_131: Obj;
+                                let mut x_132: f64;
+                                let mut x_133: Obj;
+                                let mut x_134: f64;
+                                let mut x_135: f64;
+                                let mut x_136: Obj;
+                                let mut x_137: Obj;
+                                let mut x_138: f64;
+                                'b126: {
+                                    let mut x_151: f64;
+                                    let mut x_152: f64;
+                                    let mut x_153: Obj;
+                                    let mut x_154: Obj;
+                                    let mut x_155: Obj;
+                                    let mut x_156: f64;
+                                    let mut x_157: f64;
+                                    let mut x_158: f64;
+                                    let mut x_159: Obj;
+                                    let mut x_160: Obj;
+                                    let mut x_161: Obj;
+                                    let mut x_162: f64;
+                                    let mut x_163: f64;
+                                    'b150: {
+                                        let mut x_166: f64;
+                                        let mut x_167: Obj;
+                                        let mut x_168: Obj;
+                                        let mut x_169: f64;
+                                        let mut x_170: Obj;
+                                        let mut x_171: f64;
+                                        let mut x_172: f64;
+                                        let mut x_173: Obj;
+                                        let mut x_174: f64;
+                                        let mut x_175: f64;
+                                        let mut x_176: f64;
+                                        let mut x_177: Obj;
+                                        let mut x_178: f64;
+                                        let mut x_179: Obj;
+                                        let mut x_180: u8;
+                                        'b165: {
+                                            let mut x_183: f64;
+                                            let mut x_184: f64;
+                                            let mut x_185: Obj;
+                                            let mut x_186: Obj;
+                                            let mut x_187: f64;
+                                            let mut x_188: Obj;
+                                            let mut x_189: f64;
+                                            let mut x_190: f64;
+                                            let mut x_191: Obj;
+                                            let mut x_192: f64;
+                                            let mut x_193: f64;
+                                            let mut x_194: Obj;
+                                            let mut x_195: Obj;
+                                            let mut x_196: f64;
+                                            let mut x_197: f64;
+                                            'b182: {
+                                                let mut x_202: f64;
+                                                let mut x_203: f64;
+                                                let mut x_204: Obj;
+                                                let mut x_205: Obj;
+                                                let mut x_206: f64;
+                                                let mut x_207: Obj;
+                                                let mut x_208: f64;
+                                                let mut x_209: f64;
+                                                let mut x_210: Obj;
+                                                let mut x_211: f64;
+                                                let mut x_212: f64;
+                                                let mut x_213: Obj;
+                                                let mut x_214: f64;
+                                                let mut x_215: Obj;
+                                                let mut x_216: Obj;
+                                                'b201: {
+                                                    let mut x_229: f64;
+                                                    let mut x_230: f64;
+                                                    let mut x_231: Obj;
+                                                    let mut x_232: f64;
+                                                    let mut x_233: Obj;
+                                                    let mut x_234: f64;
+                                                    let mut x_235: f64;
+                                                    let mut x_236: Obj;
+                                                    let mut x_237: f64;
+                                                    let mut x_238: Obj;
+                                                    let mut x_239: f64;
+                                                    let mut x_240: f64;
+                                                    let mut x_241: Obj;
+                                                    let mut x_242: f64;
+                                                    'b228: {
+                                                        let mut x_246: f64;
+                                                        let mut x_247: f64;
+                                                        let mut x_248: Obj;
+                                                        let mut x_249: f64;
+                                                        let mut x_250: Obj;
+                                                        let mut x_251: f64;
+                                                        let mut x_252: f64;
+                                                        let mut x_253: Obj;
+                                                        let mut x_254: f64;
+                                                        let mut x_255: Obj;
+                                                        let mut x_256: f64;
+                                                        let mut x_257: f64;
+                                                        let mut x_258: Obj;
+                                                        let mut x_259: f64;
+                                                        'b245: {
+                                                            let mut x_262: f64;
+                                                            let mut x_263: f64;
+                                                            let mut x_264: Obj;
+                                                            let mut x_265: f64;
+                                                            let mut x_266: f64;
+                                                            let mut x_267: Obj;
+                                                            let mut x_268: f64;
+                                                            let mut x_269: f64;
+                                                            let mut x_270: Obj;
+                                                            let mut x_271: f64;
+                                                            let mut x_272: Obj;
+                                                            let mut x_273: f64;
+                                                            let mut x_274: Obj;
+                                                            let mut x_275: f64;
+                                                            let mut x_276: u8;
+                                                            'b261: {
+                                                                let mut x_279: f64;
+                                                                let mut x_280: f64;
+                                                                let mut x_281: Obj;
+                                                                let mut x_282: f64;
+                                                                let mut x_283: Obj;
+                                                                let mut x_284: f64;
+                                                                let mut x_285: f64;
+                                                                let mut x_286: Obj;
+                                                                let mut x_287: f64;
+                                                                let mut x_288: Obj;
+                                                                let mut x_289: f64;
+                                                                let mut x_290: Obj;
+                                                                let mut x_291: f64;
+                                                                let mut x_292: f64;
+                                                                'b278: {
+                                                                    let mut x_297: f64;
+                                                                    let mut x_298: f64;
+                                                                    let mut x_299: Obj;
+                                                                    let mut x_300: f64;
+                                                                    let mut x_301: Obj;
+                                                                    let mut x_302: f64;
+                                                                    let mut x_303: f64;
+                                                                    let mut x_304: Obj;
+                                                                    let mut x_305: f64;
+                                                                    let mut x_306: Obj;
+                                                                    let mut x_307: f64;
+                                                                    let mut x_308: Obj;
+                                                                    let mut x_309: f64;
+                                                                    let mut x_310: Obj;
+                                                                    'b296: {
+                                                                        let mut x_323: f64;
+                                                                        let mut x_324: f64;
+                                                                        let mut x_325: f64;
+                                                                        let mut x_326: Obj;
+                                                                        let mut x_327: f64;
+                                                                        let mut x_328: Obj;
+                                                                        let mut x_329: f64;
+                                                                        let mut x_330: Obj;
+                                                                        let mut x_331: Obj;
+                                                                        let mut x_332: f64;
+                                                                        'b322: {
+                                                                            let mut x_344: f64;
+                                                                            let mut x_345: f64;
+                                                                            let mut x_346: f64;
+                                                                            let mut x_347: Obj;
+                                                                            let mut x_348: Obj;
+                                                                            let mut x_349: f64;
+                                                                            let mut x_350: f64;
+                                                                            let mut x_351: Obj;
+                                                                            let mut x_352: Obj;
+                                                                            let mut x_353: f64;
+                                                                            let mut x_354: f64;
+                                                                            'b343: {
+                                                                                let mut x_357: f64;
+                                                                                let mut x_358: f64;
+                                                                                let mut x_359: f64;
+                                                                                let mut x_360: Obj;
+                                                                                let mut x_361: f64;
+                                                                                let mut x_362: f64;
+                                                                                let mut x_363: Obj;
+                                                                                let mut x_364: f64;
+                                                                                let mut x_365: f64;
+                                                                                let mut x_366: Obj;
+                                                                                let mut x_367: Obj;
+                                                                                let mut x_368: f64;
+                                                                                let mut x_369: u8;
+                                                                                'b356: {
+                                                                                    let mut x_372: f64;
+                                                                                    let mut x_373: f64;
+                                                                                    let mut x_374: f64;
+                                                                                    let mut x_375: Obj;
+                                                                                    let mut x_376: Obj;
+                                                                                    let mut x_377: f64;
+                                                                                    'b371: {
+                                                                                        let mut x_389: f64;
+                                                                                        let mut x_390: f64;
+                                                                                        let mut x_391: f64;
+                                                                                        let mut x_392: Obj;
+                                                                                        let mut x_393: Obj;
+                                                                                        let mut x_394: f64;
+                                                                                        'b388: {
+                                                                                            let mut x_397: f64;
+                                                                                            let mut x_398: f64;
+                                                                                            let mut x_399: f64;
+                                                                                            let mut x_400: f64;
+                                                                                            let mut x_401: Obj;
+                                                                                            let mut x_402: Obj;
+                                                                                            let mut x_403: u8;
+                                                                                            'b396: {
+                                                                                                let mut x_406: f64;
+                                                                                                let mut x_407: Obj;
+                                                                                                let mut x_408: Obj;
+                                                                                                let mut x_409: f64;
+                                                                                                'b405: {
+                                                                                                    let mut x_419: f64;
+                                                                                                    let mut x_420: Obj;
+                                                                                                    let mut x_421: Obj;
+                                                                                                    let mut x_422: f64;
+                                                                                                    'b418: {
+                                                                                                        let mut x_425: f64;
+                                                                                                        let mut x_426: f64;
+                                                                                                        let mut x_427: f64;
+                                                                                                        let mut x_428: Obj;
+                                                                                                        let mut x_429: Obj;
+                                                                                                        let mut x_430: u8;
+                                                                                                        'b424: {
+                                                                                                            let mut x_433: f64;
+                                                                                                            let mut x_434: Obj;
+                                                                                                            let mut x_435: Obj;
+                                                                                                            let mut x_436: Obj;
+                                                                                                            'b432: {
+                                                                                                                'b444: {
+                                                                                                                    'b458: {
+                                                                                                                        let x_473: u8 = l_Nat_ddecEq(x_94, x_122);
+                                                                                                                        match x_473 {
+                                                                                                                            0 => {
+                                                                                                                                break 'b458;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                let x_474: u8 = l_Nat_ddecEq(x_90, x_122);
+                                                                                                                                match x_474 {
+                                                                                                                                    0 => {
+                                                                                                                                        break 'b458;
+                                                                                                                                    }
+                                                                                                                                    _ => {
+                                                                                                                                        rt::lean_dec(x_90);
+                                                                                                                                        break 'b444;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    let x_459: Obj = l_Sand2_dChemistry_dmass(x_124);
+                                                                                                                    let x_460: Obj = rt::nat::lean_usize_to_nat(10000000);
+                                                                                                                    let x_461: Obj = l_Nat_dadd(x_459, x_460);
+                                                                                                                    rt::lean_dec(x_459);
+                                                                                                                    let x_462: Obj = l_Nat_dsub(x_94, x_125);
+                                                                                                                    let x_463: Obj = l_Nat_dmul(x_119, x_462);
+                                                                                                                    rt::lean_dec(x_462);
+                                                                                                                    let x_464: Obj = l_Nat_dadd(x_90, x_463);
+                                                                                                                    rt::lean_dec(x_463);
+                                                                                                                    rt::lean_dec(x_90);
+                                                                                                                    let x_465: u8 = l_Nat_ddecLt(x_461, x_464);
+                                                                                                                    rt::lean_dec(x_464);
+                                                                                                                    rt::lean_dec(x_461);
+                                                                                                                    match x_465 {
+                                                                                                                        0 => {
+                                                                                                                            break 'b444;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            rt::lean_dec(x_125);
+                                                                                                                            rt::lean_dec_ref(x_124);
+                                                                                                                            rt::lean_dec(x_95);
+                                                                                                                            rt::lean_dec(x_93);
+                                                                                                                            rt::lean_dec(x_92);
+                                                                                                                            rt::lean_dec(x_91);
+                                                                                                                            rt::lean_dec(x_89);
+                                                                                                                            rt::lean_dec_ref(x_88);
+                                                                                                                            rt::lean_dec_ref(x_86);
+                                                                                                                            rt::lean_del_object(x_47);
+                                                                                                                            rt::lean_del_object(x_42);
+                                                                                                                            rt::lean_del_object(x_38);
+                                                                                                                            rt::lean_del_object(x_34);
+                                                                                                                            rt::lean_del_object(x_30);
+                                                                                                                            rt::lean_del_object(x_26);
+                                                                                                                            rt::lean_del_object(x_22);
+                                                                                                                            let x_466: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_466, 0, x_44);
+                                                                                                                            rt::lean_ctor_set(x_466, 1, x_45);
+                                                                                                                            let x_467: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_467, 0, x_40);
+                                                                                                                            rt::lean_ctor_set(x_467, 1, x_466);
+                                                                                                                            let x_468: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_468, 0, x_36);
+                                                                                                                            rt::lean_ctor_set(x_468, 1, x_467);
+                                                                                                                            let x_469: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_469, 0, x_32);
+                                                                                                                            rt::lean_ctor_set(x_469, 1, x_468);
+                                                                                                                            let x_470: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_470, 0, x_28);
+                                                                                                                            rt::lean_ctor_set(x_470, 1, x_469);
+                                                                                                                            let x_471: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_471, 0, x_24);
+                                                                                                                            rt::lean_ctor_set(x_471, 1, x_470);
+                                                                                                                            let x_472: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                            rt::lean_ctor_set(x_472, 0, x_20);
+                                                                                                                            rt::lean_ctor_set(x_472, 1, x_471);
+                                                                                                                            x_10 = x_472;
+                                                                                                                            break 'b9;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                let x_445: Obj = rt::lean_box(x_13 as usize);
+                                                                                                                let x_446: Obj = l_Array_dset_x21_(rt::lean_box(0), x_20, x_6, x_445);
+                                                                                                                let x_447: Obj = l_Sand2_dreferenceLiquidVolume(x_124);
+                                                                                                                let x_448: u64 = l_UInt64_dofNat(x_447);
+                                                                                                                let x_449: f64 = l_UInt64_dtoFloat(x_448);
+                                                                                                                let x_450: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__2();
+                                                                                                                let x_451: f64 = l_Float_ddiv(x_449, x_450);
+                                                                                                                let x_452: Obj = l_Sand2_dChemistry_ddryGasMoles(x_88);
+                                                                                                                let x_453: Obj = l_Nat_dadd(x_452, x_125);
+                                                                                                                rt::lean_dec(x_452);
+                                                                                                                let x_454: u8 = l_Nat_ddecEq(x_453, x_122);
+                                                                                                                match x_454 {
+                                                                                                                    0 => {
+                                                                                                                        rt::lean_dec(x_93);
+                                                                                                                        let x_455: Obj = l_Sand2_dtemperatureFromEnthalpy(x_86, x_95);
+                                                                                                                        rt::lean_dec(x_95);
+                                                                                                                        rt::lean_inc(x_453);
+                                                                                                                        let x_456: Obj = l_Sand2_dmechanicalEOSPressure(x_447, x_453, x_455);
+                                                                                                                        rt::lean_dec(x_455);
+                                                                                                                        rt::lean_dec(x_447);
+                                                                                                                        x_433 = x_451;
+                                                                                                                        x_434 = x_453;
+                                                                                                                        x_435 = x_446;
+                                                                                                                        x_436 = x_456;
+                                                                                                                        break 'b432;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        rt::lean_dec(x_95);
+                                                                                                                        rt::lean_dec_ref(x_86);
+                                                                                                                        let x_457: Obj = l_Sand2_dquantizedLiquidPressure(x_447, x_93);
+                                                                                                                        rt::lean_dec(x_93);
+                                                                                                                        rt::lean_dec(x_447);
+                                                                                                                        x_433 = x_451;
+                                                                                                                        x_434 = x_453;
+                                                                                                                        x_435 = x_446;
+                                                                                                                        x_436 = x_457;
+                                                                                                                        break 'b432;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            let x_437: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__1();
+                                                                                                            let x_438: u64 = l_UInt64_dofNat(x_436);
+                                                                                                            rt::lean_dec(x_436);
+                                                                                                            let x_439: f64 = l_UInt64_dtoFloat(x_438);
+                                                                                                            let x_440: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__0();
+                                                                                                            let x_441: f64 = l_Float_ddiv(x_439, x_440);
+                                                                                                            let x_442: u8 = l_Float_disNaN(x_441);
+                                                                                                            match x_442 {
+                                                                                                                0 => {
+                                                                                                                    let x_443: u8 = l_Float_disInf(x_441);
+                                                                                                                    x_425 = x_437;
+                                                                                                                    x_426 = x_433;
+                                                                                                                    x_427 = x_441;
+                                                                                                                    x_428 = x_435;
+                                                                                                                    x_429 = x_434;
+                                                                                                                    x_430 = x_443;
+                                                                                                                    break 'b424;
+                                                                                                                }
+                                                                                                                _ => {
+                                                                                                                    x_425 = x_437;
+                                                                                                                    x_426 = x_433;
+                                                                                                                    x_427 = x_441;
+                                                                                                                    x_428 = x_435;
+                                                                                                                    x_429 = x_434;
+                                                                                                                    x_430 = x_442;
+                                                                                                                    break 'b424;
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        match x_430 {
                                                                                                             0 => {
-                                                                                                                rt::lean_inc_ref(x_49);
-                                                                                                                let x_342: Obj = l_Sand2_dtemperature(x_2, x_1, x_6, x_49);
-                                                                                                                let x_343: Obj = l_Sand2_dmechanicalEOSPressure(x_308, x_340, x_342);
-                                                                                                                rt::lean_dec(x_342);
-                                                                                                                rt::lean_dec(x_308);
-                                                                                                                x_332 = x_343;
-                                                                                                                break 'b331;
+                                                                                                                let x_431: u8 = l_Float_ddecLt(x_425, x_427);
+                                                                                                                match x_431 {
+                                                                                                                    0 => {
+                                                                                                                        x_419 = x_426;
+                                                                                                                        x_420 = x_429;
+                                                                                                                        x_421 = x_428;
+                                                                                                                        x_422 = x_427;
+                                                                                                                        break 'b418;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        x_419 = x_426;
+                                                                                                                        x_420 = x_429;
+                                                                                                                        x_421 = x_428;
+                                                                                                                        x_422 = x_425;
+                                                                                                                        break 'b418;
+                                                                                                                    }
+                                                                                                                }
                                                                                                             }
                                                                                                             _ => {
-                                                                                                                rt::lean_dec(x_340);
-                                                                                                                let x_344: Obj = rt::lean_ctor_get(x_49, 10);
-                                                                                                                rt::lean_inc(x_344);
-                                                                                                                let x_345: Obj = l_Sand2_dquantizedLiquidPressure(x_308, x_344);
-                                                                                                                rt::lean_dec(x_344);
-                                                                                                                rt::lean_dec(x_308);
-                                                                                                                x_332 = x_345;
-                                                                                                                break 'b331;
+                                                                                                                x_406 = x_426;
+                                                                                                                x_407 = x_428;
+                                                                                                                x_408 = x_429;
+                                                                                                                x_409 = x_123;
+                                                                                                                break 'b405;
                                                                                                             }
                                                                                                         }
                                                                                                     }
-                                                                                                    let x_333: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__1();
-                                                                                                    let x_334: u64 = l_UInt64_dofNat(x_332);
-                                                                                                    rt::lean_dec(x_332);
-                                                                                                    let x_335: f64 = l_UInt64_dtoFloat(x_334);
-                                                                                                    let x_336: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__0();
-                                                                                                    let x_337: f64 = l_Float_ddiv(x_335, x_336);
-                                                                                                    let x_338: u8 = l_Float_disNaN(x_337);
-                                                                                                    match x_338 {
+                                                                                                    let x_423: u8 = l_Float_ddecLt(x_123, x_422);
+                                                                                                    match x_423 {
                                                                                                         0 => {
-                                                                                                            let x_339: u8 = l_Float_disInf(x_337);
-                                                                                                            x_327 = x_337;
-                                                                                                            x_328 = x_333;
-                                                                                                            x_329 = x_339;
-                                                                                                            break 'b326;
+                                                                                                            x_406 = x_419;
+                                                                                                            x_407 = x_421;
+                                                                                                            x_408 = x_420;
+                                                                                                            x_409 = x_123;
+                                                                                                            break 'b405;
                                                                                                         }
                                                                                                         _ => {
-                                                                                                            x_327 = x_337;
-                                                                                                            x_328 = x_333;
-                                                                                                            x_329 = x_338;
-                                                                                                            break 'b326;
+                                                                                                            x_406 = x_419;
+                                                                                                            x_407 = x_421;
+                                                                                                            x_408 = x_420;
+                                                                                                            x_409 = x_422;
+                                                                                                            break 'b405;
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                                match x_329 {
+                                                                                                let x_410: f64 = l_Sand2_dmixtureEOSPressure_d__closed__0();
+                                                                                                let x_411: f64 = l_Float_dmul(x_406, x_410);
+                                                                                                let x_412: f64 = l_Float_dadd(x_410, x_409);
+                                                                                                let x_413: f64 = l_Sand2_dmixtureEOSPressure_d__closed__1();
+                                                                                                let x_414: f64 = l_Float_dsub(x_412, x_413);
+                                                                                                let x_415: f64 = l_Float_ddiv(x_411, x_414);
+                                                                                                let x_416: u8 = l_Float_disNaN(x_415);
+                                                                                                match x_416 {
                                                                                                     0 => {
-                                                                                                        let x_330: u8 = l_Float_ddecLt(x_328, x_327);
-                                                                                                        match x_330 {
-                                                                                                            0 => {
-                                                                                                                x_324 = x_327;
-                                                                                                                break 'b323;
-                                                                                                            }
-                                                                                                            _ => {
-                                                                                                                x_324 = x_328;
-                                                                                                                break 'b323;
-                                                                                                            }
-                                                                                                        }
+                                                                                                        let x_417: u8 = l_Float_disInf(x_415);
+                                                                                                        x_397 = x_410;
+                                                                                                        x_398 = x_409;
+                                                                                                        x_399 = x_415;
+                                                                                                        x_400 = x_413;
+                                                                                                        x_401 = x_408;
+                                                                                                        x_402 = x_407;
+                                                                                                        x_403 = x_417;
+                                                                                                        break 'b396;
                                                                                                     }
                                                                                                     _ => {
-                                                                                                        x_314 = x_57;
-                                                                                                        break 'b313;
+                                                                                                        x_397 = x_410;
+                                                                                                        x_398 = x_409;
+                                                                                                        x_399 = x_415;
+                                                                                                        x_400 = x_413;
+                                                                                                        x_401 = x_408;
+                                                                                                        x_402 = x_407;
+                                                                                                        x_403 = x_416;
+                                                                                                        break 'b396;
                                                                                                     }
                                                                                                 }
                                                                                             }
-                                                                                            let x_325: u8 = l_Float_ddecLt(x_57, x_324);
-                                                                                            match x_325 {
+                                                                                            match x_403 {
                                                                                                 0 => {
-                                                                                                    x_314 = x_57;
-                                                                                                    break 'b313;
+                                                                                                    let x_404: u8 = l_Float_ddecLt(x_97, x_399);
+                                                                                                    match x_404 {
+                                                                                                        0 => {
+                                                                                                            x_389 = x_397;
+                                                                                                            x_390 = x_398;
+                                                                                                            x_391 = x_400;
+                                                                                                            x_392 = x_402;
+                                                                                                            x_393 = x_401;
+                                                                                                            x_394 = x_399;
+                                                                                                            break 'b388;
+                                                                                                        }
+                                                                                                        _ => {
+                                                                                                            x_389 = x_397;
+                                                                                                            x_390 = x_398;
+                                                                                                            x_391 = x_400;
+                                                                                                            x_392 = x_402;
+                                                                                                            x_393 = x_401;
+                                                                                                            x_394 = x_97;
+                                                                                                            break 'b388;
+                                                                                                        }
+                                                                                                    }
                                                                                                 }
                                                                                                 _ => {
-                                                                                                    x_314 = x_324;
-                                                                                                    break 'b313;
+                                                                                                    x_372 = x_397;
+                                                                                                    x_373 = x_398;
+                                                                                                    x_374 = x_400;
+                                                                                                    x_375 = x_401;
+                                                                                                    x_376 = x_402;
+                                                                                                    x_377 = x_123;
+                                                                                                    break 'b371;
                                                                                                 }
                                                                                             }
                                                                                         }
-                                                                                        let x_315: f64 = l_Sand2_dmixtureEOSPressure_d__closed__0();
-                                                                                        let x_316: f64 = l_Float_dmul(x_312, x_315);
-                                                                                        let x_317: f64 = l_Float_dadd(x_315, x_314);
-                                                                                        let x_318: f64 = l_Sand2_dmixtureEOSPressure_d__closed__1();
-                                                                                        let x_319: f64 = l_Float_dsub(x_317, x_318);
-                                                                                        let x_320: f64 = l_Float_ddiv(x_316, x_319);
-                                                                                        let x_321: u8 = l_Float_disNaN(x_320);
-                                                                                        match x_321 {
+                                                                                        let x_395: u8 = l_Float_ddecLt(x_123, x_394);
+                                                                                        match x_395 {
                                                                                             0 => {
-                                                                                                let x_322: u8 = l_Float_disInf(x_320);
-                                                                                                x_302 = x_320;
-                                                                                                x_303 = x_318;
-                                                                                                x_304 = x_314;
-                                                                                                x_305 = x_315;
-                                                                                                x_306 = x_322;
-                                                                                                break 'b301;
+                                                                                                x_372 = x_389;
+                                                                                                x_373 = x_390;
+                                                                                                x_374 = x_391;
+                                                                                                x_375 = x_393;
+                                                                                                x_376 = x_392;
+                                                                                                x_377 = x_123;
+                                                                                                break 'b371;
                                                                                             }
                                                                                             _ => {
-                                                                                                x_302 = x_320;
-                                                                                                x_303 = x_318;
-                                                                                                x_304 = x_314;
-                                                                                                x_305 = x_315;
-                                                                                                x_306 = x_321;
-                                                                                                break 'b301;
+                                                                                                x_372 = x_389;
+                                                                                                x_373 = x_390;
+                                                                                                x_374 = x_391;
+                                                                                                x_375 = x_393;
+                                                                                                x_376 = x_392;
+                                                                                                x_377 = x_394;
+                                                                                                break 'b371;
                                                                                             }
                                                                                         }
                                                                                     }
-                                                                                    match x_306 {
+                                                                                    let x_378: Obj = l_FloatArray_dset_x21_(x_24, x_6, x_377);
+                                                                                    let x_379: Obj = rt::nat::lean_usize_to_nat(3);
+                                                                                    let x_380: f64 = l_Float_dofScientific(x_96, x_13, x_379);
+                                                                                    let x_381: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0();
+                                                                                    let x_382: u64 = l_UInt64_dofNat(x_89);
+                                                                                    let x_383: f64 = l_UInt64_dtoFloat(x_382);
+                                                                                    let x_384: f64 = l_Sand2_dliquidViscosity_d__closed__1();
+                                                                                    let x_385: f64 = l_Float_ddiv(x_383, x_384);
+                                                                                    let x_386: u8 = l_Float_disNaN(x_385);
+                                                                                    match x_386 {
                                                                                         0 => {
-                                                                                            let x_307: u8 = l_Float_ddecLt(x_52, x_302);
-                                                                                            match x_307 {
-                                                                                                0 => {
-                                                                                                    x_296 = x_303;
-                                                                                                    x_297 = x_305;
-                                                                                                    x_298 = x_304;
-                                                                                                    x_299 = x_302;
-                                                                                                    break 'b295;
-                                                                                                }
-                                                                                                _ => {
-                                                                                                    x_296 = x_303;
-                                                                                                    x_297 = x_305;
-                                                                                                    x_298 = x_304;
-                                                                                                    x_299 = x_52;
-                                                                                                    break 'b295;
-                                                                                                }
-                                                                                            }
+                                                                                            let x_387: u8 = l_Float_disInf(x_385);
+                                                                                            x_357 = x_384;
+                                                                                            x_358 = x_372;
+                                                                                            x_359 = x_373;
+                                                                                            x_360 = x_378;
+                                                                                            x_361 = x_385;
+                                                                                            x_362 = x_374;
+                                                                                            x_363 = x_379;
+                                                                                            x_364 = x_381;
+                                                                                            x_365 = x_377;
+                                                                                            x_366 = x_376;
+                                                                                            x_367 = x_375;
+                                                                                            x_368 = x_380;
+                                                                                            x_369 = x_387;
+                                                                                            break 'b356;
                                                                                         }
                                                                                         _ => {
-                                                                                            x_280 = x_303;
-                                                                                            x_281 = x_304;
-                                                                                            x_282 = x_305;
-                                                                                            x_283 = x_57;
-                                                                                            break 'b279;
+                                                                                            x_357 = x_384;
+                                                                                            x_358 = x_372;
+                                                                                            x_359 = x_373;
+                                                                                            x_360 = x_378;
+                                                                                            x_361 = x_385;
+                                                                                            x_362 = x_374;
+                                                                                            x_363 = x_379;
+                                                                                            x_364 = x_381;
+                                                                                            x_365 = x_377;
+                                                                                            x_366 = x_376;
+                                                                                            x_367 = x_375;
+                                                                                            x_368 = x_380;
+                                                                                            x_369 = x_386;
+                                                                                            break 'b356;
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                                let x_300: u8 = l_Float_ddecLt(x_57, x_299);
-                                                                                match x_300 {
+                                                                                match x_369 {
                                                                                     0 => {
-                                                                                        x_280 = x_296;
-                                                                                        x_281 = x_298;
-                                                                                        x_282 = x_297;
-                                                                                        x_283 = x_57;
-                                                                                        break 'b279;
+                                                                                        let x_370: u8 = l_Float_ddecLt(x_364, x_361);
+                                                                                        match x_370 {
+                                                                                            0 => {
+                                                                                                x_344 = x_357;
+                                                                                                x_345 = x_358;
+                                                                                                x_346 = x_359;
+                                                                                                x_347 = x_360;
+                                                                                                x_348 = x_363;
+                                                                                                x_349 = x_362;
+                                                                                                x_350 = x_365;
+                                                                                                x_351 = x_367;
+                                                                                                x_352 = x_366;
+                                                                                                x_353 = x_368;
+                                                                                                x_354 = x_361;
+                                                                                                break 'b343;
+                                                                                            }
+                                                                                            _ => {
+                                                                                                x_344 = x_357;
+                                                                                                x_345 = x_358;
+                                                                                                x_346 = x_359;
+                                                                                                x_347 = x_360;
+                                                                                                x_348 = x_363;
+                                                                                                x_349 = x_362;
+                                                                                                x_350 = x_365;
+                                                                                                x_351 = x_367;
+                                                                                                x_352 = x_366;
+                                                                                                x_353 = x_368;
+                                                                                                x_354 = x_364;
+                                                                                                break 'b343;
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                     _ => {
-                                                                                        x_280 = x_296;
-                                                                                        x_281 = x_298;
-                                                                                        x_282 = x_297;
-                                                                                        x_283 = x_299;
-                                                                                        break 'b279;
+                                                                                        x_323 = x_357;
+                                                                                        x_324 = x_358;
+                                                                                        x_325 = x_359;
+                                                                                        x_326 = x_360;
+                                                                                        x_327 = x_362;
+                                                                                        x_328 = x_363;
+                                                                                        x_329 = x_365;
+                                                                                        x_330 = x_366;
+                                                                                        x_331 = x_367;
+                                                                                        x_332 = x_123;
+                                                                                        break 'b322;
                                                                                     }
                                                                                 }
                                                                             }
-                                                                            let x_284: Obj = rt::lean_ctor_get(x_49, 1);
-                                                                            rt::lean_inc(x_284);
-                                                                            let x_285: Obj = l_FloatArray_dset_x21_(x_24, x_6, x_283);
-                                                                            let x_286: Obj = rt::nat::lean_usize_to_nat(3);
-                                                                            let x_287: f64 = l_Float_dofScientific(x_51, x_13, x_286);
-                                                                            let x_288: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0();
-                                                                            let x_289: u64 = l_UInt64_dofNat(x_284);
-                                                                            rt::lean_dec(x_284);
-                                                                            let x_290: f64 = l_UInt64_dtoFloat(x_289);
-                                                                            let x_291: f64 = l_Sand2_dliquidViscosity_d__closed__1();
-                                                                            let x_292: f64 = l_Float_ddiv(x_290, x_291);
-                                                                            let x_293: u8 = l_Float_disNaN(x_292);
-                                                                            match x_293 {
+                                                                            let x_355: u8 = l_Float_ddecLt(x_353, x_354);
+                                                                            match x_355 {
                                                                                 0 => {
-                                                                                    let x_294: u8 = l_Float_disInf(x_292);
-                                                                                    x_267 = x_286;
-                                                                                    x_268 = x_287;
-                                                                                    x_269 = x_285;
-                                                                                    x_270 = x_280;
-                                                                                    x_271 = x_282;
-                                                                                    x_272 = x_281;
-                                                                                    x_273 = x_283;
-                                                                                    x_274 = x_288;
-                                                                                    x_275 = x_291;
-                                                                                    x_276 = x_292;
-                                                                                    x_277 = x_294;
-                                                                                    break 'b266;
+                                                                                    x_323 = x_344;
+                                                                                    x_324 = x_345;
+                                                                                    x_325 = x_346;
+                                                                                    x_326 = x_347;
+                                                                                    x_327 = x_349;
+                                                                                    x_328 = x_348;
+                                                                                    x_329 = x_350;
+                                                                                    x_330 = x_352;
+                                                                                    x_331 = x_351;
+                                                                                    x_332 = x_353;
+                                                                                    break 'b322;
                                                                                 }
                                                                                 _ => {
-                                                                                    x_267 = x_286;
-                                                                                    x_268 = x_287;
-                                                                                    x_269 = x_285;
-                                                                                    x_270 = x_280;
-                                                                                    x_271 = x_282;
-                                                                                    x_272 = x_281;
-                                                                                    x_273 = x_283;
-                                                                                    x_274 = x_288;
-                                                                                    x_275 = x_291;
-                                                                                    x_276 = x_292;
-                                                                                    x_277 = x_293;
-                                                                                    break 'b266;
+                                                                                    x_323 = x_344;
+                                                                                    x_324 = x_345;
+                                                                                    x_325 = x_346;
+                                                                                    x_326 = x_347;
+                                                                                    x_327 = x_349;
+                                                                                    x_328 = x_348;
+                                                                                    x_329 = x_350;
+                                                                                    x_330 = x_352;
+                                                                                    x_331 = x_351;
+                                                                                    x_332 = x_354;
+                                                                                    break 'b322;
                                                                                 }
                                                                             }
                                                                         }
-                                                                        match x_277 {
+                                                                        let x_333: Obj = l_FloatArray_dset_x21_(x_28, x_6, x_332);
+                                                                        let x_334: f64 = l_Sand2_dliquidViscosity(x_124);
+                                                                        rt::lean_dec_ref(x_124);
+                                                                        let x_335: f64 = l_Float_dmul(x_329, x_334);
+                                                                        let x_336: f64 = l_Float_dsub(x_97, x_329);
+                                                                        let x_337: f64 = l_Float_dmul(x_336, x_121);
+                                                                        let x_338: f64 = l_Float_dadd(x_335, x_337);
+                                                                        let x_339: Obj = l_FloatArray_dset_x21_(x_32, x_6, x_338);
+                                                                        let x_340: f64 = l_Float_dofNat(x_328);
+                                                                        let x_341: f64 = l_Float_dneg(x_340);
+                                                                        let x_342: u8 = l_Nat_ddecLe(x_96, x_89);
+                                                                        match x_342 {
                                                                             0 => {
-                                                                                let x_278: u8 = l_Float_ddecLt(x_274, x_276);
-                                                                                match x_278 {
-                                                                                    0 => {
-                                                                                        x_256 = x_267;
-                                                                                        x_257 = x_268;
-                                                                                        x_258 = x_269;
-                                                                                        x_259 = x_270;
-                                                                                        x_260 = x_272;
-                                                                                        x_261 = x_271;
-                                                                                        x_262 = x_273;
-                                                                                        x_263 = x_275;
-                                                                                        x_264 = x_276;
-                                                                                        break 'b255;
-                                                                                    }
-                                                                                    _ => {
-                                                                                        x_256 = x_267;
-                                                                                        x_257 = x_268;
-                                                                                        x_258 = x_269;
-                                                                                        x_259 = x_270;
-                                                                                        x_260 = x_272;
-                                                                                        x_261 = x_271;
-                                                                                        x_262 = x_273;
-                                                                                        x_263 = x_275;
-                                                                                        x_264 = x_274;
-                                                                                        break 'b255;
-                                                                                    }
-                                                                                }
+                                                                                x_297 = x_323;
+                                                                                x_298 = x_324;
+                                                                                x_299 = x_326;
+                                                                                x_300 = x_341;
+                                                                                x_301 = x_331;
+                                                                                x_302 = x_340;
+                                                                                x_303 = x_325;
+                                                                                x_304 = x_333;
+                                                                                x_305 = x_327;
+                                                                                x_306 = x_339;
+                                                                                x_307 = x_329;
+                                                                                x_308 = x_330;
+                                                                                x_309 = x_336;
+                                                                                x_310 = x_96;
+                                                                                break 'b296;
                                                                             }
                                                                             _ => {
-                                                                                x_228 = x_267;
-                                                                                x_229 = x_269;
-                                                                                x_230 = x_270;
-                                                                                x_231 = x_271;
-                                                                                x_232 = x_272;
-                                                                                x_233 = x_273;
-                                                                                x_234 = x_275;
-                                                                                x_235 = x_57;
-                                                                                break 'b227;
+                                                                                rt::lean_inc(x_89);
+                                                                                x_297 = x_323;
+                                                                                x_298 = x_324;
+                                                                                x_299 = x_326;
+                                                                                x_300 = x_341;
+                                                                                x_301 = x_331;
+                                                                                x_302 = x_340;
+                                                                                x_303 = x_325;
+                                                                                x_304 = x_333;
+                                                                                x_305 = x_327;
+                                                                                x_306 = x_339;
+                                                                                x_307 = x_329;
+                                                                                x_308 = x_330;
+                                                                                x_309 = x_336;
+                                                                                x_310 = x_89;
+                                                                                break 'b296;
                                                                             }
                                                                         }
                                                                     }
-                                                                    let x_265: u8 = l_Float_ddecLt(x_257, x_264);
-                                                                    match x_265 {
+                                                                    let x_311: Obj = l_Int_dofNat(x_310);
+                                                                    let x_312: Obj = l_Int_dediv(x_91, x_311);
+                                                                    rt::lean_dec(x_311);
+                                                                    rt::lean_dec(x_91);
+                                                                    let x_313: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
+                                                                    let x_314: u8 = l_Int_ddecLt(x_312, x_313);
+                                                                    match x_314 {
                                                                         0 => {
-                                                                            x_228 = x_256;
-                                                                            x_229 = x_258;
-                                                                            x_230 = x_259;
-                                                                            x_231 = x_261;
-                                                                            x_232 = x_260;
-                                                                            x_233 = x_262;
-                                                                            x_234 = x_263;
-                                                                            x_235 = x_257;
-                                                                            break 'b227;
+                                                                            let x_315: Obj = l_Int_dtoNat(x_312);
+                                                                            rt::lean_dec(x_312);
+                                                                            let x_316: u64 = l_UInt64_dofNat(x_315);
+                                                                            rt::lean_dec(x_315);
+                                                                            let x_317: f64 = l_UInt64_dtoFloat(x_316);
+                                                                            x_279 = x_297;
+                                                                            x_280 = x_298;
+                                                                            x_281 = x_299;
+                                                                            x_282 = x_300;
+                                                                            x_283 = x_301;
+                                                                            x_284 = x_302;
+                                                                            x_285 = x_303;
+                                                                            x_286 = x_304;
+                                                                            x_287 = x_305;
+                                                                            x_288 = x_306;
+                                                                            x_289 = x_307;
+                                                                            x_290 = x_308;
+                                                                            x_291 = x_309;
+                                                                            x_292 = x_317;
+                                                                            break 'b278;
                                                                         }
                                                                         _ => {
-                                                                            x_228 = x_256;
-                                                                            x_229 = x_258;
-                                                                            x_230 = x_259;
-                                                                            x_231 = x_261;
-                                                                            x_232 = x_260;
-                                                                            x_233 = x_262;
-                                                                            x_234 = x_263;
-                                                                            x_235 = x_264;
-                                                                            break 'b227;
+                                                                            let x_318: Obj = l_Int_dnatAbs(x_312);
+                                                                            rt::lean_dec(x_312);
+                                                                            let x_319: u64 = l_UInt64_dofNat(x_318);
+                                                                            rt::lean_dec(x_318);
+                                                                            let x_320: f64 = l_UInt64_dtoFloat(x_319);
+                                                                            let x_321: f64 = l_Float_dneg(x_320);
+                                                                            x_279 = x_297;
+                                                                            x_280 = x_298;
+                                                                            x_281 = x_299;
+                                                                            x_282 = x_300;
+                                                                            x_283 = x_301;
+                                                                            x_284 = x_302;
+                                                                            x_285 = x_303;
+                                                                            x_286 = x_304;
+                                                                            x_287 = x_305;
+                                                                            x_288 = x_306;
+                                                                            x_289 = x_307;
+                                                                            x_290 = x_308;
+                                                                            x_291 = x_309;
+                                                                            x_292 = x_321;
+                                                                            break 'b278;
                                                                         }
                                                                     }
                                                                 }
-                                                                let x_236: Obj = l_FloatArray_dset_x21_(x_28, x_6, x_235);
-                                                                let x_237: f64 = l_Sand2_dliquidViscosity(x_226);
-                                                                rt::lean_dec_ref(x_226);
-                                                                let x_238: f64 = l_Float_dmul(x_233, x_237);
-                                                                let x_239: f64 = l_Float_dsub(x_52, x_233);
-                                                                let x_240: f64 = l_Float_dmul(x_239, x_55);
-                                                                let x_241: f64 = l_Float_dadd(x_238, x_240);
-                                                                let x_242: Obj = l_FloatArray_dset_x21_(x_32, x_6, x_241);
-                                                                let x_243: f64 = l_Float_dofNat(x_228);
-                                                                let x_244: f64 = l_Float_dneg(x_243);
-                                                                rt::lean_inc_ref(x_49);
-                                                                let x_245: Obj = l_Sand2_dParticle_dvx(x_49);
-                                                                let x_246: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
-                                                                let x_247: u8 = l_Int_ddecLt(x_245, x_246);
-                                                                match x_247 {
+                                                                let x_293: f64 = l_Float_ddiv(x_292, x_279);
+                                                                let x_294: u8 = l_Float_disNaN(x_293);
+                                                                match x_294 {
                                                                     0 => {
-                                                                        let x_248: Obj = l_Int_dtoNat(x_245);
-                                                                        rt::lean_dec(x_245);
-                                                                        let x_249: u64 = l_UInt64_dofNat(x_248);
-                                                                        rt::lean_dec(x_248);
-                                                                        let x_250: f64 = l_UInt64_dtoFloat(x_249);
-                                                                        x_211 = x_243;
-                                                                        x_212 = x_242;
-                                                                        x_213 = x_244;
-                                                                        x_214 = x_229;
-                                                                        x_215 = x_230;
-                                                                        x_216 = x_236;
-                                                                        x_217 = x_231;
-                                                                        x_218 = x_232;
-                                                                        x_219 = x_233;
-                                                                        x_220 = x_239;
-                                                                        x_221 = x_234;
-                                                                        x_222 = x_250;
-                                                                        break 'b210;
+                                                                        let x_295: u8 = l_Float_disInf(x_293);
+                                                                        x_262 = x_279;
+                                                                        x_263 = x_280;
+                                                                        x_264 = x_281;
+                                                                        x_265 = x_282;
+                                                                        x_266 = x_293;
+                                                                        x_267 = x_283;
+                                                                        x_268 = x_284;
+                                                                        x_269 = x_285;
+                                                                        x_270 = x_286;
+                                                                        x_271 = x_287;
+                                                                        x_272 = x_288;
+                                                                        x_273 = x_289;
+                                                                        x_274 = x_290;
+                                                                        x_275 = x_291;
+                                                                        x_276 = x_295;
+                                                                        break 'b261;
                                                                     }
                                                                     _ => {
-                                                                        let x_251: Obj = l_Int_dnatAbs(x_245);
-                                                                        rt::lean_dec(x_245);
-                                                                        let x_252: u64 = l_UInt64_dofNat(x_251);
-                                                                        rt::lean_dec(x_251);
-                                                                        let x_253: f64 = l_UInt64_dtoFloat(x_252);
-                                                                        let x_254: f64 = l_Float_dneg(x_253);
-                                                                        x_211 = x_243;
-                                                                        x_212 = x_242;
-                                                                        x_213 = x_244;
-                                                                        x_214 = x_229;
-                                                                        x_215 = x_230;
-                                                                        x_216 = x_236;
-                                                                        x_217 = x_231;
-                                                                        x_218 = x_232;
-                                                                        x_219 = x_233;
-                                                                        x_220 = x_239;
-                                                                        x_221 = x_234;
-                                                                        x_222 = x_254;
-                                                                        break 'b210;
+                                                                        x_262 = x_279;
+                                                                        x_263 = x_280;
+                                                                        x_264 = x_281;
+                                                                        x_265 = x_282;
+                                                                        x_266 = x_293;
+                                                                        x_267 = x_283;
+                                                                        x_268 = x_284;
+                                                                        x_269 = x_285;
+                                                                        x_270 = x_286;
+                                                                        x_271 = x_287;
+                                                                        x_272 = x_288;
+                                                                        x_273 = x_289;
+                                                                        x_274 = x_290;
+                                                                        x_275 = x_291;
+                                                                        x_276 = x_294;
+                                                                        break 'b261;
                                                                     }
                                                                 }
                                                             }
-                                                            let x_223: f64 = l_Float_ddiv(x_222, x_221);
-                                                            let x_224: u8 = l_Float_disNaN(x_223);
-                                                            match x_224 {
+                                                            match x_276 {
                                                                 0 => {
-                                                                    let x_225: u8 = l_Float_disInf(x_223);
-                                                                    x_196 = x_211;
-                                                                    x_197 = x_212;
-                                                                    x_198 = x_213;
-                                                                    x_199 = x_214;
-                                                                    x_200 = x_216;
-                                                                    x_201 = x_215;
-                                                                    x_202 = x_223;
-                                                                    x_203 = x_218;
-                                                                    x_204 = x_217;
-                                                                    x_205 = x_219;
-                                                                    x_206 = x_220;
-                                                                    x_207 = x_221;
-                                                                    x_208 = x_225;
-                                                                    break 'b195;
+                                                                    let x_277: u8 = l_Float_ddecLt(x_268, x_266);
+                                                                    match x_277 {
+                                                                        0 => {
+                                                                            x_246 = x_262;
+                                                                            x_247 = x_263;
+                                                                            x_248 = x_264;
+                                                                            x_249 = x_265;
+                                                                            x_250 = x_267;
+                                                                            x_251 = x_268;
+                                                                            x_252 = x_269;
+                                                                            x_253 = x_270;
+                                                                            x_254 = x_271;
+                                                                            x_255 = x_272;
+                                                                            x_256 = x_273;
+                                                                            x_257 = x_275;
+                                                                            x_258 = x_274;
+                                                                            x_259 = x_266;
+                                                                            break 'b245;
+                                                                        }
+                                                                        _ => {
+                                                                            x_246 = x_262;
+                                                                            x_247 = x_263;
+                                                                            x_248 = x_264;
+                                                                            x_249 = x_265;
+                                                                            x_250 = x_267;
+                                                                            x_251 = x_268;
+                                                                            x_252 = x_269;
+                                                                            x_253 = x_270;
+                                                                            x_254 = x_271;
+                                                                            x_255 = x_272;
+                                                                            x_256 = x_273;
+                                                                            x_257 = x_275;
+                                                                            x_258 = x_274;
+                                                                            x_259 = x_268;
+                                                                            break 'b245;
+                                                                        }
+                                                                    }
                                                                 }
                                                                 _ => {
-                                                                    x_196 = x_211;
-                                                                    x_197 = x_212;
-                                                                    x_198 = x_213;
-                                                                    x_199 = x_214;
-                                                                    x_200 = x_216;
-                                                                    x_201 = x_215;
-                                                                    x_202 = x_223;
-                                                                    x_203 = x_218;
-                                                                    x_204 = x_217;
-                                                                    x_205 = x_219;
-                                                                    x_206 = x_220;
-                                                                    x_207 = x_221;
-                                                                    x_208 = x_224;
-                                                                    break 'b195;
+                                                                    x_229 = x_262;
+                                                                    x_230 = x_263;
+                                                                    x_231 = x_264;
+                                                                    x_232 = x_265;
+                                                                    x_233 = x_267;
+                                                                    x_234 = x_268;
+                                                                    x_235 = x_269;
+                                                                    x_236 = x_270;
+                                                                    x_237 = x_271;
+                                                                    x_238 = x_272;
+                                                                    x_239 = x_273;
+                                                                    x_240 = x_275;
+                                                                    x_241 = x_274;
+                                                                    x_242 = x_123;
+                                                                    break 'b228;
                                                                 }
                                                             }
                                                         }
-                                                        match x_208 {
+                                                        let x_260: u8 = l_Float_ddecLt(x_249, x_259);
+                                                        match x_260 {
                                                             0 => {
-                                                                let x_209: u8 = l_Float_ddecLt(x_196, x_202);
-                                                                match x_209 {
-                                                                    0 => {
-                                                                        x_182 = x_196;
-                                                                        x_183 = x_197;
-                                                                        x_184 = x_198;
-                                                                        x_185 = x_199;
-                                                                        x_186 = x_201;
-                                                                        x_187 = x_200;
-                                                                        x_188 = x_204;
-                                                                        x_189 = x_203;
-                                                                        x_190 = x_205;
-                                                                        x_191 = x_206;
-                                                                        x_192 = x_207;
-                                                                        x_193 = x_202;
-                                                                        break 'b181;
-                                                                    }
-                                                                    _ => {
-                                                                        x_182 = x_196;
-                                                                        x_183 = x_197;
-                                                                        x_184 = x_198;
-                                                                        x_185 = x_199;
-                                                                        x_186 = x_201;
-                                                                        x_187 = x_200;
-                                                                        x_188 = x_204;
-                                                                        x_189 = x_203;
-                                                                        x_190 = x_205;
-                                                                        x_191 = x_206;
-                                                                        x_192 = x_207;
-                                                                        x_193 = x_196;
-                                                                        break 'b181;
-                                                                    }
-                                                                }
+                                                                x_229 = x_246;
+                                                                x_230 = x_247;
+                                                                x_231 = x_248;
+                                                                x_232 = x_249;
+                                                                x_233 = x_250;
+                                                                x_234 = x_251;
+                                                                x_235 = x_252;
+                                                                x_236 = x_253;
+                                                                x_237 = x_254;
+                                                                x_238 = x_255;
+                                                                x_239 = x_256;
+                                                                x_240 = x_257;
+                                                                x_241 = x_258;
+                                                                x_242 = x_249;
+                                                                break 'b228;
                                                             }
                                                             _ => {
-                                                                x_158 = x_196;
-                                                                x_159 = x_197;
-                                                                x_160 = x_198;
-                                                                x_161 = x_199;
-                                                                x_162 = x_200;
-                                                                x_163 = x_201;
-                                                                x_164 = x_203;
-                                                                x_165 = x_204;
-                                                                x_166 = x_205;
-                                                                x_167 = x_206;
-                                                                x_168 = x_207;
-                                                                x_169 = x_57;
-                                                                break 'b157;
+                                                                x_229 = x_246;
+                                                                x_230 = x_247;
+                                                                x_231 = x_248;
+                                                                x_232 = x_249;
+                                                                x_233 = x_250;
+                                                                x_234 = x_251;
+                                                                x_235 = x_252;
+                                                                x_236 = x_253;
+                                                                x_237 = x_254;
+                                                                x_238 = x_255;
+                                                                x_239 = x_256;
+                                                                x_240 = x_257;
+                                                                x_241 = x_258;
+                                                                x_242 = x_259;
+                                                                break 'b228;
                                                             }
                                                         }
                                                     }
-                                                    let x_194: u8 = l_Float_ddecLt(x_184, x_193);
-                                                    match x_194 {
+                                                    let x_243: Obj = l_FloatArray_dset_x21_(x_36, x_6, x_242);
+                                                    let x_244: u8 = l_Nat_ddecLe(x_96, x_89);
+                                                    match x_244 {
                                                         0 => {
-                                                            x_158 = x_182;
-                                                            x_159 = x_183;
-                                                            x_160 = x_184;
-                                                            x_161 = x_185;
-                                                            x_162 = x_187;
-                                                            x_163 = x_186;
-                                                            x_164 = x_189;
-                                                            x_165 = x_188;
-                                                            x_166 = x_190;
-                                                            x_167 = x_191;
-                                                            x_168 = x_192;
-                                                            x_169 = x_184;
-                                                            break 'b157;
+                                                            rt::lean_dec(x_89);
+                                                            x_202 = x_229;
+                                                            x_203 = x_230;
+                                                            x_204 = x_231;
+                                                            x_205 = x_243;
+                                                            x_206 = x_232;
+                                                            x_207 = x_233;
+                                                            x_208 = x_234;
+                                                            x_209 = x_235;
+                                                            x_210 = x_236;
+                                                            x_211 = x_237;
+                                                            x_212 = x_239;
+                                                            x_213 = x_238;
+                                                            x_214 = x_240;
+                                                            x_215 = x_241;
+                                                            x_216 = x_96;
+                                                            break 'b201;
                                                         }
                                                         _ => {
-                                                            x_158 = x_182;
-                                                            x_159 = x_183;
-                                                            x_160 = x_184;
-                                                            x_161 = x_185;
-                                                            x_162 = x_187;
-                                                            x_163 = x_186;
-                                                            x_164 = x_189;
-                                                            x_165 = x_188;
-                                                            x_166 = x_190;
-                                                            x_167 = x_191;
-                                                            x_168 = x_192;
-                                                            x_169 = x_193;
-                                                            break 'b157;
+                                                            x_202 = x_229;
+                                                            x_203 = x_230;
+                                                            x_204 = x_231;
+                                                            x_205 = x_243;
+                                                            x_206 = x_232;
+                                                            x_207 = x_233;
+                                                            x_208 = x_234;
+                                                            x_209 = x_235;
+                                                            x_210 = x_236;
+                                                            x_211 = x_237;
+                                                            x_212 = x_239;
+                                                            x_213 = x_238;
+                                                            x_214 = x_240;
+                                                            x_215 = x_241;
+                                                            x_216 = x_89;
+                                                            break 'b201;
                                                         }
                                                     }
                                                 }
-                                                let x_170: Obj = l_FloatArray_dset_x21_(x_36, x_6, x_169);
-                                                rt::lean_inc_ref(x_49);
-                                                let x_171: Obj = l_Sand2_dParticle_dvy(x_49);
-                                                let x_172: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
-                                                let x_173: u8 = l_Int_ddecLt(x_171, x_172);
-                                                match x_173 {
+                                                let x_217: Obj = l_Int_dofNat(x_216);
+                                                let x_218: Obj = l_Int_dediv(x_92, x_217);
+                                                rt::lean_dec(x_217);
+                                                rt::lean_dec(x_92);
+                                                let x_219: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
+                                                let x_220: u8 = l_Int_ddecLt(x_218, x_219);
+                                                match x_220 {
                                                     0 => {
-                                                        let x_174: Obj = l_Int_dtoNat(x_171);
-                                                        rt::lean_dec(x_171);
-                                                        let x_175: u64 = l_UInt64_dofNat(x_174);
-                                                        rt::lean_dec(x_174);
-                                                        let x_176: f64 = l_UInt64_dtoFloat(x_175);
-                                                        x_141 = x_158;
-                                                        x_142 = x_159;
-                                                        x_143 = x_170;
-                                                        x_144 = x_160;
-                                                        x_145 = x_161;
-                                                        x_146 = x_162;
-                                                        x_147 = x_163;
-                                                        x_148 = x_164;
-                                                        x_149 = x_165;
-                                                        x_150 = x_166;
-                                                        x_151 = x_167;
-                                                        x_152 = x_168;
-                                                        x_153 = x_176;
-                                                        break 'b140;
+                                                        let x_221: Obj = l_Int_dtoNat(x_218);
+                                                        rt::lean_dec(x_218);
+                                                        let x_222: u64 = l_UInt64_dofNat(x_221);
+                                                        rt::lean_dec(x_221);
+                                                        let x_223: f64 = l_UInt64_dtoFloat(x_222);
+                                                        x_183 = x_202;
+                                                        x_184 = x_203;
+                                                        x_185 = x_204;
+                                                        x_186 = x_205;
+                                                        x_187 = x_206;
+                                                        x_188 = x_207;
+                                                        x_189 = x_208;
+                                                        x_190 = x_209;
+                                                        x_191 = x_210;
+                                                        x_192 = x_211;
+                                                        x_193 = x_212;
+                                                        x_194 = x_213;
+                                                        x_195 = x_215;
+                                                        x_196 = x_214;
+                                                        x_197 = x_223;
+                                                        break 'b182;
                                                     }
                                                     _ => {
-                                                        let x_177: Obj = l_Int_dnatAbs(x_171);
-                                                        rt::lean_dec(x_171);
-                                                        let x_178: u64 = l_UInt64_dofNat(x_177);
-                                                        rt::lean_dec(x_177);
-                                                        let x_179: f64 = l_UInt64_dtoFloat(x_178);
-                                                        let x_180: f64 = l_Float_dneg(x_179);
-                                                        x_141 = x_158;
-                                                        x_142 = x_159;
-                                                        x_143 = x_170;
-                                                        x_144 = x_160;
-                                                        x_145 = x_161;
-                                                        x_146 = x_162;
-                                                        x_147 = x_163;
-                                                        x_148 = x_164;
-                                                        x_149 = x_165;
-                                                        x_150 = x_166;
-                                                        x_151 = x_167;
-                                                        x_152 = x_168;
-                                                        x_153 = x_180;
-                                                        break 'b140;
+                                                        let x_224: Obj = l_Int_dnatAbs(x_218);
+                                                        rt::lean_dec(x_218);
+                                                        let x_225: u64 = l_UInt64_dofNat(x_224);
+                                                        rt::lean_dec(x_224);
+                                                        let x_226: f64 = l_UInt64_dtoFloat(x_225);
+                                                        let x_227: f64 = l_Float_dneg(x_226);
+                                                        x_183 = x_202;
+                                                        x_184 = x_203;
+                                                        x_185 = x_204;
+                                                        x_186 = x_205;
+                                                        x_187 = x_206;
+                                                        x_188 = x_207;
+                                                        x_189 = x_208;
+                                                        x_190 = x_209;
+                                                        x_191 = x_210;
+                                                        x_192 = x_211;
+                                                        x_193 = x_212;
+                                                        x_194 = x_213;
+                                                        x_195 = x_215;
+                                                        x_196 = x_214;
+                                                        x_197 = x_227;
+                                                        break 'b182;
                                                     }
                                                 }
                                             }
-                                            let x_154: f64 = l_Float_ddiv(x_153, x_152);
-                                            let x_155: u8 = l_Float_disNaN(x_154);
-                                            match x_155 {
+                                            let x_198: f64 = l_Float_ddiv(x_197, x_183);
+                                            let x_199: u8 = l_Float_disNaN(x_198);
+                                            match x_199 {
                                                 0 => {
-                                                    let x_156: u8 = l_Float_disInf(x_154);
-                                                    x_126 = x_141;
-                                                    x_127 = x_142;
-                                                    x_128 = x_144;
-                                                    x_129 = x_143;
-                                                    x_130 = x_145;
-                                                    x_131 = x_147;
-                                                    x_132 = x_146;
-                                                    x_133 = x_149;
-                                                    x_134 = x_148;
-                                                    x_135 = x_154;
-                                                    x_136 = x_150;
-                                                    x_137 = x_151;
-                                                    x_138 = x_156;
-                                                    break 'b125;
+                                                    let x_200: u8 = l_Float_disInf(x_198);
+                                                    x_166 = x_184;
+                                                    x_167 = x_185;
+                                                    x_168 = x_186;
+                                                    x_169 = x_187;
+                                                    x_170 = x_188;
+                                                    x_171 = x_189;
+                                                    x_172 = x_190;
+                                                    x_173 = x_191;
+                                                    x_174 = x_192;
+                                                    x_175 = x_198;
+                                                    x_176 = x_193;
+                                                    x_177 = x_194;
+                                                    x_178 = x_196;
+                                                    x_179 = x_195;
+                                                    x_180 = x_200;
+                                                    break 'b165;
                                                 }
                                                 _ => {
-                                                    x_126 = x_141;
-                                                    x_127 = x_142;
-                                                    x_128 = x_144;
-                                                    x_129 = x_143;
-                                                    x_130 = x_145;
-                                                    x_131 = x_147;
-                                                    x_132 = x_146;
-                                                    x_133 = x_149;
-                                                    x_134 = x_148;
-                                                    x_135 = x_154;
-                                                    x_136 = x_150;
-                                                    x_137 = x_151;
-                                                    x_138 = x_155;
-                                                    break 'b125;
+                                                    x_166 = x_184;
+                                                    x_167 = x_185;
+                                                    x_168 = x_186;
+                                                    x_169 = x_187;
+                                                    x_170 = x_188;
+                                                    x_171 = x_189;
+                                                    x_172 = x_190;
+                                                    x_173 = x_191;
+                                                    x_174 = x_192;
+                                                    x_175 = x_198;
+                                                    x_176 = x_193;
+                                                    x_177 = x_194;
+                                                    x_178 = x_196;
+                                                    x_179 = x_195;
+                                                    x_180 = x_199;
+                                                    break 'b165;
                                                 }
                                             }
                                         }
-                                        match x_138 {
+                                        match x_180 {
                                             0 => {
-                                                let x_139: u8 = l_Float_ddecLt(x_126, x_135);
-                                                match x_139 {
+                                                let x_181: u8 = l_Float_ddecLt(x_171, x_175);
+                                                match x_181 {
                                                     0 => {
-                                                        x_113 = x_127;
-                                                        x_114 = x_129;
-                                                        x_115 = x_128;
-                                                        x_116 = x_130;
-                                                        x_117 = x_132;
-                                                        x_118 = x_131;
-                                                        x_119 = x_134;
-                                                        x_120 = x_133;
-                                                        x_121 = x_136;
-                                                        x_122 = x_137;
-                                                        x_123 = x_135;
-                                                        break 'b112;
+                                                        x_151 = x_166;
+                                                        x_152 = x_172;
+                                                        x_153 = x_173;
+                                                        x_154 = x_167;
+                                                        x_155 = x_168;
+                                                        x_156 = x_169;
+                                                        x_157 = x_174;
+                                                        x_158 = x_176;
+                                                        x_159 = x_177;
+                                                        x_160 = x_170;
+                                                        x_161 = x_179;
+                                                        x_162 = x_178;
+                                                        x_163 = x_175;
+                                                        break 'b150;
                                                     }
                                                     _ => {
-                                                        x_113 = x_127;
-                                                        x_114 = x_129;
-                                                        x_115 = x_128;
-                                                        x_116 = x_130;
-                                                        x_117 = x_132;
-                                                        x_118 = x_131;
-                                                        x_119 = x_134;
-                                                        x_120 = x_133;
-                                                        x_121 = x_136;
-                                                        x_122 = x_137;
-                                                        x_123 = x_126;
-                                                        break 'b112;
+                                                        x_151 = x_166;
+                                                        x_152 = x_172;
+                                                        x_153 = x_173;
+                                                        x_154 = x_167;
+                                                        x_155 = x_168;
+                                                        x_156 = x_169;
+                                                        x_157 = x_174;
+                                                        x_158 = x_176;
+                                                        x_159 = x_177;
+                                                        x_160 = x_170;
+                                                        x_161 = x_179;
+                                                        x_162 = x_178;
+                                                        x_163 = x_171;
+                                                        break 'b150;
                                                     }
                                                 }
                                             }
                                             _ => {
-                                                x_97 = x_127;
-                                                x_98 = x_129;
-                                                x_99 = x_130;
-                                                x_100 = x_131;
-                                                x_101 = x_132;
-                                                x_102 = x_133;
-                                                x_103 = x_134;
-                                                x_104 = x_136;
-                                                x_105 = x_137;
-                                                x_106 = x_57;
-                                                break 'b96;
+                                                x_127 = x_166;
+                                                x_128 = x_172;
+                                                x_129 = x_173;
+                                                x_130 = x_167;
+                                                x_131 = x_168;
+                                                x_132 = x_174;
+                                                x_133 = x_177;
+                                                x_134 = x_176;
+                                                x_135 = x_178;
+                                                x_136 = x_179;
+                                                x_137 = x_170;
+                                                x_138 = x_123;
+                                                break 'b126;
                                             }
                                         }
                                     }
-                                    let x_124: u8 = l_Float_ddecLt(x_115, x_123);
-                                    match x_124 {
+                                    let x_164: u8 = l_Float_ddecLt(x_156, x_163);
+                                    match x_164 {
                                         0 => {
-                                            x_97 = x_113;
-                                            x_98 = x_114;
-                                            x_99 = x_116;
-                                            x_100 = x_118;
-                                            x_101 = x_117;
-                                            x_102 = x_120;
-                                            x_103 = x_119;
-                                            x_104 = x_121;
-                                            x_105 = x_122;
-                                            x_106 = x_115;
-                                            break 'b96;
+                                            x_127 = x_151;
+                                            x_128 = x_152;
+                                            x_129 = x_153;
+                                            x_130 = x_154;
+                                            x_131 = x_155;
+                                            x_132 = x_157;
+                                            x_133 = x_159;
+                                            x_134 = x_158;
+                                            x_135 = x_162;
+                                            x_136 = x_161;
+                                            x_137 = x_160;
+                                            x_138 = x_156;
+                                            break 'b126;
                                         }
                                         _ => {
-                                            x_97 = x_113;
-                                            x_98 = x_114;
-                                            x_99 = x_116;
-                                            x_100 = x_118;
-                                            x_101 = x_117;
-                                            x_102 = x_120;
-                                            x_103 = x_119;
-                                            x_104 = x_121;
-                                            x_105 = x_122;
-                                            x_106 = x_123;
-                                            break 'b96;
+                                            x_127 = x_151;
+                                            x_128 = x_152;
+                                            x_129 = x_153;
+                                            x_130 = x_154;
+                                            x_131 = x_155;
+                                            x_132 = x_157;
+                                            x_133 = x_159;
+                                            x_134 = x_158;
+                                            x_135 = x_162;
+                                            x_136 = x_161;
+                                            x_137 = x_160;
+                                            x_138 = x_163;
+                                            break 'b126;
                                         }
                                     }
                                 }
-                                let x_107: Obj = l_FloatArray_dset_x21_(x_40, x_6, x_106);
-                                let x_108: Obj = l_FloatArray_dset_x21_(x_44, x_6, x_103);
-                                let x_109: f64 = l_Float_ddiv(x_104, x_102);
-                                let x_110: f64 = l_Sand2_dgasGamma(x_2, x_1, x_6, x_49);
-                                let x_111: u8 = l_Float_ddecLt(x_100, x_103);
-                                match x_111 {
+                                let x_139: Obj = l_FloatArray_dset_x21_(x_40, x_6, x_138);
+                                let x_140: Obj = l_FloatArray_dset_x21_(x_44, x_6, x_128);
+                                let x_141: f64 = l_Sand2_dgasGamma_d__closed__1();
+                                let x_142: u64 = l_UInt64_dofNat(x_137);
+                                rt::lean_dec(x_137);
+                                let x_143: f64 = l_UInt64_dtoFloat(x_142);
+                                let x_144: f64 = l_Float_dmul(x_141, x_143);
+                                let x_145: Obj = l_Sand2_dChemistry_dgasCv(x_88);
+                                rt::lean_dec_ref(x_88);
+                                let x_146: Obj = rt::nat::lean_usize_to_nat(27686);
+                                let x_147: Obj = l_Nat_dmul(x_146, x_125);
+                                rt::lean_dec(x_125);
+                                let x_148: Obj = l_Nat_dadd(x_145, x_147);
+                                rt::lean_dec(x_147);
+                                rt::lean_dec(x_145);
+                                let x_149: u8 = l_Nat_ddecLe(x_96, x_148);
+                                match x_149 {
                                     0 => {
-                                        x_61 = x_107;
-                                        x_62 = x_110;
-                                        x_63 = x_97;
-                                        x_64 = x_98;
-                                        x_65 = x_99;
-                                        x_66 = x_108;
-                                        x_67 = x_101;
-                                        x_68 = x_109;
-                                        x_69 = x_105;
-                                        x_70 = x_100;
-                                        break 'b60;
+                                        rt::lean_dec(x_148);
+                                        x_99 = x_140;
+                                        x_100 = x_127;
+                                        x_101 = x_130;
+                                        x_102 = x_131;
+                                        x_103 = x_139;
+                                        x_104 = x_144;
+                                        x_105 = x_128;
+                                        x_106 = x_129;
+                                        x_107 = x_132;
+                                        x_108 = x_134;
+                                        x_109 = x_133;
+                                        x_110 = x_136;
+                                        x_111 = x_135;
+                                        x_112 = x_96;
+                                        break 'b98;
                                     }
                                     _ => {
-                                        x_61 = x_107;
-                                        x_62 = x_110;
-                                        x_63 = x_97;
-                                        x_64 = x_98;
-                                        x_65 = x_99;
-                                        x_66 = x_108;
-                                        x_67 = x_101;
-                                        x_68 = x_109;
-                                        x_69 = x_105;
-                                        x_70 = x_103;
-                                        break 'b60;
+                                        x_99 = x_140;
+                                        x_100 = x_127;
+                                        x_101 = x_130;
+                                        x_102 = x_131;
+                                        x_103 = x_139;
+                                        x_104 = x_144;
+                                        x_105 = x_128;
+                                        x_106 = x_129;
+                                        x_107 = x_132;
+                                        x_108 = x_134;
+                                        x_109 = x_133;
+                                        x_110 = x_136;
+                                        x_111 = x_135;
+                                        x_112 = x_148;
+                                        break 'b98;
                                     }
                                 }
                             }
-                            let x_71: f64 = l_Float_dmul(x_62, x_70);
-                            let x_72: f64 = l_Float_ddiv(x_69, x_71);
-                            let x_73: f64 = l_Float_dadd(x_68, x_72);
-                            let x_74: Obj = l_FloatArray_dset_x21_(x_45, x_6, x_73);
-                            let mut x_76: Obj;
-                            'b75: {
-                                match x_48 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_47, 1, x_74);
-                                        rt::lean_ctor_set(x_47, 0, x_66);
-                                        x_76 = x_47;
-                                        break 'b75;
-                                    }
-                                    _ => {
-                                        let x_95: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_95, 0, x_66);
-                                        rt::lean_ctor_set(x_95, 1, x_74);
-                                        x_76 = x_95;
-                                        break 'b75;
-                                    }
+                            let x_113: u64 = l_UInt64_dofNat(x_112);
+                            rt::lean_dec(x_112);
+                            let x_114: f64 = l_UInt64_dtoFloat(x_113);
+                            let x_115: f64 = l_Float_ddiv(x_104, x_114);
+                            let x_116: f64 = l_Float_dadd(x_97, x_115);
+                            let x_117: f64 = l_Float_ddiv(x_108, x_100);
+                            let x_118: u8 = l_Float_ddecLt(x_107, x_105);
+                            match x_118 {
+                                0 => {
+                                    x_50 = x_99;
+                                    x_51 = x_117;
+                                    x_52 = x_106;
+                                    x_53 = x_101;
+                                    x_54 = x_102;
+                                    x_55 = x_116;
+                                    x_56 = x_103;
+                                    x_57 = x_109;
+                                    x_58 = x_110;
+                                    x_59 = x_111;
+                                    x_60 = x_107;
+                                    break 'b49;
+                                }
+                                _ => {
+                                    x_50 = x_99;
+                                    x_51 = x_117;
+                                    x_52 = x_106;
+                                    x_53 = x_101;
+                                    x_54 = x_102;
+                                    x_55 = x_116;
+                                    x_56 = x_103;
+                                    x_57 = x_109;
+                                    x_58 = x_110;
+                                    x_59 = x_111;
+                                    x_60 = x_105;
+                                    break 'b49;
                                 }
                             }
-                            let mut x_78: Obj;
-                            'b77: {
-                                match x_43 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_42, 1, x_76);
-                                        rt::lean_ctor_set(x_42, 0, x_61);
-                                        x_78 = x_42;
-                                        break 'b77;
-                                    }
-                                    _ => {
-                                        let x_94: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_94, 0, x_61);
-                                        rt::lean_ctor_set(x_94, 1, x_76);
-                                        x_78 = x_94;
-                                        break 'b77;
-                                    }
-                                }
-                            }
-                            let mut x_80: Obj;
-                            'b79: {
-                                match x_39 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_38, 1, x_78);
-                                        rt::lean_ctor_set(x_38, 0, x_64);
-                                        x_80 = x_38;
-                                        break 'b79;
-                                    }
-                                    _ => {
-                                        let x_93: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_93, 0, x_64);
-                                        rt::lean_ctor_set(x_93, 1, x_78);
-                                        x_80 = x_93;
-                                        break 'b79;
-                                    }
-                                }
-                            }
-                            let mut x_82: Obj;
-                            'b81: {
-                                match x_35 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_34, 1, x_80);
-                                        rt::lean_ctor_set(x_34, 0, x_63);
-                                        x_82 = x_34;
-                                        break 'b81;
-                                    }
-                                    _ => {
-                                        let x_92: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_92, 0, x_63);
-                                        rt::lean_ctor_set(x_92, 1, x_80);
-                                        x_82 = x_92;
-                                        break 'b81;
-                                    }
-                                }
-                            }
-                            let mut x_84: Obj;
-                            'b83: {
-                                match x_31 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_30, 1, x_82);
-                                        rt::lean_ctor_set(x_30, 0, x_67);
-                                        x_84 = x_30;
-                                        break 'b83;
-                                    }
-                                    _ => {
-                                        let x_91: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_91, 0, x_67);
-                                        rt::lean_ctor_set(x_91, 1, x_82);
-                                        x_84 = x_91;
-                                        break 'b83;
-                                    }
-                                }
-                            }
-                            let mut x_86: Obj;
-                            'b85: {
-                                match x_27 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_26, 1, x_84);
-                                        rt::lean_ctor_set(x_26, 0, x_65);
-                                        x_86 = x_26;
-                                        break 'b85;
-                                    }
-                                    _ => {
-                                        let x_90: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_90, 0, x_65);
-                                        rt::lean_ctor_set(x_90, 1, x_84);
-                                        x_86 = x_90;
-                                        break 'b85;
-                                    }
-                                }
-                            }
-                            let mut x_88: Obj;
-                            'b87: {
-                                match x_23 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_22, 1, x_86);
-                                        rt::lean_ctor_set(x_22, 0, x_59);
-                                        x_88 = x_22;
-                                        break 'b87;
-                                    }
-                                    _ => {
-                                        let x_89: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_89, 0, x_59);
-                                        rt::lean_ctor_set(x_89, 1, x_86);
-                                        x_88 = x_89;
-                                        break 'b87;
-                                    }
-                                }
-                            }
-                            x_10 = x_88;
-                            break 'b9;
                         }
                         _ => {
-                            rt::lean_dec_ref(x_49);
-                            let mut x_347: Obj;
-                            'b346: {
-                                match x_48 {
-                                    0 => {
-                                        x_347 = x_47;
-                                        break 'b346;
-                                    }
-                                    _ => {
-                                        let x_366: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_366, 0, x_44);
-                                        rt::lean_ctor_set(x_366, 1, x_45);
-                                        x_347 = x_366;
-                                        break 'b346;
-                                    }
-                                }
-                            }
-                            let mut x_349: Obj;
-                            'b348: {
-                                match x_43 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_42, 1, x_347);
-                                        x_349 = x_42;
-                                        break 'b348;
-                                    }
-                                    _ => {
-                                        let x_365: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_365, 0, x_40);
-                                        rt::lean_ctor_set(x_365, 1, x_347);
-                                        x_349 = x_365;
-                                        break 'b348;
-                                    }
-                                }
-                            }
-                            let mut x_351: Obj;
-                            'b350: {
-                                match x_39 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_38, 1, x_349);
-                                        x_351 = x_38;
-                                        break 'b350;
-                                    }
-                                    _ => {
-                                        let x_364: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_364, 0, x_36);
-                                        rt::lean_ctor_set(x_364, 1, x_349);
-                                        x_351 = x_364;
-                                        break 'b350;
-                                    }
-                                }
-                            }
-                            let mut x_353: Obj;
-                            'b352: {
-                                match x_35 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_34, 1, x_351);
-                                        x_353 = x_34;
-                                        break 'b352;
-                                    }
-                                    _ => {
-                                        let x_363: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_363, 0, x_32);
-                                        rt::lean_ctor_set(x_363, 1, x_351);
-                                        x_353 = x_363;
-                                        break 'b352;
-                                    }
-                                }
-                            }
-                            let mut x_355: Obj;
-                            'b354: {
-                                match x_31 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_30, 1, x_353);
-                                        x_355 = x_30;
-                                        break 'b354;
-                                    }
-                                    _ => {
-                                        let x_362: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_362, 0, x_28);
-                                        rt::lean_ctor_set(x_362, 1, x_353);
-                                        x_355 = x_362;
-                                        break 'b354;
-                                    }
-                                }
-                            }
-                            let mut x_357: Obj;
-                            'b356: {
-                                match x_27 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_26, 1, x_355);
-                                        x_357 = x_26;
-                                        break 'b356;
-                                    }
-                                    _ => {
-                                        let x_361: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_361, 0, x_24);
-                                        rt::lean_ctor_set(x_361, 1, x_355);
-                                        x_357 = x_361;
-                                        break 'b356;
-                                    }
-                                }
-                            }
-                            let mut x_359: Obj;
-                            'b358: {
-                                match x_23 {
-                                    0 => {
-                                        rt::lean_ctor_set(x_22, 1, x_357);
-                                        x_359 = x_22;
-                                        break 'b358;
-                                    }
-                                    _ => {
-                                        let x_360: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_360, 0, x_20);
-                                        rt::lean_ctor_set(x_360, 1, x_357);
-                                        x_359 = x_360;
-                                        break 'b358;
-                                    }
-                                }
-                            }
-                            x_10 = x_359;
+                            rt::lean_dec_ref(x_86);
+                            rt::lean_del_object(x_47);
+                            rt::lean_del_object(x_42);
+                            rt::lean_del_object(x_38);
+                            rt::lean_del_object(x_34);
+                            rt::lean_del_object(x_30);
+                            rt::lean_del_object(x_26);
+                            rt::lean_del_object(x_22);
+                            let x_475: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_475, 0, x_44);
+                            rt::lean_ctor_set(x_475, 1, x_45);
+                            let x_476: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_476, 0, x_40);
+                            rt::lean_ctor_set(x_476, 1, x_475);
+                            let x_477: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_477, 0, x_36);
+                            rt::lean_ctor_set(x_477, 1, x_476);
+                            let x_478: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_478, 0, x_32);
+                            rt::lean_ctor_set(x_478, 1, x_477);
+                            let x_479: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_479, 0, x_28);
+                            rt::lean_ctor_set(x_479, 1, x_478);
+                            let x_480: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_480, 0, x_24);
+                            rt::lean_ctor_set(x_480, 1, x_479);
+                            let x_481: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_481, 0, x_20);
+                            rt::lean_ctor_set(x_481, 1, x_480);
+                            x_10 = x_481;
                             break 'b9;
                         }
                     }
                 }
+                let x_61: f64 = l_Float_dmul(x_55, x_60);
+                let x_62: f64 = l_Float_ddiv(x_59, x_61);
+                let x_63: f64 = l_Float_dadd(x_51, x_62);
+                let x_64: Obj = l_FloatArray_dset_x21_(x_45, x_6, x_63);
+                let mut x_66: Obj;
+                'b65: {
+                    match x_48 {
+                        0 => {
+                            rt::lean_ctor_set(x_47, 1, x_64);
+                            rt::lean_ctor_set(x_47, 0, x_50);
+                            x_66 = x_47;
+                            break 'b65;
+                        }
+                        _ => {
+                            let x_85: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_85, 0, x_50);
+                            rt::lean_ctor_set(x_85, 1, x_64);
+                            x_66 = x_85;
+                            break 'b65;
+                        }
+                    }
+                }
+                let mut x_68: Obj;
+                'b67: {
+                    match x_43 {
+                        0 => {
+                            rt::lean_ctor_set(x_42, 1, x_66);
+                            rt::lean_ctor_set(x_42, 0, x_56);
+                            x_68 = x_42;
+                            break 'b67;
+                        }
+                        _ => {
+                            let x_84: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_84, 0, x_56);
+                            rt::lean_ctor_set(x_84, 1, x_66);
+                            x_68 = x_84;
+                            break 'b67;
+                        }
+                    }
+                }
+                let mut x_70: Obj;
+                'b69: {
+                    match x_39 {
+                        0 => {
+                            rt::lean_ctor_set(x_38, 1, x_68);
+                            rt::lean_ctor_set(x_38, 0, x_54);
+                            x_70 = x_38;
+                            break 'b69;
+                        }
+                        _ => {
+                            let x_83: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_83, 0, x_54);
+                            rt::lean_ctor_set(x_83, 1, x_68);
+                            x_70 = x_83;
+                            break 'b69;
+                        }
+                    }
+                }
+                let mut x_72: Obj;
+                'b71: {
+                    match x_35 {
+                        0 => {
+                            rt::lean_ctor_set(x_34, 1, x_70);
+                            rt::lean_ctor_set(x_34, 0, x_57);
+                            x_72 = x_34;
+                            break 'b71;
+                        }
+                        _ => {
+                            let x_82: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_82, 0, x_57);
+                            rt::lean_ctor_set(x_82, 1, x_70);
+                            x_72 = x_82;
+                            break 'b71;
+                        }
+                    }
+                }
+                let mut x_74: Obj;
+                'b73: {
+                    match x_31 {
+                        0 => {
+                            rt::lean_ctor_set(x_30, 1, x_72);
+                            rt::lean_ctor_set(x_30, 0, x_52);
+                            x_74 = x_30;
+                            break 'b73;
+                        }
+                        _ => {
+                            let x_81: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_81, 0, x_52);
+                            rt::lean_ctor_set(x_81, 1, x_72);
+                            x_74 = x_81;
+                            break 'b73;
+                        }
+                    }
+                }
+                let mut x_76: Obj;
+                'b75: {
+                    match x_27 {
+                        0 => {
+                            rt::lean_ctor_set(x_26, 1, x_74);
+                            rt::lean_ctor_set(x_26, 0, x_53);
+                            x_76 = x_26;
+                            break 'b75;
+                        }
+                        _ => {
+                            let x_80: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_80, 0, x_53);
+                            rt::lean_ctor_set(x_80, 1, x_74);
+                            x_76 = x_80;
+                            break 'b75;
+                        }
+                    }
+                }
+                let mut x_78: Obj;
+                'b77: {
+                    match x_23 {
+                        0 => {
+                            rt::lean_ctor_set(x_22, 1, x_76);
+                            rt::lean_ctor_set(x_22, 0, x_58);
+                            x_78 = x_22;
+                            break 'b77;
+                        }
+                        _ => {
+                            let x_79: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                            rt::lean_ctor_set(x_79, 0, x_58);
+                            rt::lean_ctor_set(x_79, 1, x_76);
+                            x_78 = x_79;
+                            break 'b77;
+                        }
+                    }
+                }
+                x_10 = x_78;
+                break 'b9;
             }
         }
-        let x_11: Obj = l_Nat_dadd(x_6, x_8);
-        rt::lean_dec(x_6);
-        let t_0: Obj = x_1;
-        let t_1: Obj = x_2;
-        let t_2: Obj = x_3;
-        let t_3: Obj = x_4;
-        let t_4: Obj = x_10;
-        let t_5: Obj = x_11;
-        x_1 = t_0;
-        x_2 = t_1;
-        x_3 = t_2;
-        x_4 = t_3;
-        x_5 = t_4;
-        x_6 = t_5;
-        continue 'tail;
     }
+    let x_11: Obj = l_Nat_dadd(x_6, x_8);
+    let x_12: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg(x_1, x_2, x_3, x_4, x_10, x_11);
+    return x_12;
 }
 
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0._redArg._boxed
@@ -3163,25 +3423,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj) -> Obj {
     let x_7: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6);
+    rt::lean_dec(x_6);
     rt::lean_dec_ref(x_4);
     rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
     rt::lean_dec(x_1);
     return x_7;
-}
-
-// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0._redArg._closed_0
-// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
-// Source: <lean>/Init/Data/Range/Basic.lean:37:25
-static C_l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
-unsafe fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0__init() -> f64 {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(30000);
-    let x_2: f64 = l_Float_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0() -> f64 {
-    C_l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0.get(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_d__redArg_d__closed__0__init)
 }
 
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.projectFluid.spec_0
@@ -3238,20 +3485,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_24: Obj;
                     let mut x_25: u8;
                     'b23: {
-                        let x_320: u8 = (!rt::lean_is_exclusive(x_8)) as u8;
-                        match x_320 {
+                        let x_234: u8 = (!rt::lean_is_exclusive(x_8)) as u8;
+                        match x_234 {
                             0 => {
-                                let x_321: Obj = rt::lean_ctor_get(x_8, 1);
-                                rt::lean_dec(x_321);
+                                let x_235: Obj = rt::lean_ctor_get(x_8, 1);
+                                rt::lean_dec(x_235);
                                 x_24 = x_8;
-                                x_25 = x_320;
+                                x_25 = x_234;
                                 break 'b23;
                             }
                             _ => {
                                 rt::lean_inc(x_22);
                                 rt::lean_dec(x_8);
                                 x_24 = rt::lean_box(0);
-                                x_25 = x_320;
+                                x_25 = x_234;
                                 break 'b23;
                             }
                         }
@@ -3260,20 +3507,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_28: Obj;
                     let mut x_29: u8;
                     'b27: {
-                        let x_318: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
-                        match x_318 {
+                        let x_232: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
+                        match x_232 {
                             0 => {
-                                let x_319: Obj = rt::lean_ctor_get(x_17, 1);
-                                rt::lean_dec(x_319);
+                                let x_233: Obj = rt::lean_ctor_get(x_17, 1);
+                                rt::lean_dec(x_233);
                                 x_28 = x_17;
-                                x_29 = x_318;
+                                x_29 = x_232;
                                 break 'b27;
                             }
                             _ => {
                                 rt::lean_inc(x_26);
                                 rt::lean_dec(x_17);
                                 x_28 = rt::lean_box(0);
-                                x_29 = x_318;
+                                x_29 = x_232;
                                 break 'b27;
                             }
                         }
@@ -3282,20 +3529,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_32: Obj;
                     let mut x_33: u8;
                     'b31: {
-                        let x_316: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
-                        match x_316 {
+                        let x_230: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
+                        match x_230 {
                             0 => {
-                                let x_317: Obj = rt::lean_ctor_get(x_18, 1);
-                                rt::lean_dec(x_317);
+                                let x_231: Obj = rt::lean_ctor_get(x_18, 1);
+                                rt::lean_dec(x_231);
                                 x_32 = x_18;
-                                x_33 = x_316;
+                                x_33 = x_230;
                                 break 'b31;
                             }
                             _ => {
                                 rt::lean_inc(x_30);
                                 rt::lean_dec(x_18);
                                 x_32 = rt::lean_box(0);
-                                x_33 = x_316;
+                                x_33 = x_230;
                                 break 'b31;
                             }
                         }
@@ -3304,20 +3551,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_36: Obj;
                     let mut x_37: u8;
                     'b35: {
-                        let x_314: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
-                        match x_314 {
+                        let x_228: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
+                        match x_228 {
                             0 => {
-                                let x_315: Obj = rt::lean_ctor_get(x_19, 1);
-                                rt::lean_dec(x_315);
+                                let x_229: Obj = rt::lean_ctor_get(x_19, 1);
+                                rt::lean_dec(x_229);
                                 x_36 = x_19;
-                                x_37 = x_314;
+                                x_37 = x_228;
                                 break 'b35;
                             }
                             _ => {
                                 rt::lean_inc(x_34);
                                 rt::lean_dec(x_19);
                                 x_36 = rt::lean_box(0);
-                                x_37 = x_314;
+                                x_37 = x_228;
                                 break 'b35;
                             }
                         }
@@ -3326,20 +3573,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_40: Obj;
                     let mut x_41: u8;
                     'b39: {
-                        let x_312: u8 = (!rt::lean_is_exclusive(x_20)) as u8;
-                        match x_312 {
+                        let x_226: u8 = (!rt::lean_is_exclusive(x_20)) as u8;
+                        match x_226 {
                             0 => {
-                                let x_313: Obj = rt::lean_ctor_get(x_20, 1);
-                                rt::lean_dec(x_313);
+                                let x_227: Obj = rt::lean_ctor_get(x_20, 1);
+                                rt::lean_dec(x_227);
                                 x_40 = x_20;
-                                x_41 = x_312;
+                                x_41 = x_226;
                                 break 'b39;
                             }
                             _ => {
                                 rt::lean_inc(x_38);
                                 rt::lean_dec(x_20);
                                 x_40 = rt::lean_box(0);
-                                x_41 = x_312;
+                                x_41 = x_226;
                                 break 'b39;
                             }
                         }
@@ -3349,11 +3596,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_45: Obj;
                     let mut x_46: u8;
                     'b44: {
-                        let x_311: u8 = (!rt::lean_is_exclusive(x_21)) as u8;
-                        match x_311 {
+                        let x_225: u8 = (!rt::lean_is_exclusive(x_21)) as u8;
+                        match x_225 {
                             0 => {
                                 x_45 = x_21;
-                                x_46 = x_311;
+                                x_46 = x_225;
                                 break 'b44;
                             }
                             _ => {
@@ -3361,911 +3608,625 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_inc(x_42);
                                 rt::lean_dec(x_21);
                                 x_45 = rt::lean_box(0);
-                                x_46 = x_311;
+                                x_46 = x_225;
                                 break 'b44;
                             }
                         }
                     }
-                    let mut x_48: Obj;
-                    let mut x_49: Obj;
-                    let mut x_50: Obj;
-                    let mut x_51: f64;
-                    let mut x_52: Obj;
-                    let mut x_53: f64;
+                    let x_47: Obj = rt::lean_ctor_get(x_3, 2);
+                    let x_48: Obj = rt::lean_ctor_get(x_3, 8);
+                    let x_49: Obj = rt::nat::lean_usize_to_nat(1);
+                    let x_50: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
+                    let mut x_52: f64;
+                    let mut x_53: Obj;
                     let mut x_54: Obj;
                     let mut x_55: Obj;
-                    let mut x_56: f64;
-                    let mut x_57: f64;
-                    'b47: {
-                        let x_80: Obj = rt::lean_ctor_get(x_3, 2);
-                        let x_81: Obj = rt::lean_ctor_get(x_3, 8);
-                        let x_82: Obj = rt::nat::lean_usize_to_nat(1);
-                        let x_83: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                        let mut x_85: Obj;
-                        let mut x_86: Obj;
-                        let mut x_87: Obj;
-                        let mut x_88: Obj;
-                        let mut x_89: f64;
-                        let mut x_90: Obj;
-                        let mut x_91: f64;
-                        let mut x_92: Obj;
-                        let mut x_93: Obj;
-                        let mut x_94: f64;
-                        'b84: {
-                            let mut x_99: Obj;
-                            let mut x_100: Obj;
-                            let mut x_101: Obj;
-                            let mut x_102: f64;
-                            let mut x_103: Obj;
-                            let mut x_104: Obj;
-                            let mut x_105: Obj;
-                            let mut x_106: f64;
-                            'b98: {
-                                let mut x_127: Obj;
-                                let mut x_128: Obj;
-                                let mut x_129: Obj;
-                                let mut x_130: f64;
-                                let mut x_131: f64;
-                                let mut x_132: Obj;
-                                let mut x_133: Obj;
-                                let mut x_134: Obj;
-                                let mut x_135: f64;
-                                'b126: {
-                                    let mut x_140: Obj;
-                                    let mut x_141: Obj;
-                                    let mut x_142: Obj;
-                                    let mut x_143: f64;
-                                    let mut x_144: Obj;
-                                    let mut x_145: Obj;
-                                    let mut x_146: Obj;
-                                    let mut x_147: f64;
-                                    'b139: {
-                                        let mut x_152: Obj;
-                                        let mut x_153: Obj;
-                                        let mut x_154: Obj;
-                                        let mut x_155: f64;
-                                        let mut x_156: Obj;
-                                        let mut x_157: Obj;
-                                        let mut x_158: Obj;
-                                        let mut x_159: Obj;
-                                        let mut x_160: u8;
-                                        'b151: {
-                                            let mut x_183: Obj;
-                                            let mut x_184: Obj;
-                                            let mut x_185: Obj;
-                                            let mut x_186: Obj;
-                                            'b182: {
-                                                let mut x_205: Obj;
-                                                let mut x_206: f64;
-                                                let mut x_207: Obj;
-                                                let mut x_208: f64;
-                                                let mut x_209: f64;
-                                                let mut x_210: Obj;
-                                                let mut x_211: f64;
-                                                'b204: {
-                                                    let mut x_217: Obj;
-                                                    let mut x_218: Obj;
-                                                    let mut x_219: f64;
-                                                    let mut x_220: f64;
-                                                    let mut x_221: Obj;
-                                                    let mut x_222: Obj;
-                                                    let mut x_223: f64;
-                                                    'b216: {
-                                                        let mut x_228: Obj;
-                                                        let mut x_229: Obj;
-                                                        let mut x_230: f64;
-                                                        let mut x_231: Obj;
-                                                        let mut x_232: f64;
-                                                        'b227: {
-                                                            let mut x_243: Obj;
-                                                            let mut x_244: Obj;
-                                                            let mut x_245: f64;
-                                                            let mut x_246: f64;
-                                                            let mut x_247: Obj;
-                                                            let mut x_248: f64;
-                                                            'b242: {
-                                                                let mut x_253: Obj;
-                                                                let mut x_254: Obj;
-                                                                let mut x_255: f64;
-                                                                let mut x_256: Obj;
-                                                                let mut x_257: f64;
-                                                                'b252: {
-                                                                    let mut x_262: Obj;
-                                                                    let mut x_263: Obj;
-                                                                    let mut x_264: f64;
-                                                                    let mut x_265: Obj;
-                                                                    let mut x_266: Obj;
-                                                                    let mut x_267: u8;
-                                                                    'b261: {
-                                                                        let mut x_284: Obj;
-                                                                        'b283: {
-                                                                            let mut x_297: f64;
-                                                                            'b296: {
-                                                                                let x_304: Obj = l_Array_dsize(rt::lean_box(0), x_80);
-                                                                                let x_305: u8 = l_Nat_ddecLt(x_9, x_304);
-                                                                                match x_305 {
-                                                                                    0 => {
-                                                                                        x_284 = x_22;
-                                                                                        break 'b283;
-                                                                                    }
-                                                                                    _ => {
-                                                                                        let x_306: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_80, x_9, rt::lean_box(0));
-                                                                                        let x_307: u8 = rt::lean_unbox(x_306) as u8;
-                                                                                        match x_307 {
-                                                                                            0 => {
-                                                                                                x_284 = x_22;
-                                                                                                break 'b283;
-                                                                                            }
-                                                                                            _ => {
-                                                                                                let x_308: Obj = l_FloatArray_dsize(x_5);
-                                                                                                let x_309: u8 = l_Nat_ddecLt(x_9, x_308);
-                                                                                                match x_309 {
-                                                                                                    0 => {
-                                                                                                        x_297 = x_83;
-                                                                                                        break 'b296;
-                                                                                                    }
-                                                                                                    _ => {
-                                                                                                        let x_310: f64 = l_FloatArray_dget(x_5, x_9, rt::lean_box(0));
-                                                                                                        x_297 = x_310;
-                                                                                                        break 'b296;
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            let x_298: Obj = rt::nat::lean_usize_to_nat(981);
-                                                                            let x_299: Obj = rt::nat::lean_usize_to_nat(2);
-                                                                            let x_300: f64 = l_Float_dofScientific(x_298, x_16, x_299);
-                                                                            let x_301: f64 = l_Float_dmul(x_300, x_4);
-                                                                            let x_302: f64 = l_Float_dadd(x_297, x_301);
-                                                                            let x_303: Obj = l_FloatArray_dset_x21_(x_22, x_9, x_302);
-                                                                            x_284 = x_303;
-                                                                            break 'b283;
-                                                                        }
-                                                                        let x_285: Obj = l_Nat_dmod(x_9, x_1);
-                                                                        let x_286: Obj = l_Nat_dadd(x_285, x_82);
-                                                                        rt::lean_dec(x_285);
-                                                                        let x_287: u8 = l_Nat_ddecLt(x_286, x_1);
-                                                                        rt::lean_dec(x_286);
-                                                                        match x_287 {
-                                                                            0 => {
-                                                                                x_183 = x_284;
-                                                                                x_184 = x_26;
-                                                                                x_185 = x_34;
-                                                                                x_186 = x_42;
-                                                                                break 'b182;
-                                                                            }
-                                                                            _ => {
-                                                                                let x_288: Obj = l_Nat_dadd(x_9, x_82);
-                                                                                rt::lean_inc(x_288);
-                                                                                rt::lean_inc_ref(x_80);
-                                                                                let x_289: Obj = rt::lean_alloc_closure(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__0_d__redArg_d__lam__0_d__boxed as *const (), 3, 2);
-                                                                                rt::lean_closure_set(x_289, 0, x_80);
-                                                                                rt::lean_closure_set(x_289, 1, x_288);
-                                                                                let x_290: f64 = l_Sand2_dfluidFace(x_3, x_9, x_288);
-                                                                                let x_291: Obj = l_FloatArray_dset_x21_(x_26, x_9, x_290);
-                                                                                let x_292: Obj = l_Array_dsize(rt::lean_box(0), x_80);
-                                                                                let x_293: u8 = l_Nat_ddecLt(x_9, x_292);
-                                                                                match x_293 {
-                                                                                    0 => {
-                                                                                        x_262 = x_291;
-                                                                                        x_263 = x_288;
-                                                                                        x_264 = x_290;
-                                                                                        x_265 = x_289;
-                                                                                        x_266 = x_284;
-                                                                                        x_267 = x_293;
-                                                                                        break 'b261;
-                                                                                    }
-                                                                                    _ => {
-                                                                                        let x_294: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_80, x_9, rt::lean_box(0));
-                                                                                        let x_295: u8 = rt::lean_unbox(x_294) as u8;
-                                                                                        x_262 = x_291;
-                                                                                        x_263 = x_288;
-                                                                                        x_264 = x_290;
-                                                                                        x_265 = x_289;
-                                                                                        x_266 = x_284;
-                                                                                        x_267 = x_295;
-                                                                                        break 'b261;
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    match x_267 {
-                                                                        0 => {
-                                                                            let x_268: Obj = rt::lean_box(0);
-                                                                            let x_269: Obj = rt::lean_apply_1(x_265, x_268);
-                                                                            let x_270: u8 = rt::lean_unbox(x_269) as u8;
-                                                                            match x_270 {
-                                                                                0 => {
-                                                                                    rt::lean_dec(x_263);
-                                                                                    x_183 = x_266;
-                                                                                    x_184 = x_262;
-                                                                                    x_185 = x_34;
-                                                                                    x_186 = x_42;
-                                                                                    break 'b182;
-                                                                                }
-                                                                                _ => {
-                                                                                    let x_271: Obj = l_FloatArray_dsize(x_6);
-                                                                                    let x_272: u8 = l_Nat_ddecLt(x_263, x_271);
-                                                                                    match x_272 {
-                                                                                        0 => {
-                                                                                            x_228 = x_262;
-                                                                                            x_229 = x_263;
-                                                                                            x_230 = x_264;
-                                                                                            x_231 = x_266;
-                                                                                            x_232 = x_83;
-                                                                                            break 'b227;
-                                                                                        }
-                                                                                        _ => {
-                                                                                            let x_273: f64 = l_FloatArray_dget(x_6, x_263, rt::lean_box(0));
-                                                                                            x_228 = x_262;
-                                                                                            x_229 = x_263;
-                                                                                            x_230 = x_264;
-                                                                                            x_231 = x_266;
-                                                                                            x_232 = x_273;
-                                                                                            break 'b227;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        _ => {
-                                                                            let x_274: Obj = rt::lean_box(0);
-                                                                            let x_275: Obj = rt::lean_apply_1(x_265, x_274);
-                                                                            let x_276: u8 = rt::lean_unbox(x_275) as u8;
-                                                                            match x_276 {
-                                                                                0 => {
-                                                                                    let x_277: Obj = l_FloatArray_dsize(x_6);
-                                                                                    let x_278: u8 = l_Nat_ddecLt(x_9, x_277);
-                                                                                    match x_278 {
-                                                                                        0 => {
-                                                                                            x_228 = x_262;
-                                                                                            x_229 = x_263;
-                                                                                            x_230 = x_264;
-                                                                                            x_231 = x_266;
-                                                                                            x_232 = x_83;
-                                                                                            break 'b227;
-                                                                                        }
-                                                                                        _ => {
-                                                                                            let x_279: f64 = l_FloatArray_dget(x_6, x_9, rt::lean_box(0));
-                                                                                            x_228 = x_262;
-                                                                                            x_229 = x_263;
-                                                                                            x_230 = x_264;
-                                                                                            x_231 = x_266;
-                                                                                            x_232 = x_279;
-                                                                                            break 'b227;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                _ => {
-                                                                                    let x_280: Obj = l_FloatArray_dsize(x_6);
-                                                                                    let x_281: u8 = l_Nat_ddecLt(x_9, x_280);
-                                                                                    match x_281 {
-                                                                                        0 => {
-                                                                                            x_253 = x_262;
-                                                                                            x_254 = x_263;
-                                                                                            x_255 = x_264;
-                                                                                            x_256 = x_266;
-                                                                                            x_257 = x_83;
-                                                                                            break 'b252;
-                                                                                        }
-                                                                                        _ => {
-                                                                                            let x_282: f64 = l_FloatArray_dget(x_6, x_9, rt::lean_box(0));
-                                                                                            x_253 = x_262;
-                                                                                            x_254 = x_263;
-                                                                                            x_255 = x_264;
-                                                                                            x_256 = x_266;
-                                                                                            x_257 = x_282;
-                                                                                            break 'b252;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                let x_258: Obj = l_FloatArray_dsize(x_6);
-                                                                let x_259: u8 = l_Nat_ddecLt(x_254, x_258);
-                                                                match x_259 {
-                                                                    0 => {
-                                                                        x_243 = x_253;
-                                                                        x_244 = x_254;
-                                                                        x_245 = x_255;
-                                                                        x_246 = x_257;
-                                                                        x_247 = x_256;
-                                                                        x_248 = x_83;
-                                                                        break 'b242;
-                                                                    }
-                                                                    _ => {
-                                                                        let x_260: f64 = l_FloatArray_dget(x_6, x_254, rt::lean_box(0));
-                                                                        x_243 = x_253;
-                                                                        x_244 = x_254;
-                                                                        x_245 = x_255;
-                                                                        x_246 = x_257;
-                                                                        x_247 = x_256;
-                                                                        x_248 = x_260;
-                                                                        break 'b242;
-                                                                    }
-                                                                }
-                                                            }
-                                                            let x_249: f64 = l_Float_dadd(x_246, x_248);
-                                                            let x_250: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
-                                                            let x_251: f64 = l_Float_ddiv(x_249, x_250);
-                                                            x_228 = x_243;
-                                                            x_229 = x_244;
-                                                            x_230 = x_245;
-                                                            x_231 = x_247;
-                                                            x_232 = x_251;
-                                                            break 'b227;
-                                                        }
-                                                        let x_233: Obj = l_FloatArray_dset_x21_(x_34, x_9, x_232);
-                                                        let x_234: u8 = l_Float_ddecLt(x_83, x_230);
-                                                        match x_234 {
-                                                            0 => {
-                                                                rt::lean_dec(x_229);
-                                                                x_183 = x_231;
-                                                                x_184 = x_228;
-                                                                x_185 = x_233;
-                                                                x_186 = x_42;
-                                                                break 'b182;
-                                                            }
-                                                            _ => {
-                                                                let x_235: Obj = rt::nat::lean_usize_to_nat(2);
-                                                                let x_236: f64 = l_Float_dofScientific(x_82, x_16, x_235);
-                                                                let x_237: f64 = l_Float_ddiv(x_4, x_236);
-                                                                let x_238: f64 = l_Float_dmul(x_237, x_230);
-                                                                let x_239: Obj = l_FloatArray_dsize(x_81);
-                                                                let x_240: u8 = l_Nat_ddecLt(x_229, x_239);
-                                                                match x_240 {
-                                                                    0 => {
-                                                                        rt::lean_dec(x_229);
-                                                                        rt::lean_inc_ref(x_81);
-                                                                        x_217 = x_228;
-                                                                        x_218 = x_233;
-                                                                        x_219 = x_238;
-                                                                        x_220 = x_232;
-                                                                        x_221 = x_81;
-                                                                        x_222 = x_231;
-                                                                        x_223 = x_83;
-                                                                        break 'b216;
-                                                                    }
-                                                                    _ => {
-                                                                        let x_241: f64 = l_FloatArray_dget(x_81, x_229, rt::lean_box(0));
-                                                                        rt::lean_dec(x_229);
-                                                                        rt::lean_inc_ref(x_81);
-                                                                        x_217 = x_228;
-                                                                        x_218 = x_233;
-                                                                        x_219 = x_238;
-                                                                        x_220 = x_232;
-                                                                        x_221 = x_81;
-                                                                        x_222 = x_231;
-                                                                        x_223 = x_241;
-                                                                        break 'b216;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                    let x_224: Obj = l_FloatArray_dsize(x_221);
-                                                    let x_225: u8 = l_Nat_ddecLt(x_9, x_224);
-                                                    match x_225 {
-                                                        0 => {
-                                                            rt::lean_dec_ref(x_221);
-                                                            x_205 = x_217;
-                                                            x_206 = x_223;
-                                                            x_207 = x_218;
-                                                            x_208 = x_219;
-                                                            x_209 = x_220;
-                                                            x_210 = x_222;
-                                                            x_211 = x_83;
-                                                            break 'b204;
-                                                        }
-                                                        _ => {
-                                                            let x_226: f64 = l_FloatArray_dget(x_221, x_9, rt::lean_box(0));
-                                                            rt::lean_dec_ref(x_221);
-                                                            x_205 = x_217;
-                                                            x_206 = x_223;
-                                                            x_207 = x_218;
-                                                            x_208 = x_219;
-                                                            x_209 = x_220;
-                                                            x_210 = x_222;
-                                                            x_211 = x_226;
-                                                            break 'b204;
-                                                        }
-                                                    }
-                                                }
-                                                let x_212: f64 = l_Float_dsub(x_206, x_211);
-                                                let x_213: f64 = l_Float_dmul(x_208, x_212);
-                                                let x_214: f64 = l_Float_dsub(x_209, x_213);
-                                                let x_215: Obj = l_FloatArray_dset_x21_(x_42, x_9, x_214);
-                                                x_183 = x_210;
-                                                x_184 = x_205;
-                                                x_185 = x_207;
-                                                x_186 = x_215;
-                                                break 'b182;
-                                            }
-                                            let x_187: Obj = l_Nat_ddiv(x_9, x_1);
-                                            let x_188: Obj = l_Nat_dadd(x_187, x_82);
-                                            rt::lean_dec(x_187);
-                                            let x_189: u8 = l_Nat_ddecLt(x_188, x_2);
-                                            rt::lean_dec(x_188);
-                                            match x_189 {
+                    let mut x_56: Obj;
+                    let mut x_57: Obj;
+                    let mut x_58: Obj;
+                    let mut x_59: f64;
+                    'b51: {
+                        let mut x_113: f64;
+                        let mut x_114: Obj;
+                        let mut x_115: Obj;
+                        let mut x_116: Obj;
+                        let mut x_117: Obj;
+                        let mut x_118: Obj;
+                        let mut x_119: Obj;
+                        let mut x_120: Obj;
+                        let mut x_121: u8;
+                        'b112: {
+                            let mut x_142: Obj;
+                            let mut x_143: Obj;
+                            let mut x_144: Obj;
+                            let mut x_145: Obj;
+                            'b141: {
+                                let mut x_164: Obj;
+                                let mut x_165: f64;
+                                let mut x_166: Obj;
+                                let mut x_167: Obj;
+                                let mut x_168: f64;
+                                'b163: {
+                                    let mut x_182: Obj;
+                                    let mut x_183: f64;
+                                    let mut x_184: Obj;
+                                    let mut x_185: Obj;
+                                    let mut x_186: Obj;
+                                    let mut x_187: u8;
+                                    'b181: {
+                                        let mut x_202: Obj;
+                                        'b201: {
+                                            let x_214: Obj = l_Array_dsize(rt::lean_box(0), x_47);
+                                            let x_215: u8 = l_Nat_ddecLt(x_9, x_214);
+                                            match x_215 {
                                                 0 => {
-                                                    rt::lean_del_object(x_45);
-                                                    rt::lean_del_object(x_40);
-                                                    rt::lean_del_object(x_36);
-                                                    rt::lean_del_object(x_32);
-                                                    rt::lean_del_object(x_28);
-                                                    rt::lean_del_object(x_24);
-                                                    let x_190: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_190, 0, x_186);
-                                                    rt::lean_ctor_set(x_190, 1, x_43);
-                                                    let x_191: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_191, 0, x_38);
-                                                    rt::lean_ctor_set(x_191, 1, x_190);
-                                                    let x_192: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_192, 0, x_185);
-                                                    rt::lean_ctor_set(x_192, 1, x_191);
-                                                    let x_193: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_193, 0, x_30);
-                                                    rt::lean_ctor_set(x_193, 1, x_192);
-                                                    let x_194: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_194, 0, x_184);
-                                                    rt::lean_ctor_set(x_194, 1, x_193);
-                                                    let x_195: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                    rt::lean_ctor_set(x_195, 0, x_183);
-                                                    rt::lean_ctor_set(x_195, 1, x_194);
-                                                    x_13 = x_195;
-                                                    break 'b12;
+                                                    x_202 = x_22;
+                                                    break 'b201;
                                                 }
                                                 _ => {
-                                                    let x_196: Obj = l_Nat_dadd(x_9, x_1);
-                                                    rt::lean_inc(x_196);
-                                                    rt::lean_inc_ref(x_80);
-                                                    let x_197: Obj = rt::lean_alloc_closure(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__0_d__redArg_d__lam__0_d__boxed as *const (), 3, 2);
-                                                    rt::lean_closure_set(x_197, 0, x_80);
-                                                    rt::lean_closure_set(x_197, 1, x_196);
-                                                    let x_198: f64 = l_Sand2_dfluidFace(x_3, x_9, x_196);
-                                                    let x_199: Obj = l_FloatArray_dset_x21_(x_30, x_9, x_198);
-                                                    let x_200: Obj = l_Array_dsize(rt::lean_box(0), x_80);
-                                                    let x_201: u8 = l_Nat_ddecLt(x_9, x_200);
-                                                    match x_201 {
+                                                    let x_216: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_47, x_9, rt::lean_box(0));
+                                                    let x_217: u8 = rt::lean_unbox(x_216) as u8;
+                                                    match x_217 {
                                                         0 => {
-                                                            x_152 = x_185;
-                                                            x_153 = x_196;
-                                                            x_154 = x_186;
-                                                            x_155 = x_198;
-                                                            x_156 = x_199;
-                                                            x_157 = x_197;
-                                                            x_158 = x_183;
-                                                            x_159 = x_184;
-                                                            x_160 = x_201;
-                                                            break 'b151;
+                                                            x_202 = x_22;
+                                                            break 'b201;
                                                         }
                                                         _ => {
-                                                            let x_202: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_80, x_9, rt::lean_box(0));
-                                                            let x_203: u8 = rt::lean_unbox(x_202) as u8;
-                                                            x_152 = x_185;
-                                                            x_153 = x_196;
-                                                            x_154 = x_186;
-                                                            x_155 = x_198;
-                                                            x_156 = x_199;
-                                                            x_157 = x_197;
-                                                            x_158 = x_183;
-                                                            x_159 = x_184;
-                                                            x_160 = x_203;
-                                                            break 'b151;
+                                                            let x_218: f64 = l_FloatArray_dget_x21_(x_5, x_9);
+                                                            let x_219: Obj = rt::nat::lean_usize_to_nat(981);
+                                                            let x_220: Obj = rt::nat::lean_usize_to_nat(2);
+                                                            let x_221: f64 = l_Float_dofScientific(x_219, x_16, x_220);
+                                                            let x_222: f64 = l_Float_dmul(x_221, x_4);
+                                                            let x_223: f64 = l_Float_dadd(x_218, x_222);
+                                                            let x_224: Obj = l_FloatArray_dset_x21_(x_22, x_9, x_223);
+                                                            x_202 = x_224;
+                                                            break 'b201;
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        match x_160 {
+                                        let x_203: Obj = l_Nat_dmod(x_9, x_1);
+                                        let x_204: Obj = l_Nat_dadd(x_203, x_49);
+                                        rt::lean_dec(x_203);
+                                        let x_205: u8 = l_Nat_ddecLt(x_204, x_1);
+                                        rt::lean_dec(x_204);
+                                        match x_205 {
                                             0 => {
-                                                let x_161: Obj = rt::lean_box(0);
-                                                let x_162: Obj = rt::lean_apply_1(x_157, x_161);
-                                                let x_163: u8 = rt::lean_unbox(x_162) as u8;
-                                                match x_163 {
-                                                    0 => {
-                                                        rt::lean_dec(x_153);
-                                                        rt::lean_del_object(x_45);
-                                                        rt::lean_del_object(x_40);
-                                                        rt::lean_del_object(x_36);
-                                                        rt::lean_del_object(x_32);
-                                                        rt::lean_del_object(x_28);
-                                                        rt::lean_del_object(x_24);
-                                                        let x_164: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_164, 0, x_154);
-                                                        rt::lean_ctor_set(x_164, 1, x_43);
-                                                        let x_165: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_165, 0, x_38);
-                                                        rt::lean_ctor_set(x_165, 1, x_164);
-                                                        let x_166: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_166, 0, x_152);
-                                                        rt::lean_ctor_set(x_166, 1, x_165);
-                                                        let x_167: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_167, 0, x_156);
-                                                        rt::lean_ctor_set(x_167, 1, x_166);
-                                                        let x_168: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_168, 0, x_159);
-                                                        rt::lean_ctor_set(x_168, 1, x_167);
-                                                        let x_169: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                                        rt::lean_ctor_set(x_169, 0, x_158);
-                                                        rt::lean_ctor_set(x_169, 1, x_168);
-                                                        x_13 = x_169;
-                                                        break 'b12;
-                                                    }
-                                                    _ => {
-                                                        let x_170: Obj = l_FloatArray_dsize(x_5);
-                                                        let x_171: u8 = l_Nat_ddecLt(x_153, x_170);
-                                                        match x_171 {
-                                                            0 => {
-                                                                x_99 = x_152;
-                                                                x_100 = x_153;
-                                                                x_101 = x_154;
-                                                                x_102 = x_155;
-                                                                x_103 = x_156;
-                                                                x_104 = x_158;
-                                                                x_105 = x_159;
-                                                                x_106 = x_83;
-                                                                break 'b98;
-                                                            }
-                                                            _ => {
-                                                                let x_172: f64 = l_FloatArray_dget(x_5, x_153, rt::lean_box(0));
-                                                                x_99 = x_152;
-                                                                x_100 = x_153;
-                                                                x_101 = x_154;
-                                                                x_102 = x_155;
-                                                                x_103 = x_156;
-                                                                x_104 = x_158;
-                                                                x_105 = x_159;
-                                                                x_106 = x_172;
-                                                                break 'b98;
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                                x_142 = x_202;
+                                                x_143 = x_26;
+                                                x_144 = x_34;
+                                                x_145 = x_42;
+                                                break 'b141;
                                             }
                                             _ => {
-                                                let x_173: Obj = rt::lean_box(0);
-                                                let x_174: Obj = rt::lean_apply_1(x_157, x_173);
-                                                let x_175: u8 = rt::lean_unbox(x_174) as u8;
-                                                match x_175 {
+                                                let x_206: Obj = l_Nat_dadd(x_9, x_49);
+                                                rt::lean_inc(x_206);
+                                                rt::lean_inc_ref(x_47);
+                                                let x_207: Obj = rt::lean_alloc_closure(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__0_d__redArg_d__lam__0_d__boxed as *const (), 3, 2);
+                                                rt::lean_closure_set(x_207, 0, x_47);
+                                                rt::lean_closure_set(x_207, 1, x_206);
+                                                let x_208: f64 = l_Sand2_dfluidFace(x_3, x_9, x_206);
+                                                let x_209: Obj = l_FloatArray_dset_x21_(x_26, x_9, x_208);
+                                                let x_210: Obj = l_Array_dsize(rt::lean_box(0), x_47);
+                                                let x_211: u8 = l_Nat_ddecLt(x_9, x_210);
+                                                match x_211 {
                                                     0 => {
-                                                        let x_176: Obj = l_FloatArray_dsize(x_5);
-                                                        let x_177: u8 = l_Nat_ddecLt(x_9, x_176);
-                                                        match x_177 {
-                                                            0 => {
-                                                                x_99 = x_152;
-                                                                x_100 = x_153;
-                                                                x_101 = x_154;
-                                                                x_102 = x_155;
-                                                                x_103 = x_156;
-                                                                x_104 = x_158;
-                                                                x_105 = x_159;
-                                                                x_106 = x_83;
-                                                                break 'b98;
-                                                            }
-                                                            _ => {
-                                                                let x_178: f64 = l_FloatArray_dget(x_5, x_9, rt::lean_box(0));
-                                                                x_99 = x_152;
-                                                                x_100 = x_153;
-                                                                x_101 = x_154;
-                                                                x_102 = x_155;
-                                                                x_103 = x_156;
-                                                                x_104 = x_158;
-                                                                x_105 = x_159;
-                                                                x_106 = x_178;
-                                                                break 'b98;
-                                                            }
-                                                        }
+                                                        x_182 = x_209;
+                                                        x_183 = x_208;
+                                                        x_184 = x_206;
+                                                        x_185 = x_202;
+                                                        x_186 = x_207;
+                                                        x_187 = x_211;
+                                                        break 'b181;
                                                     }
                                                     _ => {
-                                                        let x_179: Obj = l_FloatArray_dsize(x_5);
-                                                        let x_180: u8 = l_Nat_ddecLt(x_9, x_179);
-                                                        match x_180 {
-                                                            0 => {
-                                                                x_140 = x_152;
-                                                                x_141 = x_153;
-                                                                x_142 = x_154;
-                                                                x_143 = x_155;
-                                                                x_144 = x_156;
-                                                                x_145 = x_158;
-                                                                x_146 = x_159;
-                                                                x_147 = x_83;
-                                                                break 'b139;
-                                                            }
-                                                            _ => {
-                                                                let x_181: f64 = l_FloatArray_dget(x_5, x_9, rt::lean_box(0));
-                                                                x_140 = x_152;
-                                                                x_141 = x_153;
-                                                                x_142 = x_154;
-                                                                x_143 = x_155;
-                                                                x_144 = x_156;
-                                                                x_145 = x_158;
-                                                                x_146 = x_159;
-                                                                x_147 = x_181;
-                                                                break 'b139;
-                                                            }
-                                                        }
+                                                        let x_212: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_47, x_9, rt::lean_box(0));
+                                                        let x_213: u8 = rt::lean_unbox(x_212) as u8;
+                                                        x_182 = x_209;
+                                                        x_183 = x_208;
+                                                        x_184 = x_206;
+                                                        x_185 = x_202;
+                                                        x_186 = x_207;
+                                                        x_187 = x_213;
+                                                        break 'b181;
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                    let x_148: Obj = l_FloatArray_dsize(x_5);
-                                    let x_149: u8 = l_Nat_ddecLt(x_141, x_148);
-                                    match x_149 {
+                                    match x_187 {
                                         0 => {
-                                            x_127 = x_140;
-                                            x_128 = x_142;
-                                            x_129 = x_141;
-                                            x_130 = x_147;
-                                            x_131 = x_143;
-                                            x_132 = x_144;
-                                            x_133 = x_145;
-                                            x_134 = x_146;
-                                            x_135 = x_83;
-                                            break 'b126;
+                                            let x_188: Obj = rt::lean_box(0);
+                                            let x_189: Obj = rt::lean_apply_1(x_186, x_188);
+                                            let x_190: u8 = rt::lean_unbox(x_189) as u8;
+                                            match x_190 {
+                                                0 => {
+                                                    rt::lean_dec(x_184);
+                                                    x_142 = x_185;
+                                                    x_143 = x_182;
+                                                    x_144 = x_34;
+                                                    x_145 = x_42;
+                                                    break 'b141;
+                                                }
+                                                _ => {
+                                                    let x_191: f64 = l_FloatArray_dget_x21_(x_6, x_184);
+                                                    x_164 = x_182;
+                                                    x_165 = x_183;
+                                                    x_166 = x_184;
+                                                    x_167 = x_185;
+                                                    x_168 = x_191;
+                                                    break 'b163;
+                                                }
+                                            }
                                         }
                                         _ => {
-                                            let x_150: f64 = l_FloatArray_dget(x_5, x_141, rt::lean_box(0));
-                                            x_127 = x_140;
-                                            x_128 = x_142;
-                                            x_129 = x_141;
-                                            x_130 = x_147;
-                                            x_131 = x_143;
-                                            x_132 = x_144;
-                                            x_133 = x_145;
-                                            x_134 = x_146;
-                                            x_135 = x_150;
-                                            break 'b126;
+                                            let x_192: Obj = rt::lean_box(0);
+                                            let x_193: Obj = rt::lean_apply_1(x_186, x_192);
+                                            let x_194: u8 = rt::lean_unbox(x_193) as u8;
+                                            match x_194 {
+                                                0 => {
+                                                    let x_195: f64 = l_FloatArray_dget_x21_(x_6, x_9);
+                                                    x_164 = x_182;
+                                                    x_165 = x_183;
+                                                    x_166 = x_184;
+                                                    x_167 = x_185;
+                                                    x_168 = x_195;
+                                                    break 'b163;
+                                                }
+                                                _ => {
+                                                    let x_196: f64 = l_FloatArray_dget_x21_(x_6, x_9);
+                                                    let x_197: f64 = l_FloatArray_dget_x21_(x_6, x_184);
+                                                    let x_198: f64 = l_Float_dadd(x_196, x_197);
+                                                    let x_199: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
+                                                    let x_200: f64 = l_Float_ddiv(x_198, x_199);
+                                                    x_164 = x_182;
+                                                    x_165 = x_183;
+                                                    x_166 = x_184;
+                                                    x_167 = x_185;
+                                                    x_168 = x_200;
+                                                    break 'b163;
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                                let x_136: f64 = l_Float_dadd(x_130, x_135);
-                                let x_137: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
-                                let x_138: f64 = l_Float_ddiv(x_136, x_137);
-                                x_99 = x_127;
-                                x_100 = x_129;
-                                x_101 = x_128;
-                                x_102 = x_131;
-                                x_103 = x_132;
-                                x_104 = x_133;
-                                x_105 = x_134;
-                                x_106 = x_138;
-                                break 'b98;
+                                let x_169: Obj = l_FloatArray_dset_x21_(x_34, x_9, x_168);
+                                let x_170: u8 = l_Float_ddecLt(x_50, x_165);
+                                match x_170 {
+                                    0 => {
+                                        rt::lean_dec(x_166);
+                                        x_142 = x_167;
+                                        x_143 = x_164;
+                                        x_144 = x_169;
+                                        x_145 = x_42;
+                                        break 'b141;
+                                    }
+                                    _ => {
+                                        let x_171: Obj = rt::nat::lean_usize_to_nat(2);
+                                        let x_172: f64 = l_Float_dofScientific(x_49, x_16, x_171);
+                                        let x_173: f64 = l_Float_ddiv(x_4, x_172);
+                                        let x_174: f64 = l_Float_dmul(x_173, x_165);
+                                        let x_175: f64 = l_FloatArray_dget_x21_(x_48, x_166);
+                                        rt::lean_dec(x_166);
+                                        let x_176: f64 = l_FloatArray_dget_x21_(x_48, x_9);
+                                        let x_177: f64 = l_Float_dsub(x_175, x_176);
+                                        let x_178: f64 = l_Float_dmul(x_174, x_177);
+                                        let x_179: f64 = l_Float_dsub(x_168, x_178);
+                                        let x_180: Obj = l_FloatArray_dset_x21_(x_42, x_9, x_179);
+                                        x_142 = x_167;
+                                        x_143 = x_164;
+                                        x_144 = x_169;
+                                        x_145 = x_180;
+                                        break 'b141;
+                                    }
+                                }
                             }
-                            let x_107: Obj = rt::nat::lean_usize_to_nat(981);
-                            let x_108: Obj = rt::nat::lean_usize_to_nat(2);
-                            let x_109: f64 = l_Float_dofScientific(x_107, x_16, x_108);
-                            let x_110: f64 = l_Float_dmul(x_109, x_4);
-                            let x_111: f64 = l_Float_dadd(x_106, x_110);
-                            let x_112: Obj = l_FloatArray_dset_x21_(x_38, x_9, x_111);
-                            let x_113: u8 = l_Float_ddecLt(x_83, x_102);
-                            match x_113 {
+                            let x_146: Obj = l_Nat_ddiv(x_9, x_1);
+                            let x_147: Obj = l_Nat_dadd(x_146, x_49);
+                            rt::lean_dec(x_146);
+                            let x_148: u8 = l_Nat_ddecLt(x_147, x_2);
+                            rt::lean_dec(x_147);
+                            match x_148 {
                                 0 => {
-                                    rt::lean_dec(x_100);
                                     rt::lean_del_object(x_45);
                                     rt::lean_del_object(x_40);
                                     rt::lean_del_object(x_36);
                                     rt::lean_del_object(x_32);
                                     rt::lean_del_object(x_28);
                                     rt::lean_del_object(x_24);
-                                    let x_114: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_114, 0, x_101);
-                                    rt::lean_ctor_set(x_114, 1, x_43);
-                                    let x_115: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_115, 0, x_112);
-                                    rt::lean_ctor_set(x_115, 1, x_114);
-                                    let x_116: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_116, 0, x_99);
-                                    rt::lean_ctor_set(x_116, 1, x_115);
-                                    let x_117: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_117, 0, x_103);
-                                    rt::lean_ctor_set(x_117, 1, x_116);
-                                    let x_118: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_118, 0, x_105);
-                                    rt::lean_ctor_set(x_118, 1, x_117);
-                                    let x_119: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                    rt::lean_ctor_set(x_119, 0, x_104);
-                                    rt::lean_ctor_set(x_119, 1, x_118);
-                                    x_13 = x_119;
+                                    let x_149: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_149, 0, x_145);
+                                    rt::lean_ctor_set(x_149, 1, x_43);
+                                    let x_150: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_150, 0, x_38);
+                                    rt::lean_ctor_set(x_150, 1, x_149);
+                                    let x_151: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_151, 0, x_144);
+                                    rt::lean_ctor_set(x_151, 1, x_150);
+                                    let x_152: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_152, 0, x_30);
+                                    rt::lean_ctor_set(x_152, 1, x_151);
+                                    let x_153: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_153, 0, x_143);
+                                    rt::lean_ctor_set(x_153, 1, x_152);
+                                    let x_154: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                    rt::lean_ctor_set(x_154, 0, x_142);
+                                    rt::lean_ctor_set(x_154, 1, x_153);
+                                    x_13 = x_154;
                                     break 'b12;
                                 }
                                 _ => {
-                                    let x_120: f64 = l_Float_dofScientific(x_82, x_16, x_108);
-                                    let x_121: f64 = l_Float_ddiv(x_4, x_120);
-                                    let x_122: f64 = l_Float_dmul(x_121, x_102);
-                                    let x_123: Obj = l_FloatArray_dsize(x_81);
-                                    let x_124: u8 = l_Nat_ddecLt(x_100, x_123);
-                                    match x_124 {
+                                    let x_155: Obj = l_Nat_dadd(x_9, x_1);
+                                    rt::lean_inc(x_155);
+                                    rt::lean_inc_ref(x_47);
+                                    let x_156: Obj = rt::lean_alloc_closure(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__0_d__redArg_d__lam__0_d__boxed as *const (), 3, 2);
+                                    rt::lean_closure_set(x_156, 0, x_47);
+                                    rt::lean_closure_set(x_156, 1, x_155);
+                                    let x_157: f64 = l_Sand2_dfluidFace(x_3, x_9, x_155);
+                                    let x_158: Obj = l_FloatArray_dset_x21_(x_30, x_9, x_157);
+                                    let x_159: Obj = l_Array_dsize(rt::lean_box(0), x_47);
+                                    let x_160: u8 = l_Nat_ddecLt(x_9, x_159);
+                                    match x_160 {
                                         0 => {
-                                            rt::lean_dec(x_100);
-                                            rt::lean_inc_ref(x_81);
-                                            x_85 = x_99;
-                                            x_86 = x_101;
-                                            x_87 = x_112;
-                                            x_88 = x_81;
-                                            x_89 = x_111;
-                                            x_90 = x_103;
-                                            x_91 = x_122;
-                                            x_92 = x_104;
-                                            x_93 = x_105;
-                                            x_94 = x_83;
-                                            break 'b84;
+                                            x_113 = x_157;
+                                            x_114 = x_142;
+                                            x_115 = x_144;
+                                            x_116 = x_143;
+                                            x_117 = x_156;
+                                            x_118 = x_155;
+                                            x_119 = x_158;
+                                            x_120 = x_145;
+                                            x_121 = x_160;
+                                            break 'b112;
                                         }
                                         _ => {
-                                            let x_125: f64 = l_FloatArray_dget(x_81, x_100, rt::lean_box(0));
-                                            rt::lean_dec(x_100);
-                                            rt::lean_inc_ref(x_81);
-                                            x_85 = x_99;
-                                            x_86 = x_101;
-                                            x_87 = x_112;
-                                            x_88 = x_81;
-                                            x_89 = x_111;
-                                            x_90 = x_103;
-                                            x_91 = x_122;
-                                            x_92 = x_104;
-                                            x_93 = x_105;
-                                            x_94 = x_125;
-                                            break 'b84;
+                                            let x_161: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_47, x_9, rt::lean_box(0));
+                                            let x_162: u8 = rt::lean_unbox(x_161) as u8;
+                                            x_113 = x_157;
+                                            x_114 = x_142;
+                                            x_115 = x_144;
+                                            x_116 = x_143;
+                                            x_117 = x_156;
+                                            x_118 = x_155;
+                                            x_119 = x_158;
+                                            x_120 = x_145;
+                                            x_121 = x_162;
+                                            break 'b112;
                                         }
                                     }
                                 }
                             }
                         }
-                        let x_95: Obj = l_FloatArray_dsize(x_88);
-                        let x_96: u8 = l_Nat_ddecLt(x_9, x_95);
-                        match x_96 {
+                        match x_121 {
                             0 => {
-                                rt::lean_dec_ref(x_88);
-                                x_48 = x_85;
-                                x_49 = x_86;
-                                x_50 = x_87;
-                                x_51 = x_89;
-                                x_52 = x_90;
-                                x_53 = x_91;
-                                x_54 = x_92;
-                                x_55 = x_93;
-                                x_56 = x_94;
-                                x_57 = x_83;
-                                break 'b47;
+                                let x_122: Obj = rt::lean_box(0);
+                                let x_123: Obj = rt::lean_apply_1(x_117, x_122);
+                                let x_124: u8 = rt::lean_unbox(x_123) as u8;
+                                match x_124 {
+                                    0 => {
+                                        rt::lean_dec(x_118);
+                                        rt::lean_del_object(x_45);
+                                        rt::lean_del_object(x_40);
+                                        rt::lean_del_object(x_36);
+                                        rt::lean_del_object(x_32);
+                                        rt::lean_del_object(x_28);
+                                        rt::lean_del_object(x_24);
+                                        let x_125: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_125, 0, x_120);
+                                        rt::lean_ctor_set(x_125, 1, x_43);
+                                        let x_126: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_126, 0, x_38);
+                                        rt::lean_ctor_set(x_126, 1, x_125);
+                                        let x_127: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_127, 0, x_115);
+                                        rt::lean_ctor_set(x_127, 1, x_126);
+                                        let x_128: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_128, 0, x_119);
+                                        rt::lean_ctor_set(x_128, 1, x_127);
+                                        let x_129: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_129, 0, x_116);
+                                        rt::lean_ctor_set(x_129, 1, x_128);
+                                        let x_130: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_130, 0, x_114);
+                                        rt::lean_ctor_set(x_130, 1, x_129);
+                                        x_13 = x_130;
+                                        break 'b12;
+                                    }
+                                    _ => {
+                                        let x_131: f64 = l_FloatArray_dget_x21_(x_5, x_118);
+                                        x_52 = x_113;
+                                        x_53 = x_114;
+                                        x_54 = x_115;
+                                        x_55 = x_116;
+                                        x_56 = x_118;
+                                        x_57 = x_119;
+                                        x_58 = x_120;
+                                        x_59 = x_131;
+                                        break 'b51;
+                                    }
+                                }
                             }
                             _ => {
-                                let x_97: f64 = l_FloatArray_dget(x_88, x_9, rt::lean_box(0));
-                                rt::lean_dec_ref(x_88);
-                                x_48 = x_85;
-                                x_49 = x_86;
-                                x_50 = x_87;
-                                x_51 = x_89;
-                                x_52 = x_90;
-                                x_53 = x_91;
-                                x_54 = x_92;
-                                x_55 = x_93;
-                                x_56 = x_94;
-                                x_57 = x_97;
-                                break 'b47;
+                                let x_132: Obj = rt::lean_box(0);
+                                let x_133: Obj = rt::lean_apply_1(x_117, x_132);
+                                let x_134: u8 = rt::lean_unbox(x_133) as u8;
+                                match x_134 {
+                                    0 => {
+                                        let x_135: f64 = l_FloatArray_dget_x21_(x_5, x_9);
+                                        x_52 = x_113;
+                                        x_53 = x_114;
+                                        x_54 = x_115;
+                                        x_55 = x_116;
+                                        x_56 = x_118;
+                                        x_57 = x_119;
+                                        x_58 = x_120;
+                                        x_59 = x_135;
+                                        break 'b51;
+                                    }
+                                    _ => {
+                                        let x_136: f64 = l_FloatArray_dget_x21_(x_5, x_9);
+                                        let x_137: f64 = l_FloatArray_dget_x21_(x_5, x_118);
+                                        let x_138: f64 = l_Float_dadd(x_136, x_137);
+                                        let x_139: f64 = l_Sand2_dmixtureEOSPressure_d__closed__5();
+                                        let x_140: f64 = l_Float_ddiv(x_138, x_139);
+                                        x_52 = x_113;
+                                        x_53 = x_114;
+                                        x_54 = x_115;
+                                        x_55 = x_116;
+                                        x_56 = x_118;
+                                        x_57 = x_119;
+                                        x_58 = x_120;
+                                        x_59 = x_140;
+                                        break 'b51;
+                                    }
+                                }
                             }
                         }
                     }
-                    let x_58: f64 = l_Float_dsub(x_56, x_57);
-                    let x_59: f64 = l_Float_dmul(x_53, x_58);
-                    let x_60: f64 = l_Float_dsub(x_51, x_59);
-                    let x_61: Obj = l_FloatArray_dset_x21_(x_43, x_9, x_60);
-                    let mut x_63: Obj;
-                    'b62: {
-                        match x_46 {
-                            0 => {
-                                rt::lean_ctor_set(x_45, 1, x_61);
-                                rt::lean_ctor_set(x_45, 0, x_49);
-                                x_63 = x_45;
-                                break 'b62;
+                    let x_60: Obj = rt::nat::lean_usize_to_nat(981);
+                    let x_61: Obj = rt::nat::lean_usize_to_nat(2);
+                    let x_62: f64 = l_Float_dofScientific(x_60, x_16, x_61);
+                    let x_63: f64 = l_Float_dmul(x_62, x_4);
+                    let x_64: f64 = l_Float_dadd(x_59, x_63);
+                    let x_65: Obj = l_FloatArray_dset_x21_(x_38, x_9, x_64);
+                    let x_66: u8 = l_Float_ddecLt(x_50, x_52);
+                    match x_66 {
+                        0 => {
+                            rt::lean_dec(x_56);
+                            let mut x_68: Obj;
+                            'b67: {
+                                match x_46 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_45, 0, x_58);
+                                        x_68 = x_45;
+                                        break 'b67;
+                                    }
+                                    _ => {
+                                        let x_84: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_84, 0, x_58);
+                                        rt::lean_ctor_set(x_84, 1, x_43);
+                                        x_68 = x_84;
+                                        break 'b67;
+                                    }
+                                }
                             }
-                            _ => {
-                                let x_79: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_79, 0, x_49);
-                                rt::lean_ctor_set(x_79, 1, x_61);
-                                x_63 = x_79;
-                                break 'b62;
+                            let mut x_70: Obj;
+                            'b69: {
+                                match x_41 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_40, 1, x_68);
+                                        rt::lean_ctor_set(x_40, 0, x_65);
+                                        x_70 = x_40;
+                                        break 'b69;
+                                    }
+                                    _ => {
+                                        let x_83: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_83, 0, x_65);
+                                        rt::lean_ctor_set(x_83, 1, x_68);
+                                        x_70 = x_83;
+                                        break 'b69;
+                                    }
+                                }
                             }
+                            let mut x_72: Obj;
+                            'b71: {
+                                match x_37 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_36, 1, x_70);
+                                        rt::lean_ctor_set(x_36, 0, x_54);
+                                        x_72 = x_36;
+                                        break 'b71;
+                                    }
+                                    _ => {
+                                        let x_82: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_82, 0, x_54);
+                                        rt::lean_ctor_set(x_82, 1, x_70);
+                                        x_72 = x_82;
+                                        break 'b71;
+                                    }
+                                }
+                            }
+                            let mut x_74: Obj;
+                            'b73: {
+                                match x_33 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_32, 1, x_72);
+                                        rt::lean_ctor_set(x_32, 0, x_57);
+                                        x_74 = x_32;
+                                        break 'b73;
+                                    }
+                                    _ => {
+                                        let x_81: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_81, 0, x_57);
+                                        rt::lean_ctor_set(x_81, 1, x_72);
+                                        x_74 = x_81;
+                                        break 'b73;
+                                    }
+                                }
+                            }
+                            let mut x_76: Obj;
+                            'b75: {
+                                match x_29 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_28, 1, x_74);
+                                        rt::lean_ctor_set(x_28, 0, x_55);
+                                        x_76 = x_28;
+                                        break 'b75;
+                                    }
+                                    _ => {
+                                        let x_80: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_80, 0, x_55);
+                                        rt::lean_ctor_set(x_80, 1, x_74);
+                                        x_76 = x_80;
+                                        break 'b75;
+                                    }
+                                }
+                            }
+                            let mut x_78: Obj;
+                            'b77: {
+                                match x_25 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_24, 1, x_76);
+                                        rt::lean_ctor_set(x_24, 0, x_53);
+                                        x_78 = x_24;
+                                        break 'b77;
+                                    }
+                                    _ => {
+                                        let x_79: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_79, 0, x_53);
+                                        rt::lean_ctor_set(x_79, 1, x_76);
+                                        x_78 = x_79;
+                                        break 'b77;
+                                    }
+                                }
+                            }
+                            x_13 = x_78;
+                            break 'b12;
+                        }
+                        _ => {
+                            let x_85: f64 = l_Float_dofScientific(x_49, x_16, x_61);
+                            let x_86: f64 = l_Float_ddiv(x_4, x_85);
+                            let x_87: f64 = l_Float_dmul(x_86, x_52);
+                            let x_88: f64 = l_FloatArray_dget_x21_(x_48, x_56);
+                            rt::lean_dec(x_56);
+                            let x_89: f64 = l_FloatArray_dget_x21_(x_48, x_9);
+                            let x_90: f64 = l_Float_dsub(x_88, x_89);
+                            let x_91: f64 = l_Float_dmul(x_87, x_90);
+                            let x_92: f64 = l_Float_dsub(x_64, x_91);
+                            let x_93: Obj = l_FloatArray_dset_x21_(x_43, x_9, x_92);
+                            let mut x_95: Obj;
+                            'b94: {
+                                match x_46 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_45, 1, x_93);
+                                        rt::lean_ctor_set(x_45, 0, x_58);
+                                        x_95 = x_45;
+                                        break 'b94;
+                                    }
+                                    _ => {
+                                        let x_111: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_111, 0, x_58);
+                                        rt::lean_ctor_set(x_111, 1, x_93);
+                                        x_95 = x_111;
+                                        break 'b94;
+                                    }
+                                }
+                            }
+                            let mut x_97: Obj;
+                            'b96: {
+                                match x_41 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_40, 1, x_95);
+                                        rt::lean_ctor_set(x_40, 0, x_65);
+                                        x_97 = x_40;
+                                        break 'b96;
+                                    }
+                                    _ => {
+                                        let x_110: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_110, 0, x_65);
+                                        rt::lean_ctor_set(x_110, 1, x_95);
+                                        x_97 = x_110;
+                                        break 'b96;
+                                    }
+                                }
+                            }
+                            let mut x_99: Obj;
+                            'b98: {
+                                match x_37 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_36, 1, x_97);
+                                        rt::lean_ctor_set(x_36, 0, x_54);
+                                        x_99 = x_36;
+                                        break 'b98;
+                                    }
+                                    _ => {
+                                        let x_109: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_109, 0, x_54);
+                                        rt::lean_ctor_set(x_109, 1, x_97);
+                                        x_99 = x_109;
+                                        break 'b98;
+                                    }
+                                }
+                            }
+                            let mut x_101: Obj;
+                            'b100: {
+                                match x_33 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_32, 1, x_99);
+                                        rt::lean_ctor_set(x_32, 0, x_57);
+                                        x_101 = x_32;
+                                        break 'b100;
+                                    }
+                                    _ => {
+                                        let x_108: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_108, 0, x_57);
+                                        rt::lean_ctor_set(x_108, 1, x_99);
+                                        x_101 = x_108;
+                                        break 'b100;
+                                    }
+                                }
+                            }
+                            let mut x_103: Obj;
+                            'b102: {
+                                match x_29 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_28, 1, x_101);
+                                        rt::lean_ctor_set(x_28, 0, x_55);
+                                        x_103 = x_28;
+                                        break 'b102;
+                                    }
+                                    _ => {
+                                        let x_107: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_107, 0, x_55);
+                                        rt::lean_ctor_set(x_107, 1, x_101);
+                                        x_103 = x_107;
+                                        break 'b102;
+                                    }
+                                }
+                            }
+                            let mut x_105: Obj;
+                            'b104: {
+                                match x_25 {
+                                    0 => {
+                                        rt::lean_ctor_set(x_24, 1, x_103);
+                                        rt::lean_ctor_set(x_24, 0, x_53);
+                                        x_105 = x_24;
+                                        break 'b104;
+                                    }
+                                    _ => {
+                                        let x_106: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_106, 0, x_53);
+                                        rt::lean_ctor_set(x_106, 1, x_103);
+                                        x_105 = x_106;
+                                        break 'b104;
+                                    }
+                                }
+                            }
+                            x_13 = x_105;
+                            break 'b12;
                         }
                     }
-                    let mut x_65: Obj;
-                    'b64: {
-                        match x_41 {
-                            0 => {
-                                rt::lean_ctor_set(x_40, 1, x_63);
-                                rt::lean_ctor_set(x_40, 0, x_50);
-                                x_65 = x_40;
-                                break 'b64;
-                            }
-                            _ => {
-                                let x_78: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_78, 0, x_50);
-                                rt::lean_ctor_set(x_78, 1, x_63);
-                                x_65 = x_78;
-                                break 'b64;
-                            }
-                        }
-                    }
-                    let mut x_67: Obj;
-                    'b66: {
-                        match x_37 {
-                            0 => {
-                                rt::lean_ctor_set(x_36, 1, x_65);
-                                rt::lean_ctor_set(x_36, 0, x_48);
-                                x_67 = x_36;
-                                break 'b66;
-                            }
-                            _ => {
-                                let x_77: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_77, 0, x_48);
-                                rt::lean_ctor_set(x_77, 1, x_65);
-                                x_67 = x_77;
-                                break 'b66;
-                            }
-                        }
-                    }
-                    let mut x_69: Obj;
-                    'b68: {
-                        match x_33 {
-                            0 => {
-                                rt::lean_ctor_set(x_32, 1, x_67);
-                                rt::lean_ctor_set(x_32, 0, x_52);
-                                x_69 = x_32;
-                                break 'b68;
-                            }
-                            _ => {
-                                let x_76: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_76, 0, x_52);
-                                rt::lean_ctor_set(x_76, 1, x_67);
-                                x_69 = x_76;
-                                break 'b68;
-                            }
-                        }
-                    }
-                    let mut x_71: Obj;
-                    'b70: {
-                        match x_29 {
-                            0 => {
-                                rt::lean_ctor_set(x_28, 1, x_69);
-                                rt::lean_ctor_set(x_28, 0, x_55);
-                                x_71 = x_28;
-                                break 'b70;
-                            }
-                            _ => {
-                                let x_75: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_75, 0, x_55);
-                                rt::lean_ctor_set(x_75, 1, x_69);
-                                x_71 = x_75;
-                                break 'b70;
-                            }
-                        }
-                    }
-                    let mut x_73: Obj;
-                    'b72: {
-                        match x_25 {
-                            0 => {
-                                rt::lean_ctor_set(x_24, 1, x_71);
-                                rt::lean_ctor_set(x_24, 0, x_54);
-                                x_73 = x_24;
-                                break 'b72;
-                            }
-                            _ => {
-                                let x_74: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_74, 0, x_54);
-                                rt::lean_ctor_set(x_74, 1, x_71);
-                                x_73 = x_74;
-                                break 'b72;
-                            }
-                        }
-                    }
-                    x_13 = x_73;
-                    break 'b12;
                 }
             }
         }
@@ -4340,7 +4301,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.projectFluid.spec_1
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
-pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1(x_1: Obj, x_2: Obj, x_3: f64, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: f64, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
     let x_13: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10);
     return x_13;
 }
@@ -4349,14 +4310,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj) -> Obj {
-    let x_13: f64 = rt::lean_unbox_float(x_3);
-    rt::lean_dec_ref(x_3);
-    let x_14: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1(x_1, x_2, x_13, x_4, x_5, x_6, x_7, x_8, x_9, x_10, x_11, x_12);
-    rt::lean_dec_ref(x_8);
+    let x_13: f64 = rt::lean_unbox_float(x_7);
     rt::lean_dec_ref(x_7);
+    let x_14: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1(x_1, x_2, x_3, x_4, x_5, x_6, x_13, x_8, x_9, x_10, x_11, x_12);
+    rt::lean_dec_ref(x_8);
     rt::lean_dec_ref(x_6);
     rt::lean_dec_ref(x_5);
     rt::lean_dec_ref(x_4);
+    rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
     rt::lean_dec_ref(x_1);
     return x_14;
@@ -4365,7 +4326,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.projectFluid.spec_1._redArg
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
-pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: f64, mut x_4: Obj, mut x_5: Obj, mut x_6: Obj, mut x_7: Obj, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj, mut x_5: Obj, mut x_6: Obj, mut x_7: f64, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj) -> Obj {
     'tail: loop {
         let x_11: Obj = rt::lean_ctor_get(x_8, 1);
         let x_12: Obj = rt::lean_ctor_get(x_8, 2);
@@ -4383,11 +4344,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_21: Obj;
                     let mut x_22: u8;
                     'b20: {
-                        let x_135: u8 = (!rt::lean_is_exclusive(x_9)) as u8;
-                        match x_135 {
+                        let x_92: u8 = (!rt::lean_is_exclusive(x_9)) as u8;
+                        match x_92 {
                             0 => {
                                 x_21 = x_9;
-                                x_22 = x_135;
+                                x_22 = x_92;
                                 break 'b20;
                             }
                             _ => {
@@ -4395,7 +4356,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_inc(x_18);
                                 rt::lean_dec(x_9);
                                 x_21 = rt::lean_box(0);
-                                x_22 = x_135;
+                                x_22 = x_92;
                                 break 'b20;
                             }
                         }
@@ -4423,304 +4384,131 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         let mut x_36: f64;
                                         let mut x_37: f64;
                                         let mut x_38: f64;
+                                        let mut x_39: f64;
                                         'b35: {
-                                            let x_55: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                            let mut x_57: f64;
-                                            let mut x_58: f64;
-                                            let mut x_59: f64;
-                                            let mut x_60: f64;
-                                            'b56: {
-                                                let mut x_67: f64;
-                                                let mut x_68: f64;
-                                                let mut x_69: f64;
-                                                let mut x_70: f64;
-                                                'b66: {
-                                                    let mut x_76: f64;
-                                                    let mut x_77: f64;
-                                                    let mut x_78: f64;
-                                                    let mut x_79: f64;
-                                                    'b75: {
-                                                        let mut x_85: f64;
-                                                        let mut x_86: u8;
-                                                        let mut x_87: f64;
-                                                        let mut x_88: f64;
-                                                        let mut x_89: f64;
-                                                        'b84: {
-                                                            let mut x_96: u8;
-                                                            let mut x_97: f64;
-                                                            let mut x_98: f64;
-                                                            let mut x_99: f64;
-                                                            let mut x_100: f64;
-                                                            'b95: {
-                                                                let x_105: Obj = l_Nat_dmod(x_10, x_2);
-                                                                let x_106: u8 = l_Nat_ddecLt(x_33, x_105);
-                                                                rt::lean_dec(x_105);
-                                                                let mut x_108: u8;
-                                                                let mut x_109: f64;
-                                                                let mut x_110: f64;
-                                                                let mut x_111: f64;
-                                                                'b107: {
-                                                                    let mut x_117: u8;
-                                                                    let mut x_118: f64;
-                                                                    let mut x_119: f64;
-                                                                    'b116: {
-                                                                        let mut x_124: f64;
-                                                                        'b123: {
-                                                                            match x_106 {
-                                                                                0 => {
-                                                                                    x_124 = x_55;
-                                                                                    break 'b123;
-                                                                                }
-                                                                                _ => {
-                                                                                    let x_131: Obj = l_Nat_dsub(x_10, x_34);
-                                                                                    let x_132: Obj = l_FloatArray_dsize(x_5);
-                                                                                    let x_133: u8 = l_Nat_ddecLt(x_131, x_132);
-                                                                                    match x_133 {
-                                                                                        0 => {
-                                                                                            rt::lean_dec(x_131);
-                                                                                            x_124 = x_55;
-                                                                                            break 'b123;
-                                                                                        }
-                                                                                        _ => {
-                                                                                            let x_134: f64 = l_FloatArray_dget(x_5, x_131, rt::lean_box(0));
-                                                                                            rt::lean_dec(x_131);
-                                                                                            x_124 = x_134;
-                                                                                            break 'b123;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        let x_125: Obj = l_Nat_ddiv(x_10, x_2);
-                                                                        let x_126: u8 = l_Nat_ddecLt(x_33, x_125);
-                                                                        rt::lean_dec(x_125);
-                                                                        match x_126 {
-                                                                            0 => {
-                                                                                x_117 = x_126;
-                                                                                x_118 = x_124;
-                                                                                x_119 = x_55;
-                                                                                break 'b116;
-                                                                            }
-                                                                            _ => {
-                                                                                let x_127: Obj = l_Nat_dsub(x_10, x_2);
-                                                                                let x_128: Obj = l_FloatArray_dsize(x_4);
-                                                                                let x_129: u8 = l_Nat_ddecLt(x_127, x_128);
-                                                                                match x_129 {
-                                                                                    0 => {
-                                                                                        rt::lean_dec(x_127);
-                                                                                        x_117 = x_126;
-                                                                                        x_118 = x_124;
-                                                                                        x_119 = x_55;
-                                                                                        break 'b116;
-                                                                                    }
-                                                                                    _ => {
-                                                                                        let x_130: f64 = l_FloatArray_dget(x_4, x_127, rt::lean_box(0));
-                                                                                        rt::lean_dec(x_127);
-                                                                                        x_117 = x_126;
-                                                                                        x_118 = x_124;
-                                                                                        x_119 = x_130;
-                                                                                        break 'b116;
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    let x_120: Obj = l_FloatArray_dsize(x_7);
-                                                                    let x_121: u8 = l_Nat_ddecLt(x_10, x_120);
-                                                                    match x_121 {
-                                                                        0 => {
-                                                                            x_108 = x_117;
-                                                                            x_109 = x_118;
-                                                                            x_110 = x_119;
-                                                                            x_111 = x_55;
-                                                                            break 'b107;
-                                                                        }
-                                                                        _ => {
-                                                                            let x_122: f64 = l_FloatArray_dget(x_7, x_10, rt::lean_box(0));
-                                                                            x_108 = x_117;
-                                                                            x_109 = x_118;
-                                                                            x_110 = x_119;
-                                                                            x_111 = x_122;
-                                                                            break 'b107;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                match x_106 {
-                                                                    0 => {
-                                                                        x_96 = x_108;
-                                                                        x_97 = x_109;
-                                                                        x_98 = x_111;
-                                                                        x_99 = x_110;
-                                                                        x_100 = x_55;
-                                                                        break 'b95;
-                                                                    }
-                                                                    _ => {
-                                                                        let x_112: Obj = l_Nat_dsub(x_10, x_34);
-                                                                        let x_113: Obj = l_FloatArray_dsize(x_7);
-                                                                        let x_114: u8 = l_Nat_ddecLt(x_112, x_113);
-                                                                        match x_114 {
-                                                                            0 => {
-                                                                                rt::lean_dec(x_112);
-                                                                                x_96 = x_108;
-                                                                                x_97 = x_109;
-                                                                                x_98 = x_111;
-                                                                                x_99 = x_110;
-                                                                                x_100 = x_55;
-                                                                                break 'b95;
-                                                                            }
-                                                                            _ => {
-                                                                                let x_115: f64 = l_FloatArray_dget(x_7, x_112, rt::lean_box(0));
-                                                                                rt::lean_dec(x_112);
-                                                                                x_96 = x_108;
-                                                                                x_97 = x_109;
-                                                                                x_98 = x_111;
-                                                                                x_99 = x_110;
-                                                                                x_100 = x_115;
-                                                                                break 'b95;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                            let x_101: f64 = l_Float_dsub(x_98, x_100);
-                                                            let x_102: Obj = l_FloatArray_dsize(x_6);
-                                                            let x_103: u8 = l_Nat_ddecLt(x_10, x_102);
-                                                            match x_103 {
-                                                                0 => {
-                                                                    x_85 = x_101;
-                                                                    x_86 = x_96;
-                                                                    x_87 = x_97;
-                                                                    x_88 = x_99;
-                                                                    x_89 = x_55;
-                                                                    break 'b84;
-                                                                }
-                                                                _ => {
-                                                                    let x_104: f64 = l_FloatArray_dget(x_6, x_10, rt::lean_box(0));
-                                                                    x_85 = x_101;
-                                                                    x_86 = x_96;
-                                                                    x_87 = x_97;
-                                                                    x_88 = x_99;
-                                                                    x_89 = x_104;
-                                                                    break 'b84;
-                                                                }
-                                                            }
-                                                        }
-                                                        let x_90: f64 = l_Float_dadd(x_85, x_89);
-                                                        match x_86 {
+                                            let x_63: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
+                                            let mut x_65: u8;
+                                            let mut x_66: f64;
+                                            let mut x_67: f64;
+                                            let mut x_68: f64;
+                                            let mut x_69: f64;
+                                            'b64: {
+                                                let x_75: Obj = l_Nat_dmod(x_10, x_2);
+                                                let x_76: u8 = l_Nat_ddecLt(x_33, x_75);
+                                                rt::lean_dec(x_75);
+                                                let mut x_78: u8;
+                                                let mut x_79: f64;
+                                                let mut x_80: f64;
+                                                'b77: {
+                                                    let mut x_85: f64;
+                                                    'b84: {
+                                                        match x_76 {
                                                             0 => {
-                                                                x_76 = x_90;
-                                                                x_77 = x_87;
-                                                                x_78 = x_88;
-                                                                x_79 = x_55;
-                                                                break 'b75;
+                                                                x_85 = x_63;
+                                                                break 'b84;
                                                             }
                                                             _ => {
-                                                                let x_91: Obj = l_Nat_dsub(x_10, x_2);
-                                                                let x_92: Obj = l_FloatArray_dsize(x_6);
-                                                                let x_93: u8 = l_Nat_ddecLt(x_91, x_92);
-                                                                match x_93 {
-                                                                    0 => {
-                                                                        rt::lean_dec(x_91);
-                                                                        x_76 = x_90;
-                                                                        x_77 = x_87;
-                                                                        x_78 = x_88;
-                                                                        x_79 = x_55;
-                                                                        break 'b75;
-                                                                    }
-                                                                    _ => {
-                                                                        let x_94: f64 = l_FloatArray_dget(x_6, x_91, rt::lean_box(0));
-                                                                        rt::lean_dec(x_91);
-                                                                        x_76 = x_90;
-                                                                        x_77 = x_87;
-                                                                        x_78 = x_88;
-                                                                        x_79 = x_94;
-                                                                        break 'b75;
-                                                                    }
-                                                                }
+                                                                let x_90: Obj = l_Nat_dsub(x_10, x_34);
+                                                                let x_91: f64 = l_FloatArray_dget_x21_(x_5, x_90);
+                                                                rt::lean_dec(x_90);
+                                                                x_85 = x_91;
+                                                                break 'b84;
                                                             }
                                                         }
                                                     }
-                                                    let x_80: f64 = l_Float_dsub(x_76, x_79);
-                                                    let x_81: Obj = l_FloatArray_dsize(x_5);
-                                                    let x_82: u8 = l_Nat_ddecLt(x_10, x_81);
-                                                    match x_82 {
+                                                    let x_86: Obj = l_Nat_ddiv(x_10, x_2);
+                                                    let x_87: u8 = l_Nat_ddecLt(x_33, x_86);
+                                                    rt::lean_dec(x_86);
+                                                    match x_87 {
                                                         0 => {
-                                                            x_67 = x_80;
-                                                            x_68 = x_77;
-                                                            x_69 = x_78;
-                                                            x_70 = x_55;
-                                                            break 'b66;
+                                                            x_78 = x_87;
+                                                            x_79 = x_85;
+                                                            x_80 = x_63;
+                                                            break 'b77;
                                                         }
                                                         _ => {
-                                                            let x_83: f64 = l_FloatArray_dget(x_5, x_10, rt::lean_box(0));
-                                                            x_67 = x_80;
-                                                            x_68 = x_77;
-                                                            x_69 = x_78;
-                                                            x_70 = x_83;
-                                                            break 'b66;
+                                                            let x_88: Obj = l_Nat_dsub(x_10, x_2);
+                                                            let x_89: f64 = l_FloatArray_dget_x21_(x_6, x_88);
+                                                            rt::lean_dec(x_88);
+                                                            x_78 = x_87;
+                                                            x_79 = x_85;
+                                                            x_80 = x_89;
+                                                            break 'b77;
                                                         }
                                                     }
                                                 }
-                                                let x_71: f64 = l_Float_dadd(x_70, x_68);
-                                                let x_72: Obj = l_FloatArray_dsize(x_4);
-                                                let x_73: u8 = l_Nat_ddecLt(x_10, x_72);
-                                                match x_73 {
+                                                let x_81: f64 = l_FloatArray_dget_x21_(x_3, x_10);
+                                                match x_76 {
                                                     0 => {
-                                                        x_57 = x_67;
-                                                        x_58 = x_69;
-                                                        x_59 = x_71;
-                                                        x_60 = x_55;
-                                                        break 'b56;
+                                                        x_65 = x_78;
+                                                        x_66 = x_81;
+                                                        x_67 = x_80;
+                                                        x_68 = x_79;
+                                                        x_69 = x_63;
+                                                        break 'b64;
                                                     }
                                                     _ => {
-                                                        let x_74: f64 = l_FloatArray_dget(x_4, x_10, rt::lean_box(0));
-                                                        x_57 = x_67;
-                                                        x_58 = x_69;
-                                                        x_59 = x_71;
-                                                        x_60 = x_74;
-                                                        break 'b56;
+                                                        let x_82: Obj = l_Nat_dsub(x_10, x_34);
+                                                        let x_83: f64 = l_FloatArray_dget_x21_(x_3, x_82);
+                                                        rt::lean_dec(x_82);
+                                                        x_65 = x_78;
+                                                        x_66 = x_81;
+                                                        x_67 = x_80;
+                                                        x_68 = x_79;
+                                                        x_69 = x_83;
+                                                        break 'b64;
                                                     }
                                                 }
                                             }
-                                            let x_61: f64 = l_Float_dadd(x_59, x_60);
-                                            let x_62: f64 = l_Float_dadd(x_61, x_58);
-                                            let x_63: Obj = l_FloatArray_dsize(x_28);
-                                            let x_64: u8 = l_Nat_ddecLt(x_10, x_63);
-                                            match x_64 {
+                                            let x_70: f64 = l_Float_dsub(x_66, x_69);
+                                            let x_71: f64 = l_FloatArray_dget_x21_(x_4, x_10);
+                                            let x_72: f64 = l_Float_dadd(x_70, x_71);
+                                            match x_65 {
                                                 0 => {
-                                                    x_36 = x_57;
-                                                    x_37 = x_62;
-                                                    x_38 = x_55;
+                                                    x_36 = x_67;
+                                                    x_37 = x_72;
+                                                    x_38 = x_68;
+                                                    x_39 = x_63;
                                                     break 'b35;
                                                 }
                                                 _ => {
-                                                    let x_65: f64 = l_FloatArray_dget(x_28, x_10, rt::lean_box(0));
-                                                    x_36 = x_57;
-                                                    x_37 = x_62;
-                                                    x_38 = x_65;
+                                                    let x_73: Obj = l_Nat_dsub(x_10, x_2);
+                                                    let x_74: f64 = l_FloatArray_dget_x21_(x_4, x_73);
+                                                    rt::lean_dec(x_73);
+                                                    x_36 = x_67;
+                                                    x_37 = x_72;
+                                                    x_38 = x_68;
+                                                    x_39 = x_74;
                                                     break 'b35;
                                                 }
                                             }
                                         }
-                                        let x_39: Obj = rt::nat::lean_usize_to_nat(4);
-                                        let x_40: u8 = rt::lean_unbox(x_31) as u8;
-                                        let x_41: f64 = l_Float_dofScientific(x_34, x_40, x_39);
-                                        let x_42: f64 = l_Float_dmul(x_38, x_41);
-                                        let x_43: f64 = l_Float_dmul(x_3, x_3);
-                                        let x_44: f64 = l_Float_ddiv(x_42, x_43);
-                                        let x_45: f64 = l_Float_dadd(x_37, x_44);
-                                        let x_46: Obj = l_FloatArray_dset_x21_(x_18, x_10, x_45);
-                                        let x_47: f64 = l_Float_dneg(x_36);
-                                        let x_48: Obj = rt::nat::lean_usize_to_nat(2);
-                                        let x_49: u8 = rt::lean_unbox(x_31) as u8;
-                                        let x_50: f64 = l_Float_dofScientific(x_34, x_49, x_48);
-                                        let x_51: f64 = l_Float_dmul(x_47, x_50);
-                                        let x_52: f64 = l_Float_ddiv(x_51, x_3);
-                                        let x_53: Obj = l_FloatArray_dset_x21_(x_19, x_10, x_52);
-                                        let x_54: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                        rt::lean_ctor_set(x_54, 0, x_46);
-                                        rt::lean_ctor_set(x_54, 1, x_53);
-                                        x_14 = x_54;
+                                        let x_40: f64 = l_Float_dsub(x_37, x_39);
+                                        let x_41: f64 = l_FloatArray_dget_x21_(x_5, x_10);
+                                        let x_42: f64 = l_Float_dadd(x_41, x_38);
+                                        let x_43: f64 = l_FloatArray_dget_x21_(x_6, x_10);
+                                        let x_44: f64 = l_Float_dadd(x_42, x_43);
+                                        let x_45: f64 = l_Float_dadd(x_44, x_36);
+                                        let x_46: f64 = l_FloatArray_dget_x21_(x_28, x_10);
+                                        let x_47: Obj = rt::nat::lean_usize_to_nat(4);
+                                        let x_48: u8 = rt::lean_unbox(x_31) as u8;
+                                        let x_49: f64 = l_Float_dofScientific(x_34, x_48, x_47);
+                                        let x_50: f64 = l_Float_dmul(x_46, x_49);
+                                        let x_51: f64 = l_Float_dmul(x_7, x_7);
+                                        let x_52: f64 = l_Float_ddiv(x_50, x_51);
+                                        let x_53: f64 = l_Float_dadd(x_45, x_52);
+                                        let x_54: Obj = l_FloatArray_dset_x21_(x_18, x_10, x_53);
+                                        let x_55: f64 = l_Float_dneg(x_40);
+                                        let x_56: Obj = rt::nat::lean_usize_to_nat(2);
+                                        let x_57: u8 = rt::lean_unbox(x_31) as u8;
+                                        let x_58: f64 = l_Float_dofScientific(x_34, x_57, x_56);
+                                        let x_59: f64 = l_Float_dmul(x_55, x_58);
+                                        let x_60: f64 = l_Float_ddiv(x_59, x_7);
+                                        let x_61: Obj = l_FloatArray_dset_x21_(x_19, x_10, x_60);
+                                        let x_62: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_62, 0, x_54);
+                                        rt::lean_ctor_set(x_62, 1, x_61);
+                                        x_14 = x_62;
                                         break 'b13;
                                     }
                                 }
@@ -4752,11 +4540,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
         rt::lean_dec(x_10);
         let t_0: Obj = x_1;
         let t_1: Obj = x_2;
-        let t_2: f64 = x_3;
+        let t_2: Obj = x_3;
         let t_3: Obj = x_4;
         let t_4: Obj = x_5;
         let t_5: Obj = x_6;
-        let t_6: Obj = x_7;
+        let t_6: f64 = x_7;
         let t_7: Obj = x_8;
         let t_8: Obj = x_14;
         let t_9: Obj = x_15;
@@ -4778,14 +4566,14 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj) -> Obj {
-    let x_11: f64 = rt::lean_unbox_float(x_3);
-    rt::lean_dec_ref(x_3);
-    let x_12: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(x_1, x_2, x_11, x_4, x_5, x_6, x_7, x_8, x_9, x_10);
-    rt::lean_dec_ref(x_8);
+    let x_11: f64 = rt::lean_unbox_float(x_7);
     rt::lean_dec_ref(x_7);
+    let x_12: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__1_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6, x_11, x_8, x_9, x_10);
+    rt::lean_dec_ref(x_8);
     rt::lean_dec_ref(x_6);
     rt::lean_dec_ref(x_5);
     rt::lean_dec_ref(x_4);
+    rt::lean_dec_ref(x_3);
     rt::lean_dec(x_2);
     rt::lean_dec_ref(x_1);
     return x_12;
@@ -4816,46 +4604,30 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
     'tail: loop {
         let x_5: Obj = rt::lean_ctor_get(x_2, 1);
         let x_6: Obj = rt::lean_ctor_get(x_2, 2);
-        let mut x_8: f64;
-        'b7: {
-            let x_13: u8 = l_Nat_ddecLt(x_4, x_5);
-            match x_13 {
-                0 => {
-                    rt::lean_dec(x_4);
-                    return x_3;
-                }
-                _ => {
-                    let x_14: Obj = rt::lean_ctor_get(x_1, 8);
-                    let x_15: Obj = l_FloatArray_dsize(x_14);
-                    let x_16: u8 = l_Nat_ddecLt(x_4, x_15);
-                    match x_16 {
-                        0 => {
-                            let x_17: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                            x_8 = x_17;
-                            break 'b7;
-                        }
-                        _ => {
-                            let x_18: f64 = l_FloatArray_dget(x_14, x_4, rt::lean_box(0));
-                            x_8 = x_18;
-                            break 'b7;
-                        }
-                    }
-                }
+        let x_7: u8 = l_Nat_ddecLt(x_4, x_5);
+        match x_7 {
+            0 => {
+                rt::lean_dec(x_4);
+                return x_3;
+            }
+            _ => {
+                let x_8: Obj = rt::lean_ctor_get(x_1, 8);
+                let x_9: f64 = l_FloatArray_dget_x21_(x_8, x_4);
+                let x_10: f64 = l_Float_dneg(x_9);
+                let x_11: Obj = l_FloatArray_dset_x21_(x_3, x_4, x_10);
+                let x_12: Obj = l_Nat_dadd(x_4, x_6);
+                rt::lean_dec(x_4);
+                let t_0: Obj = x_1;
+                let t_1: Obj = x_2;
+                let t_2: Obj = x_11;
+                let t_3: Obj = x_12;
+                x_1 = t_0;
+                x_2 = t_1;
+                x_3 = t_2;
+                x_4 = t_3;
+                continue 'tail;
             }
         }
-        let x_9: f64 = l_Float_dneg(x_8);
-        let x_10: Obj = l_FloatArray_dset_x21_(x_3, x_4, x_9);
-        let x_11: Obj = l_Nat_dadd(x_4, x_6);
-        rt::lean_dec(x_4);
-        let t_0: Obj = x_1;
-        let t_1: Obj = x_2;
-        let t_2: Obj = x_10;
-        let t_3: Obj = x_11;
-        x_1 = t_0;
-        x_2 = t_1;
-        x_3 = t_2;
-        x_4 = t_3;
-        continue 'tail;
     }
 }
 
@@ -4872,7 +4644,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.projectFluid.spec_3
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
-pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3(x_1: f64, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj, x_13: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3(x_1: Obj, x_2: Obj, x_3: Obj, x_4: f64, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj, x_13: Obj) -> Obj {
     let x_14: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10, x_11);
     return x_14;
 }
@@ -4881,24 +4653,24 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj, x_12: Obj, x_13: Obj) -> Obj {
-    let x_14: f64 = rt::lean_unbox_float(x_1);
-    rt::lean_dec_ref(x_1);
-    let x_15: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3(x_14, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10, x_11, x_12, x_13);
+    let x_14: f64 = rt::lean_unbox_float(x_4);
+    rt::lean_dec_ref(x_4);
+    let x_15: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3(x_1, x_2, x_3, x_14, x_5, x_6, x_7, x_8, x_9, x_10, x_11, x_12, x_13);
     rt::lean_dec_ref(x_9);
     rt::lean_dec_ref(x_8);
     rt::lean_dec_ref(x_7);
     rt::lean_dec_ref(x_6);
-    rt::lean_dec(x_5);
-    rt::lean_dec_ref(x_4);
-    rt::lean_dec(x_3);
-    rt::lean_dec_ref(x_2);
+    rt::lean_dec_ref(x_5);
+    rt::lean_dec_ref(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
     return x_15;
 }
 
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.projectFluid.spec_3._redArg
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
-pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(mut x_1: f64, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj, mut x_5: Obj, mut x_6: Obj, mut x_7: Obj, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj, mut x_11: Obj) -> Obj {
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: f64, mut x_5: Obj, mut x_6: Obj, mut x_7: Obj, mut x_8: Obj, mut x_9: Obj, mut x_10: Obj, mut x_11: Obj) -> Obj {
     'tail: loop {
         let x_12: Obj = rt::lean_ctor_get(x_9, 1);
         let x_13: Obj = rt::lean_ctor_get(x_9, 2);
@@ -4916,11 +4688,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_22: Obj;
                     let mut x_23: u8;
                     'b21: {
-                        let x_232: u8 = (!rt::lean_is_exclusive(x_10)) as u8;
-                        match x_232 {
+                        let x_134: u8 = (!rt::lean_is_exclusive(x_10)) as u8;
+                        match x_134 {
                             0 => {
                                 x_22 = x_10;
-                                x_23 = x_232;
+                                x_23 = x_134;
                                 break 'b21;
                             }
                             _ => {
@@ -4928,7 +4700,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_inc(x_20);
                                 rt::lean_dec(x_10);
                                 x_22 = rt::lean_box(0);
-                                x_23 = x_232;
+                                x_23 = x_134;
                                 break 'b21;
                             }
                         }
@@ -4938,11 +4710,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_27: Obj;
                     let mut x_28: u8;
                     'b26: {
-                        let x_231: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
-                        match x_231 {
+                        let x_133: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
+                        match x_133 {
                             0 => {
                                 x_27 = x_19;
-                                x_28 = x_231;
+                                x_28 = x_133;
                                 break 'b26;
                             }
                             _ => {
@@ -4950,679 +4722,348 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_inc(x_24);
                                 rt::lean_dec(x_19);
                                 x_27 = rt::lean_box(0);
-                                x_28 = x_231;
+                                x_28 = x_133;
                                 break 'b26;
                             }
                         }
                     }
                     let mut x_30: Obj;
                     let mut x_31: Obj;
-                    let mut x_32: f64;
                     'b29: {
-                        let mut x_41: Obj;
-                        let mut x_42: f64;
-                        let mut x_43: Obj;
-                        let mut x_44: f64;
-                        'b40: {
+                        let mut x_39: Obj;
+                        let mut x_40: Obj;
+                        let mut x_41: f64;
+                        'b38: {
+                            let mut x_46: f64;
                             let mut x_47: Obj;
                             let mut x_48: Obj;
-                            'b46: {
-                                let x_51: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                let mut x_53: f64;
-                                let mut x_54: Obj;
+                            let mut x_49: f64;
+                            'b45: {
+                                let x_51: Obj = rt::nat::lean_usize_to_nat(1);
+                                let x_52: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
+                                let mut x_54: f64;
                                 let mut x_55: f64;
-                                let mut x_56: f64;
-                                let mut x_57: Obj;
-                                let mut x_58: u8;
-                                'b52: {
-                                    let mut x_61: f64;
-                                    let mut x_62: f64;
+                                let mut x_56: Obj;
+                                let mut x_57: f64;
+                                let mut x_58: Obj;
+                                let mut x_59: u8;
+                                'b53: {
+                                    let mut x_62: Obj;
                                     let mut x_63: Obj;
-                                    let mut x_64: f64;
-                                    let mut x_65: f64;
-                                    let mut x_66: Obj;
-                                    let mut x_67: f64;
-                                    let mut x_68: f64;
-                                    'b60: {
-                                        let mut x_75: f64;
-                                        let mut x_76: f64;
-                                        let mut x_77: Obj;
-                                        let mut x_78: f64;
-                                        let mut x_79: f64;
-                                        let mut x_80: Obj;
-                                        let mut x_81: Obj;
-                                        let mut x_82: f64;
-                                        'b74: {
-                                            let mut x_87: f64;
-                                            let mut x_88: Obj;
-                                            let mut x_89: f64;
+                                    'b61: {
+                                        let mut x_86: Obj;
+                                        let mut x_87: f64;
+                                        'b85: {
                                             let mut x_90: f64;
                                             let mut x_91: Obj;
                                             let mut x_92: f64;
-                                            let mut x_93: f64;
-                                            'b86: {
-                                                let x_100: Obj = rt::nat::lean_usize_to_nat(1);
-                                                let mut x_102: f64;
-                                                let mut x_103: Obj;
-                                                let mut x_104: f64;
-                                                let mut x_105: Obj;
-                                                let mut x_106: f64;
-                                                'b101: {
-                                                    let mut x_114: Obj;
-                                                    let mut x_115: Obj;
-                                                    let mut x_116: f64;
-                                                    'b113: {
-                                                        let mut x_124: Obj;
-                                                        let mut x_125: Obj;
-                                                        'b123: {
-                                                            let mut x_133: Obj;
-                                                            let mut x_134: f64;
-                                                            'b132: {
-                                                                let mut x_137: Obj;
-                                                                let mut x_138: f64;
-                                                                let mut x_139: f64;
-                                                                'b136: {
-                                                                    let mut x_142: f64;
-                                                                    let mut x_143: Obj;
-                                                                    let mut x_144: f64;
-                                                                    let mut x_145: f64;
-                                                                    let mut x_146: u8;
-                                                                    'b141: {
-                                                                        let mut x_149: f64;
-                                                                        let mut x_150: f64;
-                                                                        let mut x_151: f64;
-                                                                        let mut x_152: Obj;
-                                                                        let mut x_153: f64;
-                                                                        let mut x_154: f64;
-                                                                        let mut x_155: f64;
-                                                                        'b148: {
-                                                                            let mut x_162: f64;
-                                                                            let mut x_163: f64;
-                                                                            let mut x_164: Obj;
-                                                                            let mut x_165: f64;
-                                                                            let mut x_166: Obj;
-                                                                            let mut x_167: f64;
-                                                                            let mut x_168: f64;
-                                                                            'b161: {
-                                                                                let mut x_173: f64;
-                                                                                let mut x_174: f64;
-                                                                                let mut x_175: Obj;
-                                                                                let mut x_176: f64;
-                                                                                let mut x_177: f64;
-                                                                                let mut x_178: f64;
-                                                                                'b172: {
-                                                                                    let mut x_186: Obj;
-                                                                                    let mut x_187: f64;
-                                                                                    let mut x_188: f64;
-                                                                                    let mut x_189: f64;
-                                                                                    'b185: {
-                                                                                        let mut x_197: Obj;
-                                                                                        let mut x_198: f64;
-                                                                                        'b196: {
-                                                                                            let mut x_206: Obj;
-                                                                                            'b205: {
-                                                                                                let mut x_214: f64;
-                                                                                                let mut x_215: f64;
-                                                                                                'b213: {
-                                                                                                    let mut x_219: f64;
-                                                                                                    'b218: {
-                                                                                                        let x_224: Obj = l_Array_dsize(rt::lean_box(0), x_7);
-                                                                                                        let x_225: u8 = l_Nat_ddecLt(x_11, x_224);
-                                                                                                        match x_225 {
-                                                                                                            0 => {
-                                                                                                                x_206 = x_25;
-                                                                                                                break 'b205;
-                                                                                                            }
-                                                                                                            _ => {
-                                                                                                                let x_226: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_7, x_11, rt::lean_box(0));
-                                                                                                                let x_227: u8 = rt::lean_unbox(x_226) as u8;
-                                                                                                                match x_227 {
-                                                                                                                    0 => {
-                                                                                                                        x_206 = x_25;
-                                                                                                                        break 'b205;
-                                                                                                                    }
-                                                                                                                    _ => {
-                                                                                                                        let x_228: Obj = l_FloatArray_dsize(x_8);
-                                                                                                                        let x_229: u8 = l_Nat_ddecLt(x_11, x_228);
-                                                                                                                        match x_229 {
-                                                                                                                            0 => {
-                                                                                                                                x_219 = x_51;
-                                                                                                                                break 'b218;
-                                                                                                                            }
-                                                                                                                            _ => {
-                                                                                                                                let x_230: f64 = l_FloatArray_dget(x_8, x_11, rt::lean_box(0));
-                                                                                                                                x_219 = x_230;
-                                                                                                                                break 'b218;
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }
-                                                                                                    let x_220: Obj = rt::lean_ctor_get(x_2, 0);
-                                                                                                    let x_221: Obj = l_FloatArray_dsize(x_220);
-                                                                                                    let x_222: u8 = l_Nat_ddecLt(x_11, x_221);
-                                                                                                    match x_222 {
-                                                                                                        0 => {
-                                                                                                            x_214 = x_219;
-                                                                                                            x_215 = x_51;
-                                                                                                            break 'b213;
-                                                                                                        }
-                                                                                                        _ => {
-                                                                                                            let x_223: f64 = l_FloatArray_dget(x_220, x_11, rt::lean_box(0));
-                                                                                                            x_214 = x_219;
-                                                                                                            x_215 = x_223;
-                                                                                                            break 'b213;
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                                let x_216: f64 = l_Float_dadd(x_214, x_215);
-                                                                                                let x_217: Obj = l_FloatArray_dset_x21_(x_25, x_11, x_216);
-                                                                                                x_206 = x_217;
-                                                                                                break 'b205;
-                                                                                            }
-                                                                                            let x_207: Obj = l_Nat_dmod(x_11, x_3);
-                                                                                            let x_208: Obj = l_Nat_dadd(x_207, x_100);
-                                                                                            rt::lean_dec(x_207);
-                                                                                            let x_209: u8 = l_Nat_ddecLt(x_208, x_3);
-                                                                                            rt::lean_dec(x_208);
-                                                                                            match x_209 {
-                                                                                                0 => {
-                                                                                                    x_124 = x_206;
-                                                                                                    x_125 = x_20;
-                                                                                                    break 'b123;
-                                                                                                }
-                                                                                                _ => {
-                                                                                                    let x_210: Obj = l_FloatArray_dsize(x_6);
-                                                                                                    let x_211: u8 = l_Nat_ddecLt(x_11, x_210);
-                                                                                                    match x_211 {
-                                                                                                        0 => {
-                                                                                                            x_197 = x_206;
-                                                                                                            x_198 = x_51;
-                                                                                                            break 'b196;
-                                                                                                        }
-                                                                                                        _ => {
-                                                                                                            let x_212: f64 = l_FloatArray_dget(x_6, x_11, rt::lean_box(0));
-                                                                                                            x_197 = x_206;
-                                                                                                            x_198 = x_212;
-                                                                                                            break 'b196;
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                        let x_199: u8 = l_Float_ddecLt(x_51, x_198);
-                                                                                        match x_199 {
-                                                                                            0 => {
-                                                                                                x_124 = x_197;
-                                                                                                x_125 = x_20;
-                                                                                                break 'b123;
-                                                                                            }
-                                                                                            _ => {
-                                                                                                let x_200: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__0();
-                                                                                                let x_201: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__1();
-                                                                                                let x_202: Obj = l_FloatArray_dsize(x_20);
-                                                                                                let x_203: u8 = l_Nat_ddecLt(x_11, x_202);
-                                                                                                match x_203 {
-                                                                                                    0 => {
-                                                                                                        x_186 = x_197;
-                                                                                                        x_187 = x_201;
-                                                                                                        x_188 = x_200;
-                                                                                                        x_189 = x_51;
-                                                                                                        break 'b185;
-                                                                                                    }
-                                                                                                    _ => {
-                                                                                                        let x_204: f64 = l_FloatArray_dget(x_20, x_11, rt::lean_box(0));
-                                                                                                        x_186 = x_197;
-                                                                                                        x_187 = x_201;
-                                                                                                        x_188 = x_200;
-                                                                                                        x_189 = x_204;
-                                                                                                        break 'b185;
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                    let x_190: Obj = rt::nat::lean_usize_to_nat(2);
-                                                                                    let x_191: f64 = l_Float_dofScientific(x_100, x_18, x_190);
-                                                                                    let x_192: f64 = l_Float_ddiv(x_1, x_191);
-                                                                                    let x_193: Obj = l_FloatArray_dsize(x_6);
-                                                                                    let x_194: u8 = l_Nat_ddecLt(x_11, x_193);
-                                                                                    match x_194 {
-                                                                                        0 => {
-                                                                                            x_173 = x_189;
-                                                                                            x_174 = x_192;
-                                                                                            x_175 = x_186;
-                                                                                            x_176 = x_187;
-                                                                                            x_177 = x_188;
-                                                                                            x_178 = x_51;
-                                                                                            break 'b172;
-                                                                                        }
-                                                                                        _ => {
-                                                                                            let x_195: f64 = l_FloatArray_dget(x_6, x_11, rt::lean_box(0));
-                                                                                            x_173 = x_189;
-                                                                                            x_174 = x_192;
-                                                                                            x_175 = x_186;
-                                                                                            x_176 = x_187;
-                                                                                            x_177 = x_188;
-                                                                                            x_178 = x_195;
-                                                                                            break 'b172;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                let x_179: Obj = rt::lean_ctor_get(x_2, 0);
-                                                                                let x_180: f64 = l_Float_dmul(x_174, x_178);
-                                                                                let x_181: Obj = l_Nat_dadd(x_11, x_100);
-                                                                                let x_182: Obj = l_FloatArray_dsize(x_179);
-                                                                                let x_183: u8 = l_Nat_ddecLt(x_181, x_182);
-                                                                                match x_183 {
-                                                                                    0 => {
-                                                                                        rt::lean_dec(x_181);
-                                                                                        x_162 = x_180;
-                                                                                        x_163 = x_173;
-                                                                                        x_164 = x_175;
-                                                                                        x_165 = x_176;
-                                                                                        x_166 = x_179;
-                                                                                        x_167 = x_177;
-                                                                                        x_168 = x_51;
-                                                                                        break 'b161;
-                                                                                    }
-                                                                                    _ => {
-                                                                                        let x_184: f64 = l_FloatArray_dget(x_179, x_181, rt::lean_box(0));
-                                                                                        rt::lean_dec(x_181);
-                                                                                        x_162 = x_180;
-                                                                                        x_163 = x_173;
-                                                                                        x_164 = x_175;
-                                                                                        x_165 = x_176;
-                                                                                        x_166 = x_179;
-                                                                                        x_167 = x_177;
-                                                                                        x_168 = x_184;
-                                                                                        break 'b161;
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            let x_169: Obj = l_FloatArray_dsize(x_166);
-                                                                            let x_170: u8 = l_Nat_ddecLt(x_11, x_169);
-                                                                            match x_170 {
-                                                                                0 => {
-                                                                                    x_149 = x_162;
-                                                                                    x_150 = x_163;
-                                                                                    x_151 = x_168;
-                                                                                    x_152 = x_164;
-                                                                                    x_153 = x_165;
-                                                                                    x_154 = x_167;
-                                                                                    x_155 = x_51;
-                                                                                    break 'b148;
-                                                                                }
-                                                                                _ => {
-                                                                                    let x_171: f64 = l_FloatArray_dget(x_166, x_11, rt::lean_box(0));
-                                                                                    x_149 = x_162;
-                                                                                    x_150 = x_163;
-                                                                                    x_151 = x_168;
-                                                                                    x_152 = x_164;
-                                                                                    x_153 = x_165;
-                                                                                    x_154 = x_167;
-                                                                                    x_155 = x_171;
-                                                                                    break 'b148;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        let x_156: f64 = l_Float_dsub(x_151, x_155);
-                                                                        let x_157: f64 = l_Float_dmul(x_149, x_156);
-                                                                        let x_158: f64 = l_Float_dsub(x_150, x_157);
-                                                                        let x_159: u8 = l_Float_disNaN(x_158);
-                                                                        match x_159 {
-                                                                            0 => {
-                                                                                let x_160: u8 = l_Float_disInf(x_158);
-                                                                                x_142 = x_158;
-                                                                                x_143 = x_152;
-                                                                                x_144 = x_153;
-                                                                                x_145 = x_154;
-                                                                                x_146 = x_160;
-                                                                                break 'b141;
-                                                                            }
-                                                                            _ => {
-                                                                                x_142 = x_158;
-                                                                                x_143 = x_152;
-                                                                                x_144 = x_153;
-                                                                                x_145 = x_154;
-                                                                                x_146 = x_159;
-                                                                                break 'b141;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    match x_146 {
-                                                                        0 => {
-                                                                            let x_147: u8 = l_Float_ddecLt(x_145, x_142);
-                                                                            match x_147 {
-                                                                                0 => {
-                                                                                    x_137 = x_143;
-                                                                                    x_138 = x_144;
-                                                                                    x_139 = x_142;
-                                                                                    break 'b136;
-                                                                                }
-                                                                                _ => {
-                                                                                    x_137 = x_143;
-                                                                                    x_138 = x_144;
-                                                                                    x_139 = x_145;
-                                                                                    break 'b136;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        _ => {
-                                                                            x_133 = x_143;
-                                                                            x_134 = x_51;
-                                                                            break 'b132;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                let x_140: u8 = l_Float_ddecLt(x_138, x_139);
-                                                                match x_140 {
-                                                                    0 => {
-                                                                        x_133 = x_137;
-                                                                        x_134 = x_138;
-                                                                        break 'b132;
-                                                                    }
-                                                                    _ => {
-                                                                        x_133 = x_137;
-                                                                        x_134 = x_139;
-                                                                        break 'b132;
-                                                                    }
-                                                                }
-                                                            }
-                                                            let x_135: Obj = l_FloatArray_dset_x21_(x_20, x_11, x_134);
-                                                            x_124 = x_133;
-                                                            x_125 = x_135;
-                                                            break 'b123;
-                                                        }
-                                                        let x_126: Obj = l_Nat_ddiv(x_11, x_3);
-                                                        let x_127: Obj = l_Nat_dadd(x_126, x_100);
-                                                        rt::lean_dec(x_126);
-                                                        let x_128: u8 = l_Nat_ddecLt(x_127, x_5);
-                                                        rt::lean_dec(x_127);
-                                                        match x_128 {
+                                            'b89: {
+                                                let mut x_95: f64;
+                                                let mut x_96: f64;
+                                                let mut x_97: Obj;
+                                                let mut x_98: f64;
+                                                let mut x_99: u8;
+                                                'b94: {
+                                                    let mut x_102: Obj;
+                                                    'b101: {
+                                                        let x_124: Obj = l_Array_dsize(rt::lean_box(0), x_7);
+                                                        let x_125: u8 = l_Nat_ddecLt(x_11, x_124);
+                                                        match x_125 {
                                                             0 => {
-                                                                rt::lean_del_object(x_27);
-                                                                rt::lean_del_object(x_22);
-                                                                x_47 = x_125;
-                                                                x_48 = x_124;
-                                                                break 'b46;
+                                                                x_102 = x_25;
+                                                                break 'b101;
                                                             }
                                                             _ => {
-                                                                let x_129: Obj = l_FloatArray_dsize(x_4);
-                                                                let x_130: u8 = l_Nat_ddecLt(x_11, x_129);
-                                                                match x_130 {
+                                                                let x_126: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_7, x_11, rt::lean_box(0));
+                                                                let x_127: u8 = rt::lean_unbox(x_126) as u8;
+                                                                match x_127 {
                                                                     0 => {
-                                                                        x_114 = x_125;
-                                                                        x_115 = x_124;
-                                                                        x_116 = x_51;
-                                                                        break 'b113;
+                                                                        x_102 = x_25;
+                                                                        break 'b101;
                                                                     }
                                                                     _ => {
-                                                                        let x_131: f64 = l_FloatArray_dget(x_4, x_11, rt::lean_box(0));
-                                                                        x_114 = x_125;
-                                                                        x_115 = x_124;
-                                                                        x_116 = x_131;
-                                                                        break 'b113;
+                                                                        let x_128: Obj = rt::lean_ctor_get(x_5, 0);
+                                                                        let x_129: f64 = l_FloatArray_dget_x21_(x_8, x_11);
+                                                                        let x_130: f64 = l_FloatArray_dget_x21_(x_128, x_11);
+                                                                        let x_131: f64 = l_Float_dadd(x_129, x_130);
+                                                                        let x_132: Obj = l_FloatArray_dset_x21_(x_25, x_11, x_131);
+                                                                        x_102 = x_132;
+                                                                        break 'b101;
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                    let x_117: u8 = l_Float_ddecLt(x_51, x_116);
-                                                    match x_117 {
+                                                    let x_103: Obj = l_Nat_dmod(x_11, x_1);
+                                                    let x_104: Obj = l_Nat_dadd(x_103, x_51);
+                                                    rt::lean_dec(x_103);
+                                                    let x_105: u8 = l_Nat_ddecLt(x_104, x_1);
+                                                    rt::lean_dec(x_104);
+                                                    match x_105 {
                                                         0 => {
-                                                            rt::lean_del_object(x_27);
-                                                            rt::lean_del_object(x_22);
-                                                            x_47 = x_114;
-                                                            x_48 = x_115;
-                                                            break 'b46;
+                                                            x_62 = x_102;
+                                                            x_63 = x_20;
+                                                            break 'b61;
                                                         }
                                                         _ => {
-                                                            let x_118: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__0();
-                                                            let x_119: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__1();
-                                                            let x_120: Obj = l_FloatArray_dsize(x_24);
-                                                            let x_121: u8 = l_Nat_ddecLt(x_11, x_120);
-                                                            match x_121 {
+                                                            let x_106: f64 = l_FloatArray_dget_x21_(x_6, x_11);
+                                                            let x_107: u8 = l_Float_ddecLt(x_52, x_106);
+                                                            match x_107 {
                                                                 0 => {
-                                                                    x_102 = x_118;
-                                                                    x_103 = x_114;
-                                                                    x_104 = x_119;
-                                                                    x_105 = x_115;
-                                                                    x_106 = x_51;
-                                                                    break 'b101;
+                                                                    x_62 = x_102;
+                                                                    x_63 = x_20;
+                                                                    break 'b61;
                                                                 }
                                                                 _ => {
-                                                                    let x_122: f64 = l_FloatArray_dget(x_24, x_11, rt::lean_box(0));
-                                                                    x_102 = x_118;
-                                                                    x_103 = x_114;
-                                                                    x_104 = x_119;
-                                                                    x_105 = x_115;
-                                                                    x_106 = x_122;
-                                                                    break 'b101;
+                                                                    let x_108: Obj = rt::lean_ctor_get(x_5, 0);
+                                                                    let x_109: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__0();
+                                                                    let x_110: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__1();
+                                                                    let x_111: f64 = l_FloatArray_dget_x21_(x_20, x_11);
+                                                                    let x_112: Obj = rt::nat::lean_usize_to_nat(2);
+                                                                    let x_113: f64 = l_Float_dofScientific(x_51, x_18, x_112);
+                                                                    let x_114: f64 = l_Float_ddiv(x_4, x_113);
+                                                                    let x_115: f64 = l_Float_dmul(x_114, x_106);
+                                                                    let x_116: Obj = l_Nat_dadd(x_11, x_51);
+                                                                    let x_117: f64 = l_FloatArray_dget_x21_(x_108, x_116);
+                                                                    rt::lean_dec(x_116);
+                                                                    let x_118: f64 = l_FloatArray_dget_x21_(x_108, x_11);
+                                                                    let x_119: f64 = l_Float_dsub(x_117, x_118);
+                                                                    let x_120: f64 = l_Float_dmul(x_115, x_119);
+                                                                    let x_121: f64 = l_Float_dsub(x_111, x_120);
+                                                                    let x_122: u8 = l_Float_disNaN(x_121);
+                                                                    match x_122 {
+                                                                        0 => {
+                                                                            let x_123: u8 = l_Float_disInf(x_121);
+                                                                            x_95 = x_110;
+                                                                            x_96 = x_121;
+                                                                            x_97 = x_102;
+                                                                            x_98 = x_109;
+                                                                            x_99 = x_123;
+                                                                            break 'b94;
+                                                                        }
+                                                                        _ => {
+                                                                            x_95 = x_110;
+                                                                            x_96 = x_121;
+                                                                            x_97 = x_102;
+                                                                            x_98 = x_109;
+                                                                            x_99 = x_122;
+                                                                            break 'b94;
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
-                                                let x_107: Obj = rt::nat::lean_usize_to_nat(2);
-                                                let x_108: f64 = l_Float_dofScientific(x_100, x_18, x_107);
-                                                let x_109: f64 = l_Float_ddiv(x_1, x_108);
-                                                let x_110: Obj = l_FloatArray_dsize(x_4);
-                                                let x_111: u8 = l_Nat_ddecLt(x_11, x_110);
-                                                match x_111 {
+                                                match x_99 {
                                                     0 => {
-                                                        x_87 = x_102;
-                                                        x_88 = x_103;
-                                                        x_89 = x_104;
-                                                        x_90 = x_109;
-                                                        x_91 = x_105;
-                                                        x_92 = x_106;
-                                                        x_93 = x_51;
-                                                        break 'b86;
+                                                        let x_100: u8 = l_Float_ddecLt(x_98, x_96);
+                                                        match x_100 {
+                                                            0 => {
+                                                                x_90 = x_95;
+                                                                x_91 = x_97;
+                                                                x_92 = x_96;
+                                                                break 'b89;
+                                                            }
+                                                            _ => {
+                                                                x_90 = x_95;
+                                                                x_91 = x_97;
+                                                                x_92 = x_98;
+                                                                break 'b89;
+                                                            }
+                                                        }
                                                     }
                                                     _ => {
-                                                        let x_112: f64 = l_FloatArray_dget(x_4, x_11, rt::lean_box(0));
-                                                        x_87 = x_102;
-                                                        x_88 = x_103;
-                                                        x_89 = x_104;
-                                                        x_90 = x_109;
-                                                        x_91 = x_105;
-                                                        x_92 = x_106;
-                                                        x_93 = x_112;
-                                                        break 'b86;
+                                                        x_86 = x_97;
+                                                        x_87 = x_52;
+                                                        break 'b85;
                                                     }
                                                 }
                                             }
-                                            let x_94: Obj = rt::lean_ctor_get(x_2, 0);
-                                            let x_95: f64 = l_Float_dmul(x_90, x_93);
-                                            let x_96: Obj = l_Nat_dadd(x_11, x_3);
-                                            let x_97: Obj = l_FloatArray_dsize(x_94);
-                                            let x_98: u8 = l_Nat_ddecLt(x_96, x_97);
-                                            match x_98 {
+                                            let x_93: u8 = l_Float_ddecLt(x_90, x_92);
+                                            match x_93 {
                                                 0 => {
-                                                    rt::lean_dec(x_96);
-                                                    x_75 = x_95;
-                                                    x_76 = x_87;
-                                                    x_77 = x_88;
-                                                    x_78 = x_89;
-                                                    x_79 = x_92;
-                                                    x_80 = x_91;
-                                                    x_81 = x_94;
-                                                    x_82 = x_51;
-                                                    break 'b74;
+                                                    x_86 = x_91;
+                                                    x_87 = x_90;
+                                                    break 'b85;
                                                 }
                                                 _ => {
-                                                    let x_99: f64 = l_FloatArray_dget(x_94, x_96, rt::lean_box(0));
-                                                    rt::lean_dec(x_96);
-                                                    x_75 = x_95;
-                                                    x_76 = x_87;
-                                                    x_77 = x_88;
-                                                    x_78 = x_89;
-                                                    x_79 = x_92;
-                                                    x_80 = x_91;
-                                                    x_81 = x_94;
-                                                    x_82 = x_99;
-                                                    break 'b74;
+                                                    x_86 = x_91;
+                                                    x_87 = x_92;
+                                                    break 'b85;
                                                 }
                                             }
                                         }
-                                        let x_83: Obj = l_FloatArray_dsize(x_81);
-                                        let x_84: u8 = l_Nat_ddecLt(x_11, x_83);
-                                        match x_84 {
-                                            0 => {
-                                                x_61 = x_76;
-                                                x_62 = x_75;
-                                                x_63 = x_77;
-                                                x_64 = x_82;
-                                                x_65 = x_78;
-                                                x_66 = x_80;
-                                                x_67 = x_79;
-                                                x_68 = x_51;
-                                                break 'b60;
-                                            }
-                                            _ => {
-                                                let x_85: f64 = l_FloatArray_dget(x_81, x_11, rt::lean_box(0));
-                                                x_61 = x_76;
-                                                x_62 = x_75;
-                                                x_63 = x_77;
-                                                x_64 = x_82;
-                                                x_65 = x_78;
-                                                x_66 = x_80;
-                                                x_67 = x_79;
-                                                x_68 = x_85;
-                                                break 'b60;
-                                            }
-                                        }
+                                        let x_88: Obj = l_FloatArray_dset_x21_(x_20, x_11, x_87);
+                                        x_62 = x_86;
+                                        x_63 = x_88;
+                                        break 'b61;
                                     }
-                                    let x_69: f64 = l_Float_dsub(x_64, x_68);
-                                    let x_70: f64 = l_Float_dmul(x_62, x_69);
-                                    let x_71: f64 = l_Float_dsub(x_67, x_70);
-                                    let x_72: u8 = l_Float_disNaN(x_71);
-                                    match x_72 {
+                                    let x_64: Obj = l_Nat_ddiv(x_11, x_1);
+                                    let x_65: Obj = l_Nat_dadd(x_64, x_51);
+                                    rt::lean_dec(x_64);
+                                    let x_66: u8 = l_Nat_ddecLt(x_65, x_2);
+                                    rt::lean_dec(x_65);
+                                    match x_66 {
                                         0 => {
-                                            let x_73: u8 = l_Float_disInf(x_71);
-                                            x_53 = x_61;
-                                            x_54 = x_63;
-                                            x_55 = x_65;
-                                            x_56 = x_71;
-                                            x_57 = x_66;
-                                            x_58 = x_73;
-                                            break 'b52;
+                                            x_30 = x_63;
+                                            x_31 = x_62;
+                                            break 'b29;
                                         }
                                         _ => {
-                                            x_53 = x_61;
-                                            x_54 = x_63;
-                                            x_55 = x_65;
-                                            x_56 = x_71;
-                                            x_57 = x_66;
-                                            x_58 = x_72;
-                                            break 'b52;
+                                            let x_67: f64 = l_FloatArray_dget_x21_(x_3, x_11);
+                                            let x_68: u8 = l_Float_ddecLt(x_52, x_67);
+                                            match x_68 {
+                                                0 => {
+                                                    x_30 = x_63;
+                                                    x_31 = x_62;
+                                                    break 'b29;
+                                                }
+                                                _ => {
+                                                    rt::lean_del_object(x_27);
+                                                    rt::lean_del_object(x_22);
+                                                    let x_69: Obj = rt::lean_ctor_get(x_5, 0);
+                                                    let x_70: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__0();
+                                                    let x_71: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__closed__1();
+                                                    let x_72: f64 = l_FloatArray_dget_x21_(x_24, x_11);
+                                                    let x_73: Obj = rt::nat::lean_usize_to_nat(2);
+                                                    let x_74: f64 = l_Float_dofScientific(x_51, x_18, x_73);
+                                                    let x_75: f64 = l_Float_ddiv(x_4, x_74);
+                                                    let x_76: f64 = l_Float_dmul(x_75, x_67);
+                                                    let x_77: Obj = l_Nat_dadd(x_11, x_1);
+                                                    let x_78: f64 = l_FloatArray_dget_x21_(x_69, x_77);
+                                                    rt::lean_dec(x_77);
+                                                    let x_79: f64 = l_FloatArray_dget_x21_(x_69, x_11);
+                                                    let x_80: f64 = l_Float_dsub(x_78, x_79);
+                                                    let x_81: f64 = l_Float_dmul(x_76, x_80);
+                                                    let x_82: f64 = l_Float_dsub(x_72, x_81);
+                                                    let x_83: u8 = l_Float_disNaN(x_82);
+                                                    match x_83 {
+                                                        0 => {
+                                                            let x_84: u8 = l_Float_disInf(x_82);
+                                                            x_54 = x_70;
+                                                            x_55 = x_71;
+                                                            x_56 = x_63;
+                                                            x_57 = x_82;
+                                                            x_58 = x_62;
+                                                            x_59 = x_84;
+                                                            break 'b53;
+                                                        }
+                                                        _ => {
+                                                            x_54 = x_70;
+                                                            x_55 = x_71;
+                                                            x_56 = x_63;
+                                                            x_57 = x_82;
+                                                            x_58 = x_62;
+                                                            x_59 = x_83;
+                                                            break 'b53;
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                                match x_58 {
+                                match x_59 {
                                     0 => {
-                                        let x_59: u8 = l_Float_ddecLt(x_53, x_56);
-                                        match x_59 {
+                                        let x_60: u8 = l_Float_ddecLt(x_54, x_57);
+                                        match x_60 {
                                             0 => {
-                                                x_41 = x_54;
-                                                x_42 = x_55;
-                                                x_43 = x_57;
-                                                x_44 = x_56;
-                                                break 'b40;
+                                                x_46 = x_55;
+                                                x_47 = x_56;
+                                                x_48 = x_58;
+                                                x_49 = x_57;
+                                                break 'b45;
                                             }
                                             _ => {
-                                                x_41 = x_54;
-                                                x_42 = x_55;
-                                                x_43 = x_57;
-                                                x_44 = x_53;
-                                                break 'b40;
+                                                x_46 = x_55;
+                                                x_47 = x_56;
+                                                x_48 = x_58;
+                                                x_49 = x_54;
+                                                break 'b45;
                                             }
                                         }
                                     }
                                     _ => {
-                                        x_30 = x_54;
-                                        x_31 = x_57;
-                                        x_32 = x_51;
-                                        break 'b29;
+                                        x_39 = x_56;
+                                        x_40 = x_58;
+                                        x_41 = x_52;
+                                        break 'b38;
                                     }
                                 }
                             }
-                            let x_49: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                            rt::lean_ctor_set(x_49, 0, x_24);
-                            rt::lean_ctor_set(x_49, 1, x_48);
-                            let x_50: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                            rt::lean_ctor_set(x_50, 0, x_47);
-                            rt::lean_ctor_set(x_50, 1, x_49);
-                            x_15 = x_50;
-                            break 'b14;
-                        }
-                        let x_45: u8 = l_Float_ddecLt(x_42, x_44);
-                        match x_45 {
-                            0 => {
-                                x_30 = x_41;
-                                x_31 = x_43;
-                                x_32 = x_42;
-                                break 'b29;
-                            }
-                            _ => {
-                                x_30 = x_41;
-                                x_31 = x_43;
-                                x_32 = x_44;
-                                break 'b29;
+                            let x_50: u8 = l_Float_ddecLt(x_46, x_49);
+                            match x_50 {
+                                0 => {
+                                    x_39 = x_47;
+                                    x_40 = x_48;
+                                    x_41 = x_46;
+                                    break 'b38;
+                                }
+                                _ => {
+                                    x_39 = x_47;
+                                    x_40 = x_48;
+                                    x_41 = x_49;
+                                    break 'b38;
+                                }
                             }
                         }
+                        let x_42: Obj = l_FloatArray_dset_x21_(x_24, x_11, x_41);
+                        let x_43: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                        rt::lean_ctor_set(x_43, 0, x_42);
+                        rt::lean_ctor_set(x_43, 1, x_40);
+                        let x_44: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                        rt::lean_ctor_set(x_44, 0, x_39);
+                        rt::lean_ctor_set(x_44, 1, x_43);
+                        x_15 = x_44;
+                        break 'b14;
                     }
-                    let x_33: Obj = l_FloatArray_dset_x21_(x_24, x_11, x_32);
-                    let mut x_35: Obj;
-                    'b34: {
+                    let mut x_33: Obj;
+                    'b32: {
                         match x_28 {
                             0 => {
                                 rt::lean_ctor_set(x_27, 1, x_31);
-                                rt::lean_ctor_set(x_27, 0, x_33);
-                                x_35 = x_27;
-                                break 'b34;
+                                x_33 = x_27;
+                                break 'b32;
                             }
                             _ => {
-                                let x_39: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_39, 0, x_33);
-                                rt::lean_ctor_set(x_39, 1, x_31);
-                                x_35 = x_39;
-                                break 'b34;
+                                let x_37: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_37, 0, x_24);
+                                rt::lean_ctor_set(x_37, 1, x_31);
+                                x_33 = x_37;
+                                break 'b32;
                             }
                         }
                     }
-                    let mut x_37: Obj;
-                    'b36: {
+                    let mut x_35: Obj;
+                    'b34: {
                         match x_23 {
                             0 => {
-                                rt::lean_ctor_set(x_22, 1, x_35);
+                                rt::lean_ctor_set(x_22, 1, x_33);
                                 rt::lean_ctor_set(x_22, 0, x_30);
-                                x_37 = x_22;
-                                break 'b36;
+                                x_35 = x_22;
+                                break 'b34;
                             }
                             _ => {
-                                let x_38: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_38, 0, x_30);
-                                rt::lean_ctor_set(x_38, 1, x_35);
-                                x_37 = x_38;
-                                break 'b36;
+                                let x_36: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_36, 0, x_30);
+                                rt::lean_ctor_set(x_36, 1, x_33);
+                                x_35 = x_36;
+                                break 'b34;
                             }
                         }
                     }
-                    x_15 = x_37;
+                    x_15 = x_35;
                     break 'b14;
                 }
             }
         }
         let x_16: Obj = l_Nat_dadd(x_11, x_13);
         rt::lean_dec(x_11);
-        let t_0: f64 = x_1;
+        let t_0: Obj = x_1;
         let t_1: Obj = x_2;
         let t_2: Obj = x_3;
-        let t_3: Obj = x_4;
+        let t_3: f64 = x_4;
         let t_4: Obj = x_5;
         let t_5: Obj = x_6;
         let t_6: Obj = x_7;
@@ -5649,17 +5090,17 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
 // Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
 // Source: <lean>/Init/Data/Range/Basic.lean:37:25
 pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj, x_9: Obj, x_10: Obj, x_11: Obj) -> Obj {
-    let x_12: f64 = rt::lean_unbox_float(x_1);
-    rt::lean_dec_ref(x_1);
-    let x_13: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(x_12, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9, x_10, x_11);
+    let x_12: f64 = rt::lean_unbox_float(x_4);
+    rt::lean_dec_ref(x_4);
+    let x_13: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dprojectFluid_dspec__3_d__redArg(x_1, x_2, x_3, x_12, x_5, x_6, x_7, x_8, x_9, x_10, x_11);
     rt::lean_dec_ref(x_9);
     rt::lean_dec_ref(x_8);
     rt::lean_dec_ref(x_7);
     rt::lean_dec_ref(x_6);
-    rt::lean_dec(x_5);
-    rt::lean_dec_ref(x_4);
-    rt::lean_dec(x_3);
-    rt::lean_dec_ref(x_2);
+    rt::lean_dec_ref(x_5);
+    rt::lean_dec_ref(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
     return x_13;
 }
 
@@ -5739,20 +5180,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_21: Obj;
                     let mut x_22: u8;
                     'b20: {
-                        let x_140: u8 = (!rt::lean_is_exclusive(x_8)) as u8;
-                        match x_140 {
+                        let x_113: u8 = (!rt::lean_is_exclusive(x_8)) as u8;
+                        match x_113 {
                             0 => {
-                                let x_141: Obj = rt::lean_ctor_get(x_8, 1);
-                                rt::lean_dec(x_141);
+                                let x_114: Obj = rt::lean_ctor_get(x_8, 1);
+                                rt::lean_dec(x_114);
                                 x_21 = x_8;
-                                x_22 = x_140;
+                                x_22 = x_113;
                                 break 'b20;
                             }
                             _ => {
                                 rt::lean_inc(x_19);
                                 rt::lean_dec(x_8);
                                 x_21 = rt::lean_box(0);
-                                x_22 = x_140;
+                                x_22 = x_113;
                                 break 'b20;
                             }
                         }
@@ -5761,20 +5202,20 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_25: Obj;
                     let mut x_26: u8;
                     'b24: {
-                        let x_138: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
-                        match x_138 {
+                        let x_111: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
+                        match x_111 {
                             0 => {
-                                let x_139: Obj = rt::lean_ctor_get(x_17, 1);
-                                rt::lean_dec(x_139);
+                                let x_112: Obj = rt::lean_ctor_get(x_17, 1);
+                                rt::lean_dec(x_112);
                                 x_25 = x_17;
-                                x_26 = x_138;
+                                x_26 = x_111;
                                 break 'b24;
                             }
                             _ => {
                                 rt::lean_inc(x_23);
                                 rt::lean_dec(x_17);
                                 x_25 = rt::lean_box(0);
-                                x_26 = x_138;
+                                x_26 = x_111;
                                 break 'b24;
                             }
                         }
@@ -5784,11 +5225,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let mut x_30: Obj;
                     let mut x_31: u8;
                     'b29: {
-                        let x_137: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
-                        match x_137 {
+                        let x_110: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
+                        match x_110 {
                             0 => {
                                 x_30 = x_18;
-                                x_31 = x_137;
+                                x_31 = x_110;
                                 break 'b29;
                             }
                             _ => {
@@ -5796,362 +5237,260 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_inc(x_27);
                                 rt::lean_dec(x_18);
                                 x_30 = rt::lean_box(0);
-                                x_31 = x_137;
+                                x_31 = x_110;
                                 break 'b29;
                             }
                         }
                     }
-                    let mut x_33: Obj;
-                    let mut x_34: Obj;
-                    let mut x_35: Obj;
-                    let mut x_36: f64;
-                    let mut x_37: f64;
                     'b32: {
-                        'b49: {
-                            let x_53: Obj = rt::lean_ctor_get(x_1, 2);
-                            let x_54: Obj = rt::lean_ctor_get(x_1, 4);
-                            let x_55: Obj = rt::lean_ctor_get(x_1, 5);
-                            let x_56: Obj = rt::lean_ctor_get(x_1, 6);
-                            let x_57: Obj = rt::lean_ctor_get(x_1, 7);
-                            let x_58: Obj = l_Array_dsize(rt::lean_box(0), x_53);
-                            let x_59: u8 = l_Nat_ddecLt(x_9, x_58);
-                            match x_59 {
-                                0 => {
-                                    rt::lean_del_object(x_30);
-                                    rt::lean_del_object(x_25);
-                                    rt::lean_del_object(x_21);
-                                    break 'b49;
-                                }
-                                _ => {
-                                    let x_60: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_53, x_9, rt::lean_box(0));
-                                    let x_61: u8 = rt::lean_unbox(x_60) as u8;
-                                    match x_61 {
-                                        0 => {
-                                            rt::lean_del_object(x_30);
-                                            rt::lean_del_object(x_25);
-                                            rt::lean_del_object(x_21);
-                                            break 'b49;
-                                        }
-                                        _ => {
-                                            let x_62: Obj = rt::nat::lean_usize_to_nat(1);
-                                            let x_63: Obj = rt::nat::lean_usize_to_nat(0);
-                                            let mut x_65: Obj;
+                        let x_42: Obj = rt::lean_ctor_get(x_1, 2);
+                        let x_43: Obj = rt::lean_ctor_get(x_1, 4);
+                        let x_44: Obj = rt::lean_ctor_get(x_1, 5);
+                        let x_45: Obj = rt::lean_ctor_get(x_1, 6);
+                        let x_46: Obj = rt::lean_ctor_get(x_1, 7);
+                        let x_47: Obj = l_Array_dsize(rt::lean_box(0), x_42);
+                        let x_48: u8 = l_Nat_ddecLt(x_9, x_47);
+                        match x_48 {
+                            0 => {
+                                break 'b32;
+                            }
+                            _ => {
+                                let x_49: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_42, x_9, rt::lean_box(0));
+                                let x_50: u8 = rt::lean_unbox(x_49) as u8;
+                                match x_50 {
+                                    0 => {
+                                        break 'b32;
+                                    }
+                                    _ => {
+                                        rt::lean_del_object(x_30);
+                                        rt::lean_del_object(x_25);
+                                        rt::lean_del_object(x_21);
+                                        let x_51: Obj = rt::nat::lean_usize_to_nat(1);
+                                        let x_52: Obj = rt::nat::lean_usize_to_nat(0);
+                                        let x_53: f64 = l_FloatArray_dget_x21_(x_44, x_9);
+                                        let x_54: f64 = l_FloatArray_dget_x21_(x_43, x_9);
+                                        let mut x_56: Obj;
+                                        let mut x_57: Obj;
+                                        let mut x_58: Obj;
+                                        let mut x_59: f64;
+                                        'b55: {
                                             let mut x_66: Obj;
-                                            let mut x_67: f64;
-                                            let mut x_68: f64;
+                                            let mut x_67: Obj;
+                                            let mut x_68: Obj;
                                             let mut x_69: Obj;
-                                            let mut x_70: Obj;
-                                            'b64: {
-                                                let mut x_96: Obj;
-                                                let mut x_97: f64;
-                                                let mut x_98: Obj;
-                                                let mut x_99: f64;
-                                                let mut x_100: Obj;
-                                                let mut x_101: Obj;
-                                                'b95: {
-                                                    let mut x_105: f64;
-                                                    let mut x_106: f64;
-                                                    let mut x_107: Obj;
-                                                    let mut x_108: Obj;
-                                                    'b104: {
-                                                        let mut x_114: Obj;
-                                                        let mut x_115: f64;
-                                                        let mut x_116: f64;
-                                                        let mut x_117: Obj;
-                                                        'b113: {
-                                                            let mut x_121: f64;
-                                                            let mut x_122: f64;
-                                                            'b120: {
-                                                                let mut x_128: f64;
-                                                                'b127: {
-                                                                    let x_133: Obj = l_FloatArray_dsize(x_55);
-                                                                    let x_134: u8 = l_Nat_ddecLt(x_9, x_133);
-                                                                    match x_134 {
-                                                                        0 => {
-                                                                            let x_135: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                                            x_128 = x_135;
-                                                                            break 'b127;
-                                                                        }
-                                                                        _ => {
-                                                                            let x_136: f64 = l_FloatArray_dget(x_55, x_9, rt::lean_box(0));
-                                                                            x_128 = x_136;
-                                                                            break 'b127;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                let x_129: Obj = l_FloatArray_dsize(x_54);
-                                                                let x_130: u8 = l_Nat_ddecLt(x_9, x_129);
-                                                                match x_130 {
-                                                                    0 => {
-                                                                        let x_131: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                                        x_121 = x_128;
-                                                                        x_122 = x_131;
-                                                                        break 'b120;
-                                                                    }
-                                                                    _ => {
-                                                                        let x_132: f64 = l_FloatArray_dget(x_54, x_9, rt::lean_box(0));
-                                                                        x_121 = x_128;
-                                                                        x_122 = x_132;
-                                                                        break 'b120;
-                                                                    }
-                                                                }
-                                                            }
-                                                            let x_123: Obj = l_Nat_dmod(x_9, x_2);
-                                                            let x_124: Obj = l_Nat_dadd(x_123, x_62);
-                                                            let x_125: u8 = l_Nat_ddecLt(x_124, x_2);
-                                                            rt::lean_dec(x_124);
-                                                            match x_125 {
+                                            'b65: {
+                                                let mut x_89: Obj;
+                                                let mut x_90: Obj;
+                                                let mut x_91: Obj;
+                                                let mut x_92: Obj;
+                                                'b88: {
+                                                    let mut x_96: Obj;
+                                                    let mut x_97: Obj;
+                                                    'b95: {
+                                                        let x_102: Obj = l_Nat_dmod(x_9, x_2);
+                                                        let mut x_104: Obj;
+                                                        'b103: {
+                                                            let x_107: Obj = l_Nat_dadd(x_102, x_51);
+                                                            let x_108: u8 = l_Nat_ddecLt(x_107, x_2);
+                                                            rt::lean_dec(x_107);
+                                                            match x_108 {
                                                                 0 => {
                                                                     rt::lean_inc(x_4);
-                                                                    x_114 = x_123;
-                                                                    x_115 = x_121;
-                                                                    x_116 = x_122;
-                                                                    x_117 = x_4;
-                                                                    break 'b113;
+                                                                    x_104 = x_4;
+                                                                    break 'b103;
                                                                 }
                                                                 _ => {
-                                                                    let x_126: Obj = l_Nat_dadd(x_9, x_62);
-                                                                    x_114 = x_123;
-                                                                    x_115 = x_121;
-                                                                    x_116 = x_122;
-                                                                    x_117 = x_126;
-                                                                    break 'b113;
+                                                                    let x_109: Obj = l_Nat_dadd(x_9, x_51);
+                                                                    x_104 = x_109;
+                                                                    break 'b103;
                                                                 }
                                                             }
                                                         }
-                                                        let x_118: u8 = l_Nat_ddecLt(x_63, x_114);
-                                                        rt::lean_dec(x_114);
-                                                        match x_118 {
+                                                        let x_105: u8 = l_Nat_ddecLt(x_52, x_102);
+                                                        rt::lean_dec(x_102);
+                                                        match x_105 {
                                                             0 => {
                                                                 rt::lean_inc(x_4);
-                                                                x_105 = x_115;
-                                                                x_106 = x_116;
-                                                                x_107 = x_117;
-                                                                x_108 = x_4;
-                                                                break 'b104;
+                                                                x_96 = x_104;
+                                                                x_97 = x_4;
+                                                                break 'b95;
                                                             }
                                                             _ => {
-                                                                let x_119: Obj = l_Nat_dsub(x_9, x_62);
-                                                                x_105 = x_115;
-                                                                x_106 = x_116;
-                                                                x_107 = x_117;
-                                                                x_108 = x_119;
-                                                                break 'b104;
+                                                                let x_106: Obj = l_Nat_dsub(x_9, x_51);
+                                                                x_96 = x_104;
+                                                                x_97 = x_106;
+                                                                break 'b95;
                                                             }
                                                         }
                                                     }
-                                                    let x_109: Obj = l_Nat_ddiv(x_9, x_2);
-                                                    let x_110: Obj = l_Nat_dadd(x_109, x_62);
-                                                    let x_111: u8 = l_Nat_ddecLt(x_110, x_6);
-                                                    rt::lean_dec(x_110);
-                                                    match x_111 {
+                                                    let x_98: Obj = l_Nat_ddiv(x_9, x_2);
+                                                    let x_99: Obj = l_Nat_dadd(x_98, x_51);
+                                                    let x_100: u8 = l_Nat_ddecLt(x_99, x_6);
+                                                    rt::lean_dec(x_99);
+                                                    match x_100 {
                                                         0 => {
                                                             rt::lean_inc(x_4);
-                                                            x_96 = x_108;
-                                                            x_97 = x_105;
-                                                            x_98 = x_109;
-                                                            x_99 = x_106;
-                                                            x_100 = x_107;
-                                                            x_101 = x_4;
-                                                            break 'b95;
+                                                            x_89 = x_97;
+                                                            x_90 = x_96;
+                                                            x_91 = x_98;
+                                                            x_92 = x_4;
+                                                            break 'b88;
                                                         }
                                                         _ => {
-                                                            let x_112: Obj = l_Nat_dadd(x_9, x_2);
-                                                            x_96 = x_108;
-                                                            x_97 = x_105;
-                                                            x_98 = x_109;
-                                                            x_99 = x_106;
-                                                            x_100 = x_107;
-                                                            x_101 = x_112;
-                                                            break 'b95;
+                                                            let x_101: Obj = l_Nat_dadd(x_9, x_2);
+                                                            x_89 = x_97;
+                                                            x_90 = x_96;
+                                                            x_91 = x_98;
+                                                            x_92 = x_101;
+                                                            break 'b88;
                                                         }
                                                     }
                                                 }
-                                                let x_102: u8 = l_Nat_ddecLt(x_63, x_98);
-                                                rt::lean_dec(x_98);
-                                                match x_102 {
+                                                let x_93: u8 = l_Nat_ddecLt(x_52, x_91);
+                                                rt::lean_dec(x_91);
+                                                match x_93 {
                                                     0 => {
                                                         rt::lean_inc(x_4);
-                                                        x_65 = x_96;
-                                                        x_66 = x_101;
-                                                        x_67 = x_97;
-                                                        x_68 = x_99;
-                                                        x_69 = x_100;
-                                                        x_70 = x_4;
-                                                        break 'b64;
+                                                        x_66 = x_89;
+                                                        x_67 = x_90;
+                                                        x_68 = x_92;
+                                                        x_69 = x_4;
+                                                        break 'b65;
                                                     }
                                                     _ => {
-                                                        let x_103: Obj = l_Nat_dsub(x_9, x_2);
-                                                        x_65 = x_96;
-                                                        x_66 = x_101;
-                                                        x_67 = x_97;
-                                                        x_68 = x_99;
-                                                        x_69 = x_100;
-                                                        x_70 = x_103;
-                                                        break 'b64;
+                                                        let x_94: Obj = l_Nat_dsub(x_9, x_2);
+                                                        x_66 = x_89;
+                                                        x_67 = x_90;
+                                                        x_68 = x_92;
+                                                        x_69 = x_94;
+                                                        break 'b65;
                                                     }
                                                 }
                                             }
-                                            let x_71: Obj = rt::lean_box(0);
+                                            let x_70: Obj = rt::lean_box(0);
+                                            let x_71: Obj = rt::lean_alloc_ctor(1, 2, 0);
+                                            rt::lean_ctor_set(x_71, 0, x_69);
+                                            rt::lean_ctor_set(x_71, 1, x_70);
                                             let x_72: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_72, 0, x_70);
+                                            rt::lean_ctor_set(x_72, 0, x_68);
                                             rt::lean_ctor_set(x_72, 1, x_71);
                                             let x_73: Obj = rt::lean_alloc_ctor(1, 2, 0);
                                             rt::lean_ctor_set(x_73, 0, x_66);
                                             rt::lean_ctor_set(x_73, 1, x_72);
                                             let x_74: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_74, 0, x_65);
+                                            rt::lean_ctor_set(x_74, 0, x_67);
                                             rt::lean_ctor_set(x_74, 1, x_73);
-                                            let x_75: Obj = rt::lean_alloc_ctor(1, 2, 0);
-                                            rt::lean_ctor_set(x_75, 0, x_69);
-                                            rt::lean_ctor_set(x_75, 1, x_74);
-                                            let x_76: Obj = rt::lean_box_float(x_68);
+                                            let x_75: Obj = rt::lean_box_float(x_54);
+                                            let x_76: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                            rt::lean_ctor_set(x_76, 0, x_23);
+                                            rt::lean_ctor_set(x_76, 1, x_75);
                                             let x_77: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                            rt::lean_ctor_set(x_77, 0, x_23);
+                                            rt::lean_ctor_set(x_77, 0, x_19);
                                             rt::lean_ctor_set(x_77, 1, x_76);
-                                            let x_78: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                            rt::lean_ctor_set(x_78, 0, x_19);
-                                            rt::lean_ctor_set(x_78, 1, x_77);
-                                            let x_79: u8 = rt::lean_unbox(x_60) as u8;
-                                            let x_80: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_9, x_2, x_67, x_3, x_79, x_55, x_4, x_53, x_75, x_78);
-                                            rt::lean_dec_ref(x_75);
-                                            let x_81: Obj = rt::lean_ctor_get(x_80, 1);
+                                            let x_78: u8 = rt::lean_unbox(x_49) as u8;
+                                            let x_79: Obj = l_List_dforIn_x27__dloop_d__at___dSand2_dviscositySystem_dspec__0_d__redArg(x_9, x_2, x_44, x_53, x_3, x_78, x_4, x_42, x_74, x_77);
+                                            rt::lean_dec_ref(x_74);
+                                            let x_80: Obj = rt::lean_ctor_get(x_79, 1);
+                                            rt::lean_inc(x_80);
+                                            let x_81: Obj = rt::lean_ctor_get(x_79, 0);
                                             rt::lean_inc(x_81);
+                                            rt::lean_dec_ref(x_79);
                                             let x_82: Obj = rt::lean_ctor_get(x_80, 0);
                                             rt::lean_inc(x_82);
-                                            rt::lean_dec_ref(x_80);
-                                            let x_83: Obj = rt::lean_ctor_get(x_81, 0);
+                                            let x_83: Obj = rt::lean_ctor_get(x_80, 1);
                                             rt::lean_inc(x_83);
-                                            let x_84: Obj = rt::lean_ctor_get(x_81, 1);
-                                            rt::lean_inc(x_84);
-                                            rt::lean_dec(x_81);
-                                            let x_85: f64 = rt::lean_unbox_float(x_84);
-                                            rt::lean_dec(x_84);
-                                            let x_86: Obj = l_FloatArray_dset_x21_(x_27, x_9, x_85);
+                                            rt::lean_dec(x_80);
+                                            let x_84: f64 = rt::lean_unbox_float(x_83);
+                                            rt::lean_dec(x_83);
+                                            let x_85: Obj = l_FloatArray_dset_x21_(x_27, x_9, x_84);
                                             match x_5 {
                                                 0 => {
-                                                    let x_87: Obj = l_FloatArray_dsize(x_56);
-                                                    let x_88: u8 = l_Nat_ddecLt(x_9, x_87);
-                                                    match x_88 {
-                                                        0 => {
-                                                            let x_89: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                            x_33 = x_82;
-                                                            x_34 = x_83;
-                                                            x_35 = x_86;
-                                                            x_36 = x_68;
-                                                            x_37 = x_89;
-                                                            break 'b32;
-                                                        }
-                                                        _ => {
-                                                            let x_90: f64 = l_FloatArray_dget(x_56, x_9, rt::lean_box(0));
-                                                            x_33 = x_82;
-                                                            x_34 = x_83;
-                                                            x_35 = x_86;
-                                                            x_36 = x_68;
-                                                            x_37 = x_90;
-                                                            break 'b32;
-                                                        }
-                                                    }
+                                                    let x_86: f64 = l_FloatArray_dget_x21_(x_45, x_9);
+                                                    x_56 = x_82;
+                                                    x_57 = x_85;
+                                                    x_58 = x_81;
+                                                    x_59 = x_86;
+                                                    break 'b55;
                                                 }
                                                 _ => {
-                                                    let x_91: Obj = l_FloatArray_dsize(x_57);
-                                                    let x_92: u8 = l_Nat_ddecLt(x_9, x_91);
-                                                    match x_92 {
-                                                        0 => {
-                                                            let x_93: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
-                                                            x_33 = x_82;
-                                                            x_34 = x_83;
-                                                            x_35 = x_86;
-                                                            x_36 = x_68;
-                                                            x_37 = x_93;
-                                                            break 'b32;
-                                                        }
-                                                        _ => {
-                                                            let x_94: f64 = l_FloatArray_dget(x_57, x_9, rt::lean_box(0));
-                                                            x_33 = x_82;
-                                                            x_34 = x_83;
-                                                            x_35 = x_86;
-                                                            x_36 = x_68;
-                                                            x_37 = x_94;
-                                                            break 'b32;
-                                                        }
-                                                    }
+                                                    let x_87: f64 = l_FloatArray_dget_x21_(x_46, x_9);
+                                                    x_56 = x_82;
+                                                    x_57 = x_85;
+                                                    x_58 = x_81;
+                                                    x_59 = x_87;
+                                                    break 'b55;
                                                 }
                                             }
                                         }
+                                        let x_60: f64 = l_Float_dmul(x_54, x_59);
+                                        let x_61: Obj = l_FloatArray_dset_x21_(x_28, x_9, x_60);
+                                        let x_62: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_62, 0, x_57);
+                                        rt::lean_ctor_set(x_62, 1, x_61);
+                                        let x_63: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_63, 0, x_56);
+                                        rt::lean_ctor_set(x_63, 1, x_62);
+                                        let x_64: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                        rt::lean_ctor_set(x_64, 0, x_58);
+                                        rt::lean_ctor_set(x_64, 1, x_63);
+                                        x_13 = x_64;
+                                        break 'b12;
                                     }
                                 }
                             }
                         }
-                        let x_50: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                        rt::lean_ctor_set(x_50, 0, x_27);
-                        rt::lean_ctor_set(x_50, 1, x_28);
-                        let x_51: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                        rt::lean_ctor_set(x_51, 0, x_23);
-                        rt::lean_ctor_set(x_51, 1, x_50);
-                        let x_52: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                        rt::lean_ctor_set(x_52, 0, x_19);
-                        rt::lean_ctor_set(x_52, 1, x_51);
-                        x_13 = x_52;
-                        break 'b12;
                     }
-                    let x_38: f64 = l_Float_dmul(x_36, x_37);
-                    let x_39: Obj = l_FloatArray_dset_x21_(x_28, x_9, x_38);
-                    let mut x_41: Obj;
-                    'b40: {
+                    let mut x_34: Obj;
+                    'b33: {
                         match x_31 {
                             0 => {
-                                rt::lean_ctor_set(x_30, 1, x_39);
-                                rt::lean_ctor_set(x_30, 0, x_35);
-                                x_41 = x_30;
-                                break 'b40;
+                                x_34 = x_30;
+                                break 'b33;
                             }
                             _ => {
-                                let x_48: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_48, 0, x_35);
-                                rt::lean_ctor_set(x_48, 1, x_39);
-                                x_41 = x_48;
-                                break 'b40;
+                                let x_41: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_41, 0, x_27);
+                                rt::lean_ctor_set(x_41, 1, x_28);
+                                x_34 = x_41;
+                                break 'b33;
                             }
                         }
                     }
-                    let mut x_43: Obj;
-                    'b42: {
+                    let mut x_36: Obj;
+                    'b35: {
                         match x_26 {
                             0 => {
-                                rt::lean_ctor_set(x_25, 1, x_41);
-                                rt::lean_ctor_set(x_25, 0, x_34);
-                                x_43 = x_25;
-                                break 'b42;
+                                rt::lean_ctor_set(x_25, 1, x_34);
+                                x_36 = x_25;
+                                break 'b35;
                             }
                             _ => {
-                                let x_47: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_47, 0, x_34);
-                                rt::lean_ctor_set(x_47, 1, x_41);
-                                x_43 = x_47;
-                                break 'b42;
+                                let x_40: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_40, 0, x_23);
+                                rt::lean_ctor_set(x_40, 1, x_34);
+                                x_36 = x_40;
+                                break 'b35;
                             }
                         }
                     }
-                    let mut x_45: Obj;
-                    'b44: {
+                    let mut x_38: Obj;
+                    'b37: {
                         match x_22 {
                             0 => {
-                                rt::lean_ctor_set(x_21, 1, x_43);
-                                rt::lean_ctor_set(x_21, 0, x_33);
-                                x_45 = x_21;
-                                break 'b44;
+                                rt::lean_ctor_set(x_21, 1, x_36);
+                                x_38 = x_21;
+                                break 'b37;
                             }
                             _ => {
-                                let x_46: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                                rt::lean_ctor_set(x_46, 0, x_33);
-                                rt::lean_ctor_set(x_46, 1, x_43);
-                                x_45 = x_46;
-                                break 'b44;
+                                let x_39: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_39, 0, x_19);
+                                rt::lean_ctor_set(x_39, 1, x_36);
+                                x_38 = x_39;
+                                break 'b37;
                             }
                         }
                     }
-                    x_13 = x_45;
+                    x_13 = x_38;
                     break 'b12;
                 }
             }
@@ -6193,6 +5532,1681 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
     rt::lean_dec(x_2);
     rt::lean_dec_ref(x_1);
     return x_12;
+}
+
+// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_._private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0.spec_0
+// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
+// Source: <lean>/Init/Data/Range/Basic.lean:37:25
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj) -> Obj {
+    let x_9: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6);
+    return x_9;
+}
+
+// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_._private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0.spec_0._boxed
+// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
+// Source: <lean>/Init/Data/Range/Basic.lean:37:25
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj, x_8: Obj) -> Obj {
+    let x_9: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0(x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8);
+    rt::lean_dec_ref(x_4);
+    rt::lean_dec_ref(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
+    return x_9;
+}
+
+// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_._private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0.spec_0._redArg
+// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
+// Source: <lean>/Init/Data/Range/Basic.lean:37:25
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj, mut x_5: Obj, mut x_6: Obj) -> Obj {
+    'tail: loop {
+        let x_7: Obj = rt::lean_ctor_get(x_4, 1);
+        let x_8: Obj = rt::lean_ctor_get(x_4, 2);
+        let mut x_10: Obj;
+        'b9: {
+            let x_13: u8 = l_Nat_ddecLt(x_6, x_7);
+            match x_13 {
+                0 => {
+                    rt::lean_dec(x_6);
+                    return x_5;
+                }
+                _ => {
+                    let x_14: Obj = rt::lean_ctor_get(x_5, 1);
+                    rt::lean_inc(x_14);
+                    let x_15: Obj = rt::lean_ctor_get(x_14, 1);
+                    rt::lean_inc(x_15);
+                    let x_16: Obj = rt::lean_ctor_get(x_15, 1);
+                    rt::lean_inc(x_16);
+                    let x_17: Obj = rt::lean_ctor_get(x_16, 1);
+                    rt::lean_inc(x_17);
+                    let x_18: Obj = rt::lean_ctor_get(x_17, 1);
+                    rt::lean_inc(x_18);
+                    let x_19: Obj = rt::lean_ctor_get(x_18, 1);
+                    rt::lean_inc(x_19);
+                    let x_20: Obj = rt::lean_ctor_get(x_5, 0);
+                    let mut x_22: Obj;
+                    let mut x_23: u8;
+                    'b21: {
+                        let x_493: u8 = (!rt::lean_is_exclusive(x_5)) as u8;
+                        match x_493 {
+                            0 => {
+                                let x_494: Obj = rt::lean_ctor_get(x_5, 1);
+                                rt::lean_dec(x_494);
+                                x_22 = x_5;
+                                x_23 = x_493;
+                                break 'b21;
+                            }
+                            _ => {
+                                rt::lean_inc(x_20);
+                                rt::lean_dec(x_5);
+                                x_22 = rt::lean_box(0);
+                                x_23 = x_493;
+                                break 'b21;
+                            }
+                        }
+                    }
+                    let x_24: Obj = rt::lean_ctor_get(x_14, 0);
+                    let mut x_26: Obj;
+                    let mut x_27: u8;
+                    'b25: {
+                        let x_491: u8 = (!rt::lean_is_exclusive(x_14)) as u8;
+                        match x_491 {
+                            0 => {
+                                let x_492: Obj = rt::lean_ctor_get(x_14, 1);
+                                rt::lean_dec(x_492);
+                                x_26 = x_14;
+                                x_27 = x_491;
+                                break 'b25;
+                            }
+                            _ => {
+                                rt::lean_inc(x_24);
+                                rt::lean_dec(x_14);
+                                x_26 = rt::lean_box(0);
+                                x_27 = x_491;
+                                break 'b25;
+                            }
+                        }
+                    }
+                    let x_28: Obj = rt::lean_ctor_get(x_15, 0);
+                    let mut x_30: Obj;
+                    let mut x_31: u8;
+                    'b29: {
+                        let x_489: u8 = (!rt::lean_is_exclusive(x_15)) as u8;
+                        match x_489 {
+                            0 => {
+                                let x_490: Obj = rt::lean_ctor_get(x_15, 1);
+                                rt::lean_dec(x_490);
+                                x_30 = x_15;
+                                x_31 = x_489;
+                                break 'b29;
+                            }
+                            _ => {
+                                rt::lean_inc(x_28);
+                                rt::lean_dec(x_15);
+                                x_30 = rt::lean_box(0);
+                                x_31 = x_489;
+                                break 'b29;
+                            }
+                        }
+                    }
+                    let x_32: Obj = rt::lean_ctor_get(x_16, 0);
+                    let mut x_34: Obj;
+                    let mut x_35: u8;
+                    'b33: {
+                        let x_487: u8 = (!rt::lean_is_exclusive(x_16)) as u8;
+                        match x_487 {
+                            0 => {
+                                let x_488: Obj = rt::lean_ctor_get(x_16, 1);
+                                rt::lean_dec(x_488);
+                                x_34 = x_16;
+                                x_35 = x_487;
+                                break 'b33;
+                            }
+                            _ => {
+                                rt::lean_inc(x_32);
+                                rt::lean_dec(x_16);
+                                x_34 = rt::lean_box(0);
+                                x_35 = x_487;
+                                break 'b33;
+                            }
+                        }
+                    }
+                    let x_36: Obj = rt::lean_ctor_get(x_17, 0);
+                    let mut x_38: Obj;
+                    let mut x_39: u8;
+                    'b37: {
+                        let x_485: u8 = (!rt::lean_is_exclusive(x_17)) as u8;
+                        match x_485 {
+                            0 => {
+                                let x_486: Obj = rt::lean_ctor_get(x_17, 1);
+                                rt::lean_dec(x_486);
+                                x_38 = x_17;
+                                x_39 = x_485;
+                                break 'b37;
+                            }
+                            _ => {
+                                rt::lean_inc(x_36);
+                                rt::lean_dec(x_17);
+                                x_38 = rt::lean_box(0);
+                                x_39 = x_485;
+                                break 'b37;
+                            }
+                        }
+                    }
+                    let x_40: Obj = rt::lean_ctor_get(x_18, 0);
+                    let mut x_42: Obj;
+                    let mut x_43: u8;
+                    'b41: {
+                        let x_483: u8 = (!rt::lean_is_exclusive(x_18)) as u8;
+                        match x_483 {
+                            0 => {
+                                let x_484: Obj = rt::lean_ctor_get(x_18, 1);
+                                rt::lean_dec(x_484);
+                                x_42 = x_18;
+                                x_43 = x_483;
+                                break 'b41;
+                            }
+                            _ => {
+                                rt::lean_inc(x_40);
+                                rt::lean_dec(x_18);
+                                x_42 = rt::lean_box(0);
+                                x_43 = x_483;
+                                break 'b41;
+                            }
+                        }
+                    }
+                    let x_44: Obj = rt::lean_ctor_get(x_19, 0);
+                    let x_45: Obj = rt::lean_ctor_get(x_19, 1);
+                    let mut x_47: Obj;
+                    let mut x_48: u8;
+                    'b46: {
+                        let x_482: u8 = (!rt::lean_is_exclusive(x_19)) as u8;
+                        match x_482 {
+                            0 => {
+                                x_47 = x_19;
+                                x_48 = x_482;
+                                break 'b46;
+                            }
+                            _ => {
+                                rt::lean_inc(x_45);
+                                rt::lean_inc(x_44);
+                                rt::lean_dec(x_19);
+                                x_47 = rt::lean_box(0);
+                                x_48 = x_482;
+                                break 'b46;
+                            }
+                        }
+                    }
+                    let mut x_50: f64;
+                    let mut x_51: f64;
+                    let mut x_52: Obj;
+                    let mut x_53: f64;
+                    let mut x_54: Obj;
+                    let mut x_55: Obj;
+                    let mut x_56: Obj;
+                    let mut x_57: Obj;
+                    let mut x_58: Obj;
+                    let mut x_59: Obj;
+                    let mut x_60: f64;
+                    'b49: {
+                        let x_86: Obj = l_Sand2_dread(x_1, x_2, x_3, x_6);
+                        let x_87: u8 = rt::lean_ctor_get_uint8(x_86, 16 * ::core::mem::size_of::<usize>() + 1);
+                        match x_87 {
+                            0 => {
+                                let x_88: Obj = rt::lean_ctor_get(x_86, 0);
+                                rt::lean_inc_ref(x_88);
+                                let x_89: Obj = rt::lean_ctor_get(x_86, 1);
+                                rt::lean_inc(x_89);
+                                let x_90: Obj = rt::lean_ctor_get(x_86, 4);
+                                rt::lean_inc(x_90);
+                                let x_91: Obj = rt::lean_ctor_get(x_86, 6);
+                                rt::lean_inc(x_91);
+                                let x_92: Obj = rt::lean_ctor_get(x_86, 7);
+                                rt::lean_inc(x_92);
+                                let x_93: Obj = rt::lean_ctor_get(x_86, 10);
+                                rt::lean_inc(x_93);
+                                let x_94: Obj = rt::lean_ctor_get(x_88, 0);
+                                rt::lean_inc_ref_n(x_86, 2);
+                                let x_95: Obj = l_Sand2_dthermalEnergy(x_2, x_1, x_6, x_86);
+                                let x_96: Obj = rt::nat::lean_usize_to_nat(1);
+                                let x_97: f64 = l_Sand2_dgasGamma_d__closed__0();
+                                let mut x_99: f64;
+                                let mut x_100: f64;
+                                let mut x_101: f64;
+                                let mut x_102: Obj;
+                                let mut x_103: f64;
+                                let mut x_104: Obj;
+                                let mut x_105: f64;
+                                let mut x_106: Obj;
+                                let mut x_107: f64;
+                                let mut x_108: Obj;
+                                let mut x_109: Obj;
+                                let mut x_110: Obj;
+                                let mut x_111: Obj;
+                                let mut x_112: Obj;
+                                'b98: {
+                                    let x_119: Obj = rt::nat::lean_usize_to_nat(18);
+                                    let x_120: Obj = rt::nat::lean_usize_to_nat(6);
+                                    let x_121: f64 = l_Float_dofScientific(x_119, x_13, x_120);
+                                    let x_122: Obj = rt::nat::lean_usize_to_nat(0);
+                                    let x_123: f64 = l_Sand2_dmixtureEOSPressure_d__closed__4();
+                                    let x_124: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_86, x_95);
+                                    let x_125: Obj = l_Sand2_dvaporWaterFast(x_86, x_95);
+                                    let mut x_127: f64;
+                                    let mut x_128: f64;
+                                    let mut x_129: f64;
+                                    let mut x_130: f64;
+                                    let mut x_131: Obj;
+                                    let mut x_132: Obj;
+                                    let mut x_133: Obj;
+                                    let mut x_134: f64;
+                                    let mut x_135: Obj;
+                                    let mut x_136: Obj;
+                                    let mut x_137: Obj;
+                                    let mut x_138: f64;
+                                    'b126: {
+                                        let mut x_151: f64;
+                                        let mut x_152: f64;
+                                        let mut x_153: f64;
+                                        let mut x_154: f64;
+                                        let mut x_155: Obj;
+                                        let mut x_156: f64;
+                                        let mut x_157: Obj;
+                                        let mut x_158: Obj;
+                                        let mut x_159: f64;
+                                        let mut x_160: Obj;
+                                        let mut x_161: Obj;
+                                        let mut x_162: Obj;
+                                        let mut x_163: f64;
+                                        'b150: {
+                                            let mut x_166: f64;
+                                            let mut x_167: f64;
+                                            let mut x_168: f64;
+                                            let mut x_169: f64;
+                                            let mut x_170: f64;
+                                            let mut x_171: Obj;
+                                            let mut x_172: f64;
+                                            let mut x_173: Obj;
+                                            let mut x_174: Obj;
+                                            let mut x_175: f64;
+                                            let mut x_176: Obj;
+                                            let mut x_177: Obj;
+                                            let mut x_178: Obj;
+                                            let mut x_179: f64;
+                                            let mut x_180: u8;
+                                            'b165: {
+                                                let mut x_183: f64;
+                                                let mut x_184: f64;
+                                                let mut x_185: f64;
+                                                let mut x_186: f64;
+                                                let mut x_187: f64;
+                                                let mut x_188: Obj;
+                                                let mut x_189: f64;
+                                                let mut x_190: Obj;
+                                                let mut x_191: f64;
+                                                let mut x_192: Obj;
+                                                let mut x_193: f64;
+                                                let mut x_194: Obj;
+                                                let mut x_195: Obj;
+                                                let mut x_196: Obj;
+                                                let mut x_197: f64;
+                                                'b182: {
+                                                    let mut x_202: f64;
+                                                    let mut x_203: f64;
+                                                    let mut x_204: f64;
+                                                    let mut x_205: f64;
+                                                    let mut x_206: f64;
+                                                    let mut x_207: Obj;
+                                                    let mut x_208: f64;
+                                                    let mut x_209: Obj;
+                                                    let mut x_210: f64;
+                                                    let mut x_211: Obj;
+                                                    let mut x_212: f64;
+                                                    let mut x_213: Obj;
+                                                    let mut x_214: Obj;
+                                                    let mut x_215: Obj;
+                                                    let mut x_216: Obj;
+                                                    'b201: {
+                                                        let mut x_229: f64;
+                                                        let mut x_230: f64;
+                                                        let mut x_231: f64;
+                                                        let mut x_232: f64;
+                                                        let mut x_233: f64;
+                                                        let mut x_234: Obj;
+                                                        let mut x_235: f64;
+                                                        let mut x_236: Obj;
+                                                        let mut x_237: f64;
+                                                        let mut x_238: Obj;
+                                                        let mut x_239: f64;
+                                                        let mut x_240: Obj;
+                                                        let mut x_241: Obj;
+                                                        let mut x_242: f64;
+                                                        'b228: {
+                                                            let mut x_246: f64;
+                                                            let mut x_247: f64;
+                                                            let mut x_248: f64;
+                                                            let mut x_249: f64;
+                                                            let mut x_250: f64;
+                                                            let mut x_251: Obj;
+                                                            let mut x_252: f64;
+                                                            let mut x_253: Obj;
+                                                            let mut x_254: f64;
+                                                            let mut x_255: Obj;
+                                                            let mut x_256: f64;
+                                                            let mut x_257: Obj;
+                                                            let mut x_258: Obj;
+                                                            let mut x_259: f64;
+                                                            'b245: {
+                                                                let mut x_262: f64;
+                                                                let mut x_263: f64;
+                                                                let mut x_264: f64;
+                                                                let mut x_265: f64;
+                                                                let mut x_266: f64;
+                                                                let mut x_267: Obj;
+                                                                let mut x_268: f64;
+                                                                let mut x_269: Obj;
+                                                                let mut x_270: f64;
+                                                                let mut x_271: f64;
+                                                                let mut x_272: Obj;
+                                                                let mut x_273: f64;
+                                                                let mut x_274: Obj;
+                                                                let mut x_275: Obj;
+                                                                let mut x_276: u8;
+                                                                'b261: {
+                                                                    let mut x_279: f64;
+                                                                    let mut x_280: f64;
+                                                                    let mut x_281: f64;
+                                                                    let mut x_282: f64;
+                                                                    let mut x_283: f64;
+                                                                    let mut x_284: Obj;
+                                                                    let mut x_285: f64;
+                                                                    let mut x_286: Obj;
+                                                                    let mut x_287: f64;
+                                                                    let mut x_288: f64;
+                                                                    let mut x_289: Obj;
+                                                                    let mut x_290: Obj;
+                                                                    let mut x_291: Obj;
+                                                                    let mut x_292: f64;
+                                                                    'b278: {
+                                                                        let mut x_297: f64;
+                                                                        let mut x_298: f64;
+                                                                        let mut x_299: f64;
+                                                                        let mut x_300: f64;
+                                                                        let mut x_301: f64;
+                                                                        let mut x_302: Obj;
+                                                                        let mut x_303: f64;
+                                                                        let mut x_304: Obj;
+                                                                        let mut x_305: f64;
+                                                                        let mut x_306: f64;
+                                                                        let mut x_307: Obj;
+                                                                        let mut x_308: Obj;
+                                                                        let mut x_309: Obj;
+                                                                        let mut x_310: Obj;
+                                                                        'b296: {
+                                                                            let mut x_323: Obj;
+                                                                            let mut x_324: f64;
+                                                                            let mut x_325: f64;
+                                                                            let mut x_326: f64;
+                                                                            let mut x_327: f64;
+                                                                            let mut x_328: Obj;
+                                                                            let mut x_329: Obj;
+                                                                            let mut x_330: f64;
+                                                                            let mut x_331: Obj;
+                                                                            let mut x_332: f64;
+                                                                            'b322: {
+                                                                                let mut x_344: Obj;
+                                                                                let mut x_345: f64;
+                                                                                let mut x_346: f64;
+                                                                                let mut x_347: f64;
+                                                                                let mut x_348: f64;
+                                                                                let mut x_349: Obj;
+                                                                                let mut x_350: f64;
+                                                                                let mut x_351: Obj;
+                                                                                let mut x_352: f64;
+                                                                                let mut x_353: Obj;
+                                                                                let mut x_354: f64;
+                                                                                'b343: {
+                                                                                    let mut x_357: Obj;
+                                                                                    let mut x_358: f64;
+                                                                                    let mut x_359: f64;
+                                                                                    let mut x_360: f64;
+                                                                                    let mut x_361: f64;
+                                                                                    let mut x_362: f64;
+                                                                                    let mut x_363: Obj;
+                                                                                    let mut x_364: Obj;
+                                                                                    let mut x_365: f64;
+                                                                                    let mut x_366: Obj;
+                                                                                    let mut x_367: f64;
+                                                                                    let mut x_368: f64;
+                                                                                    let mut x_369: u8;
+                                                                                    'b356: {
+                                                                                        let mut x_372: f64;
+                                                                                        let mut x_373: f64;
+                                                                                        let mut x_374: Obj;
+                                                                                        let mut x_375: f64;
+                                                                                        let mut x_376: Obj;
+                                                                                        let mut x_377: f64;
+                                                                                        'b371: {
+                                                                                            let mut x_389: f64;
+                                                                                            let mut x_390: f64;
+                                                                                            let mut x_391: Obj;
+                                                                                            let mut x_392: f64;
+                                                                                            let mut x_393: Obj;
+                                                                                            let mut x_394: f64;
+                                                                                            'b388: {
+                                                                                                let mut x_397: f64;
+                                                                                                let mut x_398: f64;
+                                                                                                let mut x_399: Obj;
+                                                                                                let mut x_400: f64;
+                                                                                                let mut x_401: Obj;
+                                                                                                let mut x_402: f64;
+                                                                                                let mut x_403: u8;
+                                                                                                'b396: {
+                                                                                                    let mut x_406: Obj;
+                                                                                                    let mut x_407: f64;
+                                                                                                    let mut x_408: Obj;
+                                                                                                    let mut x_409: f64;
+                                                                                                    'b405: {
+                                                                                                        let mut x_419: Obj;
+                                                                                                        let mut x_420: f64;
+                                                                                                        let mut x_421: Obj;
+                                                                                                        let mut x_422: f64;
+                                                                                                        'b418: {
+                                                                                                            let mut x_425: Obj;
+                                                                                                            let mut x_426: f64;
+                                                                                                            let mut x_427: f64;
+                                                                                                            let mut x_428: Obj;
+                                                                                                            let mut x_429: f64;
+                                                                                                            let mut x_430: u8;
+                                                                                                            'b424: {
+                                                                                                                let mut x_433: Obj;
+                                                                                                                let mut x_434: f64;
+                                                                                                                let mut x_435: Obj;
+                                                                                                                let mut x_436: Obj;
+                                                                                                                'b432: {
+                                                                                                                    'b444: {
+                                                                                                                        'b458: {
+                                                                                                                            let x_473: u8 = l_Nat_ddecEq(x_94, x_122);
+                                                                                                                            match x_473 {
+                                                                                                                                0 => {
+                                                                                                                                    break 'b458;
+                                                                                                                                }
+                                                                                                                                _ => {
+                                                                                                                                    let x_474: u8 = l_Nat_ddecEq(x_90, x_122);
+                                                                                                                                    match x_474 {
+                                                                                                                                        0 => {
+                                                                                                                                            break 'b458;
+                                                                                                                                        }
+                                                                                                                                        _ => {
+                                                                                                                                            rt::lean_dec(x_90);
+                                                                                                                                            break 'b444;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                        let x_459: Obj = l_Sand2_dChemistry_dmass(x_124);
+                                                                                                                        let x_460: Obj = rt::nat::lean_usize_to_nat(10000000);
+                                                                                                                        let x_461: Obj = l_Nat_dadd(x_459, x_460);
+                                                                                                                        rt::lean_dec(x_459);
+                                                                                                                        let x_462: Obj = l_Nat_dsub(x_94, x_125);
+                                                                                                                        let x_463: Obj = l_Nat_dmul(x_119, x_462);
+                                                                                                                        rt::lean_dec(x_462);
+                                                                                                                        let x_464: Obj = l_Nat_dadd(x_90, x_463);
+                                                                                                                        rt::lean_dec(x_463);
+                                                                                                                        rt::lean_dec(x_90);
+                                                                                                                        let x_465: u8 = l_Nat_ddecLt(x_461, x_464);
+                                                                                                                        rt::lean_dec(x_464);
+                                                                                                                        rt::lean_dec(x_461);
+                                                                                                                        match x_465 {
+                                                                                                                            0 => {
+                                                                                                                                break 'b444;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                rt::lean_dec(x_125);
+                                                                                                                                rt::lean_dec_ref(x_124);
+                                                                                                                                rt::lean_dec(x_95);
+                                                                                                                                rt::lean_dec(x_93);
+                                                                                                                                rt::lean_dec(x_92);
+                                                                                                                                rt::lean_dec(x_91);
+                                                                                                                                rt::lean_dec(x_89);
+                                                                                                                                rt::lean_dec_ref(x_88);
+                                                                                                                                rt::lean_dec_ref(x_86);
+                                                                                                                                rt::lean_del_object(x_47);
+                                                                                                                                rt::lean_del_object(x_42);
+                                                                                                                                rt::lean_del_object(x_38);
+                                                                                                                                rt::lean_del_object(x_34);
+                                                                                                                                rt::lean_del_object(x_30);
+                                                                                                                                rt::lean_del_object(x_26);
+                                                                                                                                rt::lean_del_object(x_22);
+                                                                                                                                let x_466: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_466, 0, x_44);
+                                                                                                                                rt::lean_ctor_set(x_466, 1, x_45);
+                                                                                                                                let x_467: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_467, 0, x_40);
+                                                                                                                                rt::lean_ctor_set(x_467, 1, x_466);
+                                                                                                                                let x_468: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_468, 0, x_36);
+                                                                                                                                rt::lean_ctor_set(x_468, 1, x_467);
+                                                                                                                                let x_469: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_469, 0, x_32);
+                                                                                                                                rt::lean_ctor_set(x_469, 1, x_468);
+                                                                                                                                let x_470: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_470, 0, x_28);
+                                                                                                                                rt::lean_ctor_set(x_470, 1, x_469);
+                                                                                                                                let x_471: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_471, 0, x_24);
+                                                                                                                                rt::lean_ctor_set(x_471, 1, x_470);
+                                                                                                                                let x_472: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                                                                                                                rt::lean_ctor_set(x_472, 0, x_20);
+                                                                                                                                rt::lean_ctor_set(x_472, 1, x_471);
+                                                                                                                                x_10 = x_472;
+                                                                                                                                break 'b9;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    let x_445: Obj = rt::lean_box(x_13 as usize);
+                                                                                                                    let x_446: Obj = l_Array_dset_x21_(rt::lean_box(0), x_20, x_6, x_445);
+                                                                                                                    let x_447: Obj = l_Sand2_dreferenceLiquidVolume(x_124);
+                                                                                                                    let x_448: u64 = l_UInt64_dofNat(x_447);
+                                                                                                                    let x_449: f64 = l_UInt64_dtoFloat(x_448);
+                                                                                                                    let x_450: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__2();
+                                                                                                                    let x_451: f64 = l_Float_ddiv(x_449, x_450);
+                                                                                                                    let x_452: Obj = l_Sand2_dChemistry_ddryGasMoles(x_88);
+                                                                                                                    let x_453: Obj = l_Nat_dadd(x_452, x_125);
+                                                                                                                    rt::lean_dec(x_452);
+                                                                                                                    let x_454: u8 = l_Nat_ddecEq(x_453, x_122);
+                                                                                                                    match x_454 {
+                                                                                                                        0 => {
+                                                                                                                            rt::lean_dec(x_93);
+                                                                                                                            let x_455: Obj = l_Sand2_dtemperatureFromEnthalpy(x_86, x_95);
+                                                                                                                            rt::lean_dec(x_95);
+                                                                                                                            rt::lean_inc(x_453);
+                                                                                                                            let x_456: Obj = l_Sand2_dmechanicalEOSPressure(x_447, x_453, x_455);
+                                                                                                                            rt::lean_dec(x_455);
+                                                                                                                            rt::lean_dec(x_447);
+                                                                                                                            x_433 = x_453;
+                                                                                                                            x_434 = x_451;
+                                                                                                                            x_435 = x_446;
+                                                                                                                            x_436 = x_456;
+                                                                                                                            break 'b432;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            rt::lean_dec(x_95);
+                                                                                                                            rt::lean_dec_ref(x_86);
+                                                                                                                            let x_457: Obj = l_Sand2_dquantizedLiquidPressure(x_447, x_93);
+                                                                                                                            rt::lean_dec(x_93);
+                                                                                                                            rt::lean_dec(x_447);
+                                                                                                                            x_433 = x_453;
+                                                                                                                            x_434 = x_451;
+                                                                                                                            x_435 = x_446;
+                                                                                                                            x_436 = x_457;
+                                                                                                                            break 'b432;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                let x_437: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__1();
+                                                                                                                let x_438: u64 = l_UInt64_dofNat(x_436);
+                                                                                                                rt::lean_dec(x_436);
+                                                                                                                let x_439: f64 = l_UInt64_dtoFloat(x_438);
+                                                                                                                let x_440: f64 = l_Sand2_dmechanicalEOSPressure_d__closed__0();
+                                                                                                                let x_441: f64 = l_Float_ddiv(x_439, x_440);
+                                                                                                                let x_442: u8 = l_Float_disNaN(x_441);
+                                                                                                                match x_442 {
+                                                                                                                    0 => {
+                                                                                                                        let x_443: u8 = l_Float_disInf(x_441);
+                                                                                                                        x_425 = x_433;
+                                                                                                                        x_426 = x_441;
+                                                                                                                        x_427 = x_434;
+                                                                                                                        x_428 = x_435;
+                                                                                                                        x_429 = x_437;
+                                                                                                                        x_430 = x_443;
+                                                                                                                        break 'b424;
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        x_425 = x_433;
+                                                                                                                        x_426 = x_441;
+                                                                                                                        x_427 = x_434;
+                                                                                                                        x_428 = x_435;
+                                                                                                                        x_429 = x_437;
+                                                                                                                        x_430 = x_442;
+                                                                                                                        break 'b424;
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            match x_430 {
+                                                                                                                0 => {
+                                                                                                                    let x_431: u8 = l_Float_ddecLt(x_429, x_426);
+                                                                                                                    match x_431 {
+                                                                                                                        0 => {
+                                                                                                                            x_419 = x_425;
+                                                                                                                            x_420 = x_427;
+                                                                                                                            x_421 = x_428;
+                                                                                                                            x_422 = x_426;
+                                                                                                                            break 'b418;
+                                                                                                                        }
+                                                                                                                        _ => {
+                                                                                                                            x_419 = x_425;
+                                                                                                                            x_420 = x_427;
+                                                                                                                            x_421 = x_428;
+                                                                                                                            x_422 = x_429;
+                                                                                                                            break 'b418;
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                _ => {
+                                                                                                                    x_406 = x_425;
+                                                                                                                    x_407 = x_427;
+                                                                                                                    x_408 = x_428;
+                                                                                                                    x_409 = x_123;
+                                                                                                                    break 'b405;
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                        let x_423: u8 = l_Float_ddecLt(x_123, x_422);
+                                                                                                        match x_423 {
+                                                                                                            0 => {
+                                                                                                                x_406 = x_419;
+                                                                                                                x_407 = x_420;
+                                                                                                                x_408 = x_421;
+                                                                                                                x_409 = x_123;
+                                                                                                                break 'b405;
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                x_406 = x_419;
+                                                                                                                x_407 = x_420;
+                                                                                                                x_408 = x_421;
+                                                                                                                x_409 = x_422;
+                                                                                                                break 'b405;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    let x_410: f64 = l_Sand2_dmixtureEOSPressure_d__closed__0();
+                                                                                                    let x_411: f64 = l_Float_dmul(x_407, x_410);
+                                                                                                    let x_412: f64 = l_Float_dadd(x_410, x_409);
+                                                                                                    let x_413: f64 = l_Sand2_dmixtureEOSPressure_d__closed__1();
+                                                                                                    let x_414: f64 = l_Float_dsub(x_412, x_413);
+                                                                                                    let x_415: f64 = l_Float_ddiv(x_411, x_414);
+                                                                                                    let x_416: u8 = l_Float_disNaN(x_415);
+                                                                                                    match x_416 {
+                                                                                                        0 => {
+                                                                                                            let x_417: u8 = l_Float_disInf(x_415);
+                                                                                                            x_397 = x_410;
+                                                                                                            x_398 = x_413;
+                                                                                                            x_399 = x_406;
+                                                                                                            x_400 = x_409;
+                                                                                                            x_401 = x_408;
+                                                                                                            x_402 = x_415;
+                                                                                                            x_403 = x_417;
+                                                                                                            break 'b396;
+                                                                                                        }
+                                                                                                        _ => {
+                                                                                                            x_397 = x_410;
+                                                                                                            x_398 = x_413;
+                                                                                                            x_399 = x_406;
+                                                                                                            x_400 = x_409;
+                                                                                                            x_401 = x_408;
+                                                                                                            x_402 = x_415;
+                                                                                                            x_403 = x_416;
+                                                                                                            break 'b396;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                                match x_403 {
+                                                                                                    0 => {
+                                                                                                        let x_404: u8 = l_Float_ddecLt(x_97, x_402);
+                                                                                                        match x_404 {
+                                                                                                            0 => {
+                                                                                                                x_389 = x_397;
+                                                                                                                x_390 = x_398;
+                                                                                                                x_391 = x_399;
+                                                                                                                x_392 = x_400;
+                                                                                                                x_393 = x_401;
+                                                                                                                x_394 = x_402;
+                                                                                                                break 'b388;
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                x_389 = x_397;
+                                                                                                                x_390 = x_398;
+                                                                                                                x_391 = x_399;
+                                                                                                                x_392 = x_400;
+                                                                                                                x_393 = x_401;
+                                                                                                                x_394 = x_97;
+                                                                                                                break 'b388;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    _ => {
+                                                                                                        x_372 = x_397;
+                                                                                                        x_373 = x_398;
+                                                                                                        x_374 = x_399;
+                                                                                                        x_375 = x_400;
+                                                                                                        x_376 = x_401;
+                                                                                                        x_377 = x_123;
+                                                                                                        break 'b371;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            let x_395: u8 = l_Float_ddecLt(x_123, x_394);
+                                                                                            match x_395 {
+                                                                                                0 => {
+                                                                                                    x_372 = x_389;
+                                                                                                    x_373 = x_390;
+                                                                                                    x_374 = x_391;
+                                                                                                    x_375 = x_392;
+                                                                                                    x_376 = x_393;
+                                                                                                    x_377 = x_123;
+                                                                                                    break 'b371;
+                                                                                                }
+                                                                                                _ => {
+                                                                                                    x_372 = x_389;
+                                                                                                    x_373 = x_390;
+                                                                                                    x_374 = x_391;
+                                                                                                    x_375 = x_392;
+                                                                                                    x_376 = x_393;
+                                                                                                    x_377 = x_394;
+                                                                                                    break 'b371;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        let x_378: Obj = l_FloatArray_dset_x21_(x_24, x_6, x_377);
+                                                                                        let x_379: Obj = rt::nat::lean_usize_to_nat(3);
+                                                                                        let x_380: f64 = l_Float_dofScientific(x_96, x_13, x_379);
+                                                                                        let x_381: f64 = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0();
+                                                                                        let x_382: u64 = l_UInt64_dofNat(x_89);
+                                                                                        let x_383: f64 = l_UInt64_dtoFloat(x_382);
+                                                                                        let x_384: f64 = l_Sand2_dliquidViscosity_d__closed__1();
+                                                                                        let x_385: f64 = l_Float_ddiv(x_383, x_384);
+                                                                                        let x_386: u8 = l_Float_disNaN(x_385);
+                                                                                        match x_386 {
+                                                                                            0 => {
+                                                                                                let x_387: u8 = l_Float_disInf(x_385);
+                                                                                                x_357 = x_379;
+                                                                                                x_358 = x_377;
+                                                                                                x_359 = x_380;
+                                                                                                x_360 = x_372;
+                                                                                                x_361 = x_373;
+                                                                                                x_362 = x_384;
+                                                                                                x_363 = x_374;
+                                                                                                x_364 = x_378;
+                                                                                                x_365 = x_375;
+                                                                                                x_366 = x_376;
+                                                                                                x_367 = x_381;
+                                                                                                x_368 = x_385;
+                                                                                                x_369 = x_387;
+                                                                                                break 'b356;
+                                                                                            }
+                                                                                            _ => {
+                                                                                                x_357 = x_379;
+                                                                                                x_358 = x_377;
+                                                                                                x_359 = x_380;
+                                                                                                x_360 = x_372;
+                                                                                                x_361 = x_373;
+                                                                                                x_362 = x_384;
+                                                                                                x_363 = x_374;
+                                                                                                x_364 = x_378;
+                                                                                                x_365 = x_375;
+                                                                                                x_366 = x_376;
+                                                                                                x_367 = x_381;
+                                                                                                x_368 = x_385;
+                                                                                                x_369 = x_386;
+                                                                                                break 'b356;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    match x_369 {
+                                                                                        0 => {
+                                                                                            let x_370: u8 = l_Float_ddecLt(x_367, x_368);
+                                                                                            match x_370 {
+                                                                                                0 => {
+                                                                                                    x_344 = x_357;
+                                                                                                    x_345 = x_358;
+                                                                                                    x_346 = x_359;
+                                                                                                    x_347 = x_360;
+                                                                                                    x_348 = x_361;
+                                                                                                    x_349 = x_363;
+                                                                                                    x_350 = x_362;
+                                                                                                    x_351 = x_364;
+                                                                                                    x_352 = x_365;
+                                                                                                    x_353 = x_366;
+                                                                                                    x_354 = x_368;
+                                                                                                    break 'b343;
+                                                                                                }
+                                                                                                _ => {
+                                                                                                    x_344 = x_357;
+                                                                                                    x_345 = x_358;
+                                                                                                    x_346 = x_359;
+                                                                                                    x_347 = x_360;
+                                                                                                    x_348 = x_361;
+                                                                                                    x_349 = x_363;
+                                                                                                    x_350 = x_362;
+                                                                                                    x_351 = x_364;
+                                                                                                    x_352 = x_365;
+                                                                                                    x_353 = x_366;
+                                                                                                    x_354 = x_367;
+                                                                                                    break 'b343;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        _ => {
+                                                                                            x_323 = x_357;
+                                                                                            x_324 = x_358;
+                                                                                            x_325 = x_360;
+                                                                                            x_326 = x_361;
+                                                                                            x_327 = x_362;
+                                                                                            x_328 = x_363;
+                                                                                            x_329 = x_364;
+                                                                                            x_330 = x_365;
+                                                                                            x_331 = x_366;
+                                                                                            x_332 = x_123;
+                                                                                            break 'b322;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                let x_355: u8 = l_Float_ddecLt(x_346, x_354);
+                                                                                match x_355 {
+                                                                                    0 => {
+                                                                                        x_323 = x_344;
+                                                                                        x_324 = x_345;
+                                                                                        x_325 = x_347;
+                                                                                        x_326 = x_348;
+                                                                                        x_327 = x_350;
+                                                                                        x_328 = x_349;
+                                                                                        x_329 = x_351;
+                                                                                        x_330 = x_352;
+                                                                                        x_331 = x_353;
+                                                                                        x_332 = x_346;
+                                                                                        break 'b322;
+                                                                                    }
+                                                                                    _ => {
+                                                                                        x_323 = x_344;
+                                                                                        x_324 = x_345;
+                                                                                        x_325 = x_347;
+                                                                                        x_326 = x_348;
+                                                                                        x_327 = x_350;
+                                                                                        x_328 = x_349;
+                                                                                        x_329 = x_351;
+                                                                                        x_330 = x_352;
+                                                                                        x_331 = x_353;
+                                                                                        x_332 = x_354;
+                                                                                        break 'b322;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            let x_333: Obj = l_FloatArray_dset_x21_(x_28, x_6, x_332);
+                                                                            let x_334: f64 = l_Sand2_dliquidViscosity(x_124);
+                                                                            rt::lean_dec_ref(x_124);
+                                                                            let x_335: f64 = l_Float_dmul(x_324, x_334);
+                                                                            let x_336: f64 = l_Float_dsub(x_97, x_324);
+                                                                            let x_337: f64 = l_Float_dmul(x_336, x_121);
+                                                                            let x_338: f64 = l_Float_dadd(x_335, x_337);
+                                                                            let x_339: Obj = l_FloatArray_dset_x21_(x_32, x_6, x_338);
+                                                                            let x_340: f64 = l_Float_dofNat(x_323);
+                                                                            let x_341: f64 = l_Float_dneg(x_340);
+                                                                            let x_342: u8 = l_Nat_ddecLe(x_96, x_89);
+                                                                            match x_342 {
+                                                                                0 => {
+                                                                                    x_297 = x_324;
+                                                                                    x_298 = x_340;
+                                                                                    x_299 = x_325;
+                                                                                    x_300 = x_341;
+                                                                                    x_301 = x_326;
+                                                                                    x_302 = x_329;
+                                                                                    x_303 = x_330;
+                                                                                    x_304 = x_333;
+                                                                                    x_305 = x_327;
+                                                                                    x_306 = x_336;
+                                                                                    x_307 = x_328;
+                                                                                    x_308 = x_331;
+                                                                                    x_309 = x_339;
+                                                                                    x_310 = x_96;
+                                                                                    break 'b296;
+                                                                                }
+                                                                                _ => {
+                                                                                    rt::lean_inc(x_89);
+                                                                                    x_297 = x_324;
+                                                                                    x_298 = x_340;
+                                                                                    x_299 = x_325;
+                                                                                    x_300 = x_341;
+                                                                                    x_301 = x_326;
+                                                                                    x_302 = x_329;
+                                                                                    x_303 = x_330;
+                                                                                    x_304 = x_333;
+                                                                                    x_305 = x_327;
+                                                                                    x_306 = x_336;
+                                                                                    x_307 = x_328;
+                                                                                    x_308 = x_331;
+                                                                                    x_309 = x_339;
+                                                                                    x_310 = x_89;
+                                                                                    break 'b296;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        let x_311: Obj = l_Int_dofNat(x_310);
+                                                                        let x_312: Obj = l_Int_dediv(x_91, x_311);
+                                                                        rt::lean_dec(x_311);
+                                                                        rt::lean_dec(x_91);
+                                                                        let x_313: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
+                                                                        let x_314: u8 = l_Int_ddecLt(x_312, x_313);
+                                                                        match x_314 {
+                                                                            0 => {
+                                                                                let x_315: Obj = l_Int_dtoNat(x_312);
+                                                                                rt::lean_dec(x_312);
+                                                                                let x_316: u64 = l_UInt64_dofNat(x_315);
+                                                                                rt::lean_dec(x_315);
+                                                                                let x_317: f64 = l_UInt64_dtoFloat(x_316);
+                                                                                x_279 = x_297;
+                                                                                x_280 = x_298;
+                                                                                x_281 = x_299;
+                                                                                x_282 = x_300;
+                                                                                x_283 = x_301;
+                                                                                x_284 = x_302;
+                                                                                x_285 = x_303;
+                                                                                x_286 = x_304;
+                                                                                x_287 = x_305;
+                                                                                x_288 = x_306;
+                                                                                x_289 = x_307;
+                                                                                x_290 = x_308;
+                                                                                x_291 = x_309;
+                                                                                x_292 = x_317;
+                                                                                break 'b278;
+                                                                            }
+                                                                            _ => {
+                                                                                let x_318: Obj = l_Int_dnatAbs(x_312);
+                                                                                rt::lean_dec(x_312);
+                                                                                let x_319: u64 = l_UInt64_dofNat(x_318);
+                                                                                rt::lean_dec(x_318);
+                                                                                let x_320: f64 = l_UInt64_dtoFloat(x_319);
+                                                                                let x_321: f64 = l_Float_dneg(x_320);
+                                                                                x_279 = x_297;
+                                                                                x_280 = x_298;
+                                                                                x_281 = x_299;
+                                                                                x_282 = x_300;
+                                                                                x_283 = x_301;
+                                                                                x_284 = x_302;
+                                                                                x_285 = x_303;
+                                                                                x_286 = x_304;
+                                                                                x_287 = x_305;
+                                                                                x_288 = x_306;
+                                                                                x_289 = x_307;
+                                                                                x_290 = x_308;
+                                                                                x_291 = x_309;
+                                                                                x_292 = x_321;
+                                                                                break 'b278;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    let x_293: f64 = l_Float_ddiv(x_292, x_287);
+                                                                    let x_294: u8 = l_Float_disNaN(x_293);
+                                                                    match x_294 {
+                                                                        0 => {
+                                                                            let x_295: u8 = l_Float_disInf(x_293);
+                                                                            x_262 = x_279;
+                                                                            x_263 = x_280;
+                                                                            x_264 = x_281;
+                                                                            x_265 = x_282;
+                                                                            x_266 = x_283;
+                                                                            x_267 = x_284;
+                                                                            x_268 = x_285;
+                                                                            x_269 = x_286;
+                                                                            x_270 = x_293;
+                                                                            x_271 = x_288;
+                                                                            x_272 = x_289;
+                                                                            x_273 = x_287;
+                                                                            x_274 = x_290;
+                                                                            x_275 = x_291;
+                                                                            x_276 = x_295;
+                                                                            break 'b261;
+                                                                        }
+                                                                        _ => {
+                                                                            x_262 = x_279;
+                                                                            x_263 = x_280;
+                                                                            x_264 = x_281;
+                                                                            x_265 = x_282;
+                                                                            x_266 = x_283;
+                                                                            x_267 = x_284;
+                                                                            x_268 = x_285;
+                                                                            x_269 = x_286;
+                                                                            x_270 = x_293;
+                                                                            x_271 = x_288;
+                                                                            x_272 = x_289;
+                                                                            x_273 = x_287;
+                                                                            x_274 = x_290;
+                                                                            x_275 = x_291;
+                                                                            x_276 = x_294;
+                                                                            break 'b261;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                match x_276 {
+                                                                    0 => {
+                                                                        let x_277: u8 = l_Float_ddecLt(x_263, x_270);
+                                                                        match x_277 {
+                                                                            0 => {
+                                                                                x_246 = x_262;
+                                                                                x_247 = x_263;
+                                                                                x_248 = x_264;
+                                                                                x_249 = x_265;
+                                                                                x_250 = x_266;
+                                                                                x_251 = x_267;
+                                                                                x_252 = x_268;
+                                                                                x_253 = x_269;
+                                                                                x_254 = x_271;
+                                                                                x_255 = x_272;
+                                                                                x_256 = x_273;
+                                                                                x_257 = x_275;
+                                                                                x_258 = x_274;
+                                                                                x_259 = x_270;
+                                                                                break 'b245;
+                                                                            }
+                                                                            _ => {
+                                                                                x_246 = x_262;
+                                                                                x_247 = x_263;
+                                                                                x_248 = x_264;
+                                                                                x_249 = x_265;
+                                                                                x_250 = x_266;
+                                                                                x_251 = x_267;
+                                                                                x_252 = x_268;
+                                                                                x_253 = x_269;
+                                                                                x_254 = x_271;
+                                                                                x_255 = x_272;
+                                                                                x_256 = x_273;
+                                                                                x_257 = x_275;
+                                                                                x_258 = x_274;
+                                                                                x_259 = x_263;
+                                                                                break 'b245;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    _ => {
+                                                                        x_229 = x_262;
+                                                                        x_230 = x_263;
+                                                                        x_231 = x_264;
+                                                                        x_232 = x_266;
+                                                                        x_233 = x_265;
+                                                                        x_234 = x_267;
+                                                                        x_235 = x_268;
+                                                                        x_236 = x_269;
+                                                                        x_237 = x_271;
+                                                                        x_238 = x_272;
+                                                                        x_239 = x_273;
+                                                                        x_240 = x_275;
+                                                                        x_241 = x_274;
+                                                                        x_242 = x_123;
+                                                                        break 'b228;
+                                                                    }
+                                                                }
+                                                            }
+                                                            let x_260: u8 = l_Float_ddecLt(x_249, x_259);
+                                                            match x_260 {
+                                                                0 => {
+                                                                    x_229 = x_246;
+                                                                    x_230 = x_247;
+                                                                    x_231 = x_248;
+                                                                    x_232 = x_250;
+                                                                    x_233 = x_249;
+                                                                    x_234 = x_251;
+                                                                    x_235 = x_252;
+                                                                    x_236 = x_253;
+                                                                    x_237 = x_254;
+                                                                    x_238 = x_255;
+                                                                    x_239 = x_256;
+                                                                    x_240 = x_257;
+                                                                    x_241 = x_258;
+                                                                    x_242 = x_249;
+                                                                    break 'b228;
+                                                                }
+                                                                _ => {
+                                                                    x_229 = x_246;
+                                                                    x_230 = x_247;
+                                                                    x_231 = x_248;
+                                                                    x_232 = x_250;
+                                                                    x_233 = x_249;
+                                                                    x_234 = x_251;
+                                                                    x_235 = x_252;
+                                                                    x_236 = x_253;
+                                                                    x_237 = x_254;
+                                                                    x_238 = x_255;
+                                                                    x_239 = x_256;
+                                                                    x_240 = x_257;
+                                                                    x_241 = x_258;
+                                                                    x_242 = x_259;
+                                                                    break 'b228;
+                                                                }
+                                                            }
+                                                        }
+                                                        let x_243: Obj = l_FloatArray_dset_x21_(x_36, x_6, x_242);
+                                                        let x_244: u8 = l_Nat_ddecLe(x_96, x_89);
+                                                        match x_244 {
+                                                            0 => {
+                                                                rt::lean_dec(x_89);
+                                                                x_202 = x_229;
+                                                                x_203 = x_230;
+                                                                x_204 = x_231;
+                                                                x_205 = x_232;
+                                                                x_206 = x_233;
+                                                                x_207 = x_234;
+                                                                x_208 = x_235;
+                                                                x_209 = x_236;
+                                                                x_210 = x_239;
+                                                                x_211 = x_238;
+                                                                x_212 = x_237;
+                                                                x_213 = x_243;
+                                                                x_214 = x_241;
+                                                                x_215 = x_240;
+                                                                x_216 = x_96;
+                                                                break 'b201;
+                                                            }
+                                                            _ => {
+                                                                x_202 = x_229;
+                                                                x_203 = x_230;
+                                                                x_204 = x_231;
+                                                                x_205 = x_232;
+                                                                x_206 = x_233;
+                                                                x_207 = x_234;
+                                                                x_208 = x_235;
+                                                                x_209 = x_236;
+                                                                x_210 = x_239;
+                                                                x_211 = x_238;
+                                                                x_212 = x_237;
+                                                                x_213 = x_243;
+                                                                x_214 = x_241;
+                                                                x_215 = x_240;
+                                                                x_216 = x_89;
+                                                                break 'b201;
+                                                            }
+                                                        }
+                                                    }
+                                                    let x_217: Obj = l_Int_dofNat(x_216);
+                                                    let x_218: Obj = l_Int_dediv(x_92, x_217);
+                                                    rt::lean_dec(x_217);
+                                                    rt::lean_dec(x_92);
+                                                    let x_219: Obj = l_Sand2_dmechanicalEOSPressure_d__closed__3();
+                                                    let x_220: u8 = l_Int_ddecLt(x_218, x_219);
+                                                    match x_220 {
+                                                        0 => {
+                                                            let x_221: Obj = l_Int_dtoNat(x_218);
+                                                            rt::lean_dec(x_218);
+                                                            let x_222: u64 = l_UInt64_dofNat(x_221);
+                                                            rt::lean_dec(x_221);
+                                                            let x_223: f64 = l_UInt64_dtoFloat(x_222);
+                                                            x_183 = x_202;
+                                                            x_184 = x_203;
+                                                            x_185 = x_204;
+                                                            x_186 = x_205;
+                                                            x_187 = x_206;
+                                                            x_188 = x_207;
+                                                            x_189 = x_208;
+                                                            x_190 = x_209;
+                                                            x_191 = x_210;
+                                                            x_192 = x_211;
+                                                            x_193 = x_212;
+                                                            x_194 = x_213;
+                                                            x_195 = x_215;
+                                                            x_196 = x_214;
+                                                            x_197 = x_223;
+                                                            break 'b182;
+                                                        }
+                                                        _ => {
+                                                            let x_224: Obj = l_Int_dnatAbs(x_218);
+                                                            rt::lean_dec(x_218);
+                                                            let x_225: u64 = l_UInt64_dofNat(x_224);
+                                                            rt::lean_dec(x_224);
+                                                            let x_226: f64 = l_UInt64_dtoFloat(x_225);
+                                                            let x_227: f64 = l_Float_dneg(x_226);
+                                                            x_183 = x_202;
+                                                            x_184 = x_203;
+                                                            x_185 = x_204;
+                                                            x_186 = x_205;
+                                                            x_187 = x_206;
+                                                            x_188 = x_207;
+                                                            x_189 = x_208;
+                                                            x_190 = x_209;
+                                                            x_191 = x_210;
+                                                            x_192 = x_211;
+                                                            x_193 = x_212;
+                                                            x_194 = x_213;
+                                                            x_195 = x_215;
+                                                            x_196 = x_214;
+                                                            x_197 = x_227;
+                                                            break 'b182;
+                                                        }
+                                                    }
+                                                }
+                                                let x_198: f64 = l_Float_ddiv(x_197, x_191);
+                                                let x_199: u8 = l_Float_disNaN(x_198);
+                                                match x_199 {
+                                                    0 => {
+                                                        let x_200: u8 = l_Float_disInf(x_198);
+                                                        x_166 = x_183;
+                                                        x_167 = x_184;
+                                                        x_168 = x_185;
+                                                        x_169 = x_186;
+                                                        x_170 = x_187;
+                                                        x_171 = x_188;
+                                                        x_172 = x_189;
+                                                        x_173 = x_190;
+                                                        x_174 = x_192;
+                                                        x_175 = x_193;
+                                                        x_176 = x_194;
+                                                        x_177 = x_196;
+                                                        x_178 = x_195;
+                                                        x_179 = x_198;
+                                                        x_180 = x_200;
+                                                        break 'b165;
+                                                    }
+                                                    _ => {
+                                                        x_166 = x_183;
+                                                        x_167 = x_184;
+                                                        x_168 = x_185;
+                                                        x_169 = x_186;
+                                                        x_170 = x_187;
+                                                        x_171 = x_188;
+                                                        x_172 = x_189;
+                                                        x_173 = x_190;
+                                                        x_174 = x_192;
+                                                        x_175 = x_193;
+                                                        x_176 = x_194;
+                                                        x_177 = x_196;
+                                                        x_178 = x_195;
+                                                        x_179 = x_198;
+                                                        x_180 = x_199;
+                                                        break 'b165;
+                                                    }
+                                                }
+                                            }
+                                            match x_180 {
+                                                0 => {
+                                                    let x_181: u8 = l_Float_ddecLt(x_167, x_179);
+                                                    match x_181 {
+                                                        0 => {
+                                                            x_151 = x_166;
+                                                            x_152 = x_168;
+                                                            x_153 = x_169;
+                                                            x_154 = x_170;
+                                                            x_155 = x_174;
+                                                            x_156 = x_175;
+                                                            x_157 = x_171;
+                                                            x_158 = x_176;
+                                                            x_159 = x_172;
+                                                            x_160 = x_177;
+                                                            x_161 = x_178;
+                                                            x_162 = x_173;
+                                                            x_163 = x_179;
+                                                            break 'b150;
+                                                        }
+                                                        _ => {
+                                                            x_151 = x_166;
+                                                            x_152 = x_168;
+                                                            x_153 = x_169;
+                                                            x_154 = x_170;
+                                                            x_155 = x_174;
+                                                            x_156 = x_175;
+                                                            x_157 = x_171;
+                                                            x_158 = x_176;
+                                                            x_159 = x_172;
+                                                            x_160 = x_177;
+                                                            x_161 = x_178;
+                                                            x_162 = x_173;
+                                                            x_163 = x_167;
+                                                            break 'b150;
+                                                        }
+                                                    }
+                                                }
+                                                _ => {
+                                                    x_127 = x_166;
+                                                    x_128 = x_168;
+                                                    x_129 = x_169;
+                                                    x_130 = x_175;
+                                                    x_131 = x_174;
+                                                    x_132 = x_176;
+                                                    x_133 = x_171;
+                                                    x_134 = x_172;
+                                                    x_135 = x_178;
+                                                    x_136 = x_177;
+                                                    x_137 = x_173;
+                                                    x_138 = x_123;
+                                                    break 'b126;
+                                                }
+                                            }
+                                        }
+                                        let x_164: u8 = l_Float_ddecLt(x_154, x_163);
+                                        match x_164 {
+                                            0 => {
+                                                x_127 = x_151;
+                                                x_128 = x_152;
+                                                x_129 = x_153;
+                                                x_130 = x_156;
+                                                x_131 = x_155;
+                                                x_132 = x_158;
+                                                x_133 = x_157;
+                                                x_134 = x_159;
+                                                x_135 = x_161;
+                                                x_136 = x_160;
+                                                x_137 = x_162;
+                                                x_138 = x_154;
+                                                break 'b126;
+                                            }
+                                            _ => {
+                                                x_127 = x_151;
+                                                x_128 = x_152;
+                                                x_129 = x_153;
+                                                x_130 = x_156;
+                                                x_131 = x_155;
+                                                x_132 = x_158;
+                                                x_133 = x_157;
+                                                x_134 = x_159;
+                                                x_135 = x_161;
+                                                x_136 = x_160;
+                                                x_137 = x_162;
+                                                x_138 = x_163;
+                                                break 'b126;
+                                            }
+                                        }
+                                    }
+                                    let x_139: Obj = l_FloatArray_dset_x21_(x_40, x_6, x_138);
+                                    let x_140: Obj = l_FloatArray_dset_x21_(x_44, x_6, x_134);
+                                    let x_141: f64 = l_Sand2_dgasGamma_d__closed__1();
+                                    let x_142: u64 = l_UInt64_dofNat(x_131);
+                                    rt::lean_dec(x_131);
+                                    let x_143: f64 = l_UInt64_dtoFloat(x_142);
+                                    let x_144: f64 = l_Float_dmul(x_141, x_143);
+                                    let x_145: Obj = l_Sand2_dChemistry_dgasCv(x_88);
+                                    rt::lean_dec_ref(x_88);
+                                    let x_146: Obj = rt::nat::lean_usize_to_nat(27686);
+                                    let x_147: Obj = l_Nat_dmul(x_146, x_125);
+                                    rt::lean_dec(x_125);
+                                    let x_148: Obj = l_Nat_dadd(x_145, x_147);
+                                    rt::lean_dec(x_147);
+                                    rt::lean_dec(x_145);
+                                    let x_149: u8 = l_Nat_ddecLe(x_96, x_148);
+                                    match x_149 {
+                                        0 => {
+                                            rt::lean_dec(x_148);
+                                            x_99 = x_127;
+                                            x_100 = x_128;
+                                            x_101 = x_129;
+                                            x_102 = x_140;
+                                            x_103 = x_144;
+                                            x_104 = x_133;
+                                            x_105 = x_134;
+                                            x_106 = x_137;
+                                            x_107 = x_130;
+                                            x_108 = x_132;
+                                            x_109 = x_136;
+                                            x_110 = x_135;
+                                            x_111 = x_139;
+                                            x_112 = x_96;
+                                            break 'b98;
+                                        }
+                                        _ => {
+                                            x_99 = x_127;
+                                            x_100 = x_128;
+                                            x_101 = x_129;
+                                            x_102 = x_140;
+                                            x_103 = x_144;
+                                            x_104 = x_133;
+                                            x_105 = x_134;
+                                            x_106 = x_137;
+                                            x_107 = x_130;
+                                            x_108 = x_132;
+                                            x_109 = x_136;
+                                            x_110 = x_135;
+                                            x_111 = x_139;
+                                            x_112 = x_148;
+                                            break 'b98;
+                                        }
+                                    }
+                                }
+                                let x_113: u64 = l_UInt64_dofNat(x_112);
+                                rt::lean_dec(x_112);
+                                let x_114: f64 = l_UInt64_dtoFloat(x_113);
+                                let x_115: f64 = l_Float_ddiv(x_103, x_114);
+                                let x_116: f64 = l_Float_dadd(x_97, x_115);
+                                let x_117: f64 = l_Float_ddiv(x_99, x_100);
+                                let x_118: u8 = l_Float_ddecLt(x_101, x_105);
+                                match x_118 {
+                                    0 => {
+                                        x_50 = x_116;
+                                        x_51 = x_117;
+                                        x_52 = x_102;
+                                        x_53 = x_107;
+                                        x_54 = x_104;
+                                        x_55 = x_108;
+                                        x_56 = x_109;
+                                        x_57 = x_110;
+                                        x_58 = x_111;
+                                        x_59 = x_106;
+                                        x_60 = x_101;
+                                        break 'b49;
+                                    }
+                                    _ => {
+                                        x_50 = x_116;
+                                        x_51 = x_117;
+                                        x_52 = x_102;
+                                        x_53 = x_107;
+                                        x_54 = x_104;
+                                        x_55 = x_108;
+                                        x_56 = x_109;
+                                        x_57 = x_110;
+                                        x_58 = x_111;
+                                        x_59 = x_106;
+                                        x_60 = x_105;
+                                        break 'b49;
+                                    }
+                                }
+                            }
+                            _ => {
+                                rt::lean_dec_ref(x_86);
+                                rt::lean_del_object(x_47);
+                                rt::lean_del_object(x_42);
+                                rt::lean_del_object(x_38);
+                                rt::lean_del_object(x_34);
+                                rt::lean_del_object(x_30);
+                                rt::lean_del_object(x_26);
+                                rt::lean_del_object(x_22);
+                                let x_475: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_475, 0, x_44);
+                                rt::lean_ctor_set(x_475, 1, x_45);
+                                let x_476: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_476, 0, x_40);
+                                rt::lean_ctor_set(x_476, 1, x_475);
+                                let x_477: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_477, 0, x_36);
+                                rt::lean_ctor_set(x_477, 1, x_476);
+                                let x_478: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_478, 0, x_32);
+                                rt::lean_ctor_set(x_478, 1, x_477);
+                                let x_479: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_479, 0, x_28);
+                                rt::lean_ctor_set(x_479, 1, x_478);
+                                let x_480: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_480, 0, x_24);
+                                rt::lean_ctor_set(x_480, 1, x_479);
+                                let x_481: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_481, 0, x_20);
+                                rt::lean_ctor_set(x_481, 1, x_480);
+                                x_10 = x_481;
+                                break 'b9;
+                            }
+                        }
+                    }
+                    let x_61: f64 = l_Float_dmul(x_50, x_60);
+                    let x_62: f64 = l_Float_ddiv(x_53, x_61);
+                    let x_63: f64 = l_Float_dadd(x_51, x_62);
+                    let x_64: Obj = l_FloatArray_dset_x21_(x_45, x_6, x_63);
+                    let mut x_66: Obj;
+                    'b65: {
+                        match x_48 {
+                            0 => {
+                                rt::lean_ctor_set(x_47, 1, x_64);
+                                rt::lean_ctor_set(x_47, 0, x_52);
+                                x_66 = x_47;
+                                break 'b65;
+                            }
+                            _ => {
+                                let x_85: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_85, 0, x_52);
+                                rt::lean_ctor_set(x_85, 1, x_64);
+                                x_66 = x_85;
+                                break 'b65;
+                            }
+                        }
+                    }
+                    let mut x_68: Obj;
+                    'b67: {
+                        match x_43 {
+                            0 => {
+                                rt::lean_ctor_set(x_42, 1, x_66);
+                                rt::lean_ctor_set(x_42, 0, x_58);
+                                x_68 = x_42;
+                                break 'b67;
+                            }
+                            _ => {
+                                let x_84: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_84, 0, x_58);
+                                rt::lean_ctor_set(x_84, 1, x_66);
+                                x_68 = x_84;
+                                break 'b67;
+                            }
+                        }
+                    }
+                    let mut x_70: Obj;
+                    'b69: {
+                        match x_39 {
+                            0 => {
+                                rt::lean_ctor_set(x_38, 1, x_68);
+                                rt::lean_ctor_set(x_38, 0, x_55);
+                                x_70 = x_38;
+                                break 'b69;
+                            }
+                            _ => {
+                                let x_83: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_83, 0, x_55);
+                                rt::lean_ctor_set(x_83, 1, x_68);
+                                x_70 = x_83;
+                                break 'b69;
+                            }
+                        }
+                    }
+                    let mut x_72: Obj;
+                    'b71: {
+                        match x_35 {
+                            0 => {
+                                rt::lean_ctor_set(x_34, 1, x_70);
+                                rt::lean_ctor_set(x_34, 0, x_57);
+                                x_72 = x_34;
+                                break 'b71;
+                            }
+                            _ => {
+                                let x_82: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_82, 0, x_57);
+                                rt::lean_ctor_set(x_82, 1, x_70);
+                                x_72 = x_82;
+                                break 'b71;
+                            }
+                        }
+                    }
+                    let mut x_74: Obj;
+                    'b73: {
+                        match x_31 {
+                            0 => {
+                                rt::lean_ctor_set(x_30, 1, x_72);
+                                rt::lean_ctor_set(x_30, 0, x_59);
+                                x_74 = x_30;
+                                break 'b73;
+                            }
+                            _ => {
+                                let x_81: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_81, 0, x_59);
+                                rt::lean_ctor_set(x_81, 1, x_72);
+                                x_74 = x_81;
+                                break 'b73;
+                            }
+                        }
+                    }
+                    let mut x_76: Obj;
+                    'b75: {
+                        match x_27 {
+                            0 => {
+                                rt::lean_ctor_set(x_26, 1, x_74);
+                                rt::lean_ctor_set(x_26, 0, x_54);
+                                x_76 = x_26;
+                                break 'b75;
+                            }
+                            _ => {
+                                let x_80: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_80, 0, x_54);
+                                rt::lean_ctor_set(x_80, 1, x_74);
+                                x_76 = x_80;
+                                break 'b75;
+                            }
+                        }
+                    }
+                    let mut x_78: Obj;
+                    'b77: {
+                        match x_23 {
+                            0 => {
+                                rt::lean_ctor_set(x_22, 1, x_76);
+                                rt::lean_ctor_set(x_22, 0, x_56);
+                                x_78 = x_22;
+                                break 'b77;
+                            }
+                            _ => {
+                                let x_79: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                                rt::lean_ctor_set(x_79, 0, x_56);
+                                rt::lean_ctor_set(x_79, 1, x_76);
+                                x_78 = x_79;
+                                break 'b77;
+                            }
+                        }
+                    }
+                    x_10 = x_78;
+                    break 'b9;
+                }
+            }
+        }
+        let x_11: Obj = l_Nat_dadd(x_6, x_8);
+        rt::lean_dec(x_6);
+        let t_0: Obj = x_1;
+        let t_1: Obj = x_2;
+        let t_2: Obj = x_3;
+        let t_3: Obj = x_4;
+        let t_4: Obj = x_10;
+        let t_5: Obj = x_11;
+        x_1 = t_0;
+        x_2 = t_1;
+        x_3 = t_2;
+        x_4 = t_3;
+        x_5 = t_4;
+        x_6 = t_5;
+        continue 'tail;
+    }
+}
+
+// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_._private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0.spec_0._redArg._boxed
+// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
+// Source: <lean>/Init/Data/Range/Basic.lean:37:25
+pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj) -> Obj {
+    let x_7: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg(x_1, x_2, x_3, x_4, x_5, x_6);
+    rt::lean_dec_ref(x_4);
+    rt::lean_dec_ref(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
+    return x_7;
+}
+
+// Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_._private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.fluidGeometry.spec_0.spec_0._redArg._closed_0
+// Compiled from: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop
+// Source: <lean>/Init/Data/Range/Basic.lean:37:25
+static C_l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0: rt::LazyScalar<f64> = rt::LazyScalar::new();
+unsafe fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0__init() -> f64 {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(30000);
+    let x_2: f64 = l_Float_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0() -> f64 {
+    C_l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0.get(l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dfluidGeometry_dspec__0_dspec__0_d__redArg_d__closed__0__init)
 }
 
 

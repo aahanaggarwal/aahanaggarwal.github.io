@@ -19,6 +19,27 @@ def dryCapacity (m : Mixture) : Int :=
   450*(56*m.iron) + 650*(160*m.rust) + 650*(126*m.ironChloride) +
   1000*(101*m.nitrate+32*m.sulfur+110*m.sulfide)
 
+@[inline] def sparseDryCapacity (m : Mixture) : Int :=
+  let c := (gasCv m : Int)
+  let c := weightedInt c 51000 m.biomass
+  let c := weightedInt c 28000 m.oil
+  let c := weightedInt c 8520 m.carbon
+  let c := weightedInt c 43800 m.silica
+  let c := weightedInt c 49300 m.salt
+  let c := weightedInt c 126000 m.acid
+  let c := weightedInt c 84000 m.carbonate
+  let c := weightedInt c 93500 m.calciumChloride
+  let c := weightedInt c 25200 m.iron
+  let c := weightedInt c 104000 m.rust
+  let c := weightedInt c 81900 m.ironChloride
+  let c := weightedInt c 101000 m.nitrate
+  let c := weightedInt c 32000 m.sulfur
+  weightedInt c 110000 m.sulfide
+@[csimp] theorem dry_capacity_sparse_compilation : dryCapacity = sparseDryCapacity := by
+  funext m
+  simp only [sparseDryCapacity,weightedInt_eq,dryCapacity]
+  omega
+
 def nonWaterCondensedMass (m : Mixture) : Nat :=
   30*m.biomass+14*m.oil+12*m.carbon+60*m.silica+58*m.salt+36*m.acid+
   100*m.carbonate+110*m.calciumChloride+56*m.iron+160*m.rust+126*m.ironChloride+
@@ -53,7 +74,7 @@ structure Particle where
   luminous : Nat := 0
   stamp : Nat := 0
 
-def makeParticle (matter : Mixture) (energy : Int) (label : Material := .empty)
+@[inline] def makeParticle (matter : Mixture) (energy : Int) (label : Material := .empty)
     (anchored : Bool := false) : Particle :=
   {matter, mass := Chemistry.mass matter, mass_eq := rfl,
    chemical := chemicalEnergy matter, chemical_eq := rfl,
@@ -87,13 +108,23 @@ theorem increasing_phase_pressure_cannot_lower_fine_boiling (p : Particle) (pres
   rw [p.boilingFine_eq]
   exact higher_pressure_cannot_lower_fine_boiling_point _ _ higher
 
-def Particle.vx (p : Particle) : Int := p.px / max 1 p.mass
- def Particle.vy (p : Particle) : Int := p.py / max 1 p.mass
+@[inline] def Particle.vx (p : Particle) : Int := p.px / max 1 p.mass
+ @[inline] def Particle.vy (p : Particle) : Int := p.py / max 1 p.mass
 
-def kineticEnergy (p : Particle) : Int :=
-  (p.px*p.px+p.py*p.py)/(2*(max 1 p.mass : Nat)*10000000000)
+@[inline] def kineticEnergy (p : Particle) : Int :=
+  if p.px == 0 && p.py == 0 then 0 else
+    (p.px*p.px+p.py*p.py)/(2*(max 1 p.mass : Nat)*10000000000)
 
-def potentialEnergy (height width i : Nat) (p : Particle) : Int :=
+theorem kinetic_zero_fastpath_matches_full_energy (p : Particle) :
+    kineticEnergy p = (p.px*p.px+p.py*p.py)/(2*(max 1 p.mass : Nat)*10000000000) := by
+  unfold kineticEnergy
+  split
+  · rename_i zero
+    simp only [Bool.and_eq_true,beq_iff_eq] at zero
+    simp [zero.1,zero.2]
+  · rfl
+
+@[inline] def potentialEnergy (height width i : Nat) (p : Particle) : Int :=
   (p.mass : Int)*981*((height-i/width : Nat)*1000000-p.ry)/(100*1000000)
 
 def thermalEnergy (height width i : Nat) (p : Particle) : Int :=
@@ -113,7 +144,7 @@ theorem fine_boiling_cache_bounded (p : Particle) : p.boilingFine <= 200000000 :
 
 /-- Additive mixture energy: water latent heat coexists with every other
     component's sensible heat. The vapor reference is independent of pressure. -/
-def waterDiagram (p : Particle) : PhaseDiagram :=
+@[macro_inline] def waterDiagram (p : Particle) : PhaseDiagram :=
   let fusion := waterFusion p
   let boil := fusion+liquidCapacity p*p.boilingFine/10000
   let vapor := max boil (vaporReference p+vaporCapacity p*p.boilingFine/10000)
@@ -128,12 +159,12 @@ def silicaFusion (p : Particle) : Nat := p.matter.silica*60*15000000
 
 /-- Mineral fusion thresholds include the energy of water and the other
     mineral. A trace of water cannot erase iron/silica latent heat. -/
-def ironDiagram (p : Particle) : FusionDiagram :=
+@[macro_inline] def ironDiagram (p : Particle) : FusionDiagram :=
   let start := vaporReference p+vaporCapacity p*153800
   let finish := start+ironFusion p
   ⟨start,finish,by omega⟩
 
-def silicaDiagram (p : Particle) : FusionDiagram :=
+@[macro_inline] def silicaDiagram (p : Particle) : FusionDiagram :=
   let start := vaporReference p+vaporCapacity p*170000+ironFusion p
   let finish := start+silicaFusion p
   ⟨start,finish,by omega⟩
@@ -177,6 +208,41 @@ def waterTemperatureFromInternalEnergy (p : Particle) (h : Int) : Int :=
     | .boiling => p.boilingFine/10000
     | .vapor => (h-(vaporReference p : Int))/max 1 (vaporCapacity p : Int)
 
+
+def waterBoilStart (p : Particle) : Nat := waterFusion p+liquidCapacity p*p.boilingFine/10000
+
+def waterTemperatureFast (p : Particle) (h : Int) : Int :=
+  if p.matter.water == 0 then h/max 1 p.capacity
+  else if h < 0 then h/max 1 ((p.matter.water*18*2100+p.capacity.toNat : Nat) : Int)
+  else if h < (waterFusion p : Int) then 0
+  else if h < (waterBoilStart p : Int) then (h-(waterFusion p : Int))/max 1 (liquidCapacity p : Int)
+  else if h < (max (waterBoilStart p) (vaporReference p+vaporCapacity p*p.boilingFine/10000) : Nat) then p.boilingFine/10000
+  else (h-(vaporReference p : Int))/max 1 (vaporCapacity p : Int)
+
+theorem water_temperature_fast_matches_reference (p : Particle) (h : Int) :
+    waterTemperatureFast p h = waterTemperatureFromInternalEnergy p h := by
+  unfold waterTemperatureFast waterTemperatureFromInternalEnergy
+  split
+  · rfl
+  · simp only [waterDiagram,phase,waterBoilStart]
+    by_cases ice : h < 0
+    · simp [ice]
+    · by_cases melt : h < (waterFusion p : Int)
+      · simp [ice,melt]
+      · by_cases boil : h < (waterFusion p : Int)+(liquidCapacity p : Int)*(p.boilingFine : Int)/10000
+        · simp [ice,melt,boil]
+        · by_cases vapor : h < (max (waterBoilStart p) (vaporReference p+vaporCapacity p*p.boilingFine/10000) : Nat)
+          · simp only [waterBoilStart] at vapor
+            simp [ice,melt,boil,vapor]
+          · simp only [waterBoilStart] at vapor
+            simp [ice,melt,boil,vapor]
+
+
+@[csimp] theorem compile_lazy_water_temperature : waterTemperatureFromInternalEnergy = waterTemperatureFast := by
+  funext p h
+  exact (water_temperature_fast_matches_reference p h).symm
+
+
 /-- One common temperature for water, iron and silica, with each component's
     own fusion plateau and additive latent inventory. -/
 def temperatureFromEnthalpy (p : Particle) (h : Int) : Int :=
@@ -198,20 +264,53 @@ def vaporous (height width i : Nat) (p : Particle) : Bool :=
 def vaporWaterFromEnthalpy (p : Particle) (h : Int) : Nat :=
   if p.matter.water == 0 then 0 else
     let d := waterDiagram p
-    phaseFraction p.matter.water d.boilStart d.boilEnd h
+    phaseFractionFast p.matter.water d.boilStart d.boilEnd h
+
+def vaporWaterFast (p : Particle) (h : Int) : Nat :=
+  if p.matter.water == 0 then 0
+  else if h < (waterBoilStart p : Int) then 0
+  else phaseFractionFast p.matter.water (waterBoilStart p) (waterDiagram p).boilEnd h
+
+theorem vapor_water_fast_matches_reference (p : Particle) (h : Int) :
+    vaporWaterFast p h = vaporWaterFromEnthalpy p h := by
+  by_cases dry : p.matter.water = 0
+  · simp [vaporWaterFast,vaporWaterFromEnthalpy,dry]
+  · by_cases cold : h < (waterFusion p : Int)+(liquidCapacity p : Int)*(p.boilingFine : Int)/10000
+    · have below : h < (waterDiagram p).boilStart := by simpa [waterDiagram] using cold
+      have noVapor := phase_fraction_zero_below_start p.matter.water
+        (waterDiagram p).boilStart (waterDiagram p).boilEnd h (waterDiagram p).order₃ below
+      simpa [vaporWaterFast,vaporWaterFromEnthalpy,dry,cold,waterBoilStart,waterDiagram,
+        phase_fraction_fast_matches_reference] using noVapor.symm
+    · simp [vaporWaterFast,vaporWaterFromEnthalpy,dry,cold,waterBoilStart,waterDiagram]
+
+
+@[csimp] theorem compile_lazy_water_vapor : vaporWaterFromEnthalpy = vaporWaterFast := by
+  funext p h
+  exact (vapor_water_fast_matches_reference p h).symm
+
 
 def vaporWaterMoles (height width i : Nat) (p : Particle) : Nat :=
-  vaporWaterFromEnthalpy p (thermalEnergy height width i p)
+  if p.matter.water == 0 then 0 else vaporWaterFromEnthalpy p (thermalEnergy height width i p)
+
+theorem vapor_read_fastpath_matches_complete_phase (p : Particle) :
+    vaporWaterMoles height width i p = vaporWaterFromEnthalpy p (thermalEnergy height width i p) := by
+  unfold vaporWaterMoles
+  split
+  · rename_i dry
+    simp only [beq_iff_eq] at dry
+    simp [vaporWaterFromEnthalpy,dry]
+  · rfl
 
 def gasCount (height width i : Nat) (p : Particle) : Nat :=
   dryGasMoles p.matter+vaporWaterMoles height width i p
 
 theorem vapor_molecules_cannot_exceed_water (p : Particle) :
     vaporWaterMoles height width i p <= p.matter.water := by
-  unfold vaporWaterMoles vaporWaterFromEnthalpy
+  rw [vapor_read_fastpath_matches_complete_phase]
+  unfold vaporWaterFromEnthalpy
   split
   · omega
-  · exact phase_fraction_bounded _ _ _ _
+  · simpa only [phase_fraction_fast_matches_reference] using phase_fraction_bounded _ _ _ _
 
 def gasMolecularMass (height width i : Nat) (p : Particle) : Nat :=
   32*p.matter.oxygen+28*p.matter.nitrogen+44*p.matter.carbonDioxide+2*p.matter.hydrogen+16*p.matter.methane+28*p.matter.carbonMonoxide+
@@ -363,5 +462,96 @@ theorem impulse_preserves_energy (a b : Particle) (x y : Int) :
 
 theorem impulse_preserves_matter (a b : Particle) (x y : Int) :
     (exchangeImpulse a b x y).1.matter = a.matter ∧ (exchangeImpulse a b x y).2.matter = b.matter := ⟨rfl,rfl⟩
+
+
+def freezingCapacity (p : Particle) : Int :=
+  if p.matter.water == 0 then max 1 p.capacity
+  else max 1 ((p.matter.water*18*2100+p.capacity.toNat : Nat) : Int)
+
+theorem freezing_capacity_positive (p : Particle) : 0 < freezingCapacity p := by
+  unfold freezingCapacity
+  split <;> omega
+
+theorem water_temperature_nonnegative (p : Particle) (h : Int) (positive : 0 <= h) :
+    0 <= waterTemperatureFromInternalEnergy p h := by
+  rw [← water_temperature_fast_matches_reference]
+  unfold waterTemperatureFast
+  split
+  · exact Int.ediv_nonneg positive (by omega)
+  · split
+    · omega
+    · split
+      · omega
+      · split
+        · apply Int.ediv_nonneg <;> omega
+        · split
+          · apply Int.ediv_nonneg <;> omega
+          · have bound := Nat.le_max_right (waterBoilStart p)
+                (vaporReference p+vaporCapacity p*p.boilingFine/10000)
+            have available := Nat.le_add_right (vaporReference p) (vaporCapacity p*p.boilingFine/10000)
+            apply Int.ediv_nonneg <;> omega
+
+theorem mixture_temperature_nonnegative (p : Particle) (h : Int) (positive : 0 <= h) :
+    0 <= temperatureFromEnthalpy p h := by
+  unfold temperatureFromEnthalpy
+  split
+  · exact water_temperature_nonnegative p h positive
+  · dsimp only
+    split
+    · apply water_temperature_nonnegative
+      dsimp [silicaDiagram] at *
+      omega
+    · split
+      · omega
+      · split
+        · apply water_temperature_nonnegative
+          dsimp [ironDiagram] at *
+          omega
+        · split
+          · omega
+          · exact water_temperature_nonnegative p h positive
+
+theorem negative_internal_energy_temperature (p : Particle) (h : Int) (negative : h < 0) :
+    temperatureFromEnthalpy p h = h/freezingCapacity p := by
+  have ironStart : ¬h >= (ironDiagram p).meltStart := by dsimp [ironDiagram]; omega
+  have ironEnd : ¬h >= (ironDiagram p).meltEnd := by dsimp [ironDiagram]; omega
+  have silicaStart : ¬h >= (silicaDiagram p).meltStart := by dsimp [silicaDiagram]; omega
+  have silicaEnd : ¬h >= (silicaDiagram p).meltEnd := by dsimp [silicaDiagram]; omega
+  simp only [temperatureFromEnthalpy,ironStart,ironEnd,silicaStart,silicaEnd,↓reduceIte,ite_self]
+  rw [← water_temperature_fast_matches_reference]
+  by_cases water : p.matter.water = 0
+  · simp [waterTemperatureFast,freezingCapacity,water]
+  · simp [waterTemperatureFast,freezingCapacity,water,negative]
+
+theorem temperature_kelvin_iff_energy_bound (p : Particle) (h : Int) :
+    temperatureFromEnthalpy p h >= -27315 ↔ h >= -27315*freezingCapacity p := by
+  have capacity := freezing_capacity_positive p
+  by_cases positive : 0 <= h
+  · have warm := mixture_temperature_nonnegative p h positive
+    omega
+  · rw [negative_internal_energy_temperature p h (by omega)]
+    exact Int.le_ediv_iff_mul_le capacity
+
+def kelvinAdmissible (height width i : Nat) (p : Particle) : Bool :=
+  decide (temperature height width i p >= -27315)
+
+def kelvinAdmissibleFast (height width i : Nat) (p : Particle) : Bool :=
+  let h := thermalEnergy height width i p
+  if h >= 0 then true else decide (h >= -27315*freezingCapacity p)
+
+theorem kelvin_fast_matches_reference (height width i : Nat) (p : Particle) :
+    kelvinAdmissibleFast height width i p = kelvinAdmissible height width i p := by
+  unfold kelvinAdmissibleFast kelvinAdmissible temperature
+  simp only [temperature_kelvin_iff_energy_bound]
+  have capacity := freezing_capacity_positive p
+  split
+  · have warm : thermalEnergy height width i p >= -27315*freezingCapacity p := by omega
+    simp [warm]
+  · rfl
+
+@[csimp] theorem compile_kelvin_energy_guard : kelvinAdmissible = kelvinAdmissibleFast := by
+  funext height width i p
+  exact (kelvin_fast_matches_reference height width i p).symm
+
 
 end Sand2

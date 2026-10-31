@@ -4,7 +4,7 @@
 // Source: <lean>/Init/Data/Int/DivMod/Basic.lean:47:1
 #[inline(always)]
 pub(crate) unsafe extern "C" fn l_Int_dediv(x_1: Obj, x_2: Obj) -> Obj {
-    let r: Obj = rt::intrinsics::lean_int_ediv(x_1, x_2);
+    let r: Obj = crate::runtime_arithmetic::lean_int_ediv(x_1, x_2);
     r
 }
 

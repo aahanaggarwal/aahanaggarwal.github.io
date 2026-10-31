@@ -5602,7 +5602,7 @@ pub(crate) unsafe fn l_Sand2_dmaterialName_d__closed__5() -> Obj {
 // Source: lean/Sand2/Materials.lean:61:1
 static C_l_Sand2_dmaterialName_d__closed__6: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmaterialName_d__closed__6__init() -> Obj {
-    let x_1: Obj = rt::lean_mk_string_unchecked(b"Steam", 5);
+    let x_1: Obj = rt::lean_mk_string_unchecked(b"Water vapor", 11);
     return x_1;
 }
 #[inline]

@@ -18,7 +18,7 @@ inductive FusionEquilibrium (d : FusionDiagram) (h : Int) : FusionPhase → Prop
   | melting (lo : d.meltStart <= h) (hi : h < d.meltEnd) : FusionEquilibrium d h .melting
   | liquid (hot : d.meltEnd <= h) : FusionEquilibrium d h .liquid
 
-def fusionPhase (d : FusionDiagram) (h : Int) : FusionPhase :=
+@[macro_inline] def fusionPhase (d : FusionDiagram) (h : Int) : FusionPhase :=
   if h < d.meltStart then .solid else if h < d.meltEnd then .melting else .liquid
 
 theorem fusion_phase_sound (d : FusionDiagram) (h : Int) :

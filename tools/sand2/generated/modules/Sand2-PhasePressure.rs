@@ -160,7 +160,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dequilibriumParticleFromInternalEnergy(x
             }
         }
     }
-    let x_44: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_25, x_2);
+    let x_44: Obj = l_Sand2_dvaporWaterFast(x_25, x_2);
     let x_45: Obj = l_Sand2_dChemistry_ddryGasMoles(x_26);
     let x_46: Obj = l_Nat_dadd(x_45, x_44);
     rt::lean_dec(x_44);
@@ -233,130 +233,179 @@ pub(crate) unsafe extern "C" fn l_Sand2_dflashEquilibriumPressure(x_1: Obj, x_2:
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
     let x_4: Obj = rt::lean_ctor_get(x_1, 10);
     let x_5: Obj = rt::lean_ctor_get(x_1, 11);
-    'b6: {
-        let mut x_16: Obj;
-        let mut x_17: u8;
-        'b15: {
+    let x_6: Obj = rt::lean_ctor_get(x_1, 13);
+    'b7: {
+        let mut x_17: Obj;
+        let mut x_18: u8;
+        'b16: {
             let mut x_21: Obj;
+            let mut x_22: Obj;
+            let mut x_23: Obj;
             'b20: {
-                let mut x_28: Obj;
-                let mut x_29: Obj;
-                let mut x_30: u8;
-                'b27: {
-                    let x_35: Obj = l_Sand2_dChemistry_ddryGasMoles(x_3);
-                    rt::lean_inc_ref(x_1);
-                    let x_36: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_1, x_2);
-                    let x_37: Obj = l_Sand2_dreferenceLiquidVolume(x_36);
-                    rt::lean_dec_ref(x_36);
-                    let mut x_39: Obj;
-                    'b38: {
-                        let x_46: Obj = l_Sand2_dliquidReferencePressure(x_37);
-                        let x_47: u8 = l_Nat_ddecLe(x_4, x_46);
-                        match x_47 {
+                let mut x_30: Obj;
+                'b29: {
+                    let mut x_44: Obj;
+                    let mut x_45: Obj;
+                    let mut x_46: u8;
+                    'b43: {
+                        let x_57: Obj = l_Sand2_dChemistry_ddryGasMoles(x_3);
+                        rt::lean_inc_ref(x_1);
+                        let x_58: Obj = l_Sand2_dliquidMatterFromInternalEnergy(x_1, x_2);
+                        let x_59: Obj = l_Sand2_dreferenceLiquidVolume(x_58);
+                        rt::lean_dec_ref(x_58);
+                        let mut x_61: Obj;
+                        'b60: {
+                            let x_68: Obj = l_Sand2_dliquidReferencePressure(x_59);
+                            let x_69: u8 = l_Nat_ddecLe(x_4, x_68);
+                            match x_69 {
+                                0 => {
+                                    rt::lean_dec(x_68);
+                                    rt::lean_inc(x_4);
+                                    x_61 = x_4;
+                                    break 'b60;
+                                }
+                                _ => {
+                                    x_61 = x_68;
+                                    break 'b60;
+                                }
+                            }
+                        }
+                        let x_62: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_63: u8 = l_Nat_ddecEq(x_57, x_62);
+                        rt::lean_dec(x_57);
+                        match x_63 {
                             0 => {
-                                rt::lean_dec(x_46);
-                                rt::lean_inc(x_4);
-                                x_39 = x_4;
-                                break 'b38;
+                                rt::lean_dec(x_59);
+                                x_44 = x_62;
+                                x_45 = x_61;
+                                x_46 = x_63;
+                                break 'b43;
                             }
                             _ => {
-                                x_39 = x_46;
-                                break 'b38;
+                                let x_64: Obj = __sand2_nat_literal_53616e64322d506861736550726573737572652e7273_10000000000();
+                                let x_65: Obj = rt::nat::lean_usize_to_nat(1000);
+                                let x_66: Obj = l_Nat_dadd(x_59, x_65);
+                                rt::lean_dec(x_59);
+                                let x_67: u8 = l_Nat_ddecLe(x_64, x_66);
+                                rt::lean_dec(x_66);
+                                x_44 = x_62;
+                                x_45 = x_61;
+                                x_46 = x_67;
+                                break 'b43;
                             }
                         }
                     }
-                    let x_40: Obj = rt::nat::lean_usize_to_nat(0);
-                    let x_41: u8 = l_Nat_ddecEq(x_35, x_40);
-                    rt::lean_dec(x_35);
-                    match x_41 {
+                    match x_46 {
                         0 => {
-                            rt::lean_dec(x_37);
-                            x_28 = x_40;
-                            x_29 = x_39;
-                            x_30 = x_41;
-                            break 'b27;
+                            rt::lean_dec(x_45);
+                            x_30 = x_44;
+                            break 'b29;
                         }
                         _ => {
-                            let x_42: Obj = __sand2_nat_literal_53616e64322d506861736550726573737572652e7273_10000000000();
-                            let x_43: Obj = rt::nat::lean_usize_to_nat(1000);
-                            let x_44: Obj = l_Nat_dadd(x_37, x_43);
-                            rt::lean_dec(x_37);
-                            let x_45: u8 = l_Nat_ddecLe(x_42, x_44);
-                            rt::lean_dec(x_44);
-                            x_28 = x_40;
-                            x_29 = x_39;
-                            x_30 = x_45;
-                            break 'b27;
+                            rt::lean_inc(x_45);
+                            rt::lean_inc_ref(x_1);
+                            let x_47: Obj = l_Sand2_datPressure(x_1, x_45);
+                            let x_48: Obj = rt::lean_ctor_get(x_47, 13);
+                            rt::lean_inc(x_48);
+                            let x_49: Obj = l_Sand2_dwaterFusion(x_47);
+                            let x_50: Obj = l_Sand2_dliquidCapacity(x_47);
+                            rt::lean_dec_ref(x_47);
+                            let x_51: Obj = l_Nat_dmul(x_50, x_48);
+                            rt::lean_dec(x_48);
+                            rt::lean_dec(x_50);
+                            let x_52: Obj = rt::nat::lean_usize_to_nat(10000);
+                            let x_53: Obj = l_Nat_ddiv(x_51, x_52);
+                            rt::lean_dec(x_51);
+                            let x_54: Obj = l_Nat_dadd(x_49, x_53);
+                            rt::lean_dec(x_53);
+                            rt::lean_dec(x_49);
+                            let x_55: Obj = l_Int_dofNat(x_54);
+                            let x_56: u8 = l_Int_ddecLt(x_2, x_55);
+                            rt::lean_dec(x_55);
+                            match x_56 {
+                                0 => {
+                                    rt::lean_dec(x_45);
+                                    x_30 = x_44;
+                                    break 'b29;
+                                }
+                                _ => {
+                                    rt::lean_dec(x_2);
+                                    rt::lean_dec_ref(x_1);
+                                    return x_45;
+                                }
+                            }
                         }
                     }
                 }
-                match x_30 {
+                let x_31: Obj = l_Sand2_dwaterFusion(x_1);
+                let x_32: Obj = l_Sand2_dliquidCapacity(x_1);
+                let x_33: Obj = l_Nat_dmul(x_32, x_6);
+                rt::lean_dec(x_32);
+                let x_34: Obj = rt::nat::lean_usize_to_nat(10000);
+                let x_35: Obj = l_Nat_ddiv(x_33, x_34);
+                rt::lean_dec(x_33);
+                let x_36: Obj = l_Nat_dadd(x_31, x_35);
+                rt::lean_dec(x_35);
+                rt::lean_dec(x_31);
+                let x_37: Obj = l_Sand2_dvaporReference(x_1);
+                let x_38: Obj = l_Sand2_dvaporCapacity(x_1);
+                let x_39: Obj = l_Nat_dmul(x_38, x_6);
+                rt::lean_dec(x_38);
+                let x_40: Obj = l_Nat_ddiv(x_39, x_34);
+                rt::lean_dec(x_39);
+                let x_41: Obj = l_Nat_dadd(x_37, x_40);
+                rt::lean_dec(x_40);
+                rt::lean_dec(x_37);
+                let x_42: u8 = l_Nat_ddecLe(x_36, x_41);
+                match x_42 {
                     0 => {
-                        rt::lean_dec(x_29);
-                        x_21 = x_28;
+                        rt::lean_dec(x_41);
+                        rt::lean_inc(x_36);
+                        x_21 = x_30;
+                        x_22 = x_36;
+                        x_23 = x_36;
                         break 'b20;
                     }
                     _ => {
-                        rt::lean_inc(x_29);
-                        rt::lean_inc_ref(x_1);
-                        let x_31: Obj = l_Sand2_datPressure(x_1, x_29);
-                        let x_32: Obj = l_Sand2_dwaterDiagram(x_31);
-                        rt::lean_dec_ref(x_31);
-                        let x_33: Obj = rt::lean_ctor_get(x_32, 2);
-                        rt::lean_inc(x_33);
-                        rt::lean_dec_ref(x_32);
-                        let x_34: u8 = l_Int_ddecLt(x_2, x_33);
-                        rt::lean_dec(x_33);
-                        match x_34 {
-                            0 => {
-                                rt::lean_dec(x_29);
-                                x_21 = x_28;
-                                break 'b20;
-                            }
-                            _ => {
-                                rt::lean_dec(x_2);
-                                rt::lean_dec_ref(x_1);
-                                return x_29;
-                            }
-                        }
+                        x_21 = x_30;
+                        x_22 = x_36;
+                        x_23 = x_41;
+                        break 'b20;
                     }
                 }
             }
-            let x_22: Obj = l_Sand2_dwaterDiagram(x_1);
-            let x_23: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_1, x_2);
-            let x_24: u8 = l_Nat_ddecEq(x_23, x_21);
-            rt::lean_dec(x_23);
-            match x_24 {
+            let x_24: Obj = l_Int_dofNat(x_23);
+            let x_25: Obj = l_Sand2_dvaporWaterFast(x_1, x_2);
+            let x_26: u8 = l_Nat_ddecEq(x_25, x_21);
+            rt::lean_dec(x_25);
+            match x_26 {
                 0 => {
-                    x_16 = x_22;
+                    rt::lean_dec(x_22);
                     x_17 = x_24;
-                    break 'b15;
+                    x_18 = x_26;
+                    break 'b16;
                 }
                 _ => {
-                    let x_25: Obj = rt::lean_ctor_get(x_22, 2);
-                    rt::lean_inc(x_25);
-                    let x_26: u8 = l_Int_ddecLe(x_25, x_2);
-                    rt::lean_dec(x_25);
-                    x_16 = x_22;
-                    x_17 = x_26;
-                    break 'b15;
+                    let x_27: Obj = l_Int_dofNat(x_22);
+                    let x_28: u8 = l_Int_ddecLe(x_27, x_2);
+                    rt::lean_dec(x_27);
+                    x_17 = x_24;
+                    x_18 = x_28;
+                    break 'b16;
                 }
             }
         }
-        match x_17 {
+        match x_18 {
             0 => {
-                rt::lean_dec_ref(x_16);
-                break 'b6;
+                rt::lean_dec(x_17);
+                break 'b7;
             }
             _ => {
-                let x_18: Obj = rt::lean_ctor_get(x_16, 3);
-                rt::lean_inc(x_18);
-                rt::lean_dec_ref(x_16);
-                let x_19: u8 = l_Int_ddecLt(x_2, x_18);
-                rt::lean_dec(x_18);
+                let x_19: u8 = l_Int_ddecLt(x_2, x_17);
+                rt::lean_dec(x_17);
                 match x_19 {
                     0 => {
-                        break 'b6;
+                        break 'b7;
                     }
                     _ => {
                         rt::lean_inc(x_5);
@@ -370,21 +419,21 @@ pub(crate) unsafe extern "C" fn l_Sand2_dflashEquilibriumPressure(x_1: Obj, x_2:
     }
     rt::lean_inc_n(x_5, 2);
     rt::lean_inc_ref(x_1);
-    let x_7: Obj = l_Sand2_dpredictedFlashPartialPressure(x_1, x_2, x_5);
-    let x_8: Obj = l_Int_dofNat(x_7);
-    let x_9: Obj = l_Int_dofNat(x_5);
-    let x_10: Obj = l_Int_dsub(x_8, x_9);
-    rt::lean_dec(x_9);
-    rt::lean_dec(x_8);
-    let x_11: Obj = l_Int_dnatAbs(x_10);
+    let x_8: Obj = l_Sand2_dpredictedFlashPartialPressure(x_1, x_2, x_5);
+    let x_9: Obj = l_Int_dofNat(x_8);
+    let x_10: Obj = l_Int_dofNat(x_5);
+    let x_11: Obj = l_Int_dsub(x_9, x_10);
     rt::lean_dec(x_10);
-    let x_12: Obj = rt::nat::lean_usize_to_nat(5000);
-    let x_13: u8 = l_Nat_ddecLe(x_11, x_12);
+    rt::lean_dec(x_9);
+    let x_12: Obj = l_Int_dnatAbs(x_11);
     rt::lean_dec(x_11);
-    match x_13 {
+    let x_13: Obj = rt::nat::lean_usize_to_nat(5000);
+    let x_14: u8 = l_Nat_ddecLe(x_12, x_13);
+    rt::lean_dec(x_12);
+    match x_14 {
         0 => {
-            let x_14: Obj = l_Sand2_dflashPressureSearch(x_1, x_2);
-            return x_14;
+            let x_15: Obj = l_Sand2_dflashPressureSearch(x_1, x_2);
+            return x_15;
         }
         _ => {
             rt::lean_inc(x_5);
@@ -455,7 +504,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dpredictedFlashPartialPressure(x_1: Obj,
     let x_4: Obj = l_Sand2_datPressure(x_1, x_3);
     let x_5: Obj = rt::lean_ctor_get(x_4, 0);
     rt::lean_inc_ref(x_5);
-    let x_6: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_4, x_2);
+    let x_6: Obj = l_Sand2_dvaporWaterFast(x_4, x_2);
     let x_7: Obj = l_Sand2_dChemistry_ddryGasMoles(x_5);
     rt::lean_dec_ref(x_5);
     let x_8: Obj = l_Nat_dadd(x_7, x_6);

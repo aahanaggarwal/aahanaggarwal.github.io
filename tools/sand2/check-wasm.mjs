@@ -7,6 +7,8 @@ import {loadEngine} from '../../sand2/engine.js';
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async url => url.protocol === 'file:' ? new Response(await readFile(fileURLToPath(url))) : originalFetch(url);
 const api = await loadEngine();
+assert.equal(api.world_allocator_check(), 0, 'Wasm allocator contract check failed');
+assert.equal(api.world_runtime_check(), 0, 'Wasm integer primitive boundary check failed');
 const decoder = new TextDecoder();
 const text = pointer => decoder.decode(new Uint8Array(api.memory.buffer, pointer, api.world_text_length()));
 const reference = (await readFile(process.argv[2], 'utf8')).trim().split('\n');

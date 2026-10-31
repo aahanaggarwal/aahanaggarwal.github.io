@@ -90,7 +90,7 @@ def description : Material → String
   | .stone => "Fixed quartz fixture. Transfers heat; hydrochloric acid does not dissolve silica."
   | .wood | .plant => "Fixed CH2O biomass surrogate. Burning requires heat and consumes oxygen. Biology is outside this model."
   | .fire => "A small hot hydrocarbon and oxygen parcel. A finite ignition source."
-  | .steam => "Hot water vapor mixed with air. Pressure-driven molecular transport."
+  | .steam => "Gaseous H2O, invisible in the normal view. Temperature and pressure views reveal it; white mist requires condensed droplets."
   | .oil => "CH2 hydrocarbon surrogate, less dense than water. Oxygen-limited combustion."
   | .acid => "Aqueous HCl. Reacts stoichiometrically with iron and carbonate, not arbitrary solids."
   | .lava => "Hot molten silica reservoir. Finite stored energy heats surrounding matter."
@@ -124,6 +124,14 @@ def description : Material → String
     "\",\"color\":" ++ toString (materialColor m) ++ ",\"type\":\"" ++ materialKind m ++
     "\",\"description\":\"" ++ description m ++ "\"}") ++ "]"
 
+/-- Gaseous water is optically clear. A steam label is a compositional phase,
+    not a certificate that a cell contains light-scattering liquid droplets. -/
+def normalMaterialColor (m : Material) : UInt32 :=
+  if m == .steam then materialColor .empty else materialColor m
+
+theorem gaseous_water_is_optically_clear :
+    normalMaterialColor .steam = materialColor .empty := by decide
+
 /-- Read-only projection. Rendering never changes the random seed or world. -/
 @[noinline] def renderSimulation (s : Simulation) (view : UInt32) : ByteArray := Id.run do
   let mut result := ByteArray.emptyWithCapacity (s.width*s.height*4)
@@ -140,10 +148,10 @@ def description : Material → String
         let pressure : Int := if fluidObstacle s.height s.width i p then 0 else p.mechanicalPressure
         let red := (max 0 (min 255 ((pressure-80000000)/2000000))).toNat.toUInt32
         red*65536+20*256+(255-red)
-      else materialColor m
+      else normalMaterialColor m
     let fill := if view == 0 && !fluidObstacle s.height s.width i p && isLiquid m then
       min 256 (occupiedLiquidVolume s.height s.width i p*256/cellVolume) else 256
-    let grain := if m == .empty || edge s.width s.height i || view != 0 then (0 : Int)
+    let grain := if m == .empty || m == .steam || edge s.width s.height i || view != 0 then (0 : Int)
       else (((i.toUInt32*747796405+s.world.generation.toUInt32*2891336453) >>> 24)%13).toNat-6
     for shift in [16,8,0] do
       let channel := ((color >>> shift) &&& 255).toNat

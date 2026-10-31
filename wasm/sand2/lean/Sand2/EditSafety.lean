@@ -37,4 +37,20 @@ theorem safe_single_preserves_kelvin_admissibility (p : Particle) (e : SingleEdi
     rw [same]
     exact valid
 
+
+def safePairFast (height width i j : Nat) (a b : Particle) (e : PairEdit a b) : PairEdit a b :=
+  if kelvinAdmissible height width i e.first && kelvinAdmissible height width j e.second
+  then e else unchangedPair a b
+
+def safeSingleFast (height width i : Nat) (p : Particle) (e : SingleEdit p) : SingleEdit p :=
+  if kelvinAdmissible height width i e.after then e else unchangedSingle p
+
+@[csimp] theorem compile_safe_pair_energy_guard : safePair = safePairFast := by
+  funext height width i j a b e
+  simp only [safePair,safePairFast,kelvinAdmissible,Bool.and_eq_true,decide_eq_true_eq]
+
+@[csimp] theorem compile_safe_single_energy_guard : safeSingle = safeSingleFast := by
+  funext height width i p e
+  simp only [safeSingle,safeSingleFast,kelvinAdmissible,decide_eq_true_eq]
+
 end Sand2

@@ -38,7 +38,7 @@ theorem no_vapor_below_boiling (p : Particle) (h : Int) (cold : h < (waterDiagra
   unfold vaporWaterFromEnthalpy
   split
   · rfl
-  · exact phase_fraction_zero_below_start _ _ _ _ (waterDiagram p).order₃ cold
+  · simpa only [phase_fraction_fast_matches_reference] using phase_fraction_zero_below_start _ _ _ _ (waterDiagram p).order₃ cold
 
 theorem reapplying_current_phase_pressure_changes_nothing (p : Particle) :
     atPressure p p.phasePressure = p := by

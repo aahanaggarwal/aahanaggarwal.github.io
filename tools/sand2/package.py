@@ -11,13 +11,13 @@ CRATE = ROOT / 'wasm/sand2'
 GENERATED = ROOT / 'tools/sand2/generated'
 SOURCE_FILES = [
     'wasm/sand2/Cargo.toml', 'wasm/sand2/Cargo.lock', 'wasm/sand2/build.rs',
-    'wasm/sand2/.cargo/config.toml', 'wasm/sand2/src/lib.rs',
+    'wasm/sand2/.cargo/config.toml', 'wasm/sand2/src/lib.rs', 'wasm/sand2/src/allocation_pool.rs', 'wasm/sand2/src/runtime_arithmetic.rs',
     'wasm/sand2/lean/lean-toolchain', 'wasm/sand2/lean/lakefile.toml',
     'wasm/sand2/lean/lake-manifest.json', 'wasm/sand2/lean/Sand2.lean',
     'wasm/sand2/lean/Oracle.lean', 'wasm/sand2/lean/ProofReport.lean',
     'wasm/sand2/examples/oracle.rs', 'wasm/sand2/examples/bench.rs', 'wasm/sand2/examples/profile.rs',
     'wasm/sand2/lean/Validation.lean', 'wasm/sand2/lean/FluidValidation.lean', 'wasm/sand2/lean/SaturationValidation.lean',
-    'tools/sand2/check-saturation.py',
+    'tools/sand2/check-saturation.py', 'tools/sand2/profile.sh', 'tools/sand2/benchmark.mjs',
     'tools/sand2/build.sh', 'tools/sand2/package.py', 'tools/sand2/check-wasm.mjs',
 ]
 SOURCE_FILES += [str(p.relative_to(ROOT)) for p in sorted((CRATE / 'lean/Sand2').glob('*.lean'))]
@@ -54,7 +54,7 @@ for path in sorted((CRATE / 'lean/Sand2').glob('*.lean')):
             raise SystemExit(f'Theorem missing from kernel axiom audit: {name}')
         handwritten.update(matches)
 record = {
-    'format': 1, 'generator': 'lungo 1.117.0 with automatic persistent Nat literal normalization', 'lean': '4.34.1',
+    'format': 1, 'generator': 'lungo 1.117.0 with persistent Nat literals and generic exact integer runtime fast paths', 'lean': '4.34.1',
     'rust': subprocess.check_output(['rustc', '--version'], text=True).strip(),
     'target': 'wasm32-wasip1',
     'reference_evaluator': 'Independent Lean native C compiler; no Lungo code in the reference evaluator',
@@ -63,6 +63,12 @@ record = {
         'purpose': 'Preserve compiler literal lifetime assumptions on 32-bit Wasm',
         'modules': sum('persistent Nat literal normalization v1' in p.read_text() for p in GENERATED.rglob('*.rs')),
         'persistent_literals': sum(len(re.findall(r'unsafe fn __sand2_nat_literal_', p.read_text())) for p in GENERATED.rglob('*.rs')),
+    },
+    'runtime_optimization': {
+        'arithmetic': 'wasm/sand2/src/runtime_arithmetic.rs',
+        'allocation': 'wasm/sand2/src/allocation_pool.rs',
+        'scope': 'Generic exact integer operations with arbitrary-precision fallback and bounded allocation reuse; no Rust physics',
+        'validation': 'Integer differential tests against the original runtime; allocator boundary tests; Lean C/native Rust/Wasm world-state comparisons',
     },
     'proofs': sorted(handwritten), 'audited_theorems_including_generated': len(audited),
     'trust': 'Lean kernel; standard propext, Quot.sound and Classical.choice only; no sorryAx or custom axioms',

@@ -56,6 +56,29 @@ fn stabilize_nat_literals(directory: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
+// Generic runtime specialization only: arithmetic values and ownership are
+// unchanged. Large operands are borrowed instead of cloned before arithmetic.
+fn optimize_integer_calls(directory: &Path) -> std::io::Result<()> {
+    let symbols = ["lean_nat_add", "lean_nat_sub", "lean_nat_mul", "lean_nat_div", "lean_nat_mod",
+        "lean_nat_dec_lt", "lean_nat_dec_le", "lean_int_add", "lean_int_sub", "lean_int_mul",
+        "lean_int_ediv", "lean_int_dec_lt", "lean_int_dec_le"];
+    let mut sites = 0;
+    for entry in std::fs::read_dir(directory)? {
+        let path = entry?.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("rs") { continue; }
+        let mut source = std::fs::read_to_string(&path)?;
+        let original = source.clone();
+        for symbol in symbols {
+            let old = format!("rt::intrinsics::{symbol}(");
+            sites += source.matches(&old).count();
+            source = source.replace(&old, &format!("crate::runtime_arithmetic::{symbol}("));
+        }
+        if source != original { std::fs::write(path, source)?; }
+    }
+    println!("cargo:warning=Specialized {sites} integer runtime call sites");
+    Ok(())
+}
+
 fn main() -> lungo_build::Result<()> {
     let mut program = lungo_build::configure();
     for name in ["newSimulation", "tickSimulation", "clearSimulation", "paintSimulation",
@@ -67,5 +90,7 @@ fn main() -> lungo_build::Result<()> {
     let output = std::path::PathBuf::from(std::env::var_os("OUT_DIR").expect("Cargo OUT_DIR"));
     stabilize_nat_literals(&output.join("lungo/sand2/modules"))
         .expect("normalize generated Nat literals with persistent backend cells");
+    optimize_integer_calls(&output.join("lungo/sand2/modules"))
+        .expect("specialize generic integer runtime calls");
     Ok(())
 }

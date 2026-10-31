@@ -241,6 +241,28 @@ def chemicalEnergy (m : Mixture) : Int :=
    -494600*m.nitrate -414000*m.sulfide -74870*m.methane -110530*m.carbonMonoxide)*100000 -
    8314*27315*(dryGasMoles m : Int)
 
+@[inline] def sparseChemicalEnergy (m : Mixture) : Int :=
+  let total := weightedInt 0 (-291830) m.water
+  let total := weightedInt total (-393510) m.carbonDioxide
+  let total := weightedInt total (-115900) m.biomass
+  let total := weightedInt total (-20000) m.oil
+  let total := weightedInt total (-910900) m.silica
+  let total := weightedInt total (-411120) m.salt
+  let total := weightedInt total (-167160) m.acid
+  let total := weightedInt total (-1206900) m.carbonate
+  let total := weightedInt total (-877000) m.calciumChloride
+  let total := weightedInt total (-824200) m.rust
+  let total := weightedInt total (-341800) m.ironChloride
+  let total := weightedInt total (-494600) m.nitrate
+  let total := weightedInt total (-414000) m.sulfide
+  let total := weightedInt total (-74870) m.methane
+  let total := weightedInt total (-110530) m.carbonMonoxide
+  total*100000-8314*27315*(dryGasMoles m : Int)
+@[csimp] theorem chemical_energy_sparse_compilation : chemicalEnergy = sparseChemicalEnergy := by
+  funext m
+  simp only [sparseChemicalEnergy,weightedInt_eq,chemicalEnergy]
+  omega
+
 def gasMoles (m : Mixture) (vapor : Bool) : Nat :=
   dryGasMoles m+(if vapor then m.water else 0)
 

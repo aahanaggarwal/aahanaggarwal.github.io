@@ -1,5 +1,10 @@
 //! Browser ABI and retained Lean state handles. Physics, initialization, edits,
 //! catalogue, scene definitions and rendering are generated from Lean.
+#[cfg(target_arch = "wasm32")]
+mod allocation_pool;
+
+mod runtime_arithmetic;
+
 pub mod physics {
     lungo::include_lean!("sand2");
 }
@@ -60,6 +65,8 @@ mod browser {
         WORLD.with(|slot| slot.borrow_mut().as_mut().map(f).unwrap_or_default())
     }
     #[unsafe(no_mangle)]
+    pub extern "C" fn world_runtime_check() -> u32 { u32::from(!super::runtime_arithmetic::self_test()) }
+    #[unsafe(no_mangle)]
     pub extern "C" fn world_new(width: u32, height: u32) { WORLD.with(|slot| *slot.borrow_mut() = Some(Universe::new(width, height))); }
     #[unsafe(no_mangle)]
     pub extern "C" fn world_free() { WORLD.with(|slot| *slot.borrow_mut() = None); }
@@ -102,6 +109,8 @@ mod browser {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn optimized_integer_primitives_match_reference() { assert!(runtime_arithmetic::self_test()); }
     #[test]
     fn complete_timesteps_conserve_all_elements_and_total_energy() {
         for scene in 1..=10 {

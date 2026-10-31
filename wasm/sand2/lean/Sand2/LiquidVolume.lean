@@ -23,7 +23,7 @@ theorem reference_liquid_volume_additive (a b : Mixture) :
 def liquidWaterFromInternalEnergy (p : Particle) (h : Int) : Nat :=
   if p.matter.water == 0 then 0 else
   let d := waterDiagram p
-  if h < d.meltEnd then phaseFraction p.matter.water d.meltStart d.meltEnd h
+  if h < d.meltEnd then phaseFractionFast p.matter.water d.meltStart d.meltEnd h
   else p.matter.water-vaporWaterFromEnthalpy p h
 
 def liquidWaterMoles (height width i : Nat) (p : Particle) : Nat :=
@@ -35,7 +35,7 @@ theorem liquid_water_cannot_exceed_inventory (p : Particle) :
   split
   · omega
   · split
-    · exact phase_fraction_bounded _ _ _ _
+    · simpa only [phase_fraction_fast_matches_reference] using phase_fraction_bounded _ _ _ _
     · omega
 
 /-- Only liquid is advected by the liquid velocity field. Oxygen, nitrogen,
@@ -43,8 +43,8 @@ theorem liquid_water_cannot_exceed_inventory (p : Particle) :
 def rawLiquidMatterFromInternalEnergy (p : Particle) (h : Int) : Mixture :=
   let water := liquidWaterFromInternalEnergy p h
   let dissolved := water > 0
-  let moltenSilica := phaseFraction p.matter.silica (silicaDiagram p).meltStart (silicaDiagram p).meltEnd h
-  let moltenIron := phaseFraction p.matter.iron (ironDiagram p).meltStart (ironDiagram p).meltEnd h
+  let moltenSilica := phaseFractionFast p.matter.silica (silicaDiagram p).meltStart (silicaDiagram p).meltEnd h
+  let moltenIron := phaseFractionFast p.matter.iron (ironDiagram p).meltStart (ironDiagram p).meltEnd h
   {water,oil := p.matter.oil,
    silica := moltenSilica,
    iron := moltenIron,
@@ -58,7 +58,10 @@ def rawLiquidMatterFromInternalEnergy (p : Particle) (h : Int) : Mixture :=
 theorem partial_mineral_liquid_cannot_exceed_inventory (p : Particle) (h : Int) :
     (rawLiquidMatterFromInternalEnergy p h).iron <= p.matter.iron ∧
     (rawLiquidMatterFromInternalEnergy p h).silica <= p.matter.silica :=
-  ⟨phase_fraction_bounded _ _ _ _,phase_fraction_bounded _ _ _ _⟩
+  by
+    simpa only [rawLiquidMatterFromInternalEnergy,phase_fraction_fast_matches_reference] using
+      And.intro (phase_fraction_bounded p.matter.iron (ironDiagram p).meltStart (ironDiagram p).meltEnd h)
+        (phase_fraction_bounded p.matter.silica (silicaDiagram p).meltStart (silicaDiagram p).meltEnd h)
 
 theorem zero_dry_mass_has_no_condensed_species (p : Particle) (zero : p.dryMass = 0) :
     p.matter.biomass = 0 ∧ p.matter.oil = 0 ∧ p.matter.carbon = 0 ∧ p.matter.silica = 0 ∧
@@ -81,11 +84,20 @@ theorem pure_gas_fastpath_matches_complete_phase_selection (p : Particle) (h : I
     obtain ⟨biomass,oil,carbon,silica,salt,acid,carbonate,calcium,iron,rust,chloride,nitrate,sulfur,sulfide⟩ :=
       zero_dry_mass_has_no_condensed_species p pureGas.2
     simp [rawLiquidMatterFromInternalEnergy,liquidWaterFromInternalEnergy,pureGas.1,
-      oil,silica,iron,phaseFraction]
+      oil,silica,iron,phaseFractionFast]
   · rfl
 
 def liquidMatter (height width i : Nat) (p : Particle) : Mixture :=
-  liquidMatterFromInternalEnergy p (thermalEnergy height width i p)
+  if p.matter.water == 0 && p.dryMass == 0 then {} else
+    liquidMatterFromInternalEnergy p (thermalEnergy height width i p)
+
+theorem liquid_read_fastpath_matches_complete_phase (p : Particle) :
+    liquidMatter height width i p = liquidMatterFromInternalEnergy p (thermalEnergy height width i p) := by
+  unfold liquidMatter
+  split
+  · rename_i gas
+    simp only [liquidMatterFromInternalEnergy,gas,↓reduceIte]
+  · rfl
 
 theorem liquid_advection_excludes_noncondensing_gases (p : Particle) :
     (liquidMatter height width i p).oxygen = 0 ∧
@@ -94,8 +106,7 @@ theorem liquid_advection_excludes_noncondensing_gases (p : Particle) :
     (liquidMatter height width i p).hydrogen = 0 ∧
     (liquidMatter height width i p).methane = 0 ∧
     (liquidMatter height width i p).carbonMonoxide = 0 := by
-  unfold liquidMatter
-  rw [pure_gas_fastpath_matches_complete_phase_selection]
+  rw [liquid_read_fastpath_matches_complete_phase,pure_gas_fastpath_matches_complete_phase_selection]
   exact ⟨rfl,rfl,rfl,rfl,rfl,rfl⟩
 
 def liquidVolume (height width i : Nat) (p : Particle) : Nat :=

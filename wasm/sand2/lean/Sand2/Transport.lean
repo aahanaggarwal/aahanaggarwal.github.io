@@ -7,10 +7,10 @@ open Chemistry
 /-- Both opposing packets use the same face height for gravitational energy.
     Equal counterflows therefore cancel exactly, without inventing heat in a
     uniform gas. Unequal flows retain the gravitational work in total energy. -/
-def facePotential (height width i j : Nat) (p : Particle) : Int :=
+@[inline] def facePotential (height width i j : Nat) (p : Particle) : Int :=
   (potentialEnergy height width i p+potentialEnergy height width j p)/2
 
-def gasPacket (height width i j : Nat) (source : Particle) (matter : Mixture) : Particle :=
+@[inline] def gasPacket (height width i j : Nat) (source : Particle) (matter : Mixture) : Particle :=
   let dm := Chemistry.mass matter
   let p := makeParticle matter 0
   let p := {p with px := source.vx*(dm : Int),py := source.vy*(dm : Int)}
@@ -23,7 +23,7 @@ def gasPacket (height width i j : Nat) (source : Particle) (matter : Mixture) : 
 def gasFlowEdit (height width i j : Nat) (a b : Particle) (divisor : Nat) : PairEdit a b :=
   let portion := partialGasPortion a.matter divisor (vaporWaterMoles height width i a)
   let q := gasPacket height width i j a portion.moved
-  portionEdit a b portion (emptyPortion b.matter) q.energy 0 q.px 0 q.py 0
+  portionEditCached a b q (makeParticle {} 0) portion (emptyPortion b.matter) rfl rfl
 
 /-- Symmetric molecular mixing works at equal pressure, unlike bulk pressure
     relaxation alone. Opposing portions are taken from the same original pair. -/
@@ -32,7 +32,7 @@ def gasDiffusionEdit (height width i j : Nat) (a b : Particle) (divisor : Nat) :
   let pb := partialGasPortion b.matter divisor (vaporWaterMoles height width j b)
   let qa := gasPacket height width i j a pa.moved
   let qb := gasPacket height width j i b pb.moved
-  portionEdit a b pa pb qa.energy qb.energy qa.px qb.px qa.py qb.py
+  portionEditCached a b qa qb pa pb rfl rfl
 
 theorem gas_diffusion_conserves_every_element (a b : Particle) (d : Nat) :
     atomAdd (atoms (gasDiffusionEdit height width i j a b d).first.matter)

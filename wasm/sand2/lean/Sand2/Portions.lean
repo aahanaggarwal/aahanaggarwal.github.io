@@ -99,4 +99,80 @@ theorem portion_exchange_conserves_y_momentum (a b : Particle) (pa : Portion a.m
     (portionEdit a b pa pb ea eb xa xb ya yb).second.py = a.py+b.py := by
   dsimp [portionEdit]; omega
 
+
+theorem dry_capacity_additive (a b : Mixture) : dryCapacity (add a b) = dryCapacity a+dryCapacity b := by
+  simp [dryCapacity,gasCv,add,Int.natCast_add]
+  omega
+
+theorem dry_mass_additive (a b : Mixture) : nonWaterCondensedMass (add a b) = nonWaterCondensedMass a+nonWaterCondensedMass b := by
+  simp [nonWaterCondensedMass,add]
+  omega
+
+theorem exchange_cached_mass (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) :
+    a.mass-outP.mass+inP.mass = Chemistry.mass (add portion.remaining inP.matter) := by
+  have partition := congrArg Chemistry.mass portion.partition
+  simp only [mixture_add_mass] at partition ⊢
+  rw [a.mass_eq,outP.mass_eq,inP.mass_eq,outSame]
+  omega
+
+theorem exchange_cached_chemical (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) :
+    a.chemical-outP.chemical+inP.chemical = chemicalEnergy (add portion.remaining inP.matter) := by
+  have partition := congrArg chemicalEnergy portion.partition
+  simp only [chemical_energy_additive] at partition ⊢
+  rw [a.chemical_eq,outP.chemical_eq,inP.chemical_eq,outSame]
+  omega
+
+theorem exchange_cached_capacity (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) :
+    a.capacity-outP.capacity+inP.capacity = dryCapacity (add portion.remaining inP.matter) := by
+  have partition := congrArg dryCapacity portion.partition
+  simp only [dry_capacity_additive] at partition ⊢
+  rw [a.capacity_eq,outP.capacity_eq,inP.capacity_eq,outSame]
+  omega
+
+theorem exchange_cached_dry_mass (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) :
+    a.dryMass-outP.dryMass+inP.dryMass = nonWaterCondensedMass (add portion.remaining inP.matter) := by
+  have partition := congrArg nonWaterCondensedMass portion.partition
+  simp only [dry_mass_additive] at partition ⊢
+  rw [a.dryMass_eq,outP.dryMass_eq,inP.dryMass_eq,outSame]
+  omega
+
+def replaceExchangedMatter (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) : Particle :=
+  {a with
+    matter := add portion.remaining inP.matter
+    mass := a.mass-outP.mass+inP.mass
+    mass_eq := exchange_cached_mass a outP inP portion outSame
+    chemical := a.chemical-outP.chemical+inP.chemical
+    chemical_eq := exchange_cached_chemical a outP inP portion outSame
+    capacity := a.capacity-outP.capacity+inP.capacity
+    capacity_eq := exchange_cached_capacity a outP inP portion outSame
+    dryMass := a.dryMass-outP.dryMass+inP.dryMass
+    dryMass_eq := exchange_cached_dry_mass a outP inP portion outSame }
+
+theorem exchanged_cache_matches_full_replacement (a outP inP : Particle) (portion : Portion a.matter)
+    (outSame : outP.matter = portion.moved) :
+    replaceExchangedMatter a outP inP portion outSame = replaceMatter a (add portion.remaining inP.matter) := by
+  simp only [replaceExchangedMatter,exchange_cached_mass a outP inP portion outSame,exchange_cached_chemical a outP inP portion outSame,exchange_cached_capacity a outP inP portion outSame,exchange_cached_dry_mass a outP inP portion outSame]
+  rfl
+
+def portionEditCached (a b qa qb : Particle) (pa : Portion a.matter) (pb : Portion b.matter)
+    (sameA : qa.matter = pa.moved) (sameB : qb.matter = pb.moved) : PairEdit a b :=
+  let outA := replaceExchangedMatter a qa qb pa sameA
+  let outB := replaceExchangedMatter b qb qa pb sameB
+  ⟨{outA with energy := a.energy-qa.energy+qb.energy,px := a.px-qa.px+qb.px,py := a.py-qa.py+qb.py},
+   {outB with energy := b.energy-qb.energy+qa.energy,px := b.px-qb.px+qa.px,py := b.py-qb.py+qa.py},
+   by simpa only [outA,outB,replaceExchangedMatter,sameA,sameB,exchangePortions] using portion_exchange_conserves_every_element a.matter b.matter pa pb,
+   by dsimp; omega⟩
+
+theorem cached_portion_edit_matches_reference (a b qa qb : Particle) (pa : Portion a.matter) (pb : Portion b.matter)
+    (sameA : qa.matter = pa.moved) (sameB : qb.matter = pb.moved) :
+    portionEditCached a b qa qb pa pb sameA sameB =
+      portionEdit a b pa pb qa.energy qb.energy qa.px qb.px qa.py qb.py := by
+  simp only [portionEditCached,exchanged_cache_matches_full_replacement,portionEdit,exchangePortions,sameA,sameB]
+
+
 end Sand2

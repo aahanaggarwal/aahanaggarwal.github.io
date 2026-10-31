@@ -19,12 +19,21 @@ self.onmessage = async ({data}) => {
     const tick = () => {
       const previous = api.world_steps();
       api.world_tick();
-      stepsTaken += Number(api.world_steps() !== previous);
+      const advanced = api.world_steps() !== previous;
+      stepsTaken += Number(advanced);
+      return advanced;
     };
     for (const [name, ...args] of data.commands) {
       if (name === 'world_tick') tick(); else api[name](...args);
     }
-    if (data.tick) tick();
+    if (data.tick) {
+      // A display frame may contain several finer Lean timesteps. Bound both
+      // worker occupancy and model-time advance; manual steps remain exact.
+      const modelStart = api.world_time_ms();
+      do {
+        if (!tick()) break;
+      } while (performance.now() - start < 8 && api.world_time_ms() - modelStart < 16n);
+    }
     const tickMs = stepsTaken ? (performance.now() - start) / stepsTaken : 0;
     const count = api.world_render(data.view);
     const pixels = new Uint8Array(api.memory.buffer, api.world_pixels(), width * height * 4).slice();

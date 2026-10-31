@@ -153,6 +153,56 @@ pub(crate) unsafe fn l_Sand2_dsafePair_d__closed__1() -> Obj {
     C_l_Sand2_dsafePair_d__closed__1.get(l_Sand2_dsafePair_d__closed__1__init)
 }
 
+// Lean: Sand2.safePairFast
+// Source: lean/Sand2/EditSafety.lean:41:1
+pub(crate) unsafe extern "C" fn l_Sand2_dsafePairFast(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj) -> Obj {
+    let mut x_9: u8;
+    'b8: {
+        let x_11: Obj = rt::lean_ctor_get(x_7, 0);
+        let x_12: Obj = rt::lean_ctor_get(x_7, 1);
+        rt::lean_inc_ref(x_11);
+        let x_13: u8 = l_Sand2_dkelvinAdmissibleFast(x_1, x_2, x_3, x_11);
+        match x_13 {
+            0 => {
+                x_9 = x_13;
+                break 'b8;
+            }
+            _ => {
+                rt::lean_inc_ref(x_12);
+                let x_14: u8 = l_Sand2_dkelvinAdmissibleFast(x_1, x_2, x_4, x_12);
+                x_9 = x_14;
+                break 'b8;
+            }
+        }
+    }
+    match x_9 {
+        0 => {
+            rt::lean_dec_ref(x_7);
+            let x_10: Obj = rt::lean_alloc_ctor(0, 2, 0);
+            rt::lean_ctor_set(x_10, 0, x_5);
+            rt::lean_ctor_set(x_10, 1, x_6);
+            return x_10;
+        }
+        _ => {
+            rt::lean_dec_ref(x_6);
+            rt::lean_dec_ref(x_5);
+            return x_7;
+        }
+    }
+}
+
+// Lean: Sand2.safePairFast._boxed
+// Compiled from: Sand2.safePairFast
+// Source: lean/Sand2/EditSafety.lean:41:1
+pub(crate) unsafe extern "C" fn l_Sand2_dsafePairFast_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj, x_6: Obj, x_7: Obj) -> Obj {
+    let x_8: Obj = l_Sand2_dsafePairFast(x_1, x_2, x_3, x_4, x_5, x_6, x_7);
+    rt::lean_dec(x_4);
+    rt::lean_dec(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
+    return x_8;
+}
+
 // Lean: Sand2.safeSingle
 // Source: lean/Sand2/EditSafety.lean:14:1
 pub(crate) unsafe extern "C" fn l_Sand2_dsafeSingle(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
@@ -178,6 +228,35 @@ pub(crate) unsafe extern "C" fn l_Sand2_dsafeSingle(x_1: Obj, x_2: Obj, x_3: Obj
 // Source: lean/Sand2/EditSafety.lean:14:1
 pub(crate) unsafe extern "C" fn l_Sand2_dsafeSingle_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
     let x_6: Obj = l_Sand2_dsafeSingle(x_1, x_2, x_3, x_4, x_5);
+    rt::lean_dec_ref(x_4);
+    rt::lean_dec(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
+    return x_6;
+}
+
+// Lean: Sand2.safeSingleFast
+// Source: lean/Sand2/EditSafety.lean:45:1
+pub(crate) unsafe extern "C" fn l_Sand2_dsafeSingleFast(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
+    rt::lean_inc_ref(x_5);
+    let x_6: u8 = l_Sand2_dkelvinAdmissibleFast(x_1, x_2, x_3, x_5);
+    match x_6 {
+        0 => {
+            rt::lean_dec_ref(x_5);
+            rt::lean_inc_ref(x_4);
+            return x_4;
+        }
+        _ => {
+            return x_5;
+        }
+    }
+}
+
+// Lean: Sand2.safeSingleFast._boxed
+// Compiled from: Sand2.safeSingleFast
+// Source: lean/Sand2/EditSafety.lean:45:1
+pub(crate) unsafe extern "C" fn l_Sand2_dsafeSingleFast_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
+    let x_6: Obj = l_Sand2_dsafeSingleFast(x_1, x_2, x_3, x_4, x_5);
     rt::lean_dec_ref(x_4);
     rt::lean_dec(x_3);
     rt::lean_dec(x_2);
