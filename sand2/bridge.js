@@ -8,7 +8,8 @@ export async function loadGame(width, height, onError) {
   const encoder = new TextEncoder();
   let textLength = 0, count = 0, history = 0, catalogue, inspect = '';
   let busy = false, tick = false, disposed = false, view = 0, dirty = false;
-  let commands = [], point, tickMs = 0;
+  let commands = [], point, steps = 0, sentAt = 0, batchMs = 1000 / 60;
+  let completedTicks = [];
   const writeText = value => {
     const text = encoder.encode(value);
     bytes.set(text, pixelBytes); textLength = text.length;
@@ -16,7 +17,7 @@ export async function loadGame(width, height, onError) {
   };
   const pump = () => {
     if (disposed || busy || !dirty) return;
-    busy = true; dirty = false;
+    busy = true; dirty = false; sentAt = performance.now();
     worker.postMessage({type: 'frame', commands, tick, view, inspect: point});
     commands = []; tick = false;
   };
@@ -35,7 +36,14 @@ export async function loadGame(width, height, onError) {
       else if (data.type === 'frame') {
         busy = false; bytes.set(data.pixels, 0); count = data.count;
         if (data.inspect !== undefined) inspect = data.inspect;
-        if (data.tickMs) tickMs = data.tickMs;
+        steps = data.steps;
+        const now = performance.now();
+        if (data.stepsTaken) {
+          const elapsed = (now - sentAt) / data.stepsTaken;
+          batchMs = batchMs === 1000 / 60 ? elapsed : batchMs * .8 + elapsed * .2;
+          for (let i = 0; i < data.stepsTaken; i++) completedTicks.push(now);
+        }
+        completedTicks = completedTicks.filter(t => now - t < 1000);
         pump();
       }
     };
@@ -49,6 +57,9 @@ export async function loadGame(width, height, onError) {
     world_clear() { command('world_clear'); },
     world_paint(...args) { command('world_paint', ...args); },
     world_tick() { tick = true; dirty = true; queueMicrotask(pump); },
+    world_step() { command('world_tick'); },
+    world_pause() { tick = false; },
+    world_steps() { return steps; },
     world_render(nextView) { if (view !== nextView) { view = nextView; dirty = true; queueMicrotask(pump); } return count; },
     world_pixels() { return 0; },
     world_checkpoint() { history = Math.min(16, history + 1); command('world_checkpoint'); return history; },
@@ -56,6 +67,7 @@ export async function loadGame(width, height, onError) {
     world_catalogue() { return writeText(catalogue); },
     world_inspect(x, y) { point = [x, y]; dirty = true; queueMicrotask(pump); return writeText(inspect); },
     world_text_length() { return textLength; },
-    simulation_hz() { return tickMs > 0 ? Math.round(1000 / tickMs) : 0; },
+    simulation_hz() { const now = performance.now(); completedTicks = completedTicks.filter(t => now - t < 1000); return completedTicks.length; },
+    simulation_interval() { return Math.max(1000 / 60, batchMs); },
   };
 }

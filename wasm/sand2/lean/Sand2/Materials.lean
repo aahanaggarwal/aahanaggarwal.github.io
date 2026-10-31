@@ -55,7 +55,7 @@ def decodeMaterial (n : UInt32) : Material := match n.toNat with
   | _ => .empty
 
 def materialName : Material → String
-  | .empty => "Empty" | .sand => "Sand" | .water => "Water" | .stone => "Quartz"
+  | .empty => "Air" | .sand => "Sand" | .water => "Water" | .stone => "Quartz"
   | .wood => "Wood" | .fire => "Fire" | .steam => "Steam" | .oil => "Oil"
   | .acid => "Acid" | .lava => "Molten silica" | .plant => "Plant fibre" | .ice => "Ice"
   | .smoke => "Smoke" | .glass => "Glass" | .obsidian => "Obsidian"

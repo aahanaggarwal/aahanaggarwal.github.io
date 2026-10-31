@@ -779,6 +779,53 @@ pub(crate) unsafe fn l_Sand2_dinstReprWaterRegime_drepr_d__closed__9() -> Obj {
     C_l_Sand2_dinstReprWaterRegime_drepr_d__closed__9.get(l_Sand2_dinstReprWaterRegime_drepr_d__closed__9__init)
 }
 
+// Lean: Sand2.internalLatentWaterAt
+// Source: lean/Sand2/Thermodynamics.lean:250:1
+pub(crate) unsafe extern "C" fn l_Sand2_dinternalLatentWaterAt(x_1: Obj) -> Obj {
+    let x_2: Obj = rt::nat::lean_usize_to_nat(18);
+    let x_3: Obj = l_Sand2_dlatentWaterAt(x_1);
+    let x_4: Obj = l_Nat_dmul(x_2, x_3);
+    rt::lean_dec(x_3);
+    let x_5: Obj = rt::nat::lean_usize_to_nat(8314);
+    let x_6: Obj = rt::nat::lean_usize_to_nat(27315);
+    let x_7: Obj = l_Nat_dadd(x_1, x_6);
+    let x_8: Obj = l_Nat_dmul(x_5, x_7);
+    rt::lean_dec(x_7);
+    let x_9: Obj = l_Nat_dsub(x_4, x_8);
+    rt::lean_dec(x_8);
+    rt::lean_dec(x_4);
+    return x_9;
+}
+
+// Lean: Sand2.internalLatentWaterAt._boxed
+// Compiled from: Sand2.internalLatentWaterAt
+// Source: lean/Sand2/Thermodynamics.lean:250:1
+pub(crate) unsafe extern "C" fn l_Sand2_dinternalLatentWaterAt_d__boxed(x_1: Obj) -> Obj {
+    let x_2: Obj = l_Sand2_dinternalLatentWaterAt(x_1);
+    rt::lean_dec(x_1);
+    return x_2;
+}
+
+// Lean: Sand2.latentWaterAt
+// Source: lean/Sand2/Thermodynamics.lean:240:1
+pub(crate) unsafe extern "C" fn l_Sand2_dlatentWaterAt(x_1: Obj) -> Obj {
+    let x_2: Obj = rt::nat::lean_usize_to_nat(247500000);
+    let x_3: Obj = rt::nat::lean_usize_to_nat(2180);
+    let x_4: Obj = l_Nat_dmul(x_3, x_1);
+    let x_5: Obj = l_Nat_dsub(x_2, x_4);
+    rt::lean_dec(x_4);
+    return x_5;
+}
+
+// Lean: Sand2.latentWaterAt._boxed
+// Compiled from: Sand2.latentWaterAt
+// Source: lean/Sand2/Thermodynamics.lean:240:1
+pub(crate) unsafe extern "C" fn l_Sand2_dlatentWaterAt_d__boxed(x_1: Obj) -> Obj {
+    let x_2: Obj = l_Sand2_dlatentWaterAt(x_1);
+    rt::lean_dec(x_1);
+    return x_2;
+}
+
 // Lean: Sand2.phase
 // Source: lean/Sand2/Thermodynamics.lean:131:1
 pub(crate) unsafe extern "C" fn l_Sand2_dphase(x_1: Obj, x_2: Obj) -> u8 {
@@ -835,6 +882,70 @@ pub(crate) unsafe extern "C" fn l_Sand2_dphase_d__boxed(x_1: Obj, x_2: Obj) -> O
     rt::lean_dec_ref(x_1);
     let x_4: Obj = rt::lean_box(x_3 as usize);
     return x_4;
+}
+
+// Lean: Sand2.phaseFraction
+// Source: lean/Sand2/Thermodynamics.lean:194:1
+pub(crate) unsafe extern "C" fn l_Sand2_dphaseFraction(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
+    let x_5: u8 = l_Int_ddecLe(x_3, x_4);
+    match x_5 {
+        0 => {
+            let x_6: Obj = l_Int_dsub(x_4, x_2);
+            let x_7: Obj = l_Int_dtoNat(x_6);
+            rt::lean_dec(x_6);
+            let x_8: Obj = l_Nat_dmul(x_1, x_7);
+            rt::lean_dec(x_7);
+            let mut x_10: Obj;
+            'b9: {
+                let x_13: Obj = rt::nat::lean_usize_to_nat(1);
+                let x_14: Obj = l_Int_dsub(x_3, x_2);
+                let x_15: Obj = l_Int_dtoNat(x_14);
+                rt::lean_dec(x_14);
+                let x_16: u8 = l_Nat_ddecLe(x_13, x_15);
+                match x_16 {
+                    0 => {
+                        rt::lean_dec(x_15);
+                        x_10 = x_13;
+                        break 'b9;
+                    }
+                    _ => {
+                        x_10 = x_15;
+                        break 'b9;
+                    }
+                }
+            }
+            let x_11: Obj = l_Nat_ddiv(x_8, x_10);
+            rt::lean_dec(x_10);
+            rt::lean_dec(x_8);
+            let x_12: u8 = l_Nat_ddecLe(x_1, x_11);
+            match x_12 {
+                0 => {
+                    return x_11;
+                }
+                _ => {
+                    rt::lean_dec(x_11);
+                    rt::lean_inc(x_1);
+                    return x_1;
+                }
+            }
+        }
+        _ => {
+            rt::lean_inc(x_1);
+            return x_1;
+        }
+    }
+}
+
+// Lean: Sand2.phaseFraction._boxed
+// Compiled from: Sand2.phaseFraction
+// Source: lean/Sand2/Thermodynamics.lean:194:1
+pub(crate) unsafe extern "C" fn l_Sand2_dphaseFraction_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
+    let x_5: Obj = l_Sand2_dphaseFraction(x_1, x_2, x_3, x_4);
+    rt::lean_dec(x_4);
+    rt::lean_dec(x_3);
+    rt::lean_dec(x_2);
+    rt::lean_dec(x_1);
+    return x_5;
 }
 
 // Lean: Sand2.thermalDiagram

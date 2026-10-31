@@ -191,4 +191,71 @@ theorem thermal_diagram_ordered (mass cs cl tm lf tb lv : Nat) :
   have h₃ := (thermalDiagram mass cs cl tm lf tb lv).order₃
   omega
 
+/-- Molecule count across a finite latent-heat interval. The function remains
+    total for zero-width intervals and arbitrary fixed-point enthalpies. -/
+def phaseFraction (count : Nat) (start finish h : Int) : Nat :=
+  if h >= finish then count
+  else min count (count*(h-start).toNat/max 1 (finish-start).toNat)
+
+theorem phase_fraction_bounded (count : Nat) (start finish h : Int) :
+    phaseFraction count start finish h <= count := by
+  unfold phaseFraction
+  split
+  · exact Nat.le_refl _
+  · exact Nat.min_le_left _ _
+
+theorem phase_fraction_zero_below_start (count : Nat) (start finish h : Int)
+    (ordered : start <= finish) (cold : h < start) : phaseFraction count start finish h = 0 := by
+  have below : ¬h >= finish := by omega
+  have zero : (h-start).toNat = 0 := by omega
+  simp [phaseFraction,below,zero]
+
+theorem phase_fraction_complete_above_finish (count : Nat) (start finish h : Int)
+    (hot : h >= finish) : phaseFraction count start finish h = count := by simp [phaseFraction,hot]
+
+theorem phase_fraction_monotone (count : Nat) (start finish h q : Int) (ordered : h <= q) :
+    phaseFraction count start finish h <= phaseFraction count start finish q := by
+  by_cases hh : h >= finish
+  · have qh : q >= finish := by omega
+    simp [phaseFraction,hh,qh]
+  · by_cases qh : q >= finish
+    · simp only [phaseFraction,qh,↓reduceIte]
+      exact phase_fraction_bounded _ _ _ _
+    · simp only [phaseFraction,hh,qh,↓reduceIte]
+      have numerator : (h-start).toNat <= (q-start).toNat := by omega
+      have multiplied := Nat.mul_le_mul_left count numerator
+      have divided := Nat.div_le_div_right (c := max 1 (finish-start).toNat) multiplied
+      omega
+
+/-- A partial conversion cannot spend more than the available latent heat.
+    Multiplying by the total count avoids a rounding-dependent rational unit. -/
+theorem partial_phase_conversion_respects_latent_budget (count : Nat) (start finish h : Int)
+    (width : 0 < finish-start) (notFinished : h < finish) :
+    phaseFraction count start finish h * (finish-start).toNat <= count*(h-start).toNat := by
+  have notFull : ¬h >= finish := by omega
+  have denominator : max 1 (finish-start).toNat = (finish-start).toNat := by omega
+  simp only [phaseFraction,notFull,↓reduceIte,denominator]
+  exact Nat.le_trans (Nat.mul_le_mul_right _ (Nat.min_le_right _ _)) (Nat.div_mul_le_self _ _)
+
+/-- Constant-cp water model: moving the saturation point changes the phase
+    threshold without changing the enthalpy of a given superheated vapor. -/
+def latentWaterAt (boiling : Nat) : Nat := 247500000-2180*boiling
+
+theorem pressure_change_preserves_vapor_enthalpy_reference (boiling : Nat)
+    (range : boiling <= 20000) :
+    33400000+4180*(boiling : Int)+(latentWaterAt boiling : Int) = 280900000+2000*boiling := by
+  unfold latentWaterAt
+  omega
+
+/-- Internal-energy latent interval per nanomole. Vaporization enthalpy also
+    supplies the ideal-gas pressure/volume work R*T. -/
+def internalLatentWaterAt (boiling : Nat) : Nat :=
+  18*latentWaterAt boiling-8314*(boiling+27315)
+
+theorem internal_vapor_reference_consistent (boiling : Nat) (range : boiling <= 20000) :
+    18*(33400000+4180*(boiling : Int))+(internalLatentWaterAt boiling : Int) =
+      18*(280900000+2000*(boiling : Int))-8314*((boiling : Int)+27315) := by
+  unfold internalLatentWaterAt latentWaterAt
+  omega
+
 end Sand2

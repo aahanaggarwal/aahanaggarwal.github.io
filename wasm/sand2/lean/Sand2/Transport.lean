@@ -13,15 +13,22 @@ def gasPacket (height width i j : Nat) (source : Particle) (matter : Mixture) : 
   let dm := Chemistry.mass matter
   let p := makeParticle matter 0
   let p := {p with px := source.vx*(dm : Int),py := source.vy*(dm : Int)}
-  let sensible := enthalpyAt matter (if vaporous height width i source then .steam else .empty) (temperature height width i source)
-  let energy := p.chemical+sensible+kineticEnergy p+facePotential height width i j p
+  let sensible := internalEnergyAt matter .steam (temperature height width i source)
+  let moles := matter.oxygen+matter.nitrogen+matter.carbonDioxide+matter.hydrogen+matter.water
+  let flowWork := (moles : Int)*8314*(temperature height width i source+27315)
+  let energy := p.chemical+sensible+flowWork+kineticEnergy p+facePotential height width i j p
   {p with energy}
+
+def gasFlowEdit (height width i j : Nat) (a b : Particle) (divisor : Nat) : PairEdit a b :=
+  let portion := partialGasPortion a.matter divisor (vaporWaterMoles height width i a)
+  let q := gasPacket height width i j a portion.moved
+  portionEdit a b portion (emptyPortion b.matter) q.energy 0 q.px 0 q.py 0
 
 /-- Symmetric molecular mixing works at equal pressure, unlike bulk pressure
     relaxation alone. Opposing portions are taken from the same original pair. -/
 def gasDiffusionEdit (height width i j : Nat) (a b : Particle) (divisor : Nat) : PairEdit a b :=
-  let pa := gasPortion a.matter divisor (vaporous height width i a)
-  let pb := gasPortion b.matter divisor (vaporous height width j b)
+  let pa := partialGasPortion a.matter divisor (vaporWaterMoles height width i a)
+  let pb := partialGasPortion b.matter divisor (vaporWaterMoles height width j b)
   let qa := gasPacket height width i j a pa.moved
   let qb := gasPacket height width j i b pb.moved
   portionEdit a b pa pb qa.energy qb.energy qa.px qb.px qa.py qb.py

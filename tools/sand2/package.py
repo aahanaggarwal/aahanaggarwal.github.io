@@ -16,7 +16,8 @@ SOURCE_FILES = [
     'wasm/sand2/lean/lake-manifest.json', 'wasm/sand2/lean/Sand2.lean',
     'wasm/sand2/lean/Oracle.lean', 'wasm/sand2/lean/ProofReport.lean',
     'wasm/sand2/examples/oracle.rs', 'wasm/sand2/examples/bench.rs',
-    'wasm/sand2/lean/Validation.lean',
+    'wasm/sand2/lean/Validation.lean', 'wasm/sand2/lean/SaturationValidation.lean',
+    'tools/sand2/check-saturation.py',
     'tools/sand2/build.sh', 'tools/sand2/package.py', 'tools/sand2/check-wasm.mjs',
 ]
 SOURCE_FILES += [str(p.relative_to(ROOT)) for p in sorted((CRATE / 'lean/Sand2').glob('*.lean'))]

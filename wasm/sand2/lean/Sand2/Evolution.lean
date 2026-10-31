@@ -1,5 +1,6 @@
 import Sand2.Conversions
 import Sand2.Transport
+import Sand2.PhasePressure
 
 namespace Sand2
 open Chemistry
@@ -7,9 +8,6 @@ open Chemistry
 /-- Constitutive parameters are SI approximations, with one cell = 1 cm and
     one tick = 1/60 s. Closed boundaries are adiabatic: no ambient heat source. -/
 def tickMicroseconds : Nat := 16667
-
-def gasCell (height width i : Nat) (p : Particle) : Bool :=
-  p.mass < 10000000 || (p.matter.water*18 > p.mass/2 && vaporous height width i p)
 
 
 def mobile (height width i : Nat) (p : Particle) : Bool :=
@@ -44,7 +42,7 @@ def conductivitySI : Material → Int
   | .wood | .plant | .ember => 120 | .lava => 1500
   | .salt => 6000 | .gunpowder | .ash => 100 | _ => 26
 
-def sensibleCapacity (p : Particle) : Int := max 1 (p.capacity+(p.matter.water*18 : Nat)*2000)
+def sensibleCapacity (p : Particle) : Int := max 1 (p.capacity+(p.matter.water : Int)*27686)
 
 /-- The executed Fourier flux has the sign of the temperature difference and
     is bounded by one quarter of the smaller sensible capacity. -/
@@ -163,25 +161,95 @@ def reactive (m : Mixture) : Bool :=
   let a ← Physics.getParticle i
   let b ← Physics.getParticle j
   if b.anchored || !(gasCell height width j b) then return
-  let v := vaporous height width i a
-  if pa <= pb+200 || gasMoles a.matter v == 0 then return
+  if pa <= pb+200 || gasCount height width i a == 0 then return
   let divisor := max 8 ((pa*8/max 1 (pa-pb)).toNat)
-  let packet := gasPart a.matter divisor v
-  let dm := Chemistry.mass packet
-  if dm == 0 then return
-  let q := gasPacket height width i j a packet
-  Physics.pair i j fun a b => safePair height width i j a b (transportEdit a b divisor v q.energy q.px q.py)
+  let portion := partialGasPortion a.matter divisor (vaporWaterMoles height width i a)
+  if Chemistry.mass portion.moved == 0 then return
+  Physics.pair i j fun a b => safePair height width i j a b (gasFlowEdit height width i j a b divisor)
 
 structure ThermalSample where
   t : Int := 2000
   pressure : Int := 101325000
+  waterPartial : Int := 0
+  bulkPressure : Int := 101325000
+  gas : Bool := true
+  enthalpy : Int := 0
+  phaseKey : Nat := 10000
   deriving Inhabited
 
-@[noinline] def thermalField (w : World width height) : Array ThermalSample :=
-  Array.ofFn fun i : Fin (width*height) =>
+@[noinline] def thermalField (w : World width height) : Array ThermalSample := Id.run do
+  let mut field := Array.ofFn fun i : Fin (width*height) =>
     let p := read w i
-    let t := temperature height width i p
-    ⟨t,idealGasPressure (gasMoles p.matter (vaporous height width i p)) t⟩
+    let h := thermalEnergy height width i p
+    let t := temperatureFromEnthalpy p h
+    let vapor := vaporWaterFromEnthalpy p h
+    let gasMoles := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
+    let gas := p.mass < 10000000 || p.dryMass+18*(p.matter.water-vapor) < 10000000
+    { t,pressure := idealGasPressure gasMoles t,
+      waterPartial := idealGasPressure vapor t,gas,enthalpy := h,phaseKey := p.boiling : ThermalSample }
+  let mut total := (0 : Int)
+  let mut count := 0
+  for i in [:width*height] do
+    let p := read w i
+    if !p.anchored && (field[i]?.getD default).gas then
+      total := total+(field[i]?.getD default).pressure
+      count := count+1
+  let ambient := if count == 0 then (101325000 : Int) else total/max 1 count
+  -- Liquid-column pressure is a hydrostatic approximation; gas compartments
+  -- supply their local surface pressure. It is not an incompressible solve.
+  for x in [:width] do
+    let mut surface := ambient
+    let mut head := (0 : Int)
+    for y in [:height] do
+      let i := y*width+x
+      let p := read w i
+      let sample := field[i]?.getD default
+      if sample.gas && !p.anchored then
+        surface := sample.pressure
+        head := 0
+        field := field.set! i {sample with bulkPressure := sample.pressure}
+      else if isLiquid (labelAt height width i p) then
+        let increment := (condensedMass height width i p : Int)*981/10000000
+        field := field.set! i {sample with bulkPressure := max 0 surface+head+increment/2}
+        head := head+increment
+      else
+        head := 0
+        surface := ambient
+        field := field.set! i {sample with bulkPressure := max 0 ambient}
+  return field
+
+/-- Vapor uses its partial pressure for dew-point equilibrium; condensed water
+    uses the surrounding mechanical pressure, including the hydrostatic head.
+    This is an explicit, lagged pressure/enthalpy coupling with bounded lookup. -/
+def updatePhasePressure (field : Array ThermalSample) (i : Nat) : Physics width height Unit := do
+  let p ← Physics.getParticle i
+  if p.matter.water == 0 then return
+  let sample := field[i]?.getD default
+  let target := if sample.gas then (max 0 sample.waterPartial).toNat
+    else equilibriumPhasePressure p sample.enthalpy (max 0 sample.bulkPressure).toNat
+  if target != p.phasePressure then
+    Physics.single i fun p => ⟨atPressure p target,rfl,rfl⟩
+
+/-- Recompute only changed water phase samples after pressure equilibration;
+    non-water parcels and their frozen operator-split samples are unchanged. -/
+@[noinline] def refreshPhaseField (field : Array ThermalSample) (w : World width height) : Array ThermalSample := Id.run do
+  let mut result := field
+  for i in [:width*height] do
+    let p := read w i
+    let old := field[i]?.getD default
+    if p.matter.water > 0 && p.boiling != old.phaseKey then
+      let t := temperatureFromEnthalpy p old.enthalpy
+      let vapor := vaporWaterFromEnthalpy p old.enthalpy
+      let moles := p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vapor
+      let gas := p.mass < 10000000 || p.dryMass+18*(p.matter.water-vapor) < 10000000
+      let fresh := {old with
+        t := t
+        pressure := idealGasPressure moles t
+        waterPartial := idealGasPressure vapor t
+        gas := gas
+        phaseKey := p.boiling}
+      result := result.set! i fresh
+  return result
 
 /-- Face fluxes use the start-of-tick thermal field (explicit operator splitting).
     Edits still limit actual inventories and retain a conserved energy budget. -/
@@ -305,7 +373,9 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
 @[noinline] def stepProgram : Physics width height Unit := do
   Physics.metadata (fun w => {w with generation := w.generation+1}) (by intro w; rfl)
   let generation := (← Physics.getWorld).generation
-  let field := thermalField (← Physics.getWorld)
+  let initialField := thermalField (← Physics.getWorld)
+  for i in [:width*height] do updatePhasePressure initialField i
+  let field := refreshPhaseField initialField (← Physics.getWorld)
   for k in [:width*height] do
     let i := if generation%2 == 0 then k else width*height-1-k
     normalize i

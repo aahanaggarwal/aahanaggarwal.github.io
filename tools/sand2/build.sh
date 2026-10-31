@@ -20,6 +20,8 @@ lake build
 lake env lean ProofReport.lean > "$ROOT/.tools/sand2/proofs.txt"
 tail -n 1 "$ROOT/.tools/sand2/proofs.txt"
 lake env lean --run Validation.lean
+lake env lean --run SaturationValidation.lean > "$ROOT/.tools/sand2/saturation.csv"
+python3 "$ROOT/tools/sand2/check-saturation.py" "$ROOT/.tools/sand2/saturation.csv"
 lake env lean --run Oracle.lean > "$ROOT/.tools/sand2/oracle.csv"
 cd ..
 cargo test --release --locked --jobs "${SAND2_BUILD_JOBS:-2}"

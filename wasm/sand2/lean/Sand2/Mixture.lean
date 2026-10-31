@@ -209,13 +209,15 @@ theorem gas_transfer_conserves_mass (a b : Mixture) (d : Nat) (v : Bool) :
     mass (transferGas a b d v).1+mass (transferGas a b d v).2 = mass a+mass b := by
   rw [← mixture_add_mass,gas_transfer_conserves_molecules,mixture_add_mass]
 
-/-- Rounded standard formation enthalpies (J/mol), with water referred to ice
-    at 0 C. Phase enthalpy is added separately. The scale matches cp*T*mass. -/
+/-- Rounded formation reference energies (J/mol), with water referred to ice
+    at 0 C. Permanent gases include -R*T0 so their cell energy is internal
+    energy; phase/sensible energy is added separately. -/
 def chemicalEnergy (m : Mixture) : Int :=
   (-291830*(m.water : Int) -393510*m.carbonDioxide -115900*m.biomass -20000*m.oil
    -910900*m.silica -411120*m.salt -167160*m.acid -1206900*m.carbonate
    -877000*m.calciumChloride -824200*m.rust -341800*m.ironChloride
-   -494600*m.nitrate -414000*m.sulfide)*100000
+   -494600*m.nitrate -414000*m.sulfide)*100000 -
+   8314*27315*((m.oxygen : Int)+m.nitrogen+m.carbonDioxide+m.hydrogen)
 
 def gasMoles (m : Mixture) (vapor : Bool) : Nat :=
   m.oxygen+m.nitrogen+m.carbonDioxide+m.hydrogen+(if vapor then m.water else 0)

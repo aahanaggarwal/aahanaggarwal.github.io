@@ -4933,7 +4933,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmaterialName_d__boxed(x_1: Obj) -> Obj 
 // Source: lean/Sand2/Materials.lean:57:1
 static C_l_Sand2_dmaterialName_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmaterialName_d__closed__0__init() -> Obj {
-    let x_1: Obj = rt::lean_mk_string_unchecked(b"Empty", 5);
+    let x_1: Obj = rt::lean_mk_string_unchecked(b"Air", 3);
     return x_1;
 }
 #[inline]

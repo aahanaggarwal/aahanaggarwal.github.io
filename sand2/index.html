@@ -35,7 +35,7 @@
       <div class="s2-controls">
         <button id="s2-play" type="button" title="Pause / play (Space)"><span id="s2-play-icon">Ⅱ</span> <span id="s2-play-label">Pause</span></button>
         <button id="s2-step" type="button" title="Advance one timestep (.)">Step</button>
-        <button id="s2-speed" type="button" aria-label="Simulation speed">1×</button>
+        <button id="s2-speed" type="button" aria-label="Simulation playback: fast speed">Fast</button>
         <label>BRUSH <input id="s2-brush" type="range" min="1" max="16" value="3"><output id="s2-brush-value" for="s2-brush">3</output></label>
         <button id="s2-undo" type="button" disabled title="Undo drawing (Z)">Undo</button>
         <button id="s2-clear" type="button">Clear</button>
@@ -44,14 +44,14 @@
       <div class="s2-controls">
         <label>EXPERIMENT <select id="s2-scene"><option value="1">Dam break</option><option value="2">Heat and phase</option><option value="3">Combustion</option><option value="4">Density separation</option><option value="5">Acid and limestone</option><option value="6">Gas mixing</option><option value="7">Gunpowder</option><option value="8">Molten iron</option><option value="0">Empty</option></select></label>
         <label>VIEW <select id="s2-view"><option value="0">Materials</option><option value="1">Temperature</option><option value="2">Pressure</option></select></label>
-        <span id="s2-state">LOADING</span><span><span id="s2-count">0</span> CELLS</span><span id="s2-fps">— FPS</span>
+        <span id="s2-state">LOADING</span><span id="s2-time" title="Simulated time; each physics step is 1/60 second">0.00 s</span><span><span id="s2-count">0</span> CELLS</span><span id="s2-fps">— FPS</span>
       </div>
       <div id="s2-materials" aria-label="Materials"></div>
       <button id="s2-eraser" type="button" aria-pressed="false">Eraser [E]</button>
       <p class="s2-selected"><span id="s2-selected-swatch"></span> <strong id="s2-selected-name">Sand</strong> <span id="s2-selected-type">POWDER</span> — <span id="s2-selected-description"></span></p>
       <p id="s2-inspect" aria-live="off">Point at a cell to inspect its temperature, pressure and mass.</p>
       <p class="s2-hint">SPACE: pause · 1–9: material · scroll: brush · H: heat · Z: undo · right-click: erase</p>
-      <details class="s2-model"><summary>Physics model and proofs</summary><p>A closed 2D cell model with finite molecular inventories, enthalpy-based water phases, oxygen-limited chemistry, heat conduction, gravity, gas diffusion, buoyancy and pressure-driven transport. Lean defines the entire timestep and proves conservation of all 11 tracked elements and total energy. Rust hosts the generated program in WebAssembly.</p><p>The proofs establish properties of this declared model. Coarse cell mechanics, rounded properties and simplified reaction kinetics remain approximations. Painting adds or removes matter and energy; conservation applies between edits.</p><p><a href="https://github.com/aahanaggarwal/aahanaggarwal.github.io/tree/master/wasm/sand2/lean">Read the model and proofs</a> · <a href="/sand/">Sand 1</a></p></details>
+      <details class="s2-model"><summary>Physics model and proofs</summary><p>A closed 2D cell model with finite molecular inventories, pressure-dependent water phases, partial vaporization, oxygen-limited chemistry, heat conduction, gravity, gas diffusion, buoyancy and pressure-driven transport. Lean defines the entire timestep and proves conservation of all 11 tracked elements and total energy. Rust hosts the generated program in WebAssembly.</p><p>The proofs establish properties of this declared model. Coarse cell mechanics, rounded properties and simplified reaction kinetics remain approximations. Painting adds or removes matter and energy; conservation applies between edits.</p><p><a href="https://github.com/aahanaggarwal/aahanaggarwal.github.io/tree/master/wasm/sand2/lean">Read the model and proofs</a> · <a href="/sand/">Sand 1</a></p></details>
     </main>
   </div>
   <script type="module" src="/main.js"></script>

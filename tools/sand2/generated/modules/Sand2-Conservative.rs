@@ -1751,18 +1751,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_dcontactEdit(x_1: Obj, x_2: Obj, x_3: u8
     rt::lean_inc(x_6);
     let x_7: Obj = rt::lean_ctor_get(x_1, 2);
     rt::lean_inc(x_7);
-    let x_8: Obj = rt::lean_ctor_get(x_1, 4);
+    let x_8: Obj = rt::lean_ctor_get(x_1, 5);
     rt::lean_inc(x_8);
-    let x_9: Obj = rt::lean_ctor_get(x_1, 5);
+    let x_9: Obj = rt::lean_ctor_get(x_1, 6);
     rt::lean_inc(x_9);
-    let x_10: Obj = rt::lean_ctor_get(x_1, 6);
+    let x_10: Obj = rt::lean_ctor_get(x_1, 7);
     rt::lean_inc(x_10);
     let x_11: Obj = rt::lean_ctor_get(x_2, 0);
-    let x_12: Obj = rt::lean_ctor_get(x_2, 4);
+    let x_12: Obj = rt::lean_ctor_get(x_2, 5);
     rt::lean_inc(x_12);
-    let x_13: Obj = rt::lean_ctor_get(x_2, 5);
+    let x_13: Obj = rt::lean_ctor_get(x_2, 6);
     rt::lean_inc(x_13);
-    let x_14: Obj = rt::lean_ctor_get(x_2, 6);
+    let x_14: Obj = rt::lean_ctor_get(x_2, 7);
     rt::lean_inc(x_14);
     rt::lean_inc_ref(x_11);
     rt::lean_inc_ref(x_5);
@@ -1772,11 +1772,11 @@ pub(crate) unsafe extern "C" fn l_Sand2_dcontactEdit(x_1: Obj, x_2: Obj, x_3: u8
     let mut x_19: Obj;
     let mut x_20: u8;
     'b18: {
-        let x_88: u8 = (!rt::lean_is_exclusive(x_15)) as u8;
-        match x_88 {
+        let x_94: u8 = (!rt::lean_is_exclusive(x_15)) as u8;
+        match x_94 {
             0 => {
                 x_19 = x_15;
-                x_20 = x_88;
+                x_20 = x_94;
                 break 'b18;
             }
             _ => {
@@ -1784,7 +1784,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dcontactEdit(x_1: Obj, x_2: Obj, x_3: u8
                 rt::lean_inc(x_16);
                 rt::lean_dec(x_15);
                 x_19 = rt::lean_box(0);
-                x_20 = x_88;
+                x_20 = x_94;
                 break 'b18;
             }
         }
@@ -1794,32 +1794,38 @@ pub(crate) unsafe extern "C" fn l_Sand2_dcontactEdit(x_1: Obj, x_2: Obj, x_3: u8
     let x_23: Obj = rt::lean_ctor_get(x_21, 1);
     let x_24: Obj = rt::lean_ctor_get(x_21, 2);
     let x_25: Obj = rt::lean_ctor_get(x_21, 3);
-    let x_26: Obj = rt::lean_ctor_get(x_21, 7);
+    let x_26: Obj = rt::lean_ctor_get(x_21, 4);
     let x_27: Obj = rt::lean_ctor_get(x_21, 8);
-    let x_28: u8 = rt::lean_ctor_get_uint8(x_21, 11 * ::core::mem::size_of::<usize>());
-    let x_29: u8 = rt::lean_ctor_get_uint8(x_21, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_30: u8 = rt::lean_ctor_get_uint8(x_21, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_31: Obj = rt::lean_ctor_get(x_21, 9);
-    let x_32: Obj = rt::lean_ctor_get(x_21, 10);
-    let mut x_34: Obj;
-    let mut x_35: u8;
-    'b33: {
-        let x_84: u8 = (!rt::lean_is_exclusive(x_21)) as u8;
-        match x_84 {
+    let x_28: Obj = rt::lean_ctor_get(x_21, 9);
+    let x_29: Obj = rt::lean_ctor_get(x_21, 10);
+    let x_30: Obj = rt::lean_ctor_get(x_21, 11);
+    let x_31: u8 = rt::lean_ctor_get_uint8(x_21, 14 * ::core::mem::size_of::<usize>());
+    let x_32: u8 = rt::lean_ctor_get_uint8(x_21, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_33: u8 = rt::lean_ctor_get_uint8(x_21, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_34: Obj = rt::lean_ctor_get(x_21, 12);
+    let x_35: Obj = rt::lean_ctor_get(x_21, 13);
+    let mut x_37: Obj;
+    let mut x_38: u8;
+    'b36: {
+        let x_90: u8 = (!rt::lean_is_exclusive(x_21)) as u8;
+        match x_90 {
             0 => {
-                let x_85: Obj = rt::lean_ctor_get(x_21, 6);
-                rt::lean_dec(x_85);
-                let x_86: Obj = rt::lean_ctor_get(x_21, 5);
-                rt::lean_dec(x_86);
-                let x_87: Obj = rt::lean_ctor_get(x_21, 4);
-                rt::lean_dec(x_87);
-                x_34 = x_21;
-                x_35 = x_84;
-                break 'b33;
+                let x_91: Obj = rt::lean_ctor_get(x_21, 7);
+                rt::lean_dec(x_91);
+                let x_92: Obj = rt::lean_ctor_get(x_21, 6);
+                rt::lean_dec(x_92);
+                let x_93: Obj = rt::lean_ctor_get(x_21, 5);
+                rt::lean_dec(x_93);
+                x_37 = x_21;
+                x_38 = x_90;
+                break 'b36;
             }
             _ => {
-                rt::lean_inc(x_32);
-                rt::lean_inc(x_31);
+                rt::lean_inc(x_35);
+                rt::lean_inc(x_34);
+                rt::lean_inc(x_30);
+                rt::lean_inc(x_29);
+                rt::lean_inc(x_28);
                 rt::lean_inc(x_27);
                 rt::lean_inc(x_26);
                 rt::lean_inc(x_25);
@@ -1827,207 +1833,225 @@ pub(crate) unsafe extern "C" fn l_Sand2_dcontactEdit(x_1: Obj, x_2: Obj, x_3: u8
                 rt::lean_inc(x_23);
                 rt::lean_inc(x_22);
                 rt::lean_dec(x_21);
-                x_34 = rt::lean_box(0);
-                x_35 = x_84;
-                break 'b33;
+                x_37 = rt::lean_box(0);
+                x_38 = x_90;
+                break 'b36;
             }
         }
     }
-    let x_36: Obj = l_Sand2_dreplaceMatter(x_2, x_17);
-    let x_37: Obj = l_Int_dsub(x_8, x_7);
+    let x_39: Obj = l_Sand2_dreplaceMatter(x_2, x_17);
+    let x_40: Obj = l_Int_dsub(x_8, x_7);
     rt::lean_dec(x_7);
     rt::lean_inc(x_23);
-    let x_38: Obj = l_Int_dofNat(x_23);
-    let x_39: Obj = l_Int_dmul(x_37, x_38);
-    rt::lean_dec(x_37);
-    let mut x_41: Obj;
-    'b40: {
-        let x_82: Obj = rt::nat::lean_usize_to_nat(1);
-        let x_83: u8 = l_Nat_ddecLe(x_82, x_6);
-        match x_83 {
+    let x_41: Obj = l_Int_dofNat(x_23);
+    let x_42: Obj = l_Int_dmul(x_40, x_41);
+    rt::lean_dec(x_40);
+    let mut x_44: Obj;
+    'b43: {
+        let x_88: Obj = rt::nat::lean_usize_to_nat(1);
+        let x_89: u8 = l_Nat_ddecLe(x_88, x_6);
+        match x_89 {
             0 => {
                 rt::lean_dec(x_6);
-                x_41 = x_82;
-                break 'b40;
+                x_44 = x_88;
+                break 'b43;
             }
             _ => {
-                x_41 = x_6;
-                break 'b40;
+                x_44 = x_6;
+                break 'b43;
             }
         }
     }
-    let x_42: Obj = rt::lean_ctor_get(x_36, 0);
-    let x_43: Obj = rt::lean_ctor_get(x_36, 1);
-    let x_44: Obj = rt::lean_ctor_get(x_36, 2);
-    let x_45: Obj = rt::lean_ctor_get(x_36, 3);
-    let x_46: Obj = rt::lean_ctor_get(x_36, 7);
-    let x_47: Obj = rt::lean_ctor_get(x_36, 8);
-    let x_48: u8 = rt::lean_ctor_get_uint8(x_36, 11 * ::core::mem::size_of::<usize>());
-    let x_49: u8 = rt::lean_ctor_get_uint8(x_36, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_50: u8 = rt::lean_ctor_get_uint8(x_36, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_51: Obj = rt::lean_ctor_get(x_36, 9);
-    let x_52: Obj = rt::lean_ctor_get(x_36, 10);
-    let mut x_54: Obj;
-    let mut x_55: u8;
-    'b53: {
-        let x_78: u8 = (!rt::lean_is_exclusive(x_36)) as u8;
-        match x_78 {
+    let x_45: Obj = rt::lean_ctor_get(x_39, 0);
+    let x_46: Obj = rt::lean_ctor_get(x_39, 1);
+    let x_47: Obj = rt::lean_ctor_get(x_39, 2);
+    let x_48: Obj = rt::lean_ctor_get(x_39, 3);
+    let x_49: Obj = rt::lean_ctor_get(x_39, 4);
+    let x_50: Obj = rt::lean_ctor_get(x_39, 8);
+    let x_51: Obj = rt::lean_ctor_get(x_39, 9);
+    let x_52: Obj = rt::lean_ctor_get(x_39, 10);
+    let x_53: Obj = rt::lean_ctor_get(x_39, 11);
+    let x_54: u8 = rt::lean_ctor_get_uint8(x_39, 14 * ::core::mem::size_of::<usize>());
+    let x_55: u8 = rt::lean_ctor_get_uint8(x_39, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_56: u8 = rt::lean_ctor_get_uint8(x_39, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_57: Obj = rt::lean_ctor_get(x_39, 12);
+    let x_58: Obj = rt::lean_ctor_get(x_39, 13);
+    let mut x_60: Obj;
+    let mut x_61: u8;
+    'b59: {
+        let x_84: u8 = (!rt::lean_is_exclusive(x_39)) as u8;
+        match x_84 {
             0 => {
-                let x_79: Obj = rt::lean_ctor_get(x_36, 6);
-                rt::lean_dec(x_79);
-                let x_80: Obj = rt::lean_ctor_get(x_36, 5);
-                rt::lean_dec(x_80);
-                let x_81: Obj = rt::lean_ctor_get(x_36, 4);
-                rt::lean_dec(x_81);
-                x_54 = x_36;
-                x_55 = x_78;
-                break 'b53;
+                let x_85: Obj = rt::lean_ctor_get(x_39, 7);
+                rt::lean_dec(x_85);
+                let x_86: Obj = rt::lean_ctor_get(x_39, 6);
+                rt::lean_dec(x_86);
+                let x_87: Obj = rt::lean_ctor_get(x_39, 5);
+                rt::lean_dec(x_87);
+                x_60 = x_39;
+                x_61 = x_84;
+                break 'b59;
             }
             _ => {
+                rt::lean_inc(x_58);
+                rt::lean_inc(x_57);
+                rt::lean_inc(x_53);
                 rt::lean_inc(x_52);
                 rt::lean_inc(x_51);
+                rt::lean_inc(x_50);
+                rt::lean_inc(x_49);
+                rt::lean_inc(x_48);
                 rt::lean_inc(x_47);
                 rt::lean_inc(x_46);
                 rt::lean_inc(x_45);
-                rt::lean_inc(x_44);
-                rt::lean_inc(x_43);
-                rt::lean_inc(x_42);
-                rt::lean_dec(x_36);
-                x_54 = rt::lean_box(0);
-                x_55 = x_78;
-                break 'b53;
+                rt::lean_dec(x_39);
+                x_60 = rt::lean_box(0);
+                x_61 = x_84;
+                break 'b59;
             }
         }
     }
-    let x_56: Obj = l_Int_dofNat(x_41);
-    let x_57: Obj = l_Int_dediv(x_39, x_56);
-    rt::lean_dec(x_39);
-    let x_58: Obj = l_Int_dadd(x_24, x_57);
-    rt::lean_dec(x_57);
-    let x_59: Obj = l_Int_dsub(x_8, x_58);
+    let x_62: Obj = l_Int_dofNat(x_44);
+    let x_63: Obj = l_Int_dediv(x_42, x_62);
+    rt::lean_dec(x_42);
+    let x_64: Obj = l_Int_dadd(x_24, x_63);
+    rt::lean_dec(x_63);
+    let x_65: Obj = l_Int_dsub(x_8, x_64);
     rt::lean_dec(x_8);
-    let x_60: Obj = l_Int_dmul(x_9, x_38);
-    let x_61: Obj = l_Int_dediv(x_60, x_56);
-    rt::lean_dec(x_60);
-    let x_62: Obj = l_Int_dmul(x_10, x_38);
-    rt::lean_dec(x_38);
-    let x_63: Obj = l_Int_dediv(x_62, x_56);
-    rt::lean_dec(x_56);
+    let x_66: Obj = l_Int_dmul(x_9, x_41);
+    let x_67: Obj = l_Int_dediv(x_66, x_62);
+    rt::lean_dec(x_66);
+    let x_68: Obj = l_Int_dmul(x_10, x_41);
+    rt::lean_dec(x_41);
+    let x_69: Obj = l_Int_dediv(x_68, x_62);
     rt::lean_dec(x_62);
-    rt::lean_inc(x_63);
-    rt::lean_inc(x_61);
-    let mut x_65: Obj;
-    'b64: {
-        match x_55 {
+    rt::lean_dec(x_68);
+    rt::lean_inc(x_69);
+    rt::lean_inc(x_67);
+    let mut x_71: Obj;
+    'b70: {
+        match x_61 {
             0 => {
-                rt::lean_ctor_set(x_54, 10, x_32);
-                rt::lean_ctor_set(x_54, 9, x_31);
-                rt::lean_ctor_set(x_54, 8, x_27);
-                rt::lean_ctor_set(x_54, 7, x_26);
-                rt::lean_ctor_set(x_54, 6, x_63);
-                rt::lean_ctor_set(x_54, 5, x_61);
-                rt::lean_ctor_set(x_54, 4, x_58);
-                rt::lean_ctor_set(x_54, 3, x_25);
-                rt::lean_ctor_set(x_54, 2, x_24);
-                rt::lean_ctor_set(x_54, 1, x_23);
-                rt::lean_ctor_set(x_54, 0, x_22);
-                x_65 = x_54;
-                break 'b64;
+                rt::lean_ctor_set(x_60, 13, x_35);
+                rt::lean_ctor_set(x_60, 12, x_34);
+                rt::lean_ctor_set(x_60, 11, x_30);
+                rt::lean_ctor_set(x_60, 10, x_29);
+                rt::lean_ctor_set(x_60, 9, x_28);
+                rt::lean_ctor_set(x_60, 8, x_27);
+                rt::lean_ctor_set(x_60, 7, x_69);
+                rt::lean_ctor_set(x_60, 6, x_67);
+                rt::lean_ctor_set(x_60, 5, x_64);
+                rt::lean_ctor_set(x_60, 4, x_26);
+                rt::lean_ctor_set(x_60, 3, x_25);
+                rt::lean_ctor_set(x_60, 2, x_24);
+                rt::lean_ctor_set(x_60, 1, x_23);
+                rt::lean_ctor_set(x_60, 0, x_22);
+                x_71 = x_60;
+                break 'b70;
             }
             _ => {
-                let x_77: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_77, 0, x_22);
-                rt::lean_ctor_set(x_77, 1, x_23);
-                rt::lean_ctor_set(x_77, 2, x_24);
-                rt::lean_ctor_set(x_77, 3, x_25);
-                rt::lean_ctor_set(x_77, 4, x_58);
-                rt::lean_ctor_set(x_77, 5, x_61);
-                rt::lean_ctor_set(x_77, 6, x_63);
-                rt::lean_ctor_set(x_77, 7, x_26);
-                rt::lean_ctor_set(x_77, 8, x_27);
-                rt::lean_ctor_set(x_77, 9, x_31);
-                rt::lean_ctor_set(x_77, 10, x_32);
-                x_65 = x_77;
-                break 'b64;
+                let x_83: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_83, 0, x_22);
+                rt::lean_ctor_set(x_83, 1, x_23);
+                rt::lean_ctor_set(x_83, 2, x_24);
+                rt::lean_ctor_set(x_83, 3, x_25);
+                rt::lean_ctor_set(x_83, 4, x_26);
+                rt::lean_ctor_set(x_83, 5, x_64);
+                rt::lean_ctor_set(x_83, 6, x_67);
+                rt::lean_ctor_set(x_83, 7, x_69);
+                rt::lean_ctor_set(x_83, 8, x_27);
+                rt::lean_ctor_set(x_83, 9, x_28);
+                rt::lean_ctor_set(x_83, 10, x_29);
+                rt::lean_ctor_set(x_83, 11, x_30);
+                rt::lean_ctor_set(x_83, 12, x_34);
+                rt::lean_ctor_set(x_83, 13, x_35);
+                x_71 = x_83;
+                break 'b70;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_65, 11 * ::core::mem::size_of::<usize>(), x_28);
-    rt::lean_ctor_set_uint8(x_65, 11 * ::core::mem::size_of::<usize>() + 1, x_29);
-    rt::lean_ctor_set_uint8(x_65, 11 * ::core::mem::size_of::<usize>() + 2, x_30);
-    let x_66: Obj = l_Int_dadd(x_12, x_59);
-    rt::lean_dec(x_59);
+    rt::lean_ctor_set_uint8(x_71, 14 * ::core::mem::size_of::<usize>(), x_31);
+    rt::lean_ctor_set_uint8(x_71, 14 * ::core::mem::size_of::<usize>() + 1, x_32);
+    rt::lean_ctor_set_uint8(x_71, 14 * ::core::mem::size_of::<usize>() + 2, x_33);
+    let x_72: Obj = l_Int_dadd(x_12, x_65);
+    rt::lean_dec(x_65);
     rt::lean_dec(x_12);
-    let x_67: Obj = l_Int_dadd(x_13, x_9);
+    let x_73: Obj = l_Int_dadd(x_13, x_9);
     rt::lean_dec(x_9);
     rt::lean_dec(x_13);
-    let x_68: Obj = l_Int_dsub(x_67, x_61);
-    rt::lean_dec(x_61);
+    let x_74: Obj = l_Int_dsub(x_73, x_67);
     rt::lean_dec(x_67);
-    let x_69: Obj = l_Int_dadd(x_14, x_10);
+    rt::lean_dec(x_73);
+    let x_75: Obj = l_Int_dadd(x_14, x_10);
     rt::lean_dec(x_10);
     rt::lean_dec(x_14);
-    let x_70: Obj = l_Int_dsub(x_69, x_63);
-    rt::lean_dec(x_63);
+    let x_76: Obj = l_Int_dsub(x_75, x_69);
     rt::lean_dec(x_69);
-    let mut x_72: Obj;
-    'b71: {
-        match x_35 {
+    rt::lean_dec(x_75);
+    let mut x_78: Obj;
+    'b77: {
+        match x_38 {
             0 => {
-                rt::lean_ctor_set(x_34, 10, x_52);
-                rt::lean_ctor_set(x_34, 9, x_51);
-                rt::lean_ctor_set(x_34, 8, x_47);
-                rt::lean_ctor_set(x_34, 7, x_46);
-                rt::lean_ctor_set(x_34, 6, x_70);
-                rt::lean_ctor_set(x_34, 5, x_68);
-                rt::lean_ctor_set(x_34, 4, x_66);
-                rt::lean_ctor_set(x_34, 3, x_45);
-                rt::lean_ctor_set(x_34, 2, x_44);
-                rt::lean_ctor_set(x_34, 1, x_43);
-                rt::lean_ctor_set(x_34, 0, x_42);
-                x_72 = x_34;
-                break 'b71;
+                rt::lean_ctor_set(x_37, 13, x_58);
+                rt::lean_ctor_set(x_37, 12, x_57);
+                rt::lean_ctor_set(x_37, 11, x_53);
+                rt::lean_ctor_set(x_37, 10, x_52);
+                rt::lean_ctor_set(x_37, 9, x_51);
+                rt::lean_ctor_set(x_37, 8, x_50);
+                rt::lean_ctor_set(x_37, 7, x_76);
+                rt::lean_ctor_set(x_37, 6, x_74);
+                rt::lean_ctor_set(x_37, 5, x_72);
+                rt::lean_ctor_set(x_37, 4, x_49);
+                rt::lean_ctor_set(x_37, 3, x_48);
+                rt::lean_ctor_set(x_37, 2, x_47);
+                rt::lean_ctor_set(x_37, 1, x_46);
+                rt::lean_ctor_set(x_37, 0, x_45);
+                x_78 = x_37;
+                break 'b77;
             }
             _ => {
-                let x_76: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_76, 0, x_42);
-                rt::lean_ctor_set(x_76, 1, x_43);
-                rt::lean_ctor_set(x_76, 2, x_44);
-                rt::lean_ctor_set(x_76, 3, x_45);
-                rt::lean_ctor_set(x_76, 4, x_66);
-                rt::lean_ctor_set(x_76, 5, x_68);
-                rt::lean_ctor_set(x_76, 6, x_70);
-                rt::lean_ctor_set(x_76, 7, x_46);
-                rt::lean_ctor_set(x_76, 8, x_47);
-                rt::lean_ctor_set(x_76, 9, x_51);
-                rt::lean_ctor_set(x_76, 10, x_52);
-                x_72 = x_76;
-                break 'b71;
+                let x_82: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_82, 0, x_45);
+                rt::lean_ctor_set(x_82, 1, x_46);
+                rt::lean_ctor_set(x_82, 2, x_47);
+                rt::lean_ctor_set(x_82, 3, x_48);
+                rt::lean_ctor_set(x_82, 4, x_49);
+                rt::lean_ctor_set(x_82, 5, x_72);
+                rt::lean_ctor_set(x_82, 6, x_74);
+                rt::lean_ctor_set(x_82, 7, x_76);
+                rt::lean_ctor_set(x_82, 8, x_50);
+                rt::lean_ctor_set(x_82, 9, x_51);
+                rt::lean_ctor_set(x_82, 10, x_52);
+                rt::lean_ctor_set(x_82, 11, x_53);
+                rt::lean_ctor_set(x_82, 12, x_57);
+                rt::lean_ctor_set(x_82, 13, x_58);
+                x_78 = x_82;
+                break 'b77;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_72, 11 * ::core::mem::size_of::<usize>(), x_48);
-    rt::lean_ctor_set_uint8(x_72, 11 * ::core::mem::size_of::<usize>() + 1, x_49);
-    rt::lean_ctor_set_uint8(x_72, 11 * ::core::mem::size_of::<usize>() + 2, x_50);
-    let mut x_74: Obj;
-    'b73: {
+    rt::lean_ctor_set_uint8(x_78, 14 * ::core::mem::size_of::<usize>(), x_54);
+    rt::lean_ctor_set_uint8(x_78, 14 * ::core::mem::size_of::<usize>() + 1, x_55);
+    rt::lean_ctor_set_uint8(x_78, 14 * ::core::mem::size_of::<usize>() + 2, x_56);
+    let mut x_80: Obj;
+    'b79: {
         match x_20 {
             0 => {
-                rt::lean_ctor_set(x_19, 1, x_72);
-                rt::lean_ctor_set(x_19, 0, x_65);
-                x_74 = x_19;
-                break 'b73;
+                rt::lean_ctor_set(x_19, 1, x_78);
+                rt::lean_ctor_set(x_19, 0, x_71);
+                x_80 = x_19;
+                break 'b79;
             }
             _ => {
-                let x_75: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                rt::lean_ctor_set(x_75, 0, x_65);
-                rt::lean_ctor_set(x_75, 1, x_72);
-                x_74 = x_75;
-                break 'b73;
+                let x_81: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                rt::lean_ctor_set(x_81, 0, x_71);
+                rt::lean_ctor_set(x_81, 1, x_78);
+                x_80 = x_81;
+                break 'b79;
             }
         }
     }
-    return x_74;
+    return x_80;
 }
 
 // Lean: Sand2.contactEdit._boxed
@@ -2051,24 +2075,30 @@ pub(crate) unsafe extern "C" fn l_Sand2_dheatEdit(x_1: Obj, x_2: Obj, x_3: Obj) 
     let x_10: Obj = rt::lean_ctor_get(x_1, 6);
     let x_11: Obj = rt::lean_ctor_get(x_1, 7);
     let x_12: Obj = rt::lean_ctor_get(x_1, 8);
-    let x_13: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>());
-    let x_14: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_15: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_16: Obj = rt::lean_ctor_get(x_1, 9);
-    let x_17: Obj = rt::lean_ctor_get(x_1, 10);
-    let mut x_19: Obj;
-    let mut x_20: u8;
-    'b18: {
-        let x_48: u8 = (!rt::lean_is_exclusive(x_1)) as u8;
-        match x_48 {
+    let x_13: Obj = rt::lean_ctor_get(x_1, 9);
+    let x_14: Obj = rt::lean_ctor_get(x_1, 10);
+    let x_15: Obj = rt::lean_ctor_get(x_1, 11);
+    let x_16: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>());
+    let x_17: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_18: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_19: Obj = rt::lean_ctor_get(x_1, 12);
+    let x_20: Obj = rt::lean_ctor_get(x_1, 13);
+    let mut x_22: Obj;
+    let mut x_23: u8;
+    'b21: {
+        let x_54: u8 = (!rt::lean_is_exclusive(x_1)) as u8;
+        match x_54 {
             0 => {
-                x_19 = x_1;
-                x_20 = x_48;
-                break 'b18;
+                x_22 = x_1;
+                x_23 = x_54;
+                break 'b21;
             }
             _ => {
-                rt::lean_inc(x_17);
-                rt::lean_inc(x_16);
+                rt::lean_inc(x_20);
+                rt::lean_inc(x_19);
+                rt::lean_inc(x_15);
+                rt::lean_inc(x_14);
+                rt::lean_inc(x_13);
                 rt::lean_inc(x_12);
                 rt::lean_inc(x_11);
                 rt::lean_inc(x_10);
@@ -2079,141 +2109,159 @@ pub(crate) unsafe extern "C" fn l_Sand2_dheatEdit(x_1: Obj, x_2: Obj, x_3: Obj) 
                 rt::lean_inc(x_5);
                 rt::lean_inc(x_4);
                 rt::lean_dec(x_1);
-                x_19 = rt::lean_box(0);
-                x_20 = x_48;
-                break 'b18;
+                x_22 = rt::lean_box(0);
+                x_23 = x_54;
+                break 'b21;
             }
         }
     }
-    let x_21: Obj = rt::lean_ctor_get(x_2, 0);
-    let x_22: Obj = rt::lean_ctor_get(x_2, 1);
-    let x_23: Obj = rt::lean_ctor_get(x_2, 2);
-    let x_24: Obj = rt::lean_ctor_get(x_2, 3);
-    let x_25: Obj = rt::lean_ctor_get(x_2, 4);
-    let x_26: Obj = rt::lean_ctor_get(x_2, 5);
-    let x_27: Obj = rt::lean_ctor_get(x_2, 6);
-    let x_28: Obj = rt::lean_ctor_get(x_2, 7);
-    let x_29: Obj = rt::lean_ctor_get(x_2, 8);
-    let x_30: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>());
-    let x_31: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_32: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>() + 2);
+    let x_24: Obj = rt::lean_ctor_get(x_2, 0);
+    let x_25: Obj = rt::lean_ctor_get(x_2, 1);
+    let x_26: Obj = rt::lean_ctor_get(x_2, 2);
+    let x_27: Obj = rt::lean_ctor_get(x_2, 3);
+    let x_28: Obj = rt::lean_ctor_get(x_2, 4);
+    let x_29: Obj = rt::lean_ctor_get(x_2, 5);
+    let x_30: Obj = rt::lean_ctor_get(x_2, 6);
+    let x_31: Obj = rt::lean_ctor_get(x_2, 7);
+    let x_32: Obj = rt::lean_ctor_get(x_2, 8);
     let x_33: Obj = rt::lean_ctor_get(x_2, 9);
     let x_34: Obj = rt::lean_ctor_get(x_2, 10);
-    let mut x_36: Obj;
-    let mut x_37: u8;
-    'b35: {
-        let x_47: u8 = (!rt::lean_is_exclusive(x_2)) as u8;
-        match x_47 {
+    let x_35: Obj = rt::lean_ctor_get(x_2, 11);
+    let x_36: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>());
+    let x_37: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_38: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_39: Obj = rt::lean_ctor_get(x_2, 12);
+    let x_40: Obj = rt::lean_ctor_get(x_2, 13);
+    let mut x_42: Obj;
+    let mut x_43: u8;
+    'b41: {
+        let x_53: u8 = (!rt::lean_is_exclusive(x_2)) as u8;
+        match x_53 {
             0 => {
-                x_36 = x_2;
-                x_37 = x_47;
-                break 'b35;
+                x_42 = x_2;
+                x_43 = x_53;
+                break 'b41;
             }
             _ => {
+                rt::lean_inc(x_40);
+                rt::lean_inc(x_39);
+                rt::lean_inc(x_35);
                 rt::lean_inc(x_34);
                 rt::lean_inc(x_33);
+                rt::lean_inc(x_32);
+                rt::lean_inc(x_31);
+                rt::lean_inc(x_30);
                 rt::lean_inc(x_29);
                 rt::lean_inc(x_28);
                 rt::lean_inc(x_27);
                 rt::lean_inc(x_26);
                 rt::lean_inc(x_25);
                 rt::lean_inc(x_24);
-                rt::lean_inc(x_23);
-                rt::lean_inc(x_22);
-                rt::lean_inc(x_21);
                 rt::lean_dec(x_2);
-                x_36 = rt::lean_box(0);
-                x_37 = x_47;
-                break 'b35;
+                x_42 = rt::lean_box(0);
+                x_43 = x_53;
+                break 'b41;
             }
         }
     }
-    let x_38: Obj = l_Int_dsub(x_8, x_3);
-    rt::lean_dec(x_8);
-    let mut x_40: Obj;
-    'b39: {
-        match x_37 {
+    let x_44: Obj = l_Int_dsub(x_9, x_3);
+    rt::lean_dec(x_9);
+    let mut x_46: Obj;
+    'b45: {
+        match x_43 {
             0 => {
-                rt::lean_ctor_set(x_36, 10, x_17);
-                rt::lean_ctor_set(x_36, 9, x_16);
-                rt::lean_ctor_set(x_36, 8, x_12);
-                rt::lean_ctor_set(x_36, 7, x_11);
-                rt::lean_ctor_set(x_36, 6, x_10);
-                rt::lean_ctor_set(x_36, 5, x_9);
-                rt::lean_ctor_set(x_36, 4, x_38);
-                rt::lean_ctor_set(x_36, 3, x_7);
-                rt::lean_ctor_set(x_36, 2, x_6);
-                rt::lean_ctor_set(x_36, 1, x_5);
-                rt::lean_ctor_set(x_36, 0, x_4);
-                x_40 = x_36;
-                break 'b39;
+                rt::lean_ctor_set(x_42, 13, x_20);
+                rt::lean_ctor_set(x_42, 12, x_19);
+                rt::lean_ctor_set(x_42, 11, x_15);
+                rt::lean_ctor_set(x_42, 10, x_14);
+                rt::lean_ctor_set(x_42, 9, x_13);
+                rt::lean_ctor_set(x_42, 8, x_12);
+                rt::lean_ctor_set(x_42, 7, x_11);
+                rt::lean_ctor_set(x_42, 6, x_10);
+                rt::lean_ctor_set(x_42, 5, x_44);
+                rt::lean_ctor_set(x_42, 4, x_8);
+                rt::lean_ctor_set(x_42, 3, x_7);
+                rt::lean_ctor_set(x_42, 2, x_6);
+                rt::lean_ctor_set(x_42, 1, x_5);
+                rt::lean_ctor_set(x_42, 0, x_4);
+                x_46 = x_42;
+                break 'b45;
             }
             _ => {
-                let x_46: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_46, 0, x_4);
-                rt::lean_ctor_set(x_46, 1, x_5);
-                rt::lean_ctor_set(x_46, 2, x_6);
-                rt::lean_ctor_set(x_46, 3, x_7);
-                rt::lean_ctor_set(x_46, 4, x_38);
-                rt::lean_ctor_set(x_46, 5, x_9);
-                rt::lean_ctor_set(x_46, 6, x_10);
-                rt::lean_ctor_set(x_46, 7, x_11);
-                rt::lean_ctor_set(x_46, 8, x_12);
-                rt::lean_ctor_set(x_46, 9, x_16);
-                rt::lean_ctor_set(x_46, 10, x_17);
-                x_40 = x_46;
-                break 'b39;
+                let x_52: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_52, 0, x_4);
+                rt::lean_ctor_set(x_52, 1, x_5);
+                rt::lean_ctor_set(x_52, 2, x_6);
+                rt::lean_ctor_set(x_52, 3, x_7);
+                rt::lean_ctor_set(x_52, 4, x_8);
+                rt::lean_ctor_set(x_52, 5, x_44);
+                rt::lean_ctor_set(x_52, 6, x_10);
+                rt::lean_ctor_set(x_52, 7, x_11);
+                rt::lean_ctor_set(x_52, 8, x_12);
+                rt::lean_ctor_set(x_52, 9, x_13);
+                rt::lean_ctor_set(x_52, 10, x_14);
+                rt::lean_ctor_set(x_52, 11, x_15);
+                rt::lean_ctor_set(x_52, 12, x_19);
+                rt::lean_ctor_set(x_52, 13, x_20);
+                x_46 = x_52;
+                break 'b45;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_40, 11 * ::core::mem::size_of::<usize>(), x_13);
-    rt::lean_ctor_set_uint8(x_40, 11 * ::core::mem::size_of::<usize>() + 1, x_14);
-    rt::lean_ctor_set_uint8(x_40, 11 * ::core::mem::size_of::<usize>() + 2, x_15);
-    let x_41: Obj = l_Int_dadd(x_25, x_3);
-    rt::lean_dec(x_25);
-    let mut x_43: Obj;
-    'b42: {
-        match x_20 {
+    rt::lean_ctor_set_uint8(x_46, 14 * ::core::mem::size_of::<usize>(), x_16);
+    rt::lean_ctor_set_uint8(x_46, 14 * ::core::mem::size_of::<usize>() + 1, x_17);
+    rt::lean_ctor_set_uint8(x_46, 14 * ::core::mem::size_of::<usize>() + 2, x_18);
+    let x_47: Obj = l_Int_dadd(x_29, x_3);
+    rt::lean_dec(x_29);
+    let mut x_49: Obj;
+    'b48: {
+        match x_23 {
             0 => {
-                rt::lean_ctor_set(x_19, 10, x_34);
-                rt::lean_ctor_set(x_19, 9, x_33);
-                rt::lean_ctor_set(x_19, 8, x_29);
-                rt::lean_ctor_set(x_19, 7, x_28);
-                rt::lean_ctor_set(x_19, 6, x_27);
-                rt::lean_ctor_set(x_19, 5, x_26);
-                rt::lean_ctor_set(x_19, 4, x_41);
-                rt::lean_ctor_set(x_19, 3, x_24);
-                rt::lean_ctor_set(x_19, 2, x_23);
-                rt::lean_ctor_set(x_19, 1, x_22);
-                rt::lean_ctor_set(x_19, 0, x_21);
-                x_43 = x_19;
-                break 'b42;
+                rt::lean_ctor_set(x_22, 13, x_40);
+                rt::lean_ctor_set(x_22, 12, x_39);
+                rt::lean_ctor_set(x_22, 11, x_35);
+                rt::lean_ctor_set(x_22, 10, x_34);
+                rt::lean_ctor_set(x_22, 9, x_33);
+                rt::lean_ctor_set(x_22, 8, x_32);
+                rt::lean_ctor_set(x_22, 7, x_31);
+                rt::lean_ctor_set(x_22, 6, x_30);
+                rt::lean_ctor_set(x_22, 5, x_47);
+                rt::lean_ctor_set(x_22, 4, x_28);
+                rt::lean_ctor_set(x_22, 3, x_27);
+                rt::lean_ctor_set(x_22, 2, x_26);
+                rt::lean_ctor_set(x_22, 1, x_25);
+                rt::lean_ctor_set(x_22, 0, x_24);
+                x_49 = x_22;
+                break 'b48;
             }
             _ => {
-                let x_45: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_45, 0, x_21);
-                rt::lean_ctor_set(x_45, 1, x_22);
-                rt::lean_ctor_set(x_45, 2, x_23);
-                rt::lean_ctor_set(x_45, 3, x_24);
-                rt::lean_ctor_set(x_45, 4, x_41);
-                rt::lean_ctor_set(x_45, 5, x_26);
-                rt::lean_ctor_set(x_45, 6, x_27);
-                rt::lean_ctor_set(x_45, 7, x_28);
-                rt::lean_ctor_set(x_45, 8, x_29);
-                rt::lean_ctor_set(x_45, 9, x_33);
-                rt::lean_ctor_set(x_45, 10, x_34);
-                x_43 = x_45;
-                break 'b42;
+                let x_51: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_51, 0, x_24);
+                rt::lean_ctor_set(x_51, 1, x_25);
+                rt::lean_ctor_set(x_51, 2, x_26);
+                rt::lean_ctor_set(x_51, 3, x_27);
+                rt::lean_ctor_set(x_51, 4, x_28);
+                rt::lean_ctor_set(x_51, 5, x_47);
+                rt::lean_ctor_set(x_51, 6, x_30);
+                rt::lean_ctor_set(x_51, 7, x_31);
+                rt::lean_ctor_set(x_51, 8, x_32);
+                rt::lean_ctor_set(x_51, 9, x_33);
+                rt::lean_ctor_set(x_51, 10, x_34);
+                rt::lean_ctor_set(x_51, 11, x_35);
+                rt::lean_ctor_set(x_51, 12, x_39);
+                rt::lean_ctor_set(x_51, 13, x_40);
+                x_49 = x_51;
+                break 'b48;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_43, 11 * ::core::mem::size_of::<usize>(), x_30);
-    rt::lean_ctor_set_uint8(x_43, 11 * ::core::mem::size_of::<usize>() + 1, x_31);
-    rt::lean_ctor_set_uint8(x_43, 11 * ::core::mem::size_of::<usize>() + 2, x_32);
-    let x_44: Obj = rt::lean_alloc_ctor(0, 2, 0);
-    rt::lean_ctor_set(x_44, 0, x_40);
-    rt::lean_ctor_set(x_44, 1, x_43);
-    return x_44;
+    rt::lean_ctor_set_uint8(x_49, 14 * ::core::mem::size_of::<usize>(), x_36);
+    rt::lean_ctor_set_uint8(x_49, 14 * ::core::mem::size_of::<usize>() + 1, x_37);
+    rt::lean_ctor_set_uint8(x_49, 14 * ::core::mem::size_of::<usize>() + 2, x_38);
+    let x_50: Obj = rt::lean_alloc_ctor(0, 2, 0);
+    rt::lean_ctor_set(x_50, 0, x_46);
+    rt::lean_ctor_set(x_50, 1, x_49);
+    return x_50;
 }
 
 // Lean: Sand2.heatEdit._boxed
@@ -3160,7 +3208,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dinventory_d__redArg_d__boxed(x_1: Obj, 
 // Source: lean/Sand2/Conservative.lean:14:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmeasure(x_1: u8, x_2: Obj) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_2, 0);
-    let x_4: Obj = rt::lean_ctor_get(x_2, 4);
+    let x_4: Obj = rt::lean_ctor_get(x_2, 5);
     let x_5: Obj = l_Sand2_dChemistry_datoms(x_3);
     match x_1 {
         0 => {
@@ -3290,24 +3338,30 @@ pub(crate) unsafe extern "C" fn l_Sand2_dswapEdit(x_1: Obj, x_2: Obj, x_3: Obj) 
     let x_10: Obj = rt::lean_ctor_get(x_2, 6);
     let x_11: Obj = rt::lean_ctor_get(x_2, 7);
     let x_12: Obj = rt::lean_ctor_get(x_2, 8);
-    let x_13: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>());
-    let x_14: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_15: u8 = rt::lean_ctor_get_uint8(x_2, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_16: Obj = rt::lean_ctor_get(x_2, 9);
-    let mut x_18: Obj;
-    let mut x_19: u8;
-    'b17: {
-        let x_45: u8 = (!rt::lean_is_exclusive(x_2)) as u8;
-        match x_45 {
+    let x_13: Obj = rt::lean_ctor_get(x_2, 9);
+    let x_14: Obj = rt::lean_ctor_get(x_2, 10);
+    let x_15: Obj = rt::lean_ctor_get(x_2, 11);
+    let x_16: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>());
+    let x_17: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_18: u8 = rt::lean_ctor_get_uint8(x_2, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_19: Obj = rt::lean_ctor_get(x_2, 12);
+    let mut x_21: Obj;
+    let mut x_22: u8;
+    'b20: {
+        let x_51: u8 = (!rt::lean_is_exclusive(x_2)) as u8;
+        match x_51 {
             0 => {
-                let x_46: Obj = rt::lean_ctor_get(x_2, 10);
-                rt::lean_dec(x_46);
-                x_18 = x_2;
-                x_19 = x_45;
-                break 'b17;
+                let x_52: Obj = rt::lean_ctor_get(x_2, 13);
+                rt::lean_dec(x_52);
+                x_21 = x_2;
+                x_22 = x_51;
+                break 'b20;
             }
             _ => {
-                rt::lean_inc(x_16);
+                rt::lean_inc(x_19);
+                rt::lean_inc(x_15);
+                rt::lean_inc(x_14);
+                rt::lean_inc(x_13);
                 rt::lean_inc(x_12);
                 rt::lean_inc(x_11);
                 rt::lean_inc(x_10);
@@ -3318,156 +3372,174 @@ pub(crate) unsafe extern "C" fn l_Sand2_dswapEdit(x_1: Obj, x_2: Obj, x_3: Obj) 
                 rt::lean_inc(x_5);
                 rt::lean_inc(x_4);
                 rt::lean_dec(x_2);
-                x_18 = rt::lean_box(0);
-                x_19 = x_45;
-                break 'b17;
+                x_21 = rt::lean_box(0);
+                x_22 = x_51;
+                break 'b20;
             }
         }
     }
-    let x_20: Obj = rt::lean_ctor_get(x_1, 0);
-    let x_21: Obj = rt::lean_ctor_get(x_1, 1);
-    let x_22: Obj = rt::lean_ctor_get(x_1, 2);
-    let x_23: Obj = rt::lean_ctor_get(x_1, 3);
-    let x_24: Obj = rt::lean_ctor_get(x_1, 4);
-    let x_25: Obj = rt::lean_ctor_get(x_1, 5);
-    let x_26: Obj = rt::lean_ctor_get(x_1, 6);
-    let x_27: Obj = rt::lean_ctor_get(x_1, 7);
-    let x_28: Obj = rt::lean_ctor_get(x_1, 8);
-    let x_29: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>());
-    let x_30: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_31: u8 = rt::lean_ctor_get_uint8(x_1, 11 * ::core::mem::size_of::<usize>() + 2);
+    let x_23: Obj = rt::lean_ctor_get(x_1, 0);
+    let x_24: Obj = rt::lean_ctor_get(x_1, 1);
+    let x_25: Obj = rt::lean_ctor_get(x_1, 2);
+    let x_26: Obj = rt::lean_ctor_get(x_1, 3);
+    let x_27: Obj = rt::lean_ctor_get(x_1, 4);
+    let x_28: Obj = rt::lean_ctor_get(x_1, 5);
+    let x_29: Obj = rt::lean_ctor_get(x_1, 6);
+    let x_30: Obj = rt::lean_ctor_get(x_1, 7);
+    let x_31: Obj = rt::lean_ctor_get(x_1, 8);
     let x_32: Obj = rt::lean_ctor_get(x_1, 9);
-    let mut x_34: Obj;
-    let mut x_35: u8;
-    'b33: {
-        let x_43: u8 = (!rt::lean_is_exclusive(x_1)) as u8;
-        match x_43 {
+    let x_33: Obj = rt::lean_ctor_get(x_1, 10);
+    let x_34: Obj = rt::lean_ctor_get(x_1, 11);
+    let x_35: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>());
+    let x_36: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_37: u8 = rt::lean_ctor_get_uint8(x_1, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_38: Obj = rt::lean_ctor_get(x_1, 12);
+    let mut x_40: Obj;
+    let mut x_41: u8;
+    'b39: {
+        let x_49: u8 = (!rt::lean_is_exclusive(x_1)) as u8;
+        match x_49 {
             0 => {
-                let x_44: Obj = rt::lean_ctor_get(x_1, 10);
-                rt::lean_dec(x_44);
-                x_34 = x_1;
-                x_35 = x_43;
-                break 'b33;
+                let x_50: Obj = rt::lean_ctor_get(x_1, 13);
+                rt::lean_dec(x_50);
+                x_40 = x_1;
+                x_41 = x_49;
+                break 'b39;
             }
             _ => {
+                rt::lean_inc(x_38);
+                rt::lean_inc(x_34);
+                rt::lean_inc(x_33);
                 rt::lean_inc(x_32);
+                rt::lean_inc(x_31);
+                rt::lean_inc(x_30);
+                rt::lean_inc(x_29);
                 rt::lean_inc(x_28);
                 rt::lean_inc(x_27);
                 rt::lean_inc(x_26);
                 rt::lean_inc(x_25);
                 rt::lean_inc(x_24);
                 rt::lean_inc(x_23);
-                rt::lean_inc(x_22);
-                rt::lean_inc(x_21);
-                rt::lean_inc(x_20);
                 rt::lean_dec(x_1);
-                x_34 = rt::lean_box(0);
-                x_35 = x_43;
-                break 'b33;
+                x_40 = rt::lean_box(0);
+                x_41 = x_49;
+                break 'b39;
             }
         }
     }
     rt::lean_inc(x_3);
-    let mut x_37: Obj;
-    'b36: {
-        match x_35 {
+    let mut x_43: Obj;
+    'b42: {
+        match x_41 {
             0 => {
-                rt::lean_ctor_set(x_34, 10, x_3);
-                rt::lean_ctor_set(x_34, 9, x_16);
-                rt::lean_ctor_set(x_34, 8, x_12);
-                rt::lean_ctor_set(x_34, 7, x_11);
-                rt::lean_ctor_set(x_34, 6, x_10);
-                rt::lean_ctor_set(x_34, 5, x_9);
-                rt::lean_ctor_set(x_34, 4, x_8);
-                rt::lean_ctor_set(x_34, 3, x_7);
-                rt::lean_ctor_set(x_34, 2, x_6);
-                rt::lean_ctor_set(x_34, 1, x_5);
-                rt::lean_ctor_set(x_34, 0, x_4);
-                x_37 = x_34;
-                break 'b36;
+                rt::lean_ctor_set(x_40, 13, x_3);
+                rt::lean_ctor_set(x_40, 12, x_19);
+                rt::lean_ctor_set(x_40, 11, x_15);
+                rt::lean_ctor_set(x_40, 10, x_14);
+                rt::lean_ctor_set(x_40, 9, x_13);
+                rt::lean_ctor_set(x_40, 8, x_12);
+                rt::lean_ctor_set(x_40, 7, x_11);
+                rt::lean_ctor_set(x_40, 6, x_10);
+                rt::lean_ctor_set(x_40, 5, x_9);
+                rt::lean_ctor_set(x_40, 4, x_8);
+                rt::lean_ctor_set(x_40, 3, x_7);
+                rt::lean_ctor_set(x_40, 2, x_6);
+                rt::lean_ctor_set(x_40, 1, x_5);
+                rt::lean_ctor_set(x_40, 0, x_4);
+                x_43 = x_40;
+                break 'b42;
             }
             _ => {
-                let x_42: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_42, 0, x_4);
-                rt::lean_ctor_set(x_42, 1, x_5);
-                rt::lean_ctor_set(x_42, 2, x_6);
-                rt::lean_ctor_set(x_42, 3, x_7);
-                rt::lean_ctor_set(x_42, 4, x_8);
-                rt::lean_ctor_set(x_42, 5, x_9);
-                rt::lean_ctor_set(x_42, 6, x_10);
-                rt::lean_ctor_set(x_42, 7, x_11);
-                rt::lean_ctor_set(x_42, 8, x_12);
-                rt::lean_ctor_set(x_42, 9, x_16);
-                rt::lean_ctor_set(x_42, 10, x_3);
-                x_37 = x_42;
-                break 'b36;
+                let x_48: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_48, 0, x_4);
+                rt::lean_ctor_set(x_48, 1, x_5);
+                rt::lean_ctor_set(x_48, 2, x_6);
+                rt::lean_ctor_set(x_48, 3, x_7);
+                rt::lean_ctor_set(x_48, 4, x_8);
+                rt::lean_ctor_set(x_48, 5, x_9);
+                rt::lean_ctor_set(x_48, 6, x_10);
+                rt::lean_ctor_set(x_48, 7, x_11);
+                rt::lean_ctor_set(x_48, 8, x_12);
+                rt::lean_ctor_set(x_48, 9, x_13);
+                rt::lean_ctor_set(x_48, 10, x_14);
+                rt::lean_ctor_set(x_48, 11, x_15);
+                rt::lean_ctor_set(x_48, 12, x_19);
+                rt::lean_ctor_set(x_48, 13, x_3);
+                x_43 = x_48;
+                break 'b42;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_37, 11 * ::core::mem::size_of::<usize>(), x_13);
-    rt::lean_ctor_set_uint8(x_37, 11 * ::core::mem::size_of::<usize>() + 1, x_14);
-    rt::lean_ctor_set_uint8(x_37, 11 * ::core::mem::size_of::<usize>() + 2, x_15);
-    let mut x_39: Obj;
-    'b38: {
-        match x_19 {
+    rt::lean_ctor_set_uint8(x_43, 14 * ::core::mem::size_of::<usize>(), x_16);
+    rt::lean_ctor_set_uint8(x_43, 14 * ::core::mem::size_of::<usize>() + 1, x_17);
+    rt::lean_ctor_set_uint8(x_43, 14 * ::core::mem::size_of::<usize>() + 2, x_18);
+    let mut x_45: Obj;
+    'b44: {
+        match x_22 {
             0 => {
-                rt::lean_ctor_set(x_18, 10, x_3);
-                rt::lean_ctor_set(x_18, 9, x_32);
-                rt::lean_ctor_set(x_18, 8, x_28);
-                rt::lean_ctor_set(x_18, 7, x_27);
-                rt::lean_ctor_set(x_18, 6, x_26);
-                rt::lean_ctor_set(x_18, 5, x_25);
-                rt::lean_ctor_set(x_18, 4, x_24);
-                rt::lean_ctor_set(x_18, 3, x_23);
-                rt::lean_ctor_set(x_18, 2, x_22);
-                rt::lean_ctor_set(x_18, 1, x_21);
-                rt::lean_ctor_set(x_18, 0, x_20);
-                x_39 = x_18;
-                break 'b38;
+                rt::lean_ctor_set(x_21, 13, x_3);
+                rt::lean_ctor_set(x_21, 12, x_38);
+                rt::lean_ctor_set(x_21, 11, x_34);
+                rt::lean_ctor_set(x_21, 10, x_33);
+                rt::lean_ctor_set(x_21, 9, x_32);
+                rt::lean_ctor_set(x_21, 8, x_31);
+                rt::lean_ctor_set(x_21, 7, x_30);
+                rt::lean_ctor_set(x_21, 6, x_29);
+                rt::lean_ctor_set(x_21, 5, x_28);
+                rt::lean_ctor_set(x_21, 4, x_27);
+                rt::lean_ctor_set(x_21, 3, x_26);
+                rt::lean_ctor_set(x_21, 2, x_25);
+                rt::lean_ctor_set(x_21, 1, x_24);
+                rt::lean_ctor_set(x_21, 0, x_23);
+                x_45 = x_21;
+                break 'b44;
             }
             _ => {
-                let x_41: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_41, 0, x_20);
-                rt::lean_ctor_set(x_41, 1, x_21);
-                rt::lean_ctor_set(x_41, 2, x_22);
-                rt::lean_ctor_set(x_41, 3, x_23);
-                rt::lean_ctor_set(x_41, 4, x_24);
-                rt::lean_ctor_set(x_41, 5, x_25);
-                rt::lean_ctor_set(x_41, 6, x_26);
-                rt::lean_ctor_set(x_41, 7, x_27);
-                rt::lean_ctor_set(x_41, 8, x_28);
-                rt::lean_ctor_set(x_41, 9, x_32);
-                rt::lean_ctor_set(x_41, 10, x_3);
-                x_39 = x_41;
-                break 'b38;
+                let x_47: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_47, 0, x_23);
+                rt::lean_ctor_set(x_47, 1, x_24);
+                rt::lean_ctor_set(x_47, 2, x_25);
+                rt::lean_ctor_set(x_47, 3, x_26);
+                rt::lean_ctor_set(x_47, 4, x_27);
+                rt::lean_ctor_set(x_47, 5, x_28);
+                rt::lean_ctor_set(x_47, 6, x_29);
+                rt::lean_ctor_set(x_47, 7, x_30);
+                rt::lean_ctor_set(x_47, 8, x_31);
+                rt::lean_ctor_set(x_47, 9, x_32);
+                rt::lean_ctor_set(x_47, 10, x_33);
+                rt::lean_ctor_set(x_47, 11, x_34);
+                rt::lean_ctor_set(x_47, 12, x_38);
+                rt::lean_ctor_set(x_47, 13, x_3);
+                x_45 = x_47;
+                break 'b44;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_39, 11 * ::core::mem::size_of::<usize>(), x_29);
-    rt::lean_ctor_set_uint8(x_39, 11 * ::core::mem::size_of::<usize>() + 1, x_30);
-    rt::lean_ctor_set_uint8(x_39, 11 * ::core::mem::size_of::<usize>() + 2, x_31);
-    let x_40: Obj = rt::lean_alloc_ctor(0, 2, 0);
-    rt::lean_ctor_set(x_40, 0, x_37);
-    rt::lean_ctor_set(x_40, 1, x_39);
-    return x_40;
+    rt::lean_ctor_set_uint8(x_45, 14 * ::core::mem::size_of::<usize>(), x_35);
+    rt::lean_ctor_set_uint8(x_45, 14 * ::core::mem::size_of::<usize>() + 1, x_36);
+    rt::lean_ctor_set_uint8(x_45, 14 * ::core::mem::size_of::<usize>() + 2, x_37);
+    let x_46: Obj = rt::lean_alloc_ctor(0, 2, 0);
+    rt::lean_ctor_set(x_46, 0, x_43);
+    rt::lean_ctor_set(x_46, 1, x_45);
+    return x_46;
 }
 
 // Lean: Sand2.transportEdit
 // Source: lean/Sand2/Conservative.lean:246:1
 pub(crate) unsafe extern "C" fn l_Sand2_dtransportEdit(x_1: Obj, x_2: Obj, x_3: Obj, x_4: u8, x_5: Obj, x_6: Obj, x_7: Obj) -> Obj {
     let x_8: Obj = rt::lean_ctor_get(x_1, 0);
-    let x_9: Obj = rt::lean_ctor_get(x_1, 4);
+    let x_9: Obj = rt::lean_ctor_get(x_1, 5);
     rt::lean_inc(x_9);
-    let x_10: Obj = rt::lean_ctor_get(x_1, 5);
+    let x_10: Obj = rt::lean_ctor_get(x_1, 6);
     rt::lean_inc(x_10);
-    let x_11: Obj = rt::lean_ctor_get(x_1, 6);
+    let x_11: Obj = rt::lean_ctor_get(x_1, 7);
     rt::lean_inc(x_11);
     let x_12: Obj = rt::lean_ctor_get(x_2, 0);
-    let x_13: Obj = rt::lean_ctor_get(x_2, 4);
+    let x_13: Obj = rt::lean_ctor_get(x_2, 5);
     rt::lean_inc(x_13);
-    let x_14: Obj = rt::lean_ctor_get(x_2, 5);
+    let x_14: Obj = rt::lean_ctor_get(x_2, 6);
     rt::lean_inc(x_14);
-    let x_15: Obj = rt::lean_ctor_get(x_2, 6);
+    let x_15: Obj = rt::lean_ctor_get(x_2, 7);
     rt::lean_inc(x_15);
     let x_16: Obj = l_Sand2_dChemistry_dtransferGas(x_8, x_12, x_3, x_4);
     let x_17: Obj = rt::lean_ctor_get(x_16, 0);
@@ -3475,11 +3547,11 @@ pub(crate) unsafe extern "C" fn l_Sand2_dtransportEdit(x_1: Obj, x_2: Obj, x_3: 
     let mut x_20: Obj;
     let mut x_21: u8;
     'b19: {
-        let x_75: u8 = (!rt::lean_is_exclusive(x_16)) as u8;
-        match x_75 {
+        let x_81: u8 = (!rt::lean_is_exclusive(x_16)) as u8;
+        match x_81 {
             0 => {
                 x_20 = x_16;
-                x_21 = x_75;
+                x_21 = x_81;
                 break 'b19;
             }
             _ => {
@@ -3487,7 +3559,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dtransportEdit(x_1: Obj, x_2: Obj, x_3: 
                 rt::lean_inc(x_17);
                 rt::lean_dec(x_16);
                 x_20 = rt::lean_box(0);
-                x_21 = x_75;
+                x_21 = x_81;
                 break 'b19;
             }
         }
@@ -3497,32 +3569,38 @@ pub(crate) unsafe extern "C" fn l_Sand2_dtransportEdit(x_1: Obj, x_2: Obj, x_3: 
     let x_24: Obj = rt::lean_ctor_get(x_22, 1);
     let x_25: Obj = rt::lean_ctor_get(x_22, 2);
     let x_26: Obj = rt::lean_ctor_get(x_22, 3);
-    let x_27: Obj = rt::lean_ctor_get(x_22, 7);
+    let x_27: Obj = rt::lean_ctor_get(x_22, 4);
     let x_28: Obj = rt::lean_ctor_get(x_22, 8);
-    let x_29: u8 = rt::lean_ctor_get_uint8(x_22, 11 * ::core::mem::size_of::<usize>());
-    let x_30: u8 = rt::lean_ctor_get_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_31: u8 = rt::lean_ctor_get_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_32: Obj = rt::lean_ctor_get(x_22, 9);
-    let x_33: Obj = rt::lean_ctor_get(x_22, 10);
-    let mut x_35: Obj;
-    let mut x_36: u8;
-    'b34: {
-        let x_71: u8 = (!rt::lean_is_exclusive(x_22)) as u8;
-        match x_71 {
+    let x_29: Obj = rt::lean_ctor_get(x_22, 9);
+    let x_30: Obj = rt::lean_ctor_get(x_22, 10);
+    let x_31: Obj = rt::lean_ctor_get(x_22, 11);
+    let x_32: u8 = rt::lean_ctor_get_uint8(x_22, 14 * ::core::mem::size_of::<usize>());
+    let x_33: u8 = rt::lean_ctor_get_uint8(x_22, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_34: u8 = rt::lean_ctor_get_uint8(x_22, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_35: Obj = rt::lean_ctor_get(x_22, 12);
+    let x_36: Obj = rt::lean_ctor_get(x_22, 13);
+    let mut x_38: Obj;
+    let mut x_39: u8;
+    'b37: {
+        let x_77: u8 = (!rt::lean_is_exclusive(x_22)) as u8;
+        match x_77 {
             0 => {
-                let x_72: Obj = rt::lean_ctor_get(x_22, 6);
-                rt::lean_dec(x_72);
-                let x_73: Obj = rt::lean_ctor_get(x_22, 5);
-                rt::lean_dec(x_73);
-                let x_74: Obj = rt::lean_ctor_get(x_22, 4);
-                rt::lean_dec(x_74);
-                x_35 = x_22;
-                x_36 = x_71;
-                break 'b34;
+                let x_78: Obj = rt::lean_ctor_get(x_22, 7);
+                rt::lean_dec(x_78);
+                let x_79: Obj = rt::lean_ctor_get(x_22, 6);
+                rt::lean_dec(x_79);
+                let x_80: Obj = rt::lean_ctor_get(x_22, 5);
+                rt::lean_dec(x_80);
+                x_38 = x_22;
+                x_39 = x_77;
+                break 'b37;
             }
             _ => {
-                rt::lean_inc(x_33);
-                rt::lean_inc(x_32);
+                rt::lean_inc(x_36);
+                rt::lean_inc(x_35);
+                rt::lean_inc(x_31);
+                rt::lean_inc(x_30);
+                rt::lean_inc(x_29);
                 rt::lean_inc(x_28);
                 rt::lean_inc(x_27);
                 rt::lean_inc(x_26);
@@ -3530,165 +3608,183 @@ pub(crate) unsafe extern "C" fn l_Sand2_dtransportEdit(x_1: Obj, x_2: Obj, x_3: 
                 rt::lean_inc(x_24);
                 rt::lean_inc(x_23);
                 rt::lean_dec(x_22);
-                x_35 = rt::lean_box(0);
-                x_36 = x_71;
-                break 'b34;
+                x_38 = rt::lean_box(0);
+                x_39 = x_77;
+                break 'b37;
             }
         }
     }
-    let x_37: Obj = l_Sand2_dreplaceMatter(x_2, x_18);
-    let x_38: Obj = rt::lean_ctor_get(x_37, 0);
-    let x_39: Obj = rt::lean_ctor_get(x_37, 1);
-    let x_40: Obj = rt::lean_ctor_get(x_37, 2);
-    let x_41: Obj = rt::lean_ctor_get(x_37, 3);
-    let x_42: Obj = rt::lean_ctor_get(x_37, 7);
-    let x_43: Obj = rt::lean_ctor_get(x_37, 8);
-    let x_44: u8 = rt::lean_ctor_get_uint8(x_37, 11 * ::core::mem::size_of::<usize>());
-    let x_45: u8 = rt::lean_ctor_get_uint8(x_37, 11 * ::core::mem::size_of::<usize>() + 1);
-    let x_46: u8 = rt::lean_ctor_get_uint8(x_37, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_47: Obj = rt::lean_ctor_get(x_37, 9);
-    let x_48: Obj = rt::lean_ctor_get(x_37, 10);
-    let mut x_50: Obj;
-    let mut x_51: u8;
-    'b49: {
-        let x_67: u8 = (!rt::lean_is_exclusive(x_37)) as u8;
-        match x_67 {
+    let x_40: Obj = l_Sand2_dreplaceMatter(x_2, x_18);
+    let x_41: Obj = rt::lean_ctor_get(x_40, 0);
+    let x_42: Obj = rt::lean_ctor_get(x_40, 1);
+    let x_43: Obj = rt::lean_ctor_get(x_40, 2);
+    let x_44: Obj = rt::lean_ctor_get(x_40, 3);
+    let x_45: Obj = rt::lean_ctor_get(x_40, 4);
+    let x_46: Obj = rt::lean_ctor_get(x_40, 8);
+    let x_47: Obj = rt::lean_ctor_get(x_40, 9);
+    let x_48: Obj = rt::lean_ctor_get(x_40, 10);
+    let x_49: Obj = rt::lean_ctor_get(x_40, 11);
+    let x_50: u8 = rt::lean_ctor_get_uint8(x_40, 14 * ::core::mem::size_of::<usize>());
+    let x_51: u8 = rt::lean_ctor_get_uint8(x_40, 14 * ::core::mem::size_of::<usize>() + 1);
+    let x_52: u8 = rt::lean_ctor_get_uint8(x_40, 14 * ::core::mem::size_of::<usize>() + 2);
+    let x_53: Obj = rt::lean_ctor_get(x_40, 12);
+    let x_54: Obj = rt::lean_ctor_get(x_40, 13);
+    let mut x_56: Obj;
+    let mut x_57: u8;
+    'b55: {
+        let x_73: u8 = (!rt::lean_is_exclusive(x_40)) as u8;
+        match x_73 {
             0 => {
-                let x_68: Obj = rt::lean_ctor_get(x_37, 6);
-                rt::lean_dec(x_68);
-                let x_69: Obj = rt::lean_ctor_get(x_37, 5);
-                rt::lean_dec(x_69);
-                let x_70: Obj = rt::lean_ctor_get(x_37, 4);
-                rt::lean_dec(x_70);
-                x_50 = x_37;
-                x_51 = x_67;
-                break 'b49;
+                let x_74: Obj = rt::lean_ctor_get(x_40, 7);
+                rt::lean_dec(x_74);
+                let x_75: Obj = rt::lean_ctor_get(x_40, 6);
+                rt::lean_dec(x_75);
+                let x_76: Obj = rt::lean_ctor_get(x_40, 5);
+                rt::lean_dec(x_76);
+                x_56 = x_40;
+                x_57 = x_73;
+                break 'b55;
             }
             _ => {
+                rt::lean_inc(x_54);
+                rt::lean_inc(x_53);
+                rt::lean_inc(x_49);
                 rt::lean_inc(x_48);
                 rt::lean_inc(x_47);
+                rt::lean_inc(x_46);
+                rt::lean_inc(x_45);
+                rt::lean_inc(x_44);
                 rt::lean_inc(x_43);
                 rt::lean_inc(x_42);
                 rt::lean_inc(x_41);
-                rt::lean_inc(x_40);
-                rt::lean_inc(x_39);
-                rt::lean_inc(x_38);
-                rt::lean_dec(x_37);
-                x_50 = rt::lean_box(0);
-                x_51 = x_67;
-                break 'b49;
+                rt::lean_dec(x_40);
+                x_56 = rt::lean_box(0);
+                x_57 = x_73;
+                break 'b55;
             }
         }
     }
-    let x_52: Obj = l_Int_dsub(x_9, x_5);
+    let x_58: Obj = l_Int_dsub(x_9, x_5);
     rt::lean_dec(x_9);
-    let x_53: Obj = l_Int_dsub(x_10, x_6);
+    let x_59: Obj = l_Int_dsub(x_10, x_6);
     rt::lean_dec(x_10);
-    let x_54: Obj = l_Int_dsub(x_11, x_7);
+    let x_60: Obj = l_Int_dsub(x_11, x_7);
     rt::lean_dec(x_11);
-    let mut x_56: Obj;
-    'b55: {
-        match x_51 {
+    let mut x_62: Obj;
+    'b61: {
+        match x_57 {
             0 => {
-                rt::lean_ctor_set(x_50, 10, x_33);
-                rt::lean_ctor_set(x_50, 9, x_32);
-                rt::lean_ctor_set(x_50, 8, x_28);
-                rt::lean_ctor_set(x_50, 7, x_27);
-                rt::lean_ctor_set(x_50, 6, x_54);
-                rt::lean_ctor_set(x_50, 5, x_53);
-                rt::lean_ctor_set(x_50, 4, x_52);
-                rt::lean_ctor_set(x_50, 3, x_26);
-                rt::lean_ctor_set(x_50, 2, x_25);
-                rt::lean_ctor_set(x_50, 1, x_24);
-                rt::lean_ctor_set(x_50, 0, x_23);
-                x_56 = x_50;
-                break 'b55;
+                rt::lean_ctor_set(x_56, 13, x_36);
+                rt::lean_ctor_set(x_56, 12, x_35);
+                rt::lean_ctor_set(x_56, 11, x_31);
+                rt::lean_ctor_set(x_56, 10, x_30);
+                rt::lean_ctor_set(x_56, 9, x_29);
+                rt::lean_ctor_set(x_56, 8, x_28);
+                rt::lean_ctor_set(x_56, 7, x_60);
+                rt::lean_ctor_set(x_56, 6, x_59);
+                rt::lean_ctor_set(x_56, 5, x_58);
+                rt::lean_ctor_set(x_56, 4, x_27);
+                rt::lean_ctor_set(x_56, 3, x_26);
+                rt::lean_ctor_set(x_56, 2, x_25);
+                rt::lean_ctor_set(x_56, 1, x_24);
+                rt::lean_ctor_set(x_56, 0, x_23);
+                x_62 = x_56;
+                break 'b61;
             }
             _ => {
-                let x_66: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_66, 0, x_23);
-                rt::lean_ctor_set(x_66, 1, x_24);
-                rt::lean_ctor_set(x_66, 2, x_25);
-                rt::lean_ctor_set(x_66, 3, x_26);
-                rt::lean_ctor_set(x_66, 4, x_52);
-                rt::lean_ctor_set(x_66, 5, x_53);
-                rt::lean_ctor_set(x_66, 6, x_54);
-                rt::lean_ctor_set(x_66, 7, x_27);
-                rt::lean_ctor_set(x_66, 8, x_28);
-                rt::lean_ctor_set(x_66, 9, x_32);
-                rt::lean_ctor_set(x_66, 10, x_33);
-                x_56 = x_66;
-                break 'b55;
+                let x_72: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_72, 0, x_23);
+                rt::lean_ctor_set(x_72, 1, x_24);
+                rt::lean_ctor_set(x_72, 2, x_25);
+                rt::lean_ctor_set(x_72, 3, x_26);
+                rt::lean_ctor_set(x_72, 4, x_27);
+                rt::lean_ctor_set(x_72, 5, x_58);
+                rt::lean_ctor_set(x_72, 6, x_59);
+                rt::lean_ctor_set(x_72, 7, x_60);
+                rt::lean_ctor_set(x_72, 8, x_28);
+                rt::lean_ctor_set(x_72, 9, x_29);
+                rt::lean_ctor_set(x_72, 10, x_30);
+                rt::lean_ctor_set(x_72, 11, x_31);
+                rt::lean_ctor_set(x_72, 12, x_35);
+                rt::lean_ctor_set(x_72, 13, x_36);
+                x_62 = x_72;
+                break 'b61;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_56, 11 * ::core::mem::size_of::<usize>(), x_29);
-    rt::lean_ctor_set_uint8(x_56, 11 * ::core::mem::size_of::<usize>() + 1, x_30);
-    rt::lean_ctor_set_uint8(x_56, 11 * ::core::mem::size_of::<usize>() + 2, x_31);
-    let x_57: Obj = l_Int_dadd(x_13, x_5);
+    rt::lean_ctor_set_uint8(x_62, 14 * ::core::mem::size_of::<usize>(), x_32);
+    rt::lean_ctor_set_uint8(x_62, 14 * ::core::mem::size_of::<usize>() + 1, x_33);
+    rt::lean_ctor_set_uint8(x_62, 14 * ::core::mem::size_of::<usize>() + 2, x_34);
+    let x_63: Obj = l_Int_dadd(x_13, x_5);
     rt::lean_dec(x_13);
-    let x_58: Obj = l_Int_dadd(x_14, x_6);
+    let x_64: Obj = l_Int_dadd(x_14, x_6);
     rt::lean_dec(x_14);
-    let x_59: Obj = l_Int_dadd(x_15, x_7);
+    let x_65: Obj = l_Int_dadd(x_15, x_7);
     rt::lean_dec(x_15);
-    let mut x_61: Obj;
-    'b60: {
-        match x_36 {
+    let mut x_67: Obj;
+    'b66: {
+        match x_39 {
             0 => {
-                rt::lean_ctor_set(x_35, 10, x_48);
-                rt::lean_ctor_set(x_35, 9, x_47);
-                rt::lean_ctor_set(x_35, 8, x_43);
-                rt::lean_ctor_set(x_35, 7, x_42);
-                rt::lean_ctor_set(x_35, 6, x_59);
-                rt::lean_ctor_set(x_35, 5, x_58);
-                rt::lean_ctor_set(x_35, 4, x_57);
-                rt::lean_ctor_set(x_35, 3, x_41);
-                rt::lean_ctor_set(x_35, 2, x_40);
-                rt::lean_ctor_set(x_35, 1, x_39);
-                rt::lean_ctor_set(x_35, 0, x_38);
-                x_61 = x_35;
-                break 'b60;
+                rt::lean_ctor_set(x_38, 13, x_54);
+                rt::lean_ctor_set(x_38, 12, x_53);
+                rt::lean_ctor_set(x_38, 11, x_49);
+                rt::lean_ctor_set(x_38, 10, x_48);
+                rt::lean_ctor_set(x_38, 9, x_47);
+                rt::lean_ctor_set(x_38, 8, x_46);
+                rt::lean_ctor_set(x_38, 7, x_65);
+                rt::lean_ctor_set(x_38, 6, x_64);
+                rt::lean_ctor_set(x_38, 5, x_63);
+                rt::lean_ctor_set(x_38, 4, x_45);
+                rt::lean_ctor_set(x_38, 3, x_44);
+                rt::lean_ctor_set(x_38, 2, x_43);
+                rt::lean_ctor_set(x_38, 1, x_42);
+                rt::lean_ctor_set(x_38, 0, x_41);
+                x_67 = x_38;
+                break 'b66;
             }
             _ => {
-                let x_65: Obj = rt::lean_alloc_ctor(0, 11, 3);
-                rt::lean_ctor_set(x_65, 0, x_38);
-                rt::lean_ctor_set(x_65, 1, x_39);
-                rt::lean_ctor_set(x_65, 2, x_40);
-                rt::lean_ctor_set(x_65, 3, x_41);
-                rt::lean_ctor_set(x_65, 4, x_57);
-                rt::lean_ctor_set(x_65, 5, x_58);
-                rt::lean_ctor_set(x_65, 6, x_59);
-                rt::lean_ctor_set(x_65, 7, x_42);
-                rt::lean_ctor_set(x_65, 8, x_43);
-                rt::lean_ctor_set(x_65, 9, x_47);
-                rt::lean_ctor_set(x_65, 10, x_48);
-                x_61 = x_65;
-                break 'b60;
+                let x_71: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                rt::lean_ctor_set(x_71, 0, x_41);
+                rt::lean_ctor_set(x_71, 1, x_42);
+                rt::lean_ctor_set(x_71, 2, x_43);
+                rt::lean_ctor_set(x_71, 3, x_44);
+                rt::lean_ctor_set(x_71, 4, x_45);
+                rt::lean_ctor_set(x_71, 5, x_63);
+                rt::lean_ctor_set(x_71, 6, x_64);
+                rt::lean_ctor_set(x_71, 7, x_65);
+                rt::lean_ctor_set(x_71, 8, x_46);
+                rt::lean_ctor_set(x_71, 9, x_47);
+                rt::lean_ctor_set(x_71, 10, x_48);
+                rt::lean_ctor_set(x_71, 11, x_49);
+                rt::lean_ctor_set(x_71, 12, x_53);
+                rt::lean_ctor_set(x_71, 13, x_54);
+                x_67 = x_71;
+                break 'b66;
             }
         }
     }
-    rt::lean_ctor_set_uint8(x_61, 11 * ::core::mem::size_of::<usize>(), x_44);
-    rt::lean_ctor_set_uint8(x_61, 11 * ::core::mem::size_of::<usize>() + 1, x_45);
-    rt::lean_ctor_set_uint8(x_61, 11 * ::core::mem::size_of::<usize>() + 2, x_46);
-    let mut x_63: Obj;
-    'b62: {
+    rt::lean_ctor_set_uint8(x_67, 14 * ::core::mem::size_of::<usize>(), x_50);
+    rt::lean_ctor_set_uint8(x_67, 14 * ::core::mem::size_of::<usize>() + 1, x_51);
+    rt::lean_ctor_set_uint8(x_67, 14 * ::core::mem::size_of::<usize>() + 2, x_52);
+    let mut x_69: Obj;
+    'b68: {
         match x_21 {
             0 => {
-                rt::lean_ctor_set(x_20, 1, x_61);
-                rt::lean_ctor_set(x_20, 0, x_56);
-                x_63 = x_20;
-                break 'b62;
+                rt::lean_ctor_set(x_20, 1, x_67);
+                rt::lean_ctor_set(x_20, 0, x_62);
+                x_69 = x_20;
+                break 'b68;
             }
             _ => {
-                let x_64: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                rt::lean_ctor_set(x_64, 0, x_56);
-                rt::lean_ctor_set(x_64, 1, x_61);
-                x_63 = x_64;
-                break 'b62;
+                let x_70: Obj = rt::lean_alloc_ctor(0, 2, 0);
+                rt::lean_ctor_set(x_70, 0, x_62);
+                rt::lean_ctor_set(x_70, 1, x_67);
+                x_69 = x_70;
+                break 'b68;
             }
         }
     }
-    return x_63;
+    return x_69;
 }
 
 // Lean: Sand2.transportEdit._boxed

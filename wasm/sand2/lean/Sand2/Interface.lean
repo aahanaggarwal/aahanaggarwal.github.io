@@ -128,7 +128,8 @@ def description : Material → String
         let blue := (255-red)
         red*65536+24*256+blue
       else if view == 2 then
-        let pressure := pressure s.height s.width i p
+        let pressure := if gasCell s.height s.width i p then pressure s.height s.width i p
+          else if isLiquid m then (p.phasePressure : Int) else 0
         let red := (max 0 (min 255 ((pressure-80000000)/2000000))).toNat.toUInt32
         red*65536+20*256+(255-red)
       else materialColor m
@@ -146,12 +147,27 @@ def description : Material → String
     if !edge s.width s.height i && labelAt s.height s.width i (read s.world i) != .empty then n := n+1
   return n.toUInt32
 
+def fixedTwo (n : Nat) : String :=
+  toString (n/100) ++ "." ++ (if n%100 < 10 then "0" else "") ++ toString (n%100)
+
+def temperatureText (t : Int) : String := (if t < 0 then "-" else "") ++ fixedTwo t.natAbs
+
+def massText (mass : Nat) : String :=
+  if mass >= 1000000000 then fixedTwo (mass/10000000) ++ " g"
+  else if mass >= 1000000 then fixedTwo (mass/10000) ++ " mg"
+  else fixedTwo (mass/10) ++ " ug"
+
 @[noinline] def inspectSimulation (s : Simulation) (x y : UInt32) : String :=
   let i := (min (s.height-1) y.toNat)*s.width+min (s.width-1) x.toNat
   let p := read s.world i
   let t := temperature s.height s.width i p
-  materialName (labelAt s.height s.width i p) ++ " | " ++ toString (t/100) ++ " C | " ++
-    toString (pressure s.height s.width i p/1000) ++ " Pa | " ++ toString p.mass ++ " ng"
+  let pressureText := if gasCell s.height s.width i p then
+      fixedTwo ((max 0 (pressure s.height s.width i p)).toNat/10000) ++ " kPa"
+    else if isLiquid (labelAt s.height s.width i p) then
+      fixedTwo (p.phasePressure/10000) ++ " kPa"
+    else "solid"
+  materialName (labelAt s.height s.width i p) ++ " | " ++ temperatureText t ++ " C | " ++
+    pressureText ++ " | " ++ massText p.mass
 
 def quantities : List Quantity := [.hydrogen,.oxygen,.carbon,.silicon,.sodium,.chlorine,
   .calcium,.iron,.potassium,.nitrogen,.sulfur,.energy]
@@ -170,10 +186,12 @@ def mixHash (h : UInt64) (n : Int) : UInt64 := (h ^^^ (n % 18446744073709551616)
       m.silica,m.salt,m.acid,m.carbonate,m.calciumChloride,m.iron,m.rust,
       m.ironChloride,m.hydrogen,m.nitrate,m.sulfur,m.sulfide] do
       h := mixHash h v
-    for v in [p.energy,p.px,p.py,p.rx,p.ry,p.luminous,p.stamp,(materialCode p.label).toNat,
+    for v in [p.energy,p.px,p.py,p.rx,p.ry,p.luminous,p.stamp,p.phasePressure,p.boiling,(materialCode p.label).toNat,
       if p.anchored then 1 else 0,if p.fractured then 1 else 0] do
       h := mixHash h v
   return h
+
+def stepCountSimulation (s : Simulation) : UInt32 := s.world.generation.toUInt32
 
 @[noinline] def oracle (scene ticks : UInt32) : String := Id.run do
   let mut s := sceneSimulation (newSimulation 24 20) scene

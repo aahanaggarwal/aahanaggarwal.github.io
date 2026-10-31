@@ -1,5 +1,6 @@
 import Sand2.Mixture
 import Sand2.Thermodynamics
+import Sand2.Saturation
 
 namespace Sand2
 open Chemistry
@@ -10,12 +11,17 @@ open Chemistry
 def air : Mixture := {oxygen := 8730, nitrogen := 32845}
 
 def dryCapacity (m : Mixture) : Int :=
-  (1000 : Int)*(32*m.oxygen+28*m.nitrogen+44*m.carbonDioxide+2*m.hydrogen) +
+  (21062 : Int)*m.oxygen+20806*m.nitrogen+28822*m.carbonDioxide+20286*m.hydrogen +
   1700*(30*m.biomass) + 2000*(14*m.oil) + 710*(12*m.carbon) +
   730*(60*m.silica) + 850*(58*m.salt) + 3500*(36*m.acid) +
   840*(100*m.carbonate) + 850*(110*m.calciumChloride) +
   450*(56*m.iron) + 650*(160*m.rust) + 650*(126*m.ironChloride) +
   1000*(101*m.nitrate+32*m.sulfur+110*m.sulfide)
+
+def nonWaterCondensedMass (m : Mixture) : Nat :=
+  30*m.biomass+14*m.oil+12*m.carbon+60*m.silica+58*m.salt+36*m.acid+
+  100*m.carbonate+110*m.calciumChloride+56*m.iron+160*m.rust+126*m.ironChloride+
+  101*m.nitrate+32*m.sulfur+110*m.sulfide
 
 /-- The cached mass and chemical energy have proofs tying them to matter.
     They cannot drift independently of the molecular inventory. -/
@@ -27,11 +33,16 @@ structure Particle where
   chemical_eq : chemical = chemicalEnergy matter
   capacity : Int
   capacity_eq : capacity = dryCapacity matter
+  dryMass : Nat
+  dryMass_eq : dryMass = nonWaterCondensedMass matter
   energy : Int
   px : Int := 0
   py : Int := 0
   rx : Int := 0
   ry : Int := 0
+  phasePressure : Nat := 101325000
+  boiling : Nat := saturationTemperature phasePressure
+  boiling_eq : boiling = saturationTemperature phasePressure
   label : Material := .empty
   anchored : Bool := false
   fractured : Bool := false
@@ -42,12 +53,30 @@ def makeParticle (matter : Mixture) (energy : Int) (label : Material := .empty)
     (anchored : Bool := false) : Particle :=
   {matter, mass := Chemistry.mass matter, mass_eq := rfl,
    chemical := chemicalEnergy matter, chemical_eq := rfl,
-   capacity := dryCapacity matter, capacity_eq := rfl, energy,label,anchored}
+   capacity := dryCapacity matter, capacity_eq := rfl,
+   dryMass := nonWaterCondensedMass matter,dryMass_eq := rfl,energy,label,anchored,
+   phasePressure := 101325000,boiling := saturationTemperature 101325000,boiling_eq := rfl}
 
 def replaceMatter (p : Particle) (matter : Mixture) : Particle :=
   {makeParticle matter p.energy p.label p.anchored with
     px := p.px, py := p.py, rx := p.rx, ry := p.ry, fractured := p.fractured,
-    luminous := p.luminous, stamp := p.stamp}
+    luminous := p.luminous, stamp := p.stamp,
+    phasePressure := p.phasePressure,boiling := p.boiling,boiling_eq := p.boiling_eq}
+
+def atPressure (p : Particle) (pressure : Nat) : Particle :=
+  {p with phasePressure := pressure,boiling := saturationTemperature pressure,boiling_eq := rfl}
+
+theorem cached_boiling_point_matches_pressure (p : Particle) :
+    p.boiling = saturationTemperature p.phasePressure := p.boiling_eq
+
+theorem cached_boiling_point_bounded (p : Particle) : p.boiling <= 20000 := by
+  rw [p.boiling_eq]
+  exact saturation_temperature_bounded _
+
+theorem increasing_phase_pressure_cannot_lower_boiling (p : Particle) (pressure : Nat)
+    (higher : p.phasePressure <= pressure) : p.boiling <= (atPressure p pressure).boiling := by
+  rw [p.boiling_eq]
+  exact higher_pressure_cannot_lower_boiling_point _ _ higher
 
 def Particle.vx (p : Particle) : Int := p.px / max 1 p.mass
  def Particle.vy (p : Particle) : Int := p.py / max 1 p.mass
@@ -63,17 +92,17 @@ def thermalEnergy (height width i : Nat) (p : Particle) : Int :=
 
 /-- The water component has a finite fusion and vaporization enthalpy. Other
     species contribute sensible heat to the same mixed-cell temperature. -/
-def waterDiagram (p : Particle) (boiling : Nat := 10000) : PhaseDiagram :=
+def waterDiagram (p : Particle) (boiling : Nat := p.boiling) : PhaseDiagram :=
   let waterMass := p.matter.water*18
   let fusion : Int := Int.ofNat (waterMass*33400000)
   let capacity : Int := Int.ofNat (waterMass*4180) + max 0 p.capacity
   let boil := fusion + capacity * (boiling : Int)
-  let vapor := boil + Int.ofNat (waterMass*225700000)
+  let vapor := boil + Int.ofNat (p.matter.water*internalLatentWaterAt boiling)
   ⟨0,fusion,boil,vapor,Int.natCast_nonneg _,
    Int.le_add_of_nonneg_right (Int.mul_nonneg (by have h := Int.natCast_nonneg (waterMass*4180); dsimp [capacity]; omega) (Int.natCast_nonneg _)),
    Int.le_add_of_nonneg_right (Int.natCast_nonneg _)⟩
 
-def regime (height width i : Nat) (p : Particle) (boiling : Nat := 10000) : WaterRegime :=
+def regime (height width i : Nat) (p : Particle) (boiling : Nat := p.boiling) : WaterRegime :=
   phase (waterDiagram p boiling) (thermalEnergy height width i p)
 
 /-- Rounded single-component fusion model for iron and quartz. Mixed water
@@ -94,8 +123,7 @@ def solidDiagram (p : Particle) : PhaseDiagram :=
 def solidRegime (height width i : Nat) (p : Particle) : WaterRegime :=
   phase (solidDiagram p) (thermalEnergy height width i p)
 
-def temperature (height width i : Nat) (p : Particle) (boiling : Nat := 10000) : Int :=
-  let h := thermalEnergy height width i p
+def temperatureFromEnthalpy (p : Particle) (h : Int) (boiling : Nat := p.boiling) : Int :=
   let wm := (p.matter.water*18 : Nat)
   if wm == 0 then
     if p.matter.silica*60 > p.mass/2 || p.matter.iron*56 > p.mass/2 then
@@ -111,23 +139,64 @@ def temperature (height width i : Nat) (p : Particle) (boiling : Nat := 10000) :
     | .melting => 0
     | .liquid => (h-d.meltEnd)/max 1 ((wm : Int)*4180+p.capacity)
     | .boiling => boiling
-    | .vapor => (boiling : Int)+(h-d.boilEnd)/max 1 ((wm : Int)*2000+p.capacity)
+    | .vapor => (boiling : Int)+(h-d.boilEnd)/max 1 ((p.matter.water : Int)*27686+p.capacity)
+
+
+def temperature (height width i : Nat) (p : Particle) (boiling : Nat := p.boiling) : Int :=
+  temperatureFromEnthalpy p (thermalEnergy height width i p) boiling
 
 def vaporous (height width i : Nat) (p : Particle) : Bool :=
   p.matter.water > 0 && regime height width i p == .vapor
+
+def vaporWaterFromEnthalpy (p : Particle) (h : Int) : Nat :=
+  if p.matter.water == 0 then 0 else
+    let d := waterDiagram p
+    phaseFraction p.matter.water d.boilStart d.boilEnd h
+
+def vaporWaterMoles (height width i : Nat) (p : Particle) : Nat :=
+  vaporWaterFromEnthalpy p (thermalEnergy height width i p)
+
+def gasCount (height width i : Nat) (p : Particle) : Nat :=
+  p.matter.oxygen+p.matter.nitrogen+p.matter.carbonDioxide+p.matter.hydrogen+vaporWaterMoles height width i p
+
+theorem vapor_molecules_cannot_exceed_water (p : Particle) :
+    vaporWaterMoles height width i p <= p.matter.water := by
+  unfold vaporWaterMoles vaporWaterFromEnthalpy
+  split
+  · omega
+  · exact phase_fraction_bounded _ _ _ _
+
+def gasMolecularMass (height width i : Nat) (p : Particle) : Nat :=
+  32*p.matter.oxygen+28*p.matter.nitrogen+44*p.matter.carbonDioxide+2*p.matter.hydrogen+
+  18*vaporWaterMoles height width i p
+
+def condensedMass (height width i : Nat) (p : Particle) : Nat :=
+  p.dryMass+18*(p.matter.water-vaporWaterMoles height width i p)
+
+def gasCell (height width i : Nat) (p : Particle) : Bool :=
+  p.mass < 10000000 || condensedMass height width i p < 10000000
+
+theorem phase_masses_recombine (p : Particle) :
+    gasMolecularMass height width i p+condensedMass height width i p = p.mass := by
+  have available := vapor_molecules_cannot_exceed_water (height := height) (width := width) (i := i) p
+  rw [p.mass_eq]
+  dsimp [gasMolecularMass,condensedMass]
+  rw [p.dryMass_eq]
+  dsimp [nonWaterCondensedMass,Chemistry.mass,atoms]
+  omega
 
 def idealGasPressure (moles : Nat) (t : Int) : Int :=
   (moles : Int)*8314*max 1 (t+27315)/100000
 
 def pressure (height width i : Nat) (p : Particle) : Int :=
-  idealGasPressure (gasMoles p.matter (vaporous height width i p)) (temperature height width i p)
+  idealGasPressure (gasCount height width i p) (temperature height width i p)
 
 theorem ideal_gas_pressure_matches_declared_units (n : Nat) (t : Int) :
     idealGasPressure n t = (n : Int)*8314*max 1 (t+27315)/100000 := rfl
 
-/-- Initial sensible/phase enthalpy for a requested temperature. Editing is an
+/-- Initial thermal internal energy for a requested temperature. Editing is an
     explicit external energy/matter injection, never part of physics stepping. -/
-def enthalpyAt (m : Mixture) (label : Material) (t : Int) : Int :=
+def internalEnergyAt (m : Mixture) (label : Material) (t : Int) : Int :=
   let wm : Int := m.water*18
   let other := dryCapacity m*t
   if wm == 0 then
@@ -137,7 +206,7 @@ def enthalpyAt (m : Mixture) (label : Material) (t : Int) : Int :=
       (if silica > 0 && t >= 170000 then (silica*15000000 : Nat) else 0)
   else if label == .ice then wm*2100*t+other
   else if label == .steam || label == .fire || label == .smoke then
-    wm*(300900000+2000*(t-10000))+other
+    wm*(300900000+2000*(t-10000))-(m.water : Int)*8314*(t+27315)+other
   else wm*(33400000+4180*t)+other
 
 def matterFor : Material → Mixture
@@ -176,7 +245,7 @@ def makeAt (height width i : Nat) (m : Material) (anchored : Bool := false) : Pa
     | .steam => 13000 | .smoke => 14000 | _ => 2000
   let p := makeParticle matter 0 m anchored
   {p with
-    energy := p.chemical+enthalpyAt matter m t+potentialEnergy height width i p
+    energy := p.chemical+internalEnergyAt matter m t+potentialEnergy height width i p
     luminous := (if m == .fire || m == .ember then 16 else 0)}
 
 /-- Fixed dimensions and exact grid shape are carried by the Lean state. -/

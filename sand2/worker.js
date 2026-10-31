@@ -14,10 +14,11 @@ self.onmessage = async ({data}) => {
       return;
     }
     if (!api || data.type !== 'frame') return;
-    for (const [name, ...args] of data.commands) api[name](...args);
     const start = performance.now();
-    if (data.tick) api.world_tick();
-    const tickMs = data.tick ? performance.now() - start : 0;
+    let stepsTaken = 0;
+    for (const [name, ...args] of data.commands) { api[name](...args); if (name === 'world_tick') stepsTaken++; }
+    if (data.tick) { api.world_tick(); stepsTaken++; }
+    const tickMs = stepsTaken ? (performance.now() - start) / stepsTaken : 0;
     const count = api.world_render(data.view);
     const pixels = new Uint8Array(api.memory.buffer, api.world_pixels(), width * height * 4).slice();
     let inspect;
@@ -25,7 +26,7 @@ self.onmessage = async ({data}) => {
       const pointer = api.world_inspect(...data.inspect);
       inspect = new TextDecoder().decode(new Uint8Array(api.memory.buffer, pointer, api.world_text_length()));
     }
-    self.postMessage({type: 'frame', pixels, count, inspect, tickMs}, [pixels.buffer]);
+    self.postMessage({type: 'frame', pixels, count, inspect, tickMs, stepsTaken, steps: api.world_steps()}, [pixels.buffer]);
   } catch (error) {
     self.postMessage({type: 'error', message: String(error?.stack || error)});
   }

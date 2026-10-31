@@ -38,6 +38,7 @@ impl Universe {
         self.pixels = physics::render_simulation(self.state(), view).0;
         physics::count_simulation(self.state())
     }
+    pub fn step_count(&self) -> u32 { physics::step_count_simulation(self.state()) }
     pub fn digest(&self) -> u64 { physics::digest_simulation(self.state()) }
     pub fn audit(&self) -> String { physics::audit_simulation(self.state()) }
     #[cfg(target_arch = "wasm32")]
@@ -74,6 +75,8 @@ mod browser {
     pub extern "C" fn world_checkpoint() -> u32 { world(|w| w.checkpoint()) }
     #[unsafe(no_mangle)]
     pub extern "C" fn world_undo() -> u32 { world(|w| w.undo()) }
+    #[unsafe(no_mangle)]
+    pub extern "C" fn world_steps() -> u32 { world(|w| w.step_count()) }
     #[unsafe(no_mangle)]
     pub extern "C" fn world_digest() -> u64 { world(|w| w.digest()) }
     #[unsafe(no_mangle)]

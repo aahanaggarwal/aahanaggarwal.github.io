@@ -72,6 +72,12 @@
     "renamed": true
   },
   {
+    "lean_name": "Sand2.stepCountSimulation",
+    "kind": "function",
+    "rust_path": "step_count_simulation",
+    "renamed": true
+  },
+  {
     "lean_name": "Sand2.tickSimulation",
     "kind": "function",
     "rust_path": "tick_simulation",

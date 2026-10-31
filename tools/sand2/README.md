@@ -28,12 +28,17 @@ remaining thermal budget. Heating changes enthalpy; phase changes do not replace
 matter with unrelated substances or reset temperature. Fire is a luminous state
 of finite hot fuel/product mixtures; extinguishing it never deletes its atoms.
 
-Water has finite fusion/vaporization energy and isothermal plateaus. Quartz and
+Water has finite fusion/vaporization energy, pressure-dependent saturation and
+isothermal phase plateaus. Quartz and
 iron have finite fusion energy. Constant heat capacities and rounded phase data
-are approximations; mineral polymorphs, nonideal mixtures, pressure-dependent
-boiling, radiative transfer and high-temperature vaporization of metals/minerals
-are not yet represented. The water phase diagram currently uses the reference
-100 °C boiling point even when the gas pressure changes.
+are approximations; mineral polymorphs, nonideal mixtures, radiative transfer and high-temperature vaporization of metals/minerals
+are not all represented. Water saturation uses a rounded IAPWS-derived 0–200 °C
+curve, clamped outside that range. This is not a high-pressure or supercritical
+equation of state. Gas heat capacities remain constant-temperature approximations.
+
+Cell energy stores gas internal energy with Cv. Advected packets carry enthalpy,
+including R*T pressure/volume work. Formation references include the gas
+reference offset, and the water phase curve uses internal-energy latent heat.
 
 Gas moves by bounded finite-volume pressure relaxation, symmetric molecular
 diffusion (including at equal pressure), and density-driven convective
@@ -210,3 +215,56 @@ old/new Wasm comparison over three repeated dam-break runs measured 88.43 versus
 digests. The routine pipeline's shorter benchmark measured 69.81 ms/tick; the
 difference illustrates scene evolution and timing variation, not a faster
 physical timestep. All 89 handwritten theorems and existing checks pass.
+
+## Pressure-aware phase and gas-energy milestone (2026-10-31 UTC)
+
+Water's gas fraction is derived from its available latent energy. The transport
+portion is capped by that fraction; it no longer waits for the whole parcel to
+become vapor. Gas and condensed mass recombine exactly into molecular mass, so
+compressed gas is not mistaken for liquid merely because it exceeds a mass
+threshold. The steam/air classification also retains visible dilute steam.
+
+The saturation table's ordering is part of its Lean type. Generic theorems prove
+interpolation bounds and that raising pressure cannot lower saturation
+temperature. Cached phase points carry proofs tying them to their pressure.
+Partial phase fractions are bounded, monotone and cannot overdraw their latent
+energy budget. The closed-system atom/energy theorem covers all these updates.
+
+Gas-dominated cells use water partial pressure for dew-point behavior. Condensed
+water uses hydrostatic surface pressure and a bounded twelve-step own-vapor
+pressure search. `Bracketing` proves interval retention, halving and a numerical
+width bound. Threshold-retention theorems are conditional on a threshold
+predicate; a universal proof of the nonlinear physical root equation is not
+claimed. A sealed-cell benchmark checks the pressure/temperature response and
+its pressure residual numerically. This remains a coarse fixed-volume mixture
+and hydrostatic-column model, rather than a resolved multiphase CFD solver.
+
+Closed gas cells use Cv, with distinct O2, N2, CO2 and H2 values derived from
+rounded room-temperature Cp values. Gas transport includes the pressure/volume
+work term. The water-vapor internal-energy reference is proved consistent as
+saturation pressure changes; pressure changes do not reset a superheated vapor's
+temperature. This distinguishes the conserved cell-energy inventory from a sum
+of gas enthalpies.
+
+120 handwritten theorems pass the 785-theorem namespace axiom audit. All 36
+physical checks, 45 complete-world Lean/native/browser comparisons and
+32-material browser conservation checks pass. The actual Lean saturation lookup
+was compared against the independent IAPWS equation at 2,001 pressures; maximum
+sampled error was 0.1805 °C over the clamped reference range. The 96×64 dam-break
+benchmark is approximately 103 ms/tick on this host; performance work continues.
+
+Playback now shows actual completed physics Hz and Lean simulated time. Manual
+steps are queued exactly, and undo restores time with the complete world. The
+Fast/Medium/Slow controls target progressively lower rates without claiming a
+real-time multiple on slow devices. Optimized Chromium touch tests verified five
+rapid steps, time-restoring undo, distinct playback rates, 390 px layout and
+worker cleanup without page errors.
+
+Reference details:
+
+- [IAPWS saturation formulation](https://iapws.org/public/documents/6dGkr/Supp-sat.pdf)
+- [NASA: Cp, Cv and pressure/volume work](https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/specific-heats-cp-and-cv-1/)
+- [NIST hydrogen heat capacity](https://janaf.nist.gov/tables/H-050.html)
+- [NIST O2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C7782447&Mask=1),
+  [N2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=1) and
+  [CO2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C124389&Mask=1) thermochemistry

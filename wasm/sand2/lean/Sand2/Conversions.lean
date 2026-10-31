@@ -6,7 +6,7 @@ open Chemistry
 /-- Every possible cell selects a declared enthalpy diagram. The relational
     equilibrium spec contains disjoint inequalities, not the executable code. -/
 def phaseDiagramFor (p : Particle) : PhaseDiagram :=
-  if p.matter.water*18 > p.mass/2 then waterDiagram p else solidDiagram p
+  if p.matter.water > 0 then waterDiagram p else solidDiagram p
 
 def conversionPhase (height width i : Nat) (p : Particle) : WaterRegime :=
   phase (phaseDiagramFor p) (thermalEnergy height width i p)
@@ -30,18 +30,19 @@ theorem conversion_total (p : Particle) :
   ⟨_,conversion_sound p,fun _ spec => (conversion_complete p _ spec).symm⟩
 
 theorem water_conversion_uses_latent_heat (p : Particle)
-    (water : p.matter.water*18 > p.mass/2) :
+    (water : p.matter.water > 0) :
     conversionPhase height width i p = regime height width i p := by
   simp [conversionPhase,phaseDiagramFor,water,regime]
 
 theorem mineral_conversion_uses_latent_heat (p : Particle)
-    (mineral : ¬p.matter.water*18 > p.mass/2) :
+    (mineral : ¬p.matter.water > 0) :
     conversionPhase height width i p = solidRegime height width i p := by
   simp [conversionPhase,phaseDiagramFor,mineral,solidRegime]
 
 def labelAt (height width i : Nat) (p : Particle) : Material :=
   if p.luminous > 0 then .fire
   else if p.matter.water*18 > p.mass/2 then
+    if gasCell height width i p && vaporWaterMoles height width i p > 0 then .steam else
     match conversionPhase height width i p with
     | .ice | .melting => .ice
     | .vapor => .steam
@@ -68,6 +69,7 @@ def labelAt (height width i : Nat) (p : Particle) : Material :=
   else if p.matter.oxygen > p.matter.nitrogen then .oxygen
   else if p.label == .nitrogen && p.matter.nitrogen > p.matter.oxygen then .nitrogen
   else if p.matter.carbonDioxide > 4000 then .smoke
+  else if p.matter.water > 4000 && vaporWaterMoles height width i p > 0 then .steam
   else .empty
 
 

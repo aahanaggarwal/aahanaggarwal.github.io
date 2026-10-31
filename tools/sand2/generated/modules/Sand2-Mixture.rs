@@ -309,123 +309,146 @@ pub(crate) unsafe extern "C" fn l_Sand2_dChemistry_datomAdd_d__boxed(x_1: Obj, x
 pub(crate) unsafe extern "C" fn l_Sand2_dChemistry_dchemicalEnergy(x_1: Obj) -> Obj {
     let x_2: Obj = rt::lean_ctor_get(x_1, 0);
     rt::lean_inc(x_2);
-    let x_3: Obj = rt::lean_ctor_get(x_1, 3);
+    let x_3: Obj = rt::lean_ctor_get(x_1, 1);
     rt::lean_inc(x_3);
-    let x_4: Obj = rt::lean_ctor_get(x_1, 4);
+    let x_4: Obj = rt::lean_ctor_get(x_1, 2);
     rt::lean_inc(x_4);
-    let x_5: Obj = rt::lean_ctor_get(x_1, 5);
+    let x_5: Obj = rt::lean_ctor_get(x_1, 3);
     rt::lean_inc(x_5);
-    let x_6: Obj = rt::lean_ctor_get(x_1, 7);
+    let x_6: Obj = rt::lean_ctor_get(x_1, 4);
     rt::lean_inc(x_6);
-    let x_7: Obj = rt::lean_ctor_get(x_1, 8);
+    let x_7: Obj = rt::lean_ctor_get(x_1, 5);
     rt::lean_inc(x_7);
-    let x_8: Obj = rt::lean_ctor_get(x_1, 9);
+    let x_8: Obj = rt::lean_ctor_get(x_1, 7);
     rt::lean_inc(x_8);
-    let x_9: Obj = rt::lean_ctor_get(x_1, 10);
+    let x_9: Obj = rt::lean_ctor_get(x_1, 8);
     rt::lean_inc(x_9);
-    let x_10: Obj = rt::lean_ctor_get(x_1, 11);
+    let x_10: Obj = rt::lean_ctor_get(x_1, 9);
     rt::lean_inc(x_10);
-    let x_11: Obj = rt::lean_ctor_get(x_1, 13);
+    let x_11: Obj = rt::lean_ctor_get(x_1, 10);
     rt::lean_inc(x_11);
-    let x_12: Obj = rt::lean_ctor_get(x_1, 14);
+    let x_12: Obj = rt::lean_ctor_get(x_1, 11);
     rt::lean_inc(x_12);
-    let x_13: Obj = rt::lean_ctor_get(x_1, 16);
+    let x_13: Obj = rt::lean_ctor_get(x_1, 13);
     rt::lean_inc(x_13);
-    let x_14: Obj = rt::lean_ctor_get(x_1, 18);
+    let x_14: Obj = rt::lean_ctor_get(x_1, 14);
     rt::lean_inc(x_14);
+    let x_15: Obj = rt::lean_ctor_get(x_1, 15);
+    rt::lean_inc(x_15);
+    let x_16: Obj = rt::lean_ctor_get(x_1, 16);
+    rt::lean_inc(x_16);
+    let x_17: Obj = rt::lean_ctor_get(x_1, 18);
+    rt::lean_inc(x_17);
     rt::lean_dec_ref(x_1);
-    let x_15: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__1();
-    let x_16: Obj = l_Int_dofNat(x_2);
-    let x_17: Obj = l_Int_dmul(x_15, x_16);
-    rt::lean_dec(x_16);
-    let x_18: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__2();
-    let x_19: Obj = l_Int_dofNat(x_3);
+    let x_18: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__1();
+    let x_19: Obj = l_Int_dofNat(x_2);
     let x_20: Obj = l_Int_dmul(x_18, x_19);
     rt::lean_dec(x_19);
-    let x_21: Obj = l_Int_dsub(x_17, x_20);
-    rt::lean_dec(x_20);
-    rt::lean_dec(x_17);
-    let x_22: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__3();
-    let x_23: Obj = l_Int_dofNat(x_4);
-    let x_24: Obj = l_Int_dmul(x_22, x_23);
+    let x_21: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__2();
+    let x_22: Obj = l_Int_dofNat(x_5);
+    let x_23: Obj = l_Int_dmul(x_21, x_22);
+    let x_24: Obj = l_Int_dsub(x_20, x_23);
     rt::lean_dec(x_23);
-    let x_25: Obj = l_Int_dsub(x_21, x_24);
-    rt::lean_dec(x_24);
-    rt::lean_dec(x_21);
-    let x_26: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__4();
-    let x_27: Obj = l_Int_dofNat(x_5);
-    let x_28: Obj = l_Int_dmul(x_26, x_27);
+    rt::lean_dec(x_20);
+    let x_25: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__3();
+    let x_26: Obj = l_Int_dofNat(x_6);
+    let x_27: Obj = l_Int_dmul(x_25, x_26);
+    rt::lean_dec(x_26);
+    let x_28: Obj = l_Int_dsub(x_24, x_27);
     rt::lean_dec(x_27);
-    let x_29: Obj = l_Int_dsub(x_25, x_28);
-    rt::lean_dec(x_28);
-    rt::lean_dec(x_25);
-    let x_30: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__5();
-    let x_31: Obj = l_Int_dofNat(x_6);
-    let x_32: Obj = l_Int_dmul(x_30, x_31);
+    rt::lean_dec(x_24);
+    let x_29: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__4();
+    let x_30: Obj = l_Int_dofNat(x_7);
+    let x_31: Obj = l_Int_dmul(x_29, x_30);
+    rt::lean_dec(x_30);
+    let x_32: Obj = l_Int_dsub(x_28, x_31);
     rt::lean_dec(x_31);
-    let x_33: Obj = l_Int_dsub(x_29, x_32);
-    rt::lean_dec(x_32);
-    rt::lean_dec(x_29);
-    let x_34: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__6();
-    let x_35: Obj = l_Int_dofNat(x_7);
-    let x_36: Obj = l_Int_dmul(x_34, x_35);
+    rt::lean_dec(x_28);
+    let x_33: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__5();
+    let x_34: Obj = l_Int_dofNat(x_8);
+    let x_35: Obj = l_Int_dmul(x_33, x_34);
+    rt::lean_dec(x_34);
+    let x_36: Obj = l_Int_dsub(x_32, x_35);
     rt::lean_dec(x_35);
-    let x_37: Obj = l_Int_dsub(x_33, x_36);
-    rt::lean_dec(x_36);
-    rt::lean_dec(x_33);
-    let x_38: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__7();
-    let x_39: Obj = l_Int_dofNat(x_8);
-    let x_40: Obj = l_Int_dmul(x_38, x_39);
+    rt::lean_dec(x_32);
+    let x_37: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__6();
+    let x_38: Obj = l_Int_dofNat(x_9);
+    let x_39: Obj = l_Int_dmul(x_37, x_38);
+    rt::lean_dec(x_38);
+    let x_40: Obj = l_Int_dsub(x_36, x_39);
     rt::lean_dec(x_39);
-    let x_41: Obj = l_Int_dsub(x_37, x_40);
-    rt::lean_dec(x_40);
-    rt::lean_dec(x_37);
-    let x_42: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__8();
-    let x_43: Obj = l_Int_dofNat(x_9);
-    let x_44: Obj = l_Int_dmul(x_42, x_43);
+    rt::lean_dec(x_36);
+    let x_41: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__7();
+    let x_42: Obj = l_Int_dofNat(x_10);
+    let x_43: Obj = l_Int_dmul(x_41, x_42);
+    rt::lean_dec(x_42);
+    let x_44: Obj = l_Int_dsub(x_40, x_43);
     rt::lean_dec(x_43);
-    let x_45: Obj = l_Int_dsub(x_41, x_44);
-    rt::lean_dec(x_44);
-    rt::lean_dec(x_41);
-    let x_46: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__9();
-    let x_47: Obj = l_Int_dofNat(x_10);
-    let x_48: Obj = l_Int_dmul(x_46, x_47);
+    rt::lean_dec(x_40);
+    let x_45: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__8();
+    let x_46: Obj = l_Int_dofNat(x_11);
+    let x_47: Obj = l_Int_dmul(x_45, x_46);
+    rt::lean_dec(x_46);
+    let x_48: Obj = l_Int_dsub(x_44, x_47);
     rt::lean_dec(x_47);
-    let x_49: Obj = l_Int_dsub(x_45, x_48);
-    rt::lean_dec(x_48);
-    rt::lean_dec(x_45);
-    let x_50: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__10();
-    let x_51: Obj = l_Int_dofNat(x_11);
-    let x_52: Obj = l_Int_dmul(x_50, x_51);
+    rt::lean_dec(x_44);
+    let x_49: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__9();
+    let x_50: Obj = l_Int_dofNat(x_12);
+    let x_51: Obj = l_Int_dmul(x_49, x_50);
+    rt::lean_dec(x_50);
+    let x_52: Obj = l_Int_dsub(x_48, x_51);
     rt::lean_dec(x_51);
-    let x_53: Obj = l_Int_dsub(x_49, x_52);
-    rt::lean_dec(x_52);
-    rt::lean_dec(x_49);
-    let x_54: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__11();
-    let x_55: Obj = l_Int_dofNat(x_12);
-    let x_56: Obj = l_Int_dmul(x_54, x_55);
+    rt::lean_dec(x_48);
+    let x_53: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__10();
+    let x_54: Obj = l_Int_dofNat(x_13);
+    let x_55: Obj = l_Int_dmul(x_53, x_54);
+    rt::lean_dec(x_54);
+    let x_56: Obj = l_Int_dsub(x_52, x_55);
     rt::lean_dec(x_55);
-    let x_57: Obj = l_Int_dsub(x_53, x_56);
-    rt::lean_dec(x_56);
-    rt::lean_dec(x_53);
-    let x_58: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__12();
-    let x_59: Obj = l_Int_dofNat(x_13);
-    let x_60: Obj = l_Int_dmul(x_58, x_59);
+    rt::lean_dec(x_52);
+    let x_57: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__11();
+    let x_58: Obj = l_Int_dofNat(x_14);
+    let x_59: Obj = l_Int_dmul(x_57, x_58);
+    rt::lean_dec(x_58);
+    let x_60: Obj = l_Int_dsub(x_56, x_59);
     rt::lean_dec(x_59);
-    let x_61: Obj = l_Int_dsub(x_57, x_60);
-    rt::lean_dec(x_60);
-    rt::lean_dec(x_57);
-    let x_62: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__13();
-    let x_63: Obj = l_Int_dofNat(x_14);
-    let x_64: Obj = l_Int_dmul(x_62, x_63);
+    rt::lean_dec(x_56);
+    let x_61: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__12();
+    let x_62: Obj = l_Int_dofNat(x_16);
+    let x_63: Obj = l_Int_dmul(x_61, x_62);
+    rt::lean_dec(x_62);
+    let x_64: Obj = l_Int_dsub(x_60, x_63);
     rt::lean_dec(x_63);
-    let x_65: Obj = l_Int_dsub(x_61, x_64);
-    rt::lean_dec(x_64);
-    rt::lean_dec(x_61);
-    let x_66: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__14();
+    rt::lean_dec(x_60);
+    let x_65: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__13();
+    let x_66: Obj = l_Int_dofNat(x_17);
     let x_67: Obj = l_Int_dmul(x_65, x_66);
-    rt::lean_dec(x_65);
-    return x_67;
+    rt::lean_dec(x_66);
+    let x_68: Obj = l_Int_dsub(x_64, x_67);
+    rt::lean_dec(x_67);
+    rt::lean_dec(x_64);
+    let x_69: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__14();
+    let x_70: Obj = l_Int_dmul(x_68, x_69);
+    rt::lean_dec(x_68);
+    let x_71: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__17();
+    let x_72: Obj = l_Int_dofNat(x_3);
+    let x_73: Obj = l_Int_dofNat(x_4);
+    let x_74: Obj = l_Int_dadd(x_72, x_73);
+    rt::lean_dec(x_73);
+    rt::lean_dec(x_72);
+    let x_75: Obj = l_Int_dadd(x_74, x_22);
+    rt::lean_dec(x_22);
+    rt::lean_dec(x_74);
+    let x_76: Obj = l_Int_dofNat(x_15);
+    let x_77: Obj = l_Int_dadd(x_75, x_76);
+    rt::lean_dec(x_76);
+    rt::lean_dec(x_75);
+    let x_78: Obj = l_Int_dmul(x_71, x_77);
+    rt::lean_dec(x_77);
+    let x_79: Obj = l_Int_dsub(x_70, x_78);
+    rt::lean_dec(x_78);
+    rt::lean_dec(x_70);
+    return x_79;
 }
 
 // Lean: Sand2.Chemistry.chemicalEnergy._closed_0
@@ -524,6 +547,49 @@ unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__14__init() -> Obj {
 #[inline]
 pub(crate) unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__14() -> Obj {
     C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__14.get(l_Sand2_dChemistry_dchemicalEnergy_d__closed__14__init)
+}
+
+// Lean: Sand2.Chemistry.chemicalEnergy._closed_15
+// Compiled from: Sand2.Chemistry.chemicalEnergy
+// Source: lean/Sand2/Mixture.lean:212:1
+static C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__15: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__15__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(8314);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__15() -> Obj {
+    C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__15.get(l_Sand2_dChemistry_dchemicalEnergy_d__closed__15__init)
+}
+
+// Lean: Sand2.Chemistry.chemicalEnergy._closed_16
+// Compiled from: Sand2.Chemistry.chemicalEnergy
+// Source: lean/Sand2/Mixture.lean:212:1
+static C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__16: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__16__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(27315);
+    let x_2: Obj = l_Int_dofNat(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__16() -> Obj {
+    C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__16.get(l_Sand2_dChemistry_dchemicalEnergy_d__closed__16__init)
+}
+
+// Lean: Sand2.Chemistry.chemicalEnergy._closed_17
+// Compiled from: Sand2.Chemistry.chemicalEnergy
+// Source: lean/Sand2/Mixture.lean:212:1
+static C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__17: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__17__init() -> Obj {
+    let x_1: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__16();
+    let x_2: Obj = l_Sand2_dChemistry_dchemicalEnergy_d__closed__15();
+    let x_3: Obj = l_Int_dmul(x_2, x_1);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__17() -> Obj {
+    C_l_Sand2_dChemistry_dchemicalEnergy_d__closed__17.get(l_Sand2_dChemistry_dchemicalEnergy_d__closed__17__init)
 }
 
 // Lean: Sand2.Chemistry.chemicalEnergy._closed_2
@@ -639,7 +705,7 @@ pub(crate) unsafe fn l_Sand2_dChemistry_dchemicalEnergy_d__closed__9() -> Obj {
 }
 
 // Lean: Sand2.Chemistry.gasMoles
-// Source: lean/Sand2/Mixture.lean:220:1
+// Source: lean/Sand2/Mixture.lean:222:1
 pub(crate) unsafe extern "C" fn l_Sand2_dChemistry_dgasMoles(x_1: Obj, x_2: u8) -> Obj {
     let x_3: Obj = rt::lean_ctor_get(x_1, 0);
     let x_4: Obj = rt::lean_ctor_get(x_1, 1);
@@ -665,7 +731,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dChemistry_dgasMoles(x_1: Obj, x_2: u8) 
 
 // Lean: Sand2.Chemistry.gasMoles._boxed
 // Compiled from: Sand2.Chemistry.gasMoles
-// Source: lean/Sand2/Mixture.lean:220:1
+// Source: lean/Sand2/Mixture.lean:222:1
 pub(crate) unsafe extern "C" fn l_Sand2_dChemistry_dgasMoles_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: u8 = rt::lean_unbox(x_2) as u8;
     let x_4: Obj = l_Sand2_dChemistry_dgasMoles(x_1, x_3);

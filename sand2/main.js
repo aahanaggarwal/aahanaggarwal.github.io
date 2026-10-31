@@ -70,6 +70,7 @@ export async function run() {
   const eraser = {id: 0, name: 'Eraser', type: 'TOOL', color: '#dfa19a', description: 'Make room for your next idea. Right-click or hold Shift while drawing to erase, too.'};
   const setPaused = value => {
     paused = value; accumulator = 0;
+    if (value) api?.world_pause();
     el('play-label').textContent = value ? 'Play' : 'Pause';
     el('play-icon').textContent = value ? '▷' : 'Ⅱ';
     el('play').setAttribute('aria-label', value ? 'Play simulation' : 'Pause simulation');
@@ -143,11 +144,11 @@ export async function run() {
     setScene('1', false);
 
     on(el('play'), 'click', () => setPaused(!paused));
-    on(el('step'), 'click', () => { setPaused(true); api.world_tick(); draw(); });
+    on(el('step'), 'click', () => { setPaused(true); api.world_step(); draw(); });
     on(el('speed'), 'click', () => {
-      speed = speed === 1 ? 2 : speed === 2 ? .5 : 1;
-      el('speed').textContent = `${speed}×`;
-      el('speed').setAttribute('aria-label', `Simulation speed: ${speed} times`);
+      speed = speed === 1 ? .5 : speed === .5 ? .25 : 1;
+      el('speed').textContent = speed === 1 ? 'Fast' : speed === .5 ? 'Medium' : 'Slow';
+      el('speed').setAttribute('aria-label', `Simulation playback: ${speed === 1 ? 'fast' : speed === .5 ? 'medium' : 'slow'} speed`);
     });
     on(el('brush'), 'input', event => setBrush(Number(event.target.value)));
     on(el('eraser'), 'click', () => select(material.id === 0 ? MATERIALS[0] : eraser));
@@ -194,7 +195,7 @@ export async function run() {
       else if (key === 'h') { view = view === 1 ? 0 : 1; el('view').value = String(view); }
       else if (key === '[' || key === '-') setBrush(brush - 1);
       else if (key === ']' || key === '=') setBrush(brush + 1);
-      else if (key === '.') { setPaused(true); api.world_tick(); draw(); }
+      else if (key === '.') { setPaused(true); api.world_step(); draw(); }
       else { const item = MATERIALS.find(item => item.key && item.key === key); if (item) select(item); }
     });
     const loop = time => {
@@ -204,13 +205,14 @@ export async function run() {
       const elapsed = Math.min(80, time - lastTime); lastTime = time;
       if (drawing) paint();
       if (!paused) {
-        accumulator = Math.min(accumulator + elapsed * speed, 100);
-        let ticks = 0;
-        while (accumulator >= 1000 / 60 && ticks < 2) { api.world_tick(); accumulator -= 1000 / 60; ticks++; }
+        const interval = api.simulation_interval() / speed;
+        accumulator = Math.min(accumulator + elapsed, interval * 2);
+        if (accumulator >= interval) { api.world_tick(); accumulator -= interval; }
       }
       draw(); frames++;
       if (time - statsTime > 500) {
         if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
+        el('time').textContent = `${(api.world_steps() / 60).toFixed(2)} s`;
         el('count').textContent = count.toLocaleString();
         el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS · ${api.simulation_hz()} Hz`;
         frames = 0; statsTime = time;

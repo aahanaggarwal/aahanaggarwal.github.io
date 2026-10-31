@@ -21,6 +21,26 @@ theorem gas_partition_recombines (m : Mixture) (d : Nat) (v : Bool) :
   have h := gas_transfer_conserves_molecules m {} d v
   simpa only [transferGas,mixture_zero_add,mixture_add_zero] using h
 
+theorem requested_partition_recombines (m request : Mixture) :
+    add (sub m (takeFrom m request)) (takeFrom m request) = m := by
+  apply Mixture.ext <;> simp only [add,sub,takeFrom] <;> omega
+
+def requestedPortion (m request : Mixture) : Portion m :=
+  ⟨takeFrom m request,sub m (takeFrom m request),requested_partition_recombines m request⟩
+
+def partialGasPortion (m : Mixture) (d availableWater : Nat) : Portion m :=
+  requestedPortion m {gasPart m d false with water := availableWater/max 1 d}
+
+def emptyPortion (m : Mixture) : Portion m := ⟨{},m,mixture_add_zero m⟩
+
+theorem transported_water_is_available_water (m : Mixture) (d available : Nat) :
+    (partialGasPortion m d available).moved.water = min m.water (available/max 1 d) := rfl
+
+theorem gas_transport_cannot_overdraw_vapor (m : Mixture) (d available : Nat) :
+    (partialGasPortion m d available).moved.water <= available := by
+  rw [transported_water_is_available_water]
+  exact Nat.le_trans (Nat.min_le_right _ _) (Nat.div_le_self _ _)
+
 def gasPortion (m : Mixture) (d : Nat) (v : Bool) : Portion m :=
   ⟨gasPart m d v,sub m (gasPart m d v),gas_partition_recombines m d v⟩
 
@@ -32,6 +52,11 @@ def exchangePortions (a b : Mixture) (pa : Portion a) (pb : Portion b) : Mixture
 
 theorem mixture_rearrange (a b c d : Mixture) : add (add a b) (add c d) = add (add a d) (add c b) := by
   apply Mixture.ext <;> simp [add] <;> omega
+
+theorem identical_portions_are_stationary (m : Mixture) (p : Portion m) :
+    exchangePortions m m p p = (m,m) := by
+  change (add p.remaining p.moved,add p.remaining p.moved) = (m,m)
+  rw [p.partition]
 
 theorem portion_exchange_conserves_every_molecule (a b : Mixture) (pa : Portion a) (pb : Portion b) :
     add (exchangePortions a b pa pb).1 (exchangePortions a b pa pb).2 = add a b := by

@@ -58,11 +58,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 159,
+          "line": 175,
           "column": 1
         },
         "end": {
-          "line": 160,
+          "line": 176,
           "column": 82
         }
       }
@@ -137,6 +137,7 @@
           "lean_mk_empty_array_with_capacity",
           "lean_nat_add",
           "lean_nat_dec_eq",
+          "lean_nat_dec_le",
           "lean_nat_dec_lt",
           "lean_nat_div",
           "lean_nat_mod",
@@ -185,6 +186,7 @@
           "lean_int_mul",
           "lean_int_neg",
           "lean_int_sub",
+          "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
           "lean_nat_dec_le",
@@ -206,11 +208,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 143,
+          "line": 144,
           "column": 1
         },
         "end": {
-          "line": 147,
+          "line": 148,
           "column": 20
         }
       }
@@ -242,6 +244,7 @@
           "lean_nat_abs",
           "lean_nat_add",
           "lean_nat_dec_eq",
+          "lean_nat_dec_le",
           "lean_nat_dec_lt",
           "lean_nat_div",
           "lean_nat_mul",
@@ -261,11 +264,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 164,
+          "line": 180,
           "column": 1
         },
         "end": {
-          "line": 176,
+          "line": 192,
           "column": 11
         }
       }
@@ -322,12 +325,12 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 149,
+          "line": 160,
           "column": 1
         },
         "end": {
-          "line": 154,
-          "column": 90
+          "line": 170,
+          "column": 45
         }
       }
     },
@@ -443,11 +446,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 178,
+          "line": 196,
           "column": 1
         },
         "end": {
-          "line": 181,
+          "line": 199,
           "column": 67
         }
       }
@@ -567,7 +570,7 @@
           "column": 1
         },
         "end": {
-          "line": 141,
+          "line": 142,
           "column": 16
         }
       }
@@ -622,6 +625,36 @@
         "end": {
           "line": 77,
           "column": 11
+        }
+      }
+    },
+    {
+      "name": "Sand2.stepCountSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_uint32_of_nat"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 194,
+          "column": 1
+        },
+        "end": {
+          "line": 194,
+          "column": 81
         }
       }
     },
