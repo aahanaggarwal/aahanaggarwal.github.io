@@ -1,0 +1,6 @@
+name = "sand2"
+version = "0.1.0"
+defaultTargets = ["Sand2"]
+
+[[lean_lib]]
+name = "Sand2"

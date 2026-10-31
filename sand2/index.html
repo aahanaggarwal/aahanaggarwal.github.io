@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A little world of falling sand, flowing water, growing plants and molten lava. Draw, mix and experiment in Sand Game 2.">
+  <title>Sand Game 2 — Aahan</title>
+  <link rel="stylesheet" href="/style.css?v=4">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<body class="crt">
+  <nav id="top-nav">
+    <div class="nav-logo"><a href="/">AAHAN.DEV</a></div>
+    <ul>
+      <li><a href="/">Home</a></li><li><a href="/pics/">Pics</a></li><li><a href="/blog/">Blog</a></li>
+      <li class="dropdown"><span class="dropbtn" tabindex="0">Tools</span>
+        <div class="dropdown-content">
+          <a href="/graph/">Graph</a><a href="/sand/">Sand</a><a href="/sand2/">Sand 2</a><a href="/pong/">Pong</a><a href="/tron/">Tron</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div id="hud-coords">X: 0000 Y: 0000</div><div id="hud-timer">SESSION: 00:00:00</div>
+  <canvas id="circuit"></canvas><div id="cursor"></div>
+  <div id="content">
+    <link rel="stylesheet" href="/sand2/style.css">
+    <main id="s2" aria-label="Sand Game 2">
+      <header class="s2-heading">
+        <div><div class="s2-eyebrow"><span></span> A PLAYGROUND FOR SMALL WORLDS</div>
+          <h1>Sand Game <span>2</span><span class="s2-title-dot">.</span></h1>
+          <p>A little sand. A little science. A lot of possibilities.</p>
+        </div>
+        <a class="s2-original" href="/sand/">Play the original <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="s2-workbench">
+        <div class="s2-world-column">
+          <div class="s2-stage-top"><div class="s2-world-label"><span class="s2-live-dot"></span><span id="s2-state">LOADING WORLD</span></div>
+            <label class="s2-scene-label">Scene <select id="s2-scene" aria-label="Starter scene"><option value="terrarium">Terrarium</option><option value="volcano">Volcano</option><option value="hourglass">Hourglass</option><option value="empty">Empty canvas</option></select></label>
+          </div>
+          <div class="s2-stage">
+            <canvas id="s2-canvas" width="1024" height="640" tabindex="0" aria-label="Particle sandbox. Draw with your pointer or finger. Choose a material from the palette. Press Space to pause."></canvas>
+            <div id="s2-loading" role="status">Assembling your little world<span class="s2-loading-dots">...</span></div>
+            <div id="s2-paused" hidden>PAUSED <span>Draw now. Watch it happen later.</span></div>
+            <div id="s2-empty-hint" hidden>Start with a handful of sand.<span>Click or touch anywhere to draw.</span></div>
+          </div>
+          <div class="s2-transport">
+            <div class="s2-playback">
+              <button id="s2-play" class="s2-play" type="button" aria-label="Pause simulation" title="Pause / play (Space)"><span id="s2-play-icon" aria-hidden="true">Ⅱ</span><span id="s2-play-label">Pause</span></button>
+              <button id="s2-step" type="button" aria-label="Advance one frame" title="One frame (.)">↦</button>
+              <button id="s2-speed" type="button" aria-label="Simulation speed: 1 times" title="Change simulation speed">1×</button>
+            </div>
+            <div class="s2-brush"><label for="s2-brush">BRUSH</label><input id="s2-brush" type="range" min="1" max="24" value="4"><output id="s2-brush-value" for="s2-brush">4</output><span class="s2-brush-dot" aria-hidden="true"></span></div>
+            <div class="s2-actions"><button id="s2-undo" type="button" disabled title="Undo last drawing (Z)">↶ <span>Undo</span></button><button id="s2-clear" type="button" title="Clear canvas">⌫ <span>Clear</span></button></div>
+          </div>
+          <div class="s2-stage-footer"><span><span id="s2-count">0</span> PARTICLES</span><span id="s2-fps">— FPS</span><button id="s2-snapshot" type="button" title="Download a picture of your world">Save image <span aria-hidden="true">↓</span></button></div>
+        </div>
+        <aside class="s2-palette" aria-label="Materials and tools">
+          <div class="s2-palette-heading"><span>MATERIALS</span><span>12 TO EXPLORE</span></div>
+          <div id="s2-materials" class="s2-materials"></div>
+          <button id="s2-eraser" class="s2-eraser" type="button" aria-pressed="false"><span aria-hidden="true">⌫</span> Eraser <kbd>E</kbd></button>
+          <div class="s2-selected"><div class="s2-selected-heading"><span id="s2-selected-swatch"></span><strong id="s2-selected-name">Sand</strong><span id="s2-selected-type">POWDER</span></div><p id="s2-selected-description">Falls, piles up, and sinks through water. The beginning of a small world.</p></div>
+          <div class="s2-tip"><span>TRY THIS</span><p id="s2-tip">Pour water over sand. Then add a little lava and see what survives.</p></div>
+        </aside>
+      </div>
+      <footer class="s2-footer"><span><kbd>SPACE</kbd> pause <span class="s2-keyboard-extra">· <kbd>1–9</kbd> material · <kbd>[ ]</kbd> brush · right-click to erase</span></span><span>MAKE SOMETHING. BREAK SOMETHING.</span></footer>
+    </main>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+</html>

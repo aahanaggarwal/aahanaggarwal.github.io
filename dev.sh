@@ -3,6 +3,21 @@ set -e
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
+# Sand Game 2 has its own pinned Lean -> Rust -> WASI pipeline.
+if [ -d "$ROOT/.tools/cargo/bin" ]; then
+    export CARGO_HOME="$ROOT/.tools/cargo" RUSTUP_HOME="$ROOT/.tools/rust"
+    export PATH="$CARGO_HOME/bin:$ROOT/.tools/bin:$PATH"
+fi
+if [ -x "$ROOT/.tools/cc" ] && ! command -v cc >/dev/null; then
+    export CC="$ROOT/.tools/cc" CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER="$ROOT/.tools/cc"
+fi
+if [ "${1:-}" = "--sand2-only" ]; then
+    "$ROOT/tools/sand2/build.sh"
+    if [ "${2:-}" = "--no-serve" ]; then exit 0; fi
+    exec python3 -m http.server "${SAND2_PORT:-8012}" --bind 127.0.0.1 --directory "$ROOT"
+fi
+"$ROOT/tools/sand2/build.sh"
+
 # Check for Cargo/Rust
 if ! command -v cargo &> /dev/null; then
     echo "Cargo (Rust) not found. Installing via rustup..."

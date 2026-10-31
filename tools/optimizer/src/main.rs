@@ -38,6 +38,11 @@ const IGNORE_FILES: &[&str] = &[
 ];
 
 fn main() -> Result<()> {
+    let verified = std::process::Command::new("python3")
+        .arg("tools/sand2/verify-build.py")
+        .status()
+        .context("Failed to verify Sand Game 2 artifacts")?;
+    anyhow::ensure!(verified.success(), "Sand Game 2 generated artifacts are stale");
     let start = std::time::Instant::now();
     println!("Starting optimization build...");
 

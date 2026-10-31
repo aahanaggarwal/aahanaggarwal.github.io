@@ -37,3 +37,8 @@ tron/pkg
 # Minification
 dist/
 tools/optimizer/target/
+
+# Project-local build toolchains and Sand Game 2 caches
+.tools/
+wasm/sand2/target/
+wasm/sand2/lean/.lake/

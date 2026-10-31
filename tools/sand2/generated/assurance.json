@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "program": "sand2",
+  "provenance": {
+    "lean_version": "4.34.1",
+    "lean_githash": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "lungo_version": "1.117.0",
+    "bir_version": 3,
+    "runtime_abi": 2
+  },
+  "library": null,
+  "specifications": [],
+  "facilities": [],
+  "assumptions": [],
+  "claims": [],
+  "roles": [],
+  "exports": [
+    {
+      "name": "Sand2.canSwap",
+      "module": "Sand2",
+      "async": false,
+      "trust": {
+        "axioms": [],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_uint32_dec_eq",
+          "lean_uint32_dec_lt"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2.lean",
+        "start": {
+          "line": 29,
+          "column": 1
+        },
+        "end": {
+          "line": 32,
+          "column": 48
+        }
+      }
+    },
+    {
+      "name": "Sand2.settle",
+      "module": "Sand2",
+      "async": false,
+      "trust": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_uint32_dec_eq",
+          "lean_uint32_dec_lt",
+          "lean_uint32_land",
+          "lean_uint32_lor",
+          "lean_uint32_shift_left"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2.lean",
+        "start": {
+          "line": 34,
+          "column": 1
+        },
+        "end": {
+          "line": 35,
+          "column": 45
+        }
+      }
+    },
+    {
+      "name": "Sand2.stepBlock",
+      "module": "Sand2",
+      "async": false,
+      "trust": {
+        "axioms": [
+          "Quot.sound",
+          "propext"
+        ],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_uint32_dec_eq",
+          "lean_uint32_dec_lt",
+          "lean_uint32_land",
+          "lean_uint32_lor",
+          "lean_uint32_shift_left",
+          "lean_uint32_shift_right"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2.lean",
+        "start": {
+          "line": 68,
+          "column": 1
+        },
+        "end": {
+          "line": 100,
+          "column": 55
+        }
+      }
+    }
+  ]
+}

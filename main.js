@@ -79,6 +79,7 @@ async function handleLocation(isInitial = false) {
   if (path === "/pics" || path === "/pics/") fetchUrl = "/pics/index.html";
   if (path === "/blog" || path === "/blog/") fetchUrl = "/blog/index.html";
   if (path === "/graph" || path === "/graph/") fetchUrl = "/graph/index.html";
+  if (path === "/sand2" || path === "/sand2/") fetchUrl = "/sand2/index.html";
   if (path === "/sand" || path === "/sand/") fetchUrl = "/sand/index.html";
   if (path === "/pong" || path === "/pong/") fetchUrl = "/pong/index.html";
   if (path === "/tron" || path === "/tron/") fetchUrl = "/tron/index.html";
@@ -152,6 +153,12 @@ function runPageScript(path, search) {
       if (navId !== calledNav) return;
       module.run();
       currentPageCleanup = () => module.cleanup();
+    });
+  } else if (path === "/sand2" || path.startsWith("/sand2/")) {
+    import('./sand2/main.js').then(module => {
+      if (navId !== calledNav) return;
+      currentPageCleanup = () => module.cleanup();
+      module.run();
     });
   } else if (path.startsWith("/sand")) {
     import('./sand/main.js').then(module => {

@@ -1,0 +1,22 @@
+[package]
+name = "sand2"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+lungo = "=1.117.0"
+
+[build-dependencies]
+lungo-build = "=1.117.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"

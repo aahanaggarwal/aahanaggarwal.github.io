@@ -1,0 +1,20 @@
+[
+  {
+    "lean_name": "Sand2.canSwap",
+    "kind": "function",
+    "rust_path": "can_swap",
+    "renamed": true
+  },
+  {
+    "lean_name": "Sand2.settle",
+    "kind": "function",
+    "rust_path": "settle",
+    "renamed": false
+  },
+  {
+    "lean_name": "Sand2.stepBlock",
+    "kind": "function",
+    "rust_path": "step_block",
+    "renamed": true
+  }
+]

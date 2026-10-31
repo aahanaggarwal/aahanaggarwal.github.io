@@ -1,0 +1,2 @@
+# Preserve the exact compiler output in the generated Rust snapshot.
+tools/sand2/generated/** -whitespace
