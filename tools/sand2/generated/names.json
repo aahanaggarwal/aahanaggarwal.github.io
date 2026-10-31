@@ -84,6 +84,12 @@
     "renamed": true
   },
   {
+    "lean_name": "Sand2.timeMillisecondsSimulation",
+    "kind": "function",
+    "rust_path": "time_milliseconds_simulation",
+    "renamed": true
+  },
+  {
     "lean_name": "Sand2.Simulation.mk",
     "kind": "constructor",
     "rust_path": "Simulation",

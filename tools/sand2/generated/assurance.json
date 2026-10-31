@@ -446,11 +446,11 @@
         "package": "sand2",
         "file": "Sand2/Interface.lean",
         "start": {
-          "line": 196,
+          "line": 199,
           "column": 1
         },
         "end": {
-          "line": 199,
+          "line": 202,
           "column": 67
         }
       }
@@ -712,6 +712,38 @@
         "end": {
           "line": 12,
           "column": 38
+        }
+      }
+    },
+    {
+      "name": "Sand2.timeMillisecondsSimulation",
+      "module": "Sand2.Interface",
+      "async": false,
+      "trust": {
+        "axioms": [],
+        "depends_on_sorry": false,
+        "unsafe_dependencies": [],
+        "partial_dependencies": [],
+        "extern_dependencies": [
+          "lean_nat_div",
+          "lean_nat_mul",
+          "lean_uint64_of_nat"
+        ]
+      },
+      "claims": [],
+      "assumptions": [],
+      "facilities": [],
+      "roles": [],
+      "source": {
+        "package": "sand2",
+        "file": "Sand2/Interface.lean",
+        "start": {
+          "line": 196,
+          "column": 1
+        },
+        "end": {
+          "line": 197,
+          "column": 52
         }
       }
     }

@@ -3271,10 +3271,10 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
                 let x_61: u8 = l_Int_ddecEq(x_56, x_58);
                 match x_61 {
                     0 => {
-                        x_41 = x_57;
-                        x_42 = x_56;
+                        x_41 = x_58;
+                        x_42 = x_57;
                         x_43 = x_60;
-                        x_44 = x_58;
+                        x_44 = x_56;
                         x_45 = x_4;
                         break 'b40;
                     }
@@ -3282,10 +3282,10 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
                         let x_62: u8 = l_Int_ddecEq(x_57, x_58);
                         match x_62 {
                             0 => {
-                                x_41 = x_57;
-                                x_42 = x_56;
+                                x_41 = x_58;
+                                x_42 = x_57;
                                 x_43 = x_60;
-                                x_44 = x_58;
+                                x_44 = x_56;
                                 x_45 = x_62;
                                 break 'b40;
                             }
@@ -3336,26 +3336,26 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
             let x_50: Obj = rt::lean_box(x_5 as usize);
             let x_51: Obj = rt::lean_box(x_45 as usize);
             let x_52: Obj = rt::lean_box(x_4 as usize);
-            rt::lean_inc(x_44);
+            rt::lean_inc(x_41);
             let x_53: Obj = rt::lean_alloc_closure(l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveCell_dspec__2_d__lam__2_d__boxed as *const (), 14, 10);
             rt::lean_closure_set(x_53, 0, x_49);
             rt::lean_closure_set(x_53, 1, x_46);
-            rt::lean_closure_set(x_53, 2, x_41);
+            rt::lean_closure_set(x_53, 2, x_42);
             rt::lean_closure_set(x_53, 3, x_47);
             rt::lean_closure_set(x_53, 4, x_1);
             rt::lean_closure_set(x_53, 5, x_2);
-            rt::lean_closure_set(x_53, 6, x_44);
+            rt::lean_closure_set(x_53, 6, x_41);
             rt::lean_closure_set(x_53, 7, x_50);
             rt::lean_closure_set(x_53, 8, x_51);
             rt::lean_closure_set(x_53, 9, x_52);
-            let x_54: u8 = l_Int_ddecEq(x_42, x_44);
+            let x_54: u8 = l_Int_ddecEq(x_44, x_41);
             match x_54 {
                 0 => {
-                    x_17 = x_42;
+                    x_17 = x_41;
                     x_18 = x_53;
-                    x_19 = x_47;
-                    x_20 = x_46;
-                    x_21 = x_44;
+                    x_19 = x_44;
+                    x_20 = x_47;
+                    x_21 = x_46;
                     break 'b16;
                 }
                 _ => {
@@ -3364,27 +3364,27 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
                             rt::lean_dec(x_47);
                             rt::lean_dec(x_46);
                             rt::lean_dec(x_44);
-                            rt::lean_dec(x_42);
+                            rt::lean_dec(x_41);
                             rt::lean_dec(x_2);
                             rt::lean_dec(x_1);
                             x_12 = x_53;
                             break 'b11;
                         }
                         _ => {
-                            x_17 = x_42;
+                            x_17 = x_41;
                             x_18 = x_53;
-                            x_19 = x_47;
-                            x_20 = x_46;
-                            x_21 = x_44;
+                            x_19 = x_44;
+                            x_20 = x_47;
+                            x_21 = x_46;
                             break 'b16;
                         }
                     }
                 }
             }
         }
-        let x_22: Obj = l_Int_dofNat(x_20);
-        let x_23: Obj = l_Int_dofNat(x_19);
-        let x_24: Obj = l_Int_dadd(x_23, x_17);
+        let x_22: Obj = l_Int_dofNat(x_21);
+        let x_23: Obj = l_Int_dofNat(x_20);
+        let x_24: Obj = l_Int_dadd(x_23, x_19);
         rt::lean_dec(x_23);
         rt::lean_inc(x_2);
         rt::lean_inc(x_1);
@@ -3393,7 +3393,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
             0 => {
                 rt::lean_dec(x_24);
                 rt::lean_dec(x_22);
-                rt::lean_dec(x_21);
+                rt::lean_dec(x_19);
                 rt::lean_dec(x_17);
                 rt::lean_dec(x_2);
                 rt::lean_dec(x_1);
@@ -3406,7 +3406,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dPhysi
                 rt::lean_dec(x_22);
                 rt::lean_inc(x_26);
                 rt::lean_inc(x_3);
-                let x_27: Obj = l_Sand2_dcross(x_1, x_2, x_3, x_26, x_21, x_17);
+                let x_27: Obj = l_Sand2_dcross(x_1, x_2, x_3, x_26, x_17, x_19);
                 let x_28: Obj = rt::lean_apply_1(x_27, x_10);
                 let x_29: Obj = rt::lean_ctor_get(x_28, 0);
                 rt::lean_inc(x_29);
@@ -3866,8 +3866,8 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                     rt::lean_dec(x_46);
                     x_23 = x_42;
                     x_24 = x_47;
-                    x_25 = x_50;
-                    x_26 = x_49;
+                    x_25 = x_49;
+                    x_26 = x_50;
                     break 'b22;
                 }
                 _ => {
@@ -3886,8 +3886,8 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                             rt::lean_inc(x_52);
                             rt::lean_dec(x_46);
                             x_17 = x_47;
-                            x_18 = x_52;
-                            x_19 = x_51;
+                            x_18 = x_51;
+                            x_19 = x_52;
                             break 'b16;
                         }
                         _ => {
@@ -3899,15 +3899,15 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                             rt::lean_dec(x_46);
                             x_23 = x_42;
                             x_24 = x_47;
-                            x_25 = x_54;
-                            x_26 = x_53;
+                            x_25 = x_53;
+                            x_26 = x_54;
                             break 'b22;
                         }
                     }
                 }
             }
         }
-        let x_27: u8 = l_Sand2_dlabelAt(x_2, x_3, x_25, x_4);
+        let x_27: u8 = l_Sand2_dlabelAt(x_2, x_3, x_26, x_4);
         let x_28: u8 = l_Sand2_disLiquid(x_27);
         match x_28 {
             0 => {
@@ -3923,11 +3923,11 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
             }
             _ => {
                 let x_29: Obj = rt::lean_alloc_ctor(0, 2, 0);
-                rt::lean_ctor_set(x_29, 0, x_25);
+                rt::lean_ctor_set(x_29, 0, x_26);
                 rt::lean_ctor_set(x_29, 1, x_24);
                 rt::lean_inc(x_2);
                 rt::lean_inc(x_3);
-                let x_30: Obj = l_Sand2_dPhysics_drunList_d__at___dSand2_dmoveCell_dspec__1(x_5, x_6, x_3, x_2, x_3, x_2, x_23, x_29, x_26);
+                let x_30: Obj = l_Sand2_dPhysics_drunList_d__at___dSand2_dmoveCell_dspec__1(x_5, x_6, x_3, x_2, x_3, x_2, x_23, x_29, x_25);
                 rt::lean_dec(x_2);
                 rt::lean_dec(x_3);
                 let x_31: Obj = rt::lean_ctor_get(x_30, 0);
@@ -3947,7 +3947,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
         }
     }
     let x_20: Obj = rt::lean_box(0);
-    let x_21: Obj = rt::lean_apply_4(x_1, x_20, x_18, x_17, x_19);
+    let x_21: Obj = rt::lean_apply_4(x_1, x_20, x_19, x_17, x_18);
     return x_21;
 }
 
@@ -4195,9 +4195,9 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                 let x_61: u8 = l_Int_ddecEq(x_56, x_58);
                 match x_61 {
                     0 => {
-                        x_41 = x_60;
+                        x_41 = x_58;
                         x_42 = x_57;
-                        x_43 = x_58;
+                        x_43 = x_60;
                         x_44 = x_56;
                         x_45 = x_4;
                         break 'b40;
@@ -4206,9 +4206,9 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                         let x_62: u8 = l_Int_ddecEq(x_57, x_58);
                         match x_62 {
                             0 => {
-                                x_41 = x_60;
+                                x_41 = x_58;
                                 x_42 = x_57;
-                                x_43 = x_58;
+                                x_43 = x_60;
                                 x_44 = x_56;
                                 x_45 = x_62;
                                 break 'b40;
@@ -4246,7 +4246,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
             rt::lean_inc_n(x_1, 2);
             rt::lean_inc_n(x_2, 2);
             let x_49: Obj = rt::lean_alloc_closure(l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveCell_dspec__2_d__lam__1_d__boxed as *const (), 15, 11);
-            rt::lean_closure_set(x_49, 0, x_41);
+            rt::lean_closure_set(x_49, 0, x_43);
             rt::lean_closure_set(x_49, 1, x_2);
             rt::lean_closure_set(x_49, 2, x_1);
             rt::lean_closure_set(x_49, 3, x_39);
@@ -4260,7 +4260,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
             let x_50: Obj = rt::lean_box(x_5 as usize);
             let x_51: Obj = rt::lean_box(x_45 as usize);
             let x_52: Obj = rt::lean_box(x_4 as usize);
-            rt::lean_inc(x_43);
+            rt::lean_inc(x_41);
             let x_53: Obj = rt::lean_alloc_closure(l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveCell_dspec__2_d__lam__2_d__boxed as *const (), 14, 10);
             rt::lean_closure_set(x_53, 0, x_49);
             rt::lean_closure_set(x_53, 1, x_46);
@@ -4268,18 +4268,18 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
             rt::lean_closure_set(x_53, 3, x_47);
             rt::lean_closure_set(x_53, 4, x_1);
             rt::lean_closure_set(x_53, 5, x_2);
-            rt::lean_closure_set(x_53, 6, x_43);
+            rt::lean_closure_set(x_53, 6, x_41);
             rt::lean_closure_set(x_53, 7, x_50);
             rt::lean_closure_set(x_53, 8, x_51);
             rt::lean_closure_set(x_53, 9, x_52);
-            let x_54: u8 = l_Int_ddecEq(x_44, x_43);
+            let x_54: u8 = l_Int_ddecEq(x_44, x_41);
             match x_54 {
                 0 => {
-                    x_17 = x_43;
+                    x_17 = x_47;
                     x_18 = x_53;
-                    x_19 = x_47;
-                    x_20 = x_46;
-                    x_21 = x_44;
+                    x_19 = x_46;
+                    x_20 = x_44;
+                    x_21 = x_41;
                     break 'b16;
                 }
                 _ => {
@@ -4288,27 +4288,27 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                             rt::lean_dec(x_47);
                             rt::lean_dec(x_46);
                             rt::lean_dec(x_44);
-                            rt::lean_dec(x_43);
+                            rt::lean_dec(x_41);
                             rt::lean_dec(x_2);
                             rt::lean_dec(x_1);
                             x_12 = x_53;
                             break 'b11;
                         }
                         _ => {
-                            x_17 = x_43;
+                            x_17 = x_47;
                             x_18 = x_53;
-                            x_19 = x_47;
-                            x_20 = x_46;
-                            x_21 = x_44;
+                            x_19 = x_46;
+                            x_20 = x_44;
+                            x_21 = x_41;
                             break 'b16;
                         }
                     }
                 }
             }
         }
-        let x_22: Obj = l_Int_dofNat(x_20);
-        let x_23: Obj = l_Int_dofNat(x_19);
-        let x_24: Obj = l_Int_dadd(x_23, x_21);
+        let x_22: Obj = l_Int_dofNat(x_19);
+        let x_23: Obj = l_Int_dofNat(x_17);
+        let x_24: Obj = l_Int_dadd(x_23, x_20);
         rt::lean_dec(x_23);
         rt::lean_inc(x_2);
         rt::lean_inc(x_1);
@@ -4318,7 +4318,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                 rt::lean_dec(x_24);
                 rt::lean_dec(x_22);
                 rt::lean_dec(x_21);
-                rt::lean_dec(x_17);
+                rt::lean_dec(x_20);
                 rt::lean_dec(x_2);
                 rt::lean_dec(x_1);
                 x_12 = x_18;
@@ -4330,7 +4330,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dPhysics_drunRange_d__at___dSand2_dmoveC
                 rt::lean_dec(x_22);
                 rt::lean_inc(x_26);
                 rt::lean_inc(x_3);
-                let x_27: Obj = l_Sand2_dcross(x_1, x_2, x_3, x_26, x_17, x_21);
+                let x_27: Obj = l_Sand2_dcross(x_1, x_2, x_3, x_26, x_21, x_20);
                 let x_28: Obj = rt::lean_apply_1(x_27, x_10);
                 let x_29: Obj = rt::lean_ctor_get(x_28, 0);
                 rt::lean_inc(x_29);
@@ -7660,7 +7660,7 @@ pub(crate) unsafe fn l_Sand2_dinstInhabitedThermalSample_ddefault_d__closed__1()
 }
 
 // Lean: Sand2.mobile
-// Source: lean/Sand2/Evolution.lean:13:1
+// Source: lean/Sand2/Evolution.lean:9:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmobile(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> u8 {
     let x_5: Obj = rt::lean_ctor_get(x_4, 0);
     let x_6: Obj = rt::lean_ctor_get(x_4, 1);
@@ -7733,7 +7733,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmobile(x_1: Obj, x_2: Obj, x_3: Obj, x_
 
 // Lean: Sand2.mobile._boxed
 // Compiled from: Sand2.mobile
-// Source: lean/Sand2/Evolution.lean:13:1
+// Source: lean/Sand2/Evolution.lean:9:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmobile_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: u8 = l_Sand2_dmobile(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_3);
@@ -7793,97 +7793,74 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmoveCell_d__lam__0(x_1: Obj, x_2: Obj, 
                                         }
                                         _ => {
                                             let x_35: Obj = l_Array_dgetInternalBorrowed(rt::lean_box(0), x_10, x_3, rt::lean_box(0));
+                                            let x_36: Obj = rt::lean_ctor_get(x_35, 0);
+                                            let x_37: Obj = rt::lean_ctor_get(x_35, 1);
+                                            let x_38: Obj = rt::lean_ctor_get(x_35, 2);
+                                            let x_39: Obj = rt::lean_ctor_get(x_35, 3);
+                                            let x_40: Obj = rt::lean_ctor_get(x_35, 4);
+                                            let x_41: Obj = rt::lean_ctor_get(x_35, 5);
+                                            let x_42: Obj = rt::lean_ctor_get(x_35, 8);
+                                            let x_43: Obj = rt::lean_ctor_get(x_35, 9);
+                                            let x_44: Obj = rt::lean_ctor_get(x_35, 10);
+                                            let x_45: Obj = rt::lean_ctor_get(x_35, 11);
+                                            let x_46: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>());
+                                            let x_47: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>() + 1);
+                                            let x_48: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>() + 2);
+                                            let x_49: Obj = rt::lean_ctor_get(x_35, 12);
                                             rt::lean_inc_n(x_35, 2);
-                                            let x_36: Obj = l_Sand2_dParticle_dvx(x_35);
-                                            let x_37: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__2();
-                                            let x_38: Obj = l_Int_dmul(x_36, x_37);
-                                            rt::lean_dec(x_36);
-                                            let x_39: Obj = l_Sand2_dconductivitySI_d__closed__1();
-                                            let x_40: Obj = l_Int_dediv(x_38, x_39);
-                                            rt::lean_dec(x_38);
-                                            let mut x_42: Obj;
-                                            'b41: {
-                                                let x_71: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__5();
-                                                let x_72: Obj = l_Sand2_dParticle_dvy(x_35);
-                                                let x_73: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__6();
-                                                let x_74: Obj = l_Int_dadd(x_72, x_73);
-                                                rt::lean_dec(x_72);
-                                                let x_75: u8 = l_Int_ddecLe(x_71, x_74);
-                                                match x_75 {
-                                                    0 => {
-                                                        x_42 = x_74;
-                                                        break 'b41;
-                                                    }
-                                                    _ => {
-                                                        rt::lean_dec(x_74);
-                                                        x_42 = x_71;
-                                                        break 'b41;
-                                                    }
-                                                }
-                                            }
-                                            let x_43: Obj = rt::lean_ctor_get(x_35, 0);
-                                            let x_44: Obj = rt::lean_ctor_get(x_35, 1);
-                                            let x_45: Obj = rt::lean_ctor_get(x_35, 2);
-                                            let x_46: Obj = rt::lean_ctor_get(x_35, 3);
-                                            let x_47: Obj = rt::lean_ctor_get(x_35, 4);
-                                            let x_48: Obj = rt::lean_ctor_get(x_35, 5);
-                                            let x_49: Obj = rt::lean_ctor_get(x_35, 8);
-                                            let x_50: Obj = rt::lean_ctor_get(x_35, 9);
-                                            let x_51: Obj = rt::lean_ctor_get(x_35, 10);
-                                            let x_52: Obj = rt::lean_ctor_get(x_35, 11);
-                                            let x_53: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>());
-                                            let x_54: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>() + 1);
-                                            let x_55: u8 = rt::lean_ctor_get_uint8(x_35, 14 * ::core::mem::size_of::<usize>() + 2);
-                                            let x_56: Obj = rt::lean_ctor_get(x_35, 12);
-                                            rt::lean_inc_n(x_44, 2);
-                                            let x_57: Obj = l_Int_dofNat(x_44);
-                                            let x_58: Obj = l_Int_dmul(x_57, x_40);
-                                            let x_59: Obj = l_Int_dmul(x_57, x_42);
+                                            let x_50: Obj = l_Sand2_dParticle_dvx(x_35);
+                                            let x_51: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__2();
+                                            let x_52: Obj = l_Int_dmul(x_50, x_51);
+                                            let x_53: Obj = l_Sand2_dconductivitySI_d__closed__1();
+                                            let x_54: Obj = l_Int_dediv(x_52, x_53);
+                                            rt::lean_dec(x_52);
+                                            let x_55: Obj = l_Sand2_dParticle_dvy(x_35);
+                                            let x_56: Obj = l_Sand2_dgravityVelocity(x_55);
+                                            rt::lean_inc_n(x_37, 2);
+                                            let x_57: Obj = l_Int_dofNat(x_37);
+                                            let x_58: Obj = l_Int_dmul(x_57, x_54);
+                                            let x_59: Obj = l_Int_dmul(x_57, x_56);
                                             rt::lean_dec(x_57);
-                                            let x_60: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__3();
-                                            let x_61: Obj = l_Int_dmul(x_40, x_60);
-                                            rt::lean_dec(x_40);
-                                            let x_62: Obj = l_Sand2_dmoveCell_d__lam__0_d__closed__4();
-                                            let x_63: Obj = l_Int_dediv(x_61, x_62);
-                                            rt::lean_dec(x_61);
-                                            let x_64: Obj = l_Int_dadd(x_49, x_63);
-                                            rt::lean_dec(x_63);
-                                            let x_65: Obj = l_Int_dmul(x_42, x_60);
-                                            rt::lean_dec(x_42);
-                                            let x_66: Obj = l_Int_dediv(x_65, x_62);
-                                            rt::lean_dec(x_65);
-                                            let x_67: Obj = l_Int_dadd(x_50, x_66);
-                                            rt::lean_dec(x_66);
+                                            let x_60: Obj = l_Sand2_dstepDisplacement(x_50, x_54);
+                                            rt::lean_dec(x_54);
+                                            rt::lean_dec(x_50);
+                                            let x_61: Obj = l_Int_dadd(x_42, x_60);
+                                            rt::lean_dec(x_60);
+                                            let x_62: Obj = l_Sand2_dstepDisplacement(x_55, x_56);
+                                            rt::lean_dec(x_56);
+                                            rt::lean_dec(x_55);
+                                            let x_63: Obj = l_Int_dadd(x_43, x_62);
+                                            rt::lean_dec(x_62);
                                             rt::lean_inc(x_11);
-                                            rt::lean_inc(x_56);
-                                            rt::lean_inc(x_52);
-                                            rt::lean_inc(x_51);
-                                            rt::lean_inc(x_48);
-                                            rt::lean_inc(x_47);
-                                            rt::lean_inc(x_46);
+                                            rt::lean_inc(x_49);
                                             rt::lean_inc(x_45);
-                                            rt::lean_inc_ref(x_43);
-                                            let x_68: Obj = rt::lean_alloc_ctor(0, 14, 3);
-                                            rt::lean_ctor_set(x_68, 0, x_43);
-                                            rt::lean_ctor_set(x_68, 1, x_44);
-                                            rt::lean_ctor_set(x_68, 2, x_45);
-                                            rt::lean_ctor_set(x_68, 3, x_46);
-                                            rt::lean_ctor_set(x_68, 4, x_47);
-                                            rt::lean_ctor_set(x_68, 5, x_48);
-                                            rt::lean_ctor_set(x_68, 6, x_58);
-                                            rt::lean_ctor_set(x_68, 7, x_59);
-                                            rt::lean_ctor_set(x_68, 8, x_64);
-                                            rt::lean_ctor_set(x_68, 9, x_67);
-                                            rt::lean_ctor_set(x_68, 10, x_51);
-                                            rt::lean_ctor_set(x_68, 11, x_52);
-                                            rt::lean_ctor_set(x_68, 12, x_56);
-                                            rt::lean_ctor_set(x_68, 13, x_11);
-                                            rt::lean_ctor_set_uint8(x_68, 14 * ::core::mem::size_of::<usize>(), x_53);
-                                            rt::lean_ctor_set_uint8(x_68, 14 * ::core::mem::size_of::<usize>() + 1, x_54);
-                                            rt::lean_ctor_set_uint8(x_68, 14 * ::core::mem::size_of::<usize>() + 2, x_55);
-                                            let x_69: Obj = l_Sand2_dsafeSingle(x_2, x_1, x_3, x_35, x_68);
-                                            let x_70: Obj = l_Sand2_dwrite_d__redArg(x_4, x_3, x_69);
-                                            x_16 = x_70;
+                                            rt::lean_inc(x_44);
+                                            rt::lean_inc(x_41);
+                                            rt::lean_inc(x_40);
+                                            rt::lean_inc(x_39);
+                                            rt::lean_inc(x_38);
+                                            rt::lean_inc_ref(x_36);
+                                            let x_64: Obj = rt::lean_alloc_ctor(0, 14, 3);
+                                            rt::lean_ctor_set(x_64, 0, x_36);
+                                            rt::lean_ctor_set(x_64, 1, x_37);
+                                            rt::lean_ctor_set(x_64, 2, x_38);
+                                            rt::lean_ctor_set(x_64, 3, x_39);
+                                            rt::lean_ctor_set(x_64, 4, x_40);
+                                            rt::lean_ctor_set(x_64, 5, x_41);
+                                            rt::lean_ctor_set(x_64, 6, x_58);
+                                            rt::lean_ctor_set(x_64, 7, x_59);
+                                            rt::lean_ctor_set(x_64, 8, x_61);
+                                            rt::lean_ctor_set(x_64, 9, x_63);
+                                            rt::lean_ctor_set(x_64, 10, x_44);
+                                            rt::lean_ctor_set(x_64, 11, x_45);
+                                            rt::lean_ctor_set(x_64, 12, x_49);
+                                            rt::lean_ctor_set(x_64, 13, x_11);
+                                            rt::lean_ctor_set_uint8(x_64, 14 * ::core::mem::size_of::<usize>(), x_46);
+                                            rt::lean_ctor_set_uint8(x_64, 14 * ::core::mem::size_of::<usize>() + 1, x_47);
+                                            rt::lean_ctor_set_uint8(x_64, 14 * ::core::mem::size_of::<usize>() + 2, x_48);
+                                            let x_65: Obj = l_Sand2_dsafeSingle(x_2, x_1, x_3, x_35, x_64);
+                                            let x_66: Obj = l_Sand2_dwrite_d__redArg(x_4, x_3, x_65);
+                                            x_16 = x_66;
                                             break 'b15;
                                         }
                                     }
@@ -8013,62 +7990,6 @@ unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__2__init() -> Obj {
 #[inline]
 pub(crate) unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__2() -> Obj {
     C_l_Sand2_dmoveCell_d__lam__0_d__closed__2.get(l_Sand2_dmoveCell_d__lam__0_d__closed__2__init)
-}
-
-// Lean: Sand2.moveCell._lam_0._closed_3
-// Compiled from: Sand2.moveCell
-// Source: lean/Sand2/Evolution.lean:310:1
-static C_l_Sand2_dmoveCell_d__lam__0_d__closed__3: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__3__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(5);
-    let x_2: Obj = l_Int_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__3() -> Obj {
-    C_l_Sand2_dmoveCell_d__lam__0_d__closed__3.get(l_Sand2_dmoveCell_d__lam__0_d__closed__3__init)
-}
-
-// Lean: Sand2.moveCell._lam_0._closed_4
-// Compiled from: Sand2.moveCell
-// Source: lean/Sand2/Evolution.lean:310:1
-static C_l_Sand2_dmoveCell_d__lam__0_d__closed__4: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__4__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(3);
-    let x_2: Obj = l_Int_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__4() -> Obj {
-    C_l_Sand2_dmoveCell_d__lam__0_d__closed__4.get(l_Sand2_dmoveCell_d__lam__0_d__closed__4__init)
-}
-
-// Lean: Sand2.moveCell._lam_0._closed_5
-// Compiled from: Sand2.moveCell
-// Source: lean/Sand2/Evolution.lean:310:1
-static C_l_Sand2_dmoveCell_d__lam__0_d__closed__5: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__5__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(3000000);
-    let x_2: Obj = l_Int_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__5() -> Obj {
-    C_l_Sand2_dmoveCell_d__lam__0_d__closed__5.get(l_Sand2_dmoveCell_d__lam__0_d__closed__5__init)
-}
-
-// Lean: Sand2.moveCell._lam_0._closed_6
-// Compiled from: Sand2.moveCell
-// Source: lean/Sand2/Evolution.lean:310:1
-static C_l_Sand2_dmoveCell_d__lam__0_d__closed__6: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__6__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(163500);
-    let x_2: Obj = l_Int_dofNat(x_1);
-    return x_2;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dmoveCell_d__lam__0_d__closed__6() -> Obj {
-    C_l_Sand2_dmoveCell_d__lam__0_d__closed__6.get(l_Sand2_dmoveCell_d__lam__0_d__closed__6__init)
 }
 
 // Lean: Sand2.normalize
@@ -9640,18 +9561,6 @@ pub(crate) unsafe extern "C" fn l_Sand2_dthermalField_d__lam__0_d__boxed(x_1: Ob
     return x_5;
 }
 
-// Lean: Sand2.tickMicroseconds
-// Source: lean/Sand2/Evolution.lean:8:1
-static C_l_Sand2_dtickMicroseconds: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dtickMicroseconds__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(16667);
-    return x_1;
-}
-#[inline]
-pub(crate) unsafe fn l_Sand2_dtickMicroseconds() -> Obj {
-    C_l_Sand2_dtickMicroseconds.get(l_Sand2_dtickMicroseconds__init)
-}
-
 // Lean: Sand2.unchangedPair
 // Source: lean/Sand2/Evolution.lean:19:1
 pub(crate) unsafe extern "C" fn l_Sand2_dunchangedPair(x_1: Obj, x_2: Obj) -> Obj {
@@ -9972,15 +9881,15 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             let x_66: u8 = l_Nat_ddecLt(x_27, x_61);
                             match x_66 {
                                 0 => {
-                                    x_30 = x_56;
-                                    x_31 = x_59;
-                                    x_32 = x_65;
-                                    x_33 = x_62;
-                                    x_34 = x_58;
-                                    x_35 = x_63;
-                                    x_36 = x_60;
-                                    x_37 = x_64;
-                                    x_38 = x_61;
+                                    x_30 = x_64;
+                                    x_31 = x_63;
+                                    x_32 = x_59;
+                                    x_33 = x_58;
+                                    x_34 = x_60;
+                                    x_35 = x_62;
+                                    x_36 = x_61;
+                                    x_37 = x_65;
+                                    x_38 = x_56;
                                     x_39 = x_66;
                                     break 'b29;
                                 }
@@ -9989,15 +9898,15 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     let x_68: u8 = l_Nat_ddecEq(x_60, x_67);
                                     match x_68 {
                                         0 => {
-                                            x_30 = x_56;
-                                            x_31 = x_59;
-                                            x_32 = x_65;
-                                            x_33 = x_62;
-                                            x_34 = x_58;
-                                            x_35 = x_63;
-                                            x_36 = x_60;
-                                            x_37 = x_64;
-                                            x_38 = x_61;
+                                            x_30 = x_64;
+                                            x_31 = x_63;
+                                            x_32 = x_59;
+                                            x_33 = x_58;
+                                            x_34 = x_60;
+                                            x_35 = x_62;
+                                            x_36 = x_61;
+                                            x_37 = x_65;
+                                            x_38 = x_56;
                                             x_39 = x_66;
                                             break 'b29;
                                         }
@@ -10021,7 +9930,7 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         }
                         match x_39 {
                             0 => {
-                                rt::lean_dec(x_38);
+                                rt::lean_dec_ref(x_38);
                                 rt::lean_dec(x_37);
                                 rt::lean_dec(x_36);
                                 rt::lean_dec(x_35);
@@ -10029,64 +9938,64 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                 rt::lean_dec(x_33);
                                 rt::lean_dec(x_32);
                                 rt::lean_dec(x_31);
-                                rt::lean_dec_ref(x_30);
+                                rt::lean_dec(x_30);
                                 rt::lean_dec_ref(x_28);
                                 x_11 = x_6;
                                 break 'b10;
                             }
                             _ => {
-                                let x_40: Obj = rt::lean_ctor_get(x_30, 3);
+                                let x_40: Obj = rt::lean_ctor_get(x_38, 3);
                                 rt::lean_inc(x_40);
-                                let x_41: Obj = rt::lean_ctor_get(x_30, 4);
+                                let x_41: Obj = rt::lean_ctor_get(x_38, 4);
                                 rt::lean_inc(x_41);
-                                rt::lean_dec_ref(x_30);
-                                rt::lean_inc(x_36);
+                                rt::lean_dec_ref(x_38);
+                                rt::lean_inc(x_34);
                                 rt::lean_inc_ref(x_28);
-                                let x_42: Obj = l_Sand2_dtemperatureFromEnthalpy(x_28, x_41, x_36);
+                                let x_42: Obj = l_Sand2_dtemperatureFromEnthalpy(x_28, x_41, x_34);
                                 let x_43: Obj = l_Sand2_dvaporWaterFromEnthalpy(x_28, x_41);
-                                let x_44: Obj = l_Nat_dadd(x_33, x_35);
+                                let x_44: Obj = l_Nat_dadd(x_35, x_31);
+                                rt::lean_dec(x_31);
                                 rt::lean_dec(x_35);
-                                rt::lean_dec(x_33);
-                                let x_45: Obj = l_Nat_dadd(x_44, x_37);
-                                rt::lean_dec(x_37);
+                                let x_45: Obj = l_Nat_dadd(x_44, x_30);
+                                rt::lean_dec(x_30);
                                 rt::lean_dec(x_44);
-                                let x_46: Obj = l_Nat_dadd(x_45, x_32);
-                                rt::lean_dec(x_32);
+                                let x_46: Obj = l_Nat_dadd(x_45, x_37);
+                                rt::lean_dec(x_37);
                                 rt::lean_dec(x_45);
                                 let x_47: Obj = l_Nat_dadd(x_46, x_43);
                                 rt::lean_dec(x_46);
                                 let x_48: Obj = rt::nat::lean_usize_to_nat(10000000);
-                                let x_49: u8 = l_Nat_ddecLt(x_34, x_48);
-                                rt::lean_dec(x_34);
+                                let x_49: u8 = l_Nat_ddecLt(x_33, x_48);
+                                rt::lean_dec(x_33);
                                 match x_49 {
                                     0 => {
                                         let x_50: Obj = rt::nat::lean_usize_to_nat(18);
-                                        let x_51: Obj = l_Nat_dsub(x_38, x_43);
-                                        rt::lean_dec(x_38);
+                                        let x_51: Obj = l_Nat_dsub(x_36, x_43);
+                                        rt::lean_dec(x_36);
                                         let x_52: Obj = l_Nat_dmul(x_50, x_51);
                                         rt::lean_dec(x_51);
-                                        let x_53: Obj = l_Nat_dadd(x_31, x_52);
+                                        let x_53: Obj = l_Nat_dadd(x_32, x_52);
                                         rt::lean_dec(x_52);
-                                        rt::lean_dec(x_31);
+                                        rt::lean_dec(x_32);
                                         let x_54: u8 = l_Nat_ddecLt(x_53, x_48);
                                         rt::lean_dec(x_53);
-                                        x_15 = x_41;
-                                        x_16 = x_42;
-                                        x_17 = x_36;
-                                        x_18 = x_40;
-                                        x_19 = x_43;
+                                        x_15 = x_34;
+                                        x_16 = x_41;
+                                        x_17 = x_40;
+                                        x_18 = x_43;
+                                        x_19 = x_42;
                                         x_20 = x_47;
                                         x_21 = x_54;
                                         break 'b14;
                                     }
                                     _ => {
-                                        rt::lean_dec(x_38);
-                                        rt::lean_dec(x_31);
-                                        x_15 = x_41;
-                                        x_16 = x_42;
-                                        x_17 = x_36;
-                                        x_18 = x_40;
-                                        x_19 = x_43;
+                                        rt::lean_dec(x_36);
+                                        rt::lean_dec(x_32);
+                                        x_15 = x_34;
+                                        x_16 = x_41;
+                                        x_17 = x_40;
+                                        x_18 = x_43;
+                                        x_19 = x_42;
                                         x_20 = x_47;
                                         x_21 = x_49;
                                         break 'b14;
@@ -10097,15 +10006,15 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     }
                 }
             }
-            let x_22: Obj = l_Sand2_didealGasPressure(x_20, x_16);
-            let x_23: Obj = l_Sand2_didealGasPressure(x_19, x_16);
+            let x_22: Obj = l_Sand2_didealGasPressure(x_20, x_19);
+            let x_23: Obj = l_Sand2_didealGasPressure(x_18, x_19);
             let x_24: Obj = rt::lean_alloc_ctor(0, 6, 1);
-            rt::lean_ctor_set(x_24, 0, x_16);
+            rt::lean_ctor_set(x_24, 0, x_19);
             rt::lean_ctor_set(x_24, 1, x_22);
             rt::lean_ctor_set(x_24, 2, x_23);
-            rt::lean_ctor_set(x_24, 3, x_18);
-            rt::lean_ctor_set(x_24, 4, x_15);
-            rt::lean_ctor_set(x_24, 5, x_17);
+            rt::lean_ctor_set(x_24, 3, x_17);
+            rt::lean_ctor_set(x_24, 4, x_16);
+            rt::lean_ctor_set(x_24, 5, x_15);
             rt::lean_ctor_set_uint8(x_24, 6 * ::core::mem::size_of::<usize>(), x_21);
             let x_25: Obj = l_Array_dset_x21_(rt::lean_box(0), x_6, x_7, x_24);
             x_11 = x_25;
@@ -10233,18 +10142,18 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                 let mut x_31: Obj;
                 let mut x_32: Obj;
                 let mut x_33: Obj;
-                let mut x_34: u8;
+                let mut x_34: Obj;
                 let mut x_35: Obj;
-                let mut x_36: Obj;
+                let mut x_36: u8;
                 let mut x_37: Obj;
                 'b30: {
                     let mut x_44: Obj;
                     let mut x_45: Obj;
                     let mut x_46: Obj;
                     let mut x_47: Obj;
-                    let mut x_48: u8;
+                    let mut x_48: Obj;
                     let mut x_49: Obj;
-                    let mut x_50: Obj;
+                    let mut x_50: u8;
                     let mut x_51: Obj;
                     'b43: {
                         let x_63: Obj = l_Sand2_dread(x_1, x_3, x_4, x_29);
@@ -10252,8 +10161,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         let mut x_66: Obj;
                         let mut x_67: Obj;
                         let mut x_68: Obj;
-                        let mut x_69: u8;
-                        let mut x_70: Obj;
+                        let mut x_69: Obj;
+                        let mut x_70: u8;
                         'b64: {
                             let mut x_82: Obj;
                             'b81: {
@@ -10288,11 +10197,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     rt::lean_inc(x_88);
                                     rt::lean_dec_ref(x_82);
                                     x_65 = x_85;
-                                    x_66 = x_84;
+                                    x_66 = x_87;
                                     x_67 = x_88;
                                     x_68 = x_86;
-                                    x_69 = x_83;
-                                    x_70 = x_87;
+                                    x_69 = x_84;
+                                    x_70 = x_83;
                                     break 'b64;
                                 }
                                 _ => {
@@ -10381,11 +10290,11 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             rt::lean_inc(x_110);
                                             rt::lean_dec_ref(x_82);
                                             x_65 = x_107;
-                                            x_66 = x_106;
+                                            x_66 = x_109;
                                             x_67 = x_110;
                                             x_68 = x_108;
-                                            x_69 = x_83;
-                                            x_70 = x_109;
+                                            x_69 = x_106;
+                                            x_70 = x_83;
                                             break 'b64;
                                         }
                                     }
@@ -10407,8 +10316,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         x_31 = x_65;
                                         x_32 = x_66;
                                         x_33 = x_67;
-                                        x_34 = x_69;
-                                        x_35 = x_68;
+                                        x_34 = x_68;
+                                        x_35 = x_69;
                                         x_36 = x_70;
                                         x_37 = x_27;
                                         break 'b30;
@@ -10418,8 +10327,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         x_31 = x_65;
                                         x_32 = x_66;
                                         x_33 = x_67;
-                                        x_34 = x_69;
-                                        x_35 = x_68;
+                                        x_34 = x_68;
+                                        x_35 = x_69;
                                         x_36 = x_70;
                                         x_37 = x_6;
                                         break 'b30;
@@ -10441,10 +10350,10 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     0 => {
                                         x_44 = x_65;
                                         x_45 = x_66;
-                                        x_46 = x_67;
-                                        x_47 = x_79;
-                                        x_48 = x_69;
-                                        x_49 = x_68;
+                                        x_46 = x_79;
+                                        x_47 = x_67;
+                                        x_48 = x_68;
+                                        x_49 = x_69;
                                         x_50 = x_70;
                                         x_51 = x_27;
                                         break 'b43;
@@ -10453,10 +10362,10 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         rt::lean_inc(x_22);
                                         x_44 = x_65;
                                         x_45 = x_66;
-                                        x_46 = x_67;
-                                        x_47 = x_79;
-                                        x_48 = x_69;
-                                        x_49 = x_68;
+                                        x_46 = x_79;
+                                        x_47 = x_67;
+                                        x_48 = x_68;
+                                        x_49 = x_69;
                                         x_50 = x_70;
                                         x_51 = x_22;
                                         break 'b43;
@@ -10468,22 +10377,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     let x_52: Obj = l_Int_dadd(x_51, x_23);
                     rt::lean_dec(x_51);
                     let x_53: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dthermalField_dspec__0_dspec__0_d__redArg_d__closed__0();
-                    let x_54: Obj = l_Int_dediv(x_47, x_53);
+                    let x_54: Obj = l_Int_dediv(x_46, x_53);
                     let x_55: Obj = l_Int_dadd(x_52, x_54);
                     rt::lean_dec(x_54);
                     rt::lean_dec(x_52);
                     let x_56: Obj = rt::lean_alloc_ctor(0, 6, 1);
-                    rt::lean_ctor_set(x_56, 0, x_45);
+                    rt::lean_ctor_set(x_56, 0, x_49);
                     rt::lean_ctor_set(x_56, 1, x_44);
-                    rt::lean_ctor_set(x_56, 2, x_49);
+                    rt::lean_ctor_set(x_56, 2, x_48);
                     rt::lean_ctor_set(x_56, 3, x_55);
-                    rt::lean_ctor_set(x_56, 4, x_50);
-                    rt::lean_ctor_set(x_56, 5, x_46);
-                    rt::lean_ctor_set_uint8(x_56, 6 * ::core::mem::size_of::<usize>(), x_48);
+                    rt::lean_ctor_set(x_56, 4, x_45);
+                    rt::lean_ctor_set(x_56, 5, x_47);
+                    rt::lean_ctor_set_uint8(x_56, 6 * ::core::mem::size_of::<usize>(), x_50);
                     let x_57: Obj = l_Array_dset_x21_(rt::lean_box(0), x_18, x_29, x_56);
                     rt::lean_dec(x_29);
-                    let x_58: Obj = l_Int_dadd(x_23, x_47);
-                    rt::lean_dec(x_47);
+                    let x_58: Obj = l_Int_dadd(x_23, x_46);
+                    rt::lean_dec(x_46);
                     rt::lean_dec(x_23);
                     let mut x_60: Obj;
                     'b59: {
@@ -10510,13 +10419,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     break 'b12;
                 }
                 let x_38: Obj = rt::lean_alloc_ctor(0, 6, 1);
-                rt::lean_ctor_set(x_38, 0, x_32);
+                rt::lean_ctor_set(x_38, 0, x_35);
                 rt::lean_ctor_set(x_38, 1, x_31);
-                rt::lean_ctor_set(x_38, 2, x_35);
+                rt::lean_ctor_set(x_38, 2, x_34);
                 rt::lean_ctor_set(x_38, 3, x_37);
-                rt::lean_ctor_set(x_38, 4, x_36);
+                rt::lean_ctor_set(x_38, 4, x_32);
                 rt::lean_ctor_set(x_38, 5, x_33);
-                rt::lean_ctor_set_uint8(x_38, 6 * ::core::mem::size_of::<usize>(), x_34);
+                rt::lean_ctor_set_uint8(x_38, 6 * ::core::mem::size_of::<usize>(), x_36);
                 let x_39: Obj = l_Array_dset_x21_(rt::lean_box(0), x_18, x_29, x_38);
                 rt::lean_dec(x_29);
                 rt::lean_inc_ref(x_5);
@@ -10919,8 +10828,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                     rt::lean_dec(x_28);
                     let mut x_31: Obj;
                     let mut x_32: Obj;
-                    let mut x_33: Obj;
-                    let mut x_34: u8;
+                    let mut x_33: u8;
+                    let mut x_34: Obj;
                     let mut x_35: Obj;
                     let mut x_36: Obj;
                     let mut x_37: Obj;
@@ -10928,8 +10837,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         let mut x_44: Obj;
                         let mut x_45: Obj;
                         let mut x_46: Obj;
-                        let mut x_47: Obj;
-                        let mut x_48: u8;
+                        let mut x_47: u8;
+                        let mut x_48: Obj;
                         let mut x_49: Obj;
                         let mut x_50: Obj;
                         let mut x_51: Obj;
@@ -10937,9 +10846,9 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                             let x_63: Obj = l_Sand2_dread(x_1, x_3, x_4, x_29);
                             let mut x_65: Obj;
                             let mut x_66: Obj;
-                            let mut x_67: Obj;
+                            let mut x_67: u8;
                             let mut x_68: Obj;
-                            let mut x_69: u8;
+                            let mut x_69: Obj;
                             let mut x_70: Obj;
                             'b64: {
                                 let mut x_82: Obj;
@@ -10974,12 +10883,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                         let x_88: Obj = rt::lean_ctor_get(x_82, 5);
                                         rt::lean_inc(x_88);
                                         rt::lean_dec_ref(x_82);
-                                        x_65 = x_84;
+                                        x_65 = x_85;
                                         x_66 = x_87;
-                                        x_67 = x_86;
-                                        x_68 = x_85;
-                                        x_69 = x_83;
-                                        x_70 = x_88;
+                                        x_67 = x_83;
+                                        x_68 = x_84;
+                                        x_69 = x_88;
+                                        x_70 = x_86;
                                         break 'b64;
                                     }
                                     _ => {
@@ -11067,12 +10976,12 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                                 let x_110: Obj = rt::lean_ctor_get(x_82, 5);
                                                 rt::lean_inc(x_110);
                                                 rt::lean_dec_ref(x_82);
-                                                x_65 = x_106;
+                                                x_65 = x_107;
                                                 x_66 = x_109;
-                                                x_67 = x_108;
-                                                x_68 = x_107;
-                                                x_69 = x_83;
-                                                x_70 = x_110;
+                                                x_67 = x_83;
+                                                x_68 = x_106;
+                                                x_69 = x_110;
+                                                x_70 = x_108;
                                                 break 'b64;
                                             }
                                         }
@@ -11094,8 +11003,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             x_31 = x_65;
                                             x_32 = x_66;
                                             x_33 = x_67;
-                                            x_34 = x_69;
-                                            x_35 = x_68;
+                                            x_34 = x_68;
+                                            x_35 = x_69;
                                             x_36 = x_70;
                                             x_37 = x_27;
                                             break 'b30;
@@ -11105,8 +11014,8 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                             x_31 = x_65;
                                             x_32 = x_66;
                                             x_33 = x_67;
-                                            x_34 = x_69;
-                                            x_35 = x_68;
+                                            x_34 = x_68;
+                                            x_35 = x_69;
                                             x_36 = x_70;
                                             x_37 = x_6;
                                             break 'b30;
@@ -11126,24 +11035,24 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                                     let x_80: u8 = l_Int_ddecLe(x_27, x_22);
                                     match x_80 {
                                         0 => {
-                                            x_44 = x_65;
-                                            x_45 = x_66;
-                                            x_46 = x_79;
+                                            x_44 = x_79;
+                                            x_45 = x_65;
+                                            x_46 = x_66;
                                             x_47 = x_67;
-                                            x_48 = x_69;
-                                            x_49 = x_68;
+                                            x_48 = x_68;
+                                            x_49 = x_69;
                                             x_50 = x_70;
                                             x_51 = x_27;
                                             break 'b43;
                                         }
                                         _ => {
                                             rt::lean_inc(x_22);
-                                            x_44 = x_65;
-                                            x_45 = x_66;
-                                            x_46 = x_79;
+                                            x_44 = x_79;
+                                            x_45 = x_65;
+                                            x_46 = x_66;
                                             x_47 = x_67;
-                                            x_48 = x_69;
-                                            x_49 = x_68;
+                                            x_48 = x_68;
+                                            x_49 = x_69;
                                             x_50 = x_70;
                                             x_51 = x_22;
                                             break 'b43;
@@ -11155,22 +11064,22 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         let x_52: Obj = l_Int_dadd(x_51, x_23);
                         rt::lean_dec(x_51);
                         let x_53: Obj = l___private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___d__private_dInit_dData_dRange_dBasic_d0_dStd_dLegacy_dRange_dforIn_x27__dloop_d__at___dSand2_dthermalField_dspec__0_dspec__0_d__redArg_d__closed__0();
-                        let x_54: Obj = l_Int_dediv(x_46, x_53);
+                        let x_54: Obj = l_Int_dediv(x_44, x_53);
                         let x_55: Obj = l_Int_dadd(x_52, x_54);
                         rt::lean_dec(x_54);
                         rt::lean_dec(x_52);
                         let x_56: Obj = rt::lean_alloc_ctor(0, 6, 1);
-                        rt::lean_ctor_set(x_56, 0, x_44);
-                        rt::lean_ctor_set(x_56, 1, x_49);
-                        rt::lean_ctor_set(x_56, 2, x_47);
+                        rt::lean_ctor_set(x_56, 0, x_48);
+                        rt::lean_ctor_set(x_56, 1, x_45);
+                        rt::lean_ctor_set(x_56, 2, x_50);
                         rt::lean_ctor_set(x_56, 3, x_55);
-                        rt::lean_ctor_set(x_56, 4, x_45);
-                        rt::lean_ctor_set(x_56, 5, x_50);
-                        rt::lean_ctor_set_uint8(x_56, 6 * ::core::mem::size_of::<usize>(), x_48);
+                        rt::lean_ctor_set(x_56, 4, x_46);
+                        rt::lean_ctor_set(x_56, 5, x_49);
+                        rt::lean_ctor_set_uint8(x_56, 6 * ::core::mem::size_of::<usize>(), x_47);
                         let x_57: Obj = l_Array_dset_x21_(rt::lean_box(0), x_18, x_29, x_56);
                         rt::lean_dec(x_29);
-                        let x_58: Obj = l_Int_dadd(x_23, x_46);
-                        rt::lean_dec(x_46);
+                        let x_58: Obj = l_Int_dadd(x_23, x_44);
+                        rt::lean_dec(x_44);
                         rt::lean_dec(x_23);
                         let mut x_60: Obj;
                         'b59: {
@@ -11197,13 +11106,13 @@ pub(crate) unsafe extern "C" fn l___private_dInit_dData_dRange_dBasic_d0_dStd_dL
                         break 'b12;
                     }
                     let x_38: Obj = rt::lean_alloc_ctor(0, 6, 1);
-                    rt::lean_ctor_set(x_38, 0, x_31);
-                    rt::lean_ctor_set(x_38, 1, x_35);
-                    rt::lean_ctor_set(x_38, 2, x_33);
+                    rt::lean_ctor_set(x_38, 0, x_34);
+                    rt::lean_ctor_set(x_38, 1, x_31);
+                    rt::lean_ctor_set(x_38, 2, x_36);
                     rt::lean_ctor_set(x_38, 3, x_37);
                     rt::lean_ctor_set(x_38, 4, x_32);
-                    rt::lean_ctor_set(x_38, 5, x_36);
-                    rt::lean_ctor_set_uint8(x_38, 6 * ::core::mem::size_of::<usize>(), x_34);
+                    rt::lean_ctor_set(x_38, 5, x_35);
+                    rt::lean_ctor_set_uint8(x_38, 6 * ::core::mem::size_of::<usize>(), x_33);
                     let x_39: Obj = l_Array_dset_x21_(rt::lean_box(0), x_18, x_29, x_38);
                     rt::lean_dec(x_29);
                     rt::lean_inc_ref(x_5);

@@ -153,3 +153,22 @@ def main : IO Unit := do
   let compressed := {compressed with energy := compressedEnergy}
   check "compressed gas remains gas even when its mass exceeds the old threshold"
     (gasCell h w i compressed && temperature h w i compressed == 2000)
+
+  let dropStart := fillRect (newSimulation 24 40) 8 3 9 4 .sand
+  let initialGrain := read dropStart.world (3*24+8)
+  let initialThermal := thermalEnergy 40 24 (3*24+8) initialGrain
+  let mut drop := dropStart
+  for _ in [:6] do drop := tickSimulation drop
+  let mut distance := (0 : Int)
+  let mut speed := (0 : Int)
+  let mut thermalChange := (0 : Int)
+  for k in [:drop.width*drop.height] do
+    let p := read drop.world k
+    if p.matter.silica > 0 then
+      distance := (k/drop.width : Nat)*1000000+p.ry-3000000
+      speed := p.vy
+      thermalChange := thermalEnergy drop.height drop.width k p-initialThermal
+  check "a free grain falls 4.905 cm in 0.1 simulated seconds"
+    ((distance-4905000).natAbs <= 10 && speed == 981000)
+  check "free-fall numerical/thermal drift stays below 10 microjoules"
+    (thermalChange.natAbs < 1000000000)

@@ -8,7 +8,7 @@ export async function loadGame(width, height, onError) {
   const encoder = new TextEncoder();
   let textLength = 0, count = 0, history = 0, catalogue, inspect = '';
   let busy = false, tick = false, disposed = false, view = 0, dirty = false;
-  let commands = [], point, steps = 0, sentAt = 0, batchMs = 1000 / 60;
+  let commands = [], point, steps = 0, timeMs = 0n, sentAt = 0, batchMs = 1000 / 60;
   let completedTicks = [];
   const writeText = value => {
     const text = encoder.encode(value);
@@ -36,7 +36,7 @@ export async function loadGame(width, height, onError) {
       else if (data.type === 'frame') {
         busy = false; bytes.set(data.pixels, 0); count = data.count;
         if (data.inspect !== undefined) inspect = data.inspect;
-        steps = data.steps;
+        steps = data.steps; timeMs = data.timeMs;
         const now = performance.now();
         if (data.stepsTaken) {
           const elapsed = (now - sentAt) / data.stepsTaken;
@@ -60,6 +60,7 @@ export async function loadGame(width, height, onError) {
     world_step() { command('world_tick'); },
     world_pause() { tick = false; },
     world_steps() { return steps; },
+    world_time_ms() { return timeMs; },
     world_render(nextView) { if (view !== nextView) { view = nextView; dirty = true; queueMicrotask(pump); } return count; },
     world_pixels() { return 0; },
     world_checkpoint() { history = Math.min(16, history + 1); command('world_checkpoint'); return history; },

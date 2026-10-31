@@ -212,7 +212,7 @@ export async function run() {
       draw(); frames++;
       if (time - statsTime > 500) {
         if (pointer) { const p = api.world_inspect(Math.floor(pointer.x), Math.floor(pointer.y)); el('inspect').textContent = textResult(p, api.world_text_length()); }
-        el('time').textContent = `${(api.world_steps() / 60).toFixed(2)} s`;
+        el('time').textContent = `${(Number(api.world_time_ms()) / 1000).toFixed(2)} s`;
         el('count').textContent = count.toLocaleString();
         el('fps').textContent = `${Math.min(240, Math.round(frames * 1000 / (time - statsTime)))} FPS · ${api.simulation_hz()} Hz`;
         frames = 0; statsTime = time;

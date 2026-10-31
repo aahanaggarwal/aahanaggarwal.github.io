@@ -26,9 +26,12 @@ for (const {id} of catalogue) {
 }
 api.world_scene(3);
 const checkpoint = api.world_digest();
+const checkpointTime = api.world_time_ms();
 api.world_checkpoint(); api.world_paint(12, 4, 3, 9); api.world_tick();
 assert.notEqual(api.world_digest(), checkpoint);
+assert.ok(api.world_time_ms() > checkpointTime, "Lean time did not advance");
 api.world_undo(); assert.equal(api.world_digest(), checkpoint);
+assert.equal(api.world_time_ms(), checkpointTime, "Undo did not restore Lean time");
 for (const view of [0,1,2]) api.world_render(view);
 assert.equal(api.world_digest(), checkpoint, 'Rendering mutated simulation');
 api.world_free();

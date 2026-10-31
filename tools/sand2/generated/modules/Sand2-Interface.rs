@@ -2221,7 +2221,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dnewSimulation_d__boxed(x_1: Obj, x_2: O
 }
 
 // Lean: Sand2.oracle
-// Source: lean/Sand2/Interface.lean:196:1
+// Source: lean/Sand2/Interface.lean:199:1
 pub(crate) unsafe extern "C" fn l_Sand2_doracle(x_1: u32, x_2: u32) -> Obj {
     let x_3: Obj = l_Sand2_doracle_d__closed__0();
     let x_4: Obj = l_Sand2_dsceneSimulation(x_3, x_1);
@@ -2248,7 +2248,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_doracle(x_1: u32, x_2: u32) -> Obj {
 
 // Lean: Sand2.oracle._boxed
 // Compiled from: Sand2.oracle
-// Source: lean/Sand2/Interface.lean:196:1
+// Source: lean/Sand2/Interface.lean:199:1
 pub(crate) unsafe extern "C" fn l_Sand2_doracle_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: u32 = rt::lean_unbox_uint32(x_1);
     rt::lean_dec(x_1);
@@ -2260,7 +2260,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_doracle_d__boxed(x_1: Obj, x_2: Obj) -> 
 
 // Lean: Sand2.oracle._closed_0
 // Compiled from: Sand2.oracle
-// Source: lean/Sand2/Interface.lean:196:1
+// Source: lean/Sand2/Interface.lean:199:1
 static C_l_Sand2_doracle_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_doracle_d__closed__0__init() -> Obj {
     let x_1: u32 = 20u32;
@@ -2275,7 +2275,7 @@ pub(crate) unsafe fn l_Sand2_doracle_d__closed__0() -> Obj {
 
 // Lean: Sand2.oracle._closed_1
 // Compiled from: Sand2.oracle
-// Source: lean/Sand2/Interface.lean:196:1
+// Source: lean/Sand2/Interface.lean:199:1
 static C_l_Sand2_doracle_d__closed__1: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_doracle_d__closed__1__init() -> Obj {
     let x_1: Obj = rt::lean_mk_string_unchecked(b";", 1);
@@ -3112,6 +3112,27 @@ pub(crate) unsafe extern "C" fn l_Sand2_dtickSimulation(x_1: Obj) -> Obj {
         }
     }
     return x_10;
+}
+
+// Lean: Sand2.timeMillisecondsSimulation
+// Source: lean/Sand2/Interface.lean:196:1
+pub(crate) unsafe extern "C" fn l_Sand2_dtimeMillisecondsSimulation(x_1: Obj) -> u64 {
+    let x_2: Obj = rt::lean_ctor_get(x_1, 2);
+    let x_3: Obj = rt::lean_ctor_get(x_2, 1);
+    let x_4: Obj = l_Sand2_delapsedMilliseconds(x_3);
+    let x_5: u64 = l_UInt64_dofNat(x_4);
+    rt::lean_dec(x_4);
+    return x_5;
+}
+
+// Lean: Sand2.timeMillisecondsSimulation._boxed
+// Compiled from: Sand2.timeMillisecondsSimulation
+// Source: lean/Sand2/Interface.lean:196:1
+pub(crate) unsafe extern "C" fn l_Sand2_dtimeMillisecondsSimulation_d__boxed(x_1: Obj) -> Obj {
+    let x_2: u64 = l_Sand2_dtimeMillisecondsSimulation(x_1);
+    rt::lean_dec_ref(x_1);
+    let x_3: Obj = rt::lean_box_uint64(x_2);
+    return x_3;
 }
 
 // Lean: _private.Init.Data.Range.Basic.0.Std.Legacy.Range.forIn'.loop._at_.Sand2.countSimulation.spec_0

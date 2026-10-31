@@ -193,6 +193,9 @@ def mixHash (h : UInt64) (n : Int) : UInt64 := (h ^^^ (n % 18446744073709551616)
 
 def stepCountSimulation (s : Simulation) : UInt32 := s.world.generation.toUInt32
 
+def timeMillisecondsSimulation (s : Simulation) : UInt64 :=
+  (elapsedMilliseconds s.world.generation).toUInt64
+
 @[noinline] def oracle (scene ticks : UInt32) : String := Id.run do
   let mut s := sceneSimulation (newSimulation 24 20) scene
   for _ in [:ticks.toNat] do s := tickSimulation s

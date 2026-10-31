@@ -1,13 +1,13 @@
 import Sand2.Conversions
 import Sand2.Transport
 import Sand2.PhasePressure
+import Sand2.Mechanics
 
 namespace Sand2
 open Chemistry
 
 /-- Constitutive parameters are SI approximations, with one cell = 1 cm and
     one tick = 1/60 s. Closed boundaries are adiabatic: no ambient heat source. -/
-def tickMicroseconds : Nat := 16667
 
 
 def mobile (height width i : Nat) (p : Particle) : Bool :=
@@ -313,10 +313,10 @@ def crossEdit (a b : Particle) (dx dy : Int) (stamp : Nat) : PairEdit a b :=
   if p.stamp == w.generation || !mobile height width start p || gasCell height width start p then return
   Physics.single start fun p =>
     let vx := p.vx*995/1000
-    let vy := min 3000000 (p.vy+163500)
+    let vy := gravityVelocity p.vy
     let px := (p.mass : Int)*vx
     let py := (p.mass : Int)*vy
-    let e : SingleEdit p := ⟨{p with px,py,rx := p.rx+vx*5/3,ry := p.ry+vy*5/3,stamp := w.generation},rfl,rfl⟩
+    let e : SingleEdit p := ⟨{p with px,py,rx := p.rx+stepDisplacement p.vx vx,ry := p.ry+stepDisplacement p.vy vy,stamp := w.generation},rfl,rfl⟩
     safeSingle height width start p e
   let mut pos := start
   let mut stopped := false

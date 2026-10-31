@@ -26,7 +26,7 @@ self.onmessage = async ({data}) => {
       const pointer = api.world_inspect(...data.inspect);
       inspect = new TextDecoder().decode(new Uint8Array(api.memory.buffer, pointer, api.world_text_length()));
     }
-    self.postMessage({type: 'frame', pixels, count, inspect, tickMs, stepsTaken, steps: api.world_steps()}, [pixels.buffer]);
+    self.postMessage({type: 'frame', pixels, count, inspect, tickMs, stepsTaken, steps: api.world_steps(), timeMs: api.world_time_ms()}, [pixels.buffer]);
   } catch (error) {
     self.postMessage({type: 'error', message: String(error?.stack || error)});
   }

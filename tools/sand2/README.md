@@ -268,3 +268,19 @@ Reference details:
 - [NIST O2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C7782447&Mask=1),
   [N2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=1) and
   [CO2](https://webbook.nist.gov/cgi/cbook.cgi?ID=C124389&Mask=1) thermochemistry
+
+
+## Energy-consistent gravity and Lean time (2026-10-31 UTC)
+
+Dense parcels now integrate displacement from the average of the old and new
+velocity, rather than moving for the full tick at the final velocity. Lean
+proves the SI-unit conversion, sub-position rounding bound and the exact
+uniform-acceleration distance and speed. The executed-world benchmark confirms
+4.905 cm of free fall in 0.1 simulated seconds, with less than 10 microjoules of
+thermal drift. Collisions, drag and the declared speed cap remain approximations.
+
+The browser reads elapsed milliseconds from Lean. It contains no copy of the
+physics timestep. The clock is part of the retained world and restores on undo.
+All 127 handwritten theorems, the 800-theorem namespace audit, 38 independent
+physical checks and 45 complete-world Lean/native/Wasm comparisons pass. The
+96×64 dam-break benchmark is approximately 104 ms/tick on this host.
