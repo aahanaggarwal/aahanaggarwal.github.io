@@ -1,4 +1,5 @@
 import Sand2.Conversions
+import Sand2.Transport
 
 namespace Sand2
 open Chemistry
@@ -93,7 +94,7 @@ def rateDivisor : Reaction → Nat
   | .gunpowder => 6 | _ => 16
 
 def reactionExtent (r : Reaction) (m : Mixture) (t : Int) : Nat :=
-  if t < activation r then 0 else capacity r m / rateDivisor r
+  if t < activation r then 0 else if capacity r m = 0 then 0 else max 1 (capacity r m / rateDivisor r)
 
 theorem cold_reactions_do_not_start (r : Reaction) (m : Mixture) (t : Int)
     (cold : t < activation r) : reactionExtent r m t = 0 := by simp [reactionExtent,cold]
@@ -103,7 +104,10 @@ theorem kinetics_cannot_exceed_reactants (r : Reaction) (m : Mixture) (t : Int) 
   unfold reactionExtent
   split
   · omega
-  · exact Nat.div_le_self _ _
+  · split
+    · omega
+    · have divided := Nat.div_le_self (capacity r m) (rateDivisor r)
+      omega
 
 def reactions : List Reaction := [.burnBiomass,.burnOil,.burnCarbon,.burnHydrogen,
   .rustIron,.dissolveCarbonate,.dissolveIron,.gunpowder]
@@ -123,6 +127,7 @@ def reactive (m : Mixture) : Bool :=
 
 @[noinline] def reactInside (i : Nat) (t : Int) : Physics width height Unit := do
   unless reactive (← Physics.getParticle i).matter do return
+  if (← Physics.getParticle i).anchored then return
   for r in reactions do
     let p ← Physics.getParticle i
     if possible r p.matter {} then
@@ -136,6 +141,7 @@ def reactive (m : Mixture) : Bool :=
 @[noinline] def reactContact (i j : Nat) (t : Int) : Physics width height Unit := do
   let a ← Physics.getParticle i
   let b ← Physics.getParticle j
+  if a.anchored || b.anchored then return
   unless reactive a.matter || reactive b.matter do return
   for r in reactions do
     let a ← Physics.getParticle i
@@ -163,11 +169,8 @@ def reactive (m : Mixture) : Bool :=
   let packet := gasPart a.matter divisor v
   let dm := Chemistry.mass packet
   if dm == 0 then return
-  let sensible := enthalpyAt packet (if v then .steam else .empty) (temperature height width i a)
-  let q := makeParticle packet 0
-  let q := {q with px := a.vx*(dm : Int), py := a.vy*(dm : Int)}
-  let energy := chemicalEnergy packet+sensible+kineticEnergy q+potentialEnergy height width i q
-  Physics.pair i j fun a b => safePair height width i j a b (transportEdit a b divisor v energy q.px q.py)
+  let q := gasPacket height width i j a packet
+  Physics.pair i j fun a b => safePair height width i j a b (transportEdit a b divisor v q.energy q.px q.py)
 
 structure ThermalSample where
   t : Int := 2000
@@ -181,6 +184,23 @@ structure ThermalSample where
 
 /-- Face fluxes use the start-of-tick thermal field (explicit operator splitting).
     Edits still limit actual inventories and retain a conserved energy budget. -/
+@[noinline] def diffuse (i j : Nat) : Physics width height Unit := do
+  let a ← Physics.getParticle i
+  let b ← Physics.getParticle j
+  if a.anchored || b.anchored || !gasCell height width i a || !gasCell height width j b || a.matter == b.matter then return
+  let divisor := diffusionDivisor a.matter b.matter
+  Physics.pair i j fun a b => safePair height width i j a b (gasDiffusionEdit height width i j a b divisor)
+
+/-- Overdamped buoyancy exchanges unstable gas layers: lighter gas below heavier
+    gas rises. Gravity stays in the conserved energy budget. This is a coarse
+    convective relaxation law, not a resolved momentum/viscosity solver. -/
+@[noinline] def buoyancy (upper lower : Nat) : Physics width height Unit := do
+  let a ← Physics.getParticle upper
+  let b ← Physics.getParticle lower
+  if a.anchored || b.anchored || !gasCell height width upper a || !gasCell height width lower b then return
+  if a.mass*100 > b.mass*101 then
+    Physics.pair upper lower fun a b => safePair height width upper lower a b (gasDiffusionEdit height width upper lower a b 16)
+
 @[noinline] def face (field : Array ThermalSample) (i j : Nat) : Physics width height Unit := do
   let a := field[i]?.getD default
   let b := field[j]?.getD default
@@ -188,6 +208,8 @@ structure ThermalSample where
   reactContact i j (max a.t b.t)
   flowOne i j a.pressure b.pressure
   flowOne j i b.pressure a.pressure
+  diffuse i j
+  if j == i+width then buoyancy i j
 
 /-- Dissipative drag/impact retains total energy: lost kinetic energy appears
     in the enthalpy budget. Fixtures exchange momentum with the closed vessel. -/

@@ -674,7 +674,7 @@ pub(crate) unsafe fn l_Sand2_ddryCapacity_d__closed__9() -> Obj {
 }
 
 // Lean: Sand2.edge
-// Source: lean/Sand2/State.lean:188:1
+// Source: lean/Sand2/State.lean:200:1
 pub(crate) unsafe extern "C" fn l_Sand2_dedge(x_1: Obj, x_2: Obj, x_3: Obj) -> u8 {
     let mut x_5: u8;
     'b4: {
@@ -726,7 +726,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dedge(x_1: Obj, x_2: Obj, x_3: Obj) -> u
 
 // Lean: Sand2.edge._boxed
 // Compiled from: Sand2.edge
-// Source: lean/Sand2/State.lean:188:1
+// Source: lean/Sand2/State.lean:200:1
 pub(crate) unsafe extern "C" fn l_Sand2_dedge_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: u8 = l_Sand2_dedge(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -1027,7 +1027,7 @@ pub(crate) unsafe fn l_Sand2_denthalpyAt_d__closed__5() -> Obj {
 }
 
 // Lean: Sand2.exchangeImpulse
-// Source: lean/Sand2/State.lean:205:1
+// Source: lean/Sand2/State.lean:217:1
 pub(crate) unsafe extern "C" fn l_Sand2_dexchangeImpulse(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = rt::lean_ctor_get(x_1, 0);
     let x_6: Obj = rt::lean_ctor_get(x_1, 1);
@@ -1209,7 +1209,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dexchangeImpulse(x_1: Obj, x_2: Obj, x_3
 
 // Lean: Sand2.exchangeImpulse._boxed
 // Compiled from: Sand2.exchangeImpulse
-// Source: lean/Sand2/State.lean:205:1
+// Source: lean/Sand2/State.lean:217:1
 pub(crate) unsafe extern "C" fn l_Sand2_dexchangeImpulse_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dexchangeImpulse(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_4);
@@ -1218,7 +1218,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dexchangeImpulse_d__boxed(x_1: Obj, x_2:
 }
 
 // Lean: Sand2.idx
-// Source: lean/Sand2/State.lean:186:1
+// Source: lean/Sand2/State.lean:198:1
 pub(crate) unsafe extern "C" fn l_Sand2_didx(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Int_dtoNat(x_3);
     let x_5: Obj = l_Nat_dmul(x_4, x_1);
@@ -1232,7 +1232,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_didx(x_1: Obj, x_2: Obj, x_3: Obj) -> Ob
 
 // Lean: Sand2.idx._boxed
 // Compiled from: Sand2.idx
-// Source: lean/Sand2/State.lean:186:1
+// Source: lean/Sand2/State.lean:198:1
 pub(crate) unsafe extern "C" fn l_Sand2_didx_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Sand2_didx(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -1242,7 +1242,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_didx_d__boxed(x_1: Obj, x_2: Obj, x_3: O
 }
 
 // Lean: Sand2.inside
-// Source: lean/Sand2/State.lean:183:1
+// Source: lean/Sand2/State.lean:195:1
 pub(crate) unsafe extern "C" fn l_Sand2_dinside(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> u8 {
     let mut x_6: u8;
     'b5: {
@@ -1288,7 +1288,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dinside(x_1: Obj, x_2: Obj, x_3: Obj, x_
 
 // Lean: Sand2.inside._boxed
 // Compiled from: Sand2.inside
-// Source: lean/Sand2/State.lean:183:1
+// Source: lean/Sand2/State.lean:195:1
 pub(crate) unsafe extern "C" fn l_Sand2_dinside_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: u8 = l_Sand2_dinside(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_4);
@@ -1358,22 +1358,22 @@ pub(crate) unsafe fn l_Sand2_dkineticEnergy_d__closed__0() -> Obj {
 }
 
 // Lean: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt(x_1: Obj, x_2: Obj, x_3: Obj, x_4: u8, x_5: u8) -> Obj {
     let mut x_7: Obj;
-    let mut x_8: Obj;
+    let mut x_8: u8;
     let mut x_9: Obj;
     let mut x_10: Obj;
-    let mut x_11: Obj;
+    let mut x_11: u8;
     let mut x_12: Obj;
-    let mut x_13: Obj;
+    let mut x_13: u8;
     let mut x_14: Obj;
     let mut x_15: Obj;
     let mut x_16: Obj;
-    let mut x_17: u8;
-    let mut x_18: u8;
+    let mut x_17: Obj;
+    let mut x_18: Obj;
     let mut x_19: Obj;
-    let mut x_20: u8;
+    let mut x_20: Obj;
     let mut x_21: u8;
     'b6: {
         let x_25: Obj = l_Sand2_dmatterFor(x_4);
@@ -1385,34 +1385,39 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt(x_1: Obj, x_2: Obj, x_3: Obj, x_
                     x_27 = x_50;
                     break 'b26;
                 }
-                5 => {
-                    let x_51: Obj = l_Sand2_dmakeAt_d__closed__1();
+                32 => {
+                    let x_51: Obj = l_Sand2_denthalpyAt_d__closed__4();
                     x_27 = x_51;
                     break 'b26;
                 }
-                18 => {
-                    let x_52: Obj = l_Sand2_dmakeAt_d__closed__2();
+                5 => {
+                    let x_52: Obj = l_Sand2_dmakeAt_d__closed__1();
                     x_27 = x_52;
                     break 'b26;
                 }
-                11 => {
-                    let x_53: Obj = l_Sand2_dmakeAt_d__closed__3();
+                18 => {
+                    let x_53: Obj = l_Sand2_dmakeAt_d__closed__2();
                     x_27 = x_53;
                     break 'b26;
                 }
-                6 => {
-                    let x_54: Obj = l_Sand2_dmakeAt_d__closed__4();
+                11 => {
+                    let x_54: Obj = l_Sand2_dmakeAt_d__closed__3();
                     x_27 = x_54;
                     break 'b26;
                 }
-                12 => {
-                    let x_55: Obj = l_Sand2_dmakeAt_d__closed__5();
+                6 => {
+                    let x_55: Obj = l_Sand2_dmakeAt_d__closed__4();
                     x_27 = x_55;
                     break 'b26;
                 }
-                _ => {
-                    let x_56: Obj = l_Sand2_ddryCapacity_d__closed__7();
+                12 => {
+                    let x_56: Obj = l_Sand2_dmakeAt_d__closed__5();
                     x_27 = x_56;
+                    break 'b26;
+                }
+                _ => {
+                    let x_57: Obj = l_Sand2_ddryCapacity_d__closed__7();
+                    x_27 = x_57;
                     break 'b26;
                 }
             }
@@ -1453,38 +1458,38 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt(x_1: Obj, x_2: Obj, x_3: Obj, x_
             0 => {
                 let x_48: u8 = 18u8;
                 let x_49: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_4, x_48);
-                x_7 = x_34;
-                x_8 = x_36;
-                x_9 = x_37;
-                x_10 = x_45;
-                x_11 = x_31;
-                x_12 = x_38;
-                x_13 = x_28;
-                x_14 = x_28;
-                x_15 = x_35;
-                x_16 = x_33;
-                x_17 = x_39;
-                x_18 = x_40;
-                x_19 = x_32;
-                x_20 = x_41;
+                x_7 = x_31;
+                x_8 = x_41;
+                x_9 = x_28;
+                x_10 = x_35;
+                x_11 = x_40;
+                x_12 = x_37;
+                x_13 = x_39;
+                x_14 = x_33;
+                x_15 = x_34;
+                x_16 = x_36;
+                x_17 = x_32;
+                x_18 = x_45;
+                x_19 = x_28;
+                x_20 = x_38;
                 x_21 = x_49;
                 break 'b6;
             }
             _ => {
-                x_7 = x_34;
-                x_8 = x_36;
-                x_9 = x_37;
-                x_10 = x_45;
-                x_11 = x_31;
-                x_12 = x_38;
-                x_13 = x_28;
-                x_14 = x_28;
-                x_15 = x_35;
-                x_16 = x_33;
-                x_17 = x_39;
-                x_18 = x_40;
-                x_19 = x_32;
-                x_20 = x_41;
+                x_7 = x_31;
+                x_8 = x_41;
+                x_9 = x_28;
+                x_10 = x_35;
+                x_11 = x_40;
+                x_12 = x_37;
+                x_13 = x_39;
+                x_14 = x_33;
+                x_15 = x_34;
+                x_16 = x_36;
+                x_17 = x_32;
+                x_18 = x_45;
+                x_19 = x_28;
+                x_20 = x_38;
                 x_21 = x_47;
                 break 'b6;
             }
@@ -1493,40 +1498,40 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt(x_1: Obj, x_2: Obj, x_3: Obj, x_
     match x_21 {
         0 => {
             let x_22: Obj = rt::lean_alloc_ctor(0, 11, 3);
-            rt::lean_ctor_set(x_22, 0, x_11);
-            rt::lean_ctor_set(x_22, 1, x_19);
-            rt::lean_ctor_set(x_22, 2, x_16);
-            rt::lean_ctor_set(x_22, 3, x_7);
-            rt::lean_ctor_set(x_22, 4, x_10);
-            rt::lean_ctor_set(x_22, 5, x_15);
-            rt::lean_ctor_set(x_22, 6, x_8);
-            rt::lean_ctor_set(x_22, 7, x_9);
-            rt::lean_ctor_set(x_22, 8, x_12);
-            rt::lean_ctor_set(x_22, 9, x_14);
-            rt::lean_ctor_set(x_22, 10, x_13);
-            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>(), x_17);
-            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 1, x_18);
-            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 2, x_20);
+            rt::lean_ctor_set(x_22, 0, x_7);
+            rt::lean_ctor_set(x_22, 1, x_17);
+            rt::lean_ctor_set(x_22, 2, x_14);
+            rt::lean_ctor_set(x_22, 3, x_15);
+            rt::lean_ctor_set(x_22, 4, x_18);
+            rt::lean_ctor_set(x_22, 5, x_10);
+            rt::lean_ctor_set(x_22, 6, x_16);
+            rt::lean_ctor_set(x_22, 7, x_12);
+            rt::lean_ctor_set(x_22, 8, x_20);
+            rt::lean_ctor_set(x_22, 9, x_9);
+            rt::lean_ctor_set(x_22, 10, x_19);
+            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>(), x_13);
+            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 1, x_11);
+            rt::lean_ctor_set_uint8(x_22, 11 * ::core::mem::size_of::<usize>() + 2, x_8);
             return x_22;
         }
         _ => {
-            rt::lean_dec(x_14);
+            rt::lean_dec(x_9);
             let x_23: Obj = rt::nat::lean_usize_to_nat(16);
             let x_24: Obj = rt::lean_alloc_ctor(0, 11, 3);
-            rt::lean_ctor_set(x_24, 0, x_11);
-            rt::lean_ctor_set(x_24, 1, x_19);
-            rt::lean_ctor_set(x_24, 2, x_16);
-            rt::lean_ctor_set(x_24, 3, x_7);
-            rt::lean_ctor_set(x_24, 4, x_10);
-            rt::lean_ctor_set(x_24, 5, x_15);
-            rt::lean_ctor_set(x_24, 6, x_8);
-            rt::lean_ctor_set(x_24, 7, x_9);
-            rt::lean_ctor_set(x_24, 8, x_12);
+            rt::lean_ctor_set(x_24, 0, x_7);
+            rt::lean_ctor_set(x_24, 1, x_17);
+            rt::lean_ctor_set(x_24, 2, x_14);
+            rt::lean_ctor_set(x_24, 3, x_15);
+            rt::lean_ctor_set(x_24, 4, x_18);
+            rt::lean_ctor_set(x_24, 5, x_10);
+            rt::lean_ctor_set(x_24, 6, x_16);
+            rt::lean_ctor_set(x_24, 7, x_12);
+            rt::lean_ctor_set(x_24, 8, x_20);
             rt::lean_ctor_set(x_24, 9, x_23);
-            rt::lean_ctor_set(x_24, 10, x_13);
-            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>(), x_17);
-            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>() + 1, x_18);
-            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>() + 2, x_20);
+            rt::lean_ctor_set(x_24, 10, x_19);
+            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>(), x_13);
+            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>() + 1, x_11);
+            rt::lean_ctor_set_uint8(x_24, 11 * ::core::mem::size_of::<usize>() + 2, x_8);
             return x_24;
         }
     }
@@ -1534,7 +1539,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt(x_1: Obj, x_2: Obj, x_3: Obj, x_
 
 // Lean: Sand2.makeAt._boxed
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
     let x_6: u8 = rt::lean_unbox(x_4) as u8;
     let x_7: u8 = rt::lean_unbox(x_5) as u8;
@@ -1547,7 +1552,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dmakeAt_d__boxed(x_1: Obj, x_2: Obj, x_3
 
 // Lean: Sand2.makeAt._closed_0
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__0__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(180000);
@@ -1561,7 +1566,7 @@ pub(crate) unsafe fn l_Sand2_dmakeAt_d__closed__0() -> Obj {
 
 // Lean: Sand2.makeAt._closed_1
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__1: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__1__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(90000);
@@ -1575,7 +1580,7 @@ pub(crate) unsafe fn l_Sand2_dmakeAt_d__closed__1() -> Obj {
 
 // Lean: Sand2.makeAt._closed_2
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__2: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__2__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(65000);
@@ -1589,7 +1594,7 @@ pub(crate) unsafe fn l_Sand2_dmakeAt_d__closed__2() -> Obj {
 
 // Lean: Sand2.makeAt._closed_3
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__3: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__3__init() -> Obj {
     let x_1: Obj = l_Sand2_ddryCapacity_d__closed__0();
@@ -1603,7 +1608,7 @@ pub(crate) unsafe fn l_Sand2_dmakeAt_d__closed__3() -> Obj {
 
 // Lean: Sand2.makeAt._closed_4
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__4: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__4__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(13000);
@@ -1617,7 +1622,7 @@ pub(crate) unsafe fn l_Sand2_dmakeAt_d__closed__4() -> Obj {
 
 // Lean: Sand2.makeAt._closed_5
 // Compiled from: Sand2.makeAt
-// Source: lean/Sand2/State.lean:155:1
+// Source: lean/Sand2/State.lean:167:1
 static C_l_Sand2_dmakeAt_d__closed__5: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmakeAt_d__closed__5__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(14000);
@@ -1686,149 +1691,199 @@ pub(crate) unsafe fn l_Sand2_dmakeParticle_d__closed__0() -> Obj {
 pub(crate) unsafe extern "C" fn l_Sand2_dmatterFor(x_1: u8) -> Obj {
     'b2: {
         'b4: {
-            match x_1 {
-                0 => {
-                    let x_6: Obj = l_Sand2_dair();
-                    return x_6;
-                }
-                2 => {
-                    break 'b2;
-                }
-                4 => {
-                    break 'b4;
-                }
-                5 => {
-                    let x_7: Obj = l_Sand2_dair();
-                    let x_8: Obj = rt::lean_ctor_get(x_7, 2);
-                    let x_9: Obj = rt::nat::lean_usize_to_nat(0);
-                    let x_10: Obj = rt::nat::lean_usize_to_nat(30000);
-                    let x_11: Obj = rt::nat::lean_usize_to_nat(10000);
-                    rt::lean_inc(x_8);
-                    let x_12: Obj = rt::lean_alloc_ctor(0, 19, 0);
-                    rt::lean_ctor_set(x_12, 0, x_9);
-                    rt::lean_ctor_set(x_12, 1, x_10);
-                    rt::lean_ctor_set(x_12, 2, x_8);
-                    rt::lean_ctor_set(x_12, 3, x_9);
-                    rt::lean_ctor_set(x_12, 4, x_9);
-                    rt::lean_ctor_set(x_12, 5, x_11);
-                    rt::lean_ctor_set(x_12, 6, x_9);
-                    rt::lean_ctor_set(x_12, 7, x_9);
-                    rt::lean_ctor_set(x_12, 8, x_9);
-                    rt::lean_ctor_set(x_12, 9, x_9);
-                    rt::lean_ctor_set(x_12, 10, x_9);
-                    rt::lean_ctor_set(x_12, 11, x_9);
-                    rt::lean_ctor_set(x_12, 12, x_9);
-                    rt::lean_ctor_set(x_12, 13, x_9);
-                    rt::lean_ctor_set(x_12, 14, x_9);
-                    rt::lean_ctor_set(x_12, 15, x_9);
-                    rt::lean_ctor_set(x_12, 16, x_9);
-                    rt::lean_ctor_set(x_12, 17, x_9);
-                    rt::lean_ctor_set(x_12, 18, x_9);
-                    return x_12;
-                }
-                6 => {
-                    let x_13: Obj = l_Sand2_dair();
-                    let x_14: Obj = rt::lean_ctor_get(x_13, 1);
-                    let x_15: Obj = rt::lean_ctor_get(x_13, 2);
-                    let x_16: Obj = rt::nat::lean_usize_to_nat(0);
-                    let x_17: Obj = rt::nat::lean_usize_to_nat(41575);
-                    rt::lean_inc(x_15);
-                    rt::lean_inc(x_14);
-                    let x_18: Obj = rt::lean_alloc_ctor(0, 19, 0);
-                    rt::lean_ctor_set(x_18, 0, x_17);
-                    rt::lean_ctor_set(x_18, 1, x_14);
-                    rt::lean_ctor_set(x_18, 2, x_15);
-                    rt::lean_ctor_set(x_18, 3, x_16);
-                    rt::lean_ctor_set(x_18, 4, x_16);
-                    rt::lean_ctor_set(x_18, 5, x_16);
-                    rt::lean_ctor_set(x_18, 6, x_16);
-                    rt::lean_ctor_set(x_18, 7, x_16);
-                    rt::lean_ctor_set(x_18, 8, x_16);
-                    rt::lean_ctor_set(x_18, 9, x_16);
-                    rt::lean_ctor_set(x_18, 10, x_16);
-                    rt::lean_ctor_set(x_18, 11, x_16);
-                    rt::lean_ctor_set(x_18, 12, x_16);
-                    rt::lean_ctor_set(x_18, 13, x_16);
-                    rt::lean_ctor_set(x_18, 14, x_16);
-                    rt::lean_ctor_set(x_18, 15, x_16);
-                    rt::lean_ctor_set(x_18, 16, x_16);
-                    rt::lean_ctor_set(x_18, 17, x_16);
-                    rt::lean_ctor_set(x_18, 18, x_16);
-                    return x_18;
-                }
-                7 => {
-                    let x_19: Obj = l_Sand2_dmatterFor_d__closed__2();
-                    return x_19;
-                }
-                8 => {
-                    let x_20: Obj = l_Sand2_dmatterFor_d__closed__3();
-                    return x_20;
-                }
-                10 => {
-                    break 'b4;
-                }
-                11 => {
-                    break 'b2;
-                }
-                12 => {
-                    let x_21: Obj = l_Sand2_dair();
-                    let x_22: Obj = rt::lean_ctor_get(x_21, 1);
-                    let x_23: Obj = rt::lean_ctor_get(x_21, 2);
-                    let x_24: Obj = rt::nat::lean_usize_to_nat(0);
-                    let x_25: Obj = rt::nat::lean_usize_to_nat(20000);
-                    rt::lean_inc(x_23);
-                    rt::lean_inc(x_22);
-                    let x_26: Obj = rt::lean_alloc_ctor(0, 19, 0);
-                    rt::lean_ctor_set(x_26, 0, x_25);
-                    rt::lean_ctor_set(x_26, 1, x_22);
-                    rt::lean_ctor_set(x_26, 2, x_23);
-                    rt::lean_ctor_set(x_26, 3, x_25);
-                    rt::lean_ctor_set(x_26, 4, x_24);
-                    rt::lean_ctor_set(x_26, 5, x_24);
-                    rt::lean_ctor_set(x_26, 6, x_24);
-                    rt::lean_ctor_set(x_26, 7, x_24);
-                    rt::lean_ctor_set(x_26, 8, x_24);
-                    rt::lean_ctor_set(x_26, 9, x_24);
-                    rt::lean_ctor_set(x_26, 10, x_24);
-                    rt::lean_ctor_set(x_26, 11, x_24);
-                    rt::lean_ctor_set(x_26, 12, x_24);
-                    rt::lean_ctor_set(x_26, 13, x_24);
-                    rt::lean_ctor_set(x_26, 14, x_24);
-                    rt::lean_ctor_set(x_26, 15, x_24);
-                    rt::lean_ctor_set(x_26, 16, x_24);
-                    rt::lean_ctor_set(x_26, 17, x_24);
-                    rt::lean_ctor_set(x_26, 18, x_24);
-                    return x_26;
-                }
-                15 => {
-                    let x_27: Obj = l_Sand2_dmatterFor_d__closed__4();
-                    return x_27;
-                }
-                16 => {
-                    let x_28: Obj = l_Sand2_dmatterFor_d__closed__5();
-                    return x_28;
-                }
-                17 => {
-                    let x_29: Obj = l_Sand2_dmatterFor_d__closed__6();
-                    return x_29;
-                }
-                18 => {
-                    let x_30: Obj = l_Sand2_dmatterFor_d__closed__7();
-                    return x_30;
-                }
-                19 => {
-                    let x_31: Obj = l_Sand2_dmatterFor_d__closed__8();
-                    return x_31;
-                }
-                20 => {
-                    let x_32: Obj = l_Sand2_dmatterFor_d__closed__9();
-                    return x_32;
-                }
-                _ => {
-                    let x_33: Obj = l_Sand2_dmatterFor_d__closed__10();
-                    return x_33;
+            'b6: {
+                match x_1 {
+                    0 => {
+                        let x_8: Obj = l_Sand2_dair();
+                        return x_8;
+                    }
+                    2 => {
+                        break 'b2;
+                    }
+                    4 => {
+                        break 'b4;
+                    }
+                    5 => {
+                        let x_9: Obj = l_Sand2_dair();
+                        let x_10: Obj = rt::lean_ctor_get(x_9, 2);
+                        let x_11: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_12: Obj = rt::nat::lean_usize_to_nat(30000);
+                        let x_13: Obj = rt::nat::lean_usize_to_nat(10000);
+                        rt::lean_inc(x_10);
+                        let x_14: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                        rt::lean_ctor_set(x_14, 0, x_11);
+                        rt::lean_ctor_set(x_14, 1, x_12);
+                        rt::lean_ctor_set(x_14, 2, x_10);
+                        rt::lean_ctor_set(x_14, 3, x_11);
+                        rt::lean_ctor_set(x_14, 4, x_11);
+                        rt::lean_ctor_set(x_14, 5, x_13);
+                        rt::lean_ctor_set(x_14, 6, x_11);
+                        rt::lean_ctor_set(x_14, 7, x_11);
+                        rt::lean_ctor_set(x_14, 8, x_11);
+                        rt::lean_ctor_set(x_14, 9, x_11);
+                        rt::lean_ctor_set(x_14, 10, x_11);
+                        rt::lean_ctor_set(x_14, 11, x_11);
+                        rt::lean_ctor_set(x_14, 12, x_11);
+                        rt::lean_ctor_set(x_14, 13, x_11);
+                        rt::lean_ctor_set(x_14, 14, x_11);
+                        rt::lean_ctor_set(x_14, 15, x_11);
+                        rt::lean_ctor_set(x_14, 16, x_11);
+                        rt::lean_ctor_set(x_14, 17, x_11);
+                        rt::lean_ctor_set(x_14, 18, x_11);
+                        return x_14;
+                    }
+                    6 => {
+                        let x_15: Obj = l_Sand2_dair();
+                        let x_16: Obj = rt::lean_ctor_get(x_15, 1);
+                        let x_17: Obj = rt::lean_ctor_get(x_15, 2);
+                        let x_18: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_19: Obj = rt::nat::lean_usize_to_nat(41575);
+                        rt::lean_inc(x_17);
+                        rt::lean_inc(x_16);
+                        let x_20: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                        rt::lean_ctor_set(x_20, 0, x_19);
+                        rt::lean_ctor_set(x_20, 1, x_16);
+                        rt::lean_ctor_set(x_20, 2, x_17);
+                        rt::lean_ctor_set(x_20, 3, x_18);
+                        rt::lean_ctor_set(x_20, 4, x_18);
+                        rt::lean_ctor_set(x_20, 5, x_18);
+                        rt::lean_ctor_set(x_20, 6, x_18);
+                        rt::lean_ctor_set(x_20, 7, x_18);
+                        rt::lean_ctor_set(x_20, 8, x_18);
+                        rt::lean_ctor_set(x_20, 9, x_18);
+                        rt::lean_ctor_set(x_20, 10, x_18);
+                        rt::lean_ctor_set(x_20, 11, x_18);
+                        rt::lean_ctor_set(x_20, 12, x_18);
+                        rt::lean_ctor_set(x_20, 13, x_18);
+                        rt::lean_ctor_set(x_20, 14, x_18);
+                        rt::lean_ctor_set(x_20, 15, x_18);
+                        rt::lean_ctor_set(x_20, 16, x_18);
+                        rt::lean_ctor_set(x_20, 17, x_18);
+                        rt::lean_ctor_set(x_20, 18, x_18);
+                        return x_20;
+                    }
+                    7 => {
+                        let x_21: Obj = l_Sand2_dmatterFor_d__closed__3();
+                        return x_21;
+                    }
+                    8 => {
+                        let x_22: Obj = l_Sand2_dmatterFor_d__closed__4();
+                        return x_22;
+                    }
+                    10 => {
+                        break 'b4;
+                    }
+                    11 => {
+                        break 'b2;
+                    }
+                    12 => {
+                        let x_23: Obj = l_Sand2_dair();
+                        let x_24: Obj = rt::lean_ctor_get(x_23, 1);
+                        let x_25: Obj = rt::lean_ctor_get(x_23, 2);
+                        let x_26: Obj = rt::nat::lean_usize_to_nat(0);
+                        let x_27: Obj = rt::nat::lean_usize_to_nat(20000);
+                        rt::lean_inc(x_25);
+                        rt::lean_inc(x_24);
+                        let x_28: Obj = rt::lean_alloc_ctor(0, 19, 0);
+                        rt::lean_ctor_set(x_28, 0, x_27);
+                        rt::lean_ctor_set(x_28, 1, x_24);
+                        rt::lean_ctor_set(x_28, 2, x_25);
+                        rt::lean_ctor_set(x_28, 3, x_27);
+                        rt::lean_ctor_set(x_28, 4, x_26);
+                        rt::lean_ctor_set(x_28, 5, x_26);
+                        rt::lean_ctor_set(x_28, 6, x_26);
+                        rt::lean_ctor_set(x_28, 7, x_26);
+                        rt::lean_ctor_set(x_28, 8, x_26);
+                        rt::lean_ctor_set(x_28, 9, x_26);
+                        rt::lean_ctor_set(x_28, 10, x_26);
+                        rt::lean_ctor_set(x_28, 11, x_26);
+                        rt::lean_ctor_set(x_28, 12, x_26);
+                        rt::lean_ctor_set(x_28, 13, x_26);
+                        rt::lean_ctor_set(x_28, 14, x_26);
+                        rt::lean_ctor_set(x_28, 15, x_26);
+                        rt::lean_ctor_set(x_28, 16, x_26);
+                        rt::lean_ctor_set(x_28, 17, x_26);
+                        rt::lean_ctor_set(x_28, 18, x_26);
+                        return x_28;
+                    }
+                    15 => {
+                        let x_29: Obj = l_Sand2_dmatterFor_d__closed__5();
+                        return x_29;
+                    }
+                    16 => {
+                        let x_30: Obj = l_Sand2_dmatterFor_d__closed__6();
+                        return x_30;
+                    }
+                    17 => {
+                        let x_31: Obj = l_Sand2_dmatterFor_d__closed__7();
+                        return x_31;
+                    }
+                    18 => {
+                        let x_32: Obj = l_Sand2_dmatterFor_d__closed__8();
+                        return x_32;
+                    }
+                    19 => {
+                        let x_33: Obj = l_Sand2_dmatterFor_d__closed__9();
+                        return x_33;
+                    }
+                    20 => {
+                        break 'b6;
+                    }
+                    21 => {
+                        let x_34: Obj = l_Sand2_dmatterFor_d__closed__10();
+                        return x_34;
+                    }
+                    22 => {
+                        let x_35: Obj = l_Sand2_dmatterFor_d__closed__11();
+                        return x_35;
+                    }
+                    23 => {
+                        let x_36: Obj = l_Sand2_dmatterFor_d__closed__12();
+                        return x_36;
+                    }
+                    24 => {
+                        let x_37: Obj = l_Sand2_dmatterFor_d__closed__13();
+                        return x_37;
+                    }
+                    25 => {
+                        let x_38: Obj = l_Sand2_dmatterFor_d__closed__14();
+                        return x_38;
+                    }
+                    26 => {
+                        let x_39: Obj = l_Sand2_dmatterFor_d__closed__15();
+                        return x_39;
+                    }
+                    27 => {
+                        let x_40: Obj = l_Sand2_dmatterFor_d__closed__16();
+                        return x_40;
+                    }
+                    28 => {
+                        let x_41: Obj = l_Sand2_dmatterFor_d__closed__17();
+                        return x_41;
+                    }
+                    29 => {
+                        let x_42: Obj = l_Sand2_dmatterFor_d__closed__18();
+                        return x_42;
+                    }
+                    30 => {
+                        let x_43: Obj = l_Sand2_dmatterFor_d__closed__19();
+                        return x_43;
+                    }
+                    31 => {
+                        let x_44: Obj = l_Sand2_dmatterFor_d__closed__20();
+                        return x_44;
+                    }
+                    32 => {
+                        break 'b6;
+                    }
+                    _ => {
+                        let x_45: Obj = l_Sand2_dmatterFor_d__closed__21();
+                        return x_45;
+                    }
                 }
             }
+            let x_7: Obj = l_Sand2_dmatterFor_d__closed__2();
+            return x_7;
         }
         let x_5: Obj = l_Sand2_dmatterFor_d__closed__1();
         return x_5;
@@ -1919,6 +1974,414 @@ pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__1() -> Obj {
 // Source: lean/Sand2/State.lean:138:1
 static C_l_Sand2_dmatterFor_d__closed__10: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_Sand2_dmatterFor_d__closed__10__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(27000000);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_1);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__10() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__10.get(l_Sand2_dmatterFor_d__closed__10__init)
+}
+
+// Lean: Sand2.matterFor._closed_11
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__11: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__11__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(41575);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_1);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__11() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__11.get(l_Sand2_dmatterFor_d__closed__11__init)
+}
+
+// Lean: Sand2.matterFor._closed_12
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__12: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__12__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(41575);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_1);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__12() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__12.get(l_Sand2_dmatterFor_d__closed__12__init)
+}
+
+// Lean: Sand2.matterFor._closed_13
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__13: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__13__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(41575);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_1);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__13() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__13.get(l_Sand2_dmatterFor_d__closed__13__init)
+}
+
+// Lean: Sand2.matterFor._closed_14
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__14: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__14__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(41575);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_1);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__14() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__14.get(l_Sand2_dmatterFor_d__closed__14__init)
+}
+
+// Lean: Sand2.matterFor._closed_15
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__15: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__15__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(25000000);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_1);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__15() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__15.get(l_Sand2_dmatterFor_d__closed__15__init)
+}
+
+// Lean: Sand2.matterFor._closed_16
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__16: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__16__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(32750000);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_1);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__16() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__16.get(l_Sand2_dmatterFor_d__closed__16__init)
+}
+
+// Lean: Sand2.matterFor._closed_17
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__17: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__17__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(20881188);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_1);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__17() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__17.get(l_Sand2_dmatterFor_d__closed__17__init)
+}
+
+// Lean: Sand2.matterFor._closed_18
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__18: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__18__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(64687500);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_1);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__18() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__18.get(l_Sand2_dmatterFor_d__closed__18__init)
+}
+
+// Lean: Sand2.matterFor._closed_19
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__19: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__19__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(19545454);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_1);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__19() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__19.get(l_Sand2_dmatterFor_d__closed__19__init)
+}
+
+// Lean: Sand2.matterFor._closed_2
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__2: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__2__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(140357142);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_1);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_2);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__2() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__2.get(l_Sand2_dmatterFor_d__closed__2__init)
+}
+
+// Lean: Sand2.matterFor._closed_20
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__20: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__20__init() -> Obj {
+    let x_1: Obj = rt::nat::lean_usize_to_nat(25079365);
+    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
+    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
+    rt::lean_ctor_set(x_3, 0, x_2);
+    rt::lean_ctor_set(x_3, 1, x_2);
+    rt::lean_ctor_set(x_3, 2, x_2);
+    rt::lean_ctor_set(x_3, 3, x_2);
+    rt::lean_ctor_set(x_3, 4, x_2);
+    rt::lean_ctor_set(x_3, 5, x_2);
+    rt::lean_ctor_set(x_3, 6, x_2);
+    rt::lean_ctor_set(x_3, 7, x_2);
+    rt::lean_ctor_set(x_3, 8, x_2);
+    rt::lean_ctor_set(x_3, 9, x_2);
+    rt::lean_ctor_set(x_3, 10, x_2);
+    rt::lean_ctor_set(x_3, 11, x_2);
+    rt::lean_ctor_set(x_3, 12, x_2);
+    rt::lean_ctor_set(x_3, 13, x_2);
+    rt::lean_ctor_set(x_3, 14, x_1);
+    rt::lean_ctor_set(x_3, 15, x_2);
+    rt::lean_ctor_set(x_3, 16, x_2);
+    rt::lean_ctor_set(x_3, 17, x_2);
+    rt::lean_ctor_set(x_3, 18, x_2);
+    return x_3;
+}
+#[inline]
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__20() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__20.get(l_Sand2_dmatterFor_d__closed__20__init)
+}
+
+// Lean: Sand2.matterFor._closed_21
+// Compiled from: Sand2.matterFor
+// Source: lean/Sand2/State.lean:138:1
+static C_l_Sand2_dmatterFor_d__closed__21: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__21__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(44166666);
     let x_2: Obj = rt::nat::lean_usize_to_nat(0);
     let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
@@ -1944,15 +2407,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__10__init() -> Obj {
     return x_3;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__10() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__10.get(l_Sand2_dmatterFor_d__closed__10__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__21() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__21.get(l_Sand2_dmatterFor_d__closed__21__init)
 }
 
-// Lean: Sand2.matterFor._closed_2
+// Lean: Sand2.matterFor._closed_3
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__2: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__2__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__3: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__3__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(57142857);
     let x_2: Obj = rt::nat::lean_usize_to_nat(0);
     let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
@@ -1978,15 +2441,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__2__init() -> Obj {
     return x_3;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__2() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__2.get(l_Sand2_dmatterFor_d__closed__2__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__3() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__3.get(l_Sand2_dmatterFor_d__closed__3__init)
 }
 
-// Lean: Sand2.matterFor._closed_3
+// Lean: Sand2.matterFor._closed_4
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__3: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__3__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__4: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__4__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(3000000);
     let x_2: Obj = rt::nat::lean_usize_to_nat(0);
     let x_3: Obj = rt::nat::lean_usize_to_nat(45000000);
@@ -2013,15 +2476,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__3__init() -> Obj {
     return x_4;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__3() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__3.get(l_Sand2_dmatterFor_d__closed__3__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__4() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__4.get(l_Sand2_dmatterFor_d__closed__4__init)
 }
 
-// Lean: Sand2.matterFor._closed_4
+// Lean: Sand2.matterFor._closed_5
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__4: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__4__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__5: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__5__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(6296296);
     let x_2: Obj = rt::nat::lean_usize_to_nat(12592592);
     let x_3: Obj = rt::nat::lean_usize_to_nat(18888888);
@@ -2049,15 +2512,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__4__init() -> Obj {
     return x_5;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__4() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__4.get(l_Sand2_dmatterFor_d__closed__4__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__5() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__5.get(l_Sand2_dmatterFor_d__closed__5__init)
 }
 
-// Lean: Sand2.matterFor._closed_5
+// Lean: Sand2.matterFor._closed_6
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__5: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__5__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__6: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__6__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(37310344);
     let x_2: Obj = rt::nat::lean_usize_to_nat(0);
     let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
@@ -2083,15 +2546,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__5__init() -> Obj {
     return x_3;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__5() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__5.get(l_Sand2_dmatterFor_d__closed__5__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__6() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__6.get(l_Sand2_dmatterFor_d__closed__6__init)
 }
 
-// Lean: Sand2.matterFor._closed_6
+// Lean: Sand2.matterFor._closed_7
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__6: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__6__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__7: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__7__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(700000);
     let x_2: Obj = rt::nat::lean_usize_to_nat(0);
     let x_3: Obj = rt::nat::lean_usize_to_nat(53000000);
@@ -2118,15 +2581,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__6__init() -> Obj {
     return x_4;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__6() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__6.get(l_Sand2_dmatterFor_d__closed__6__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__7() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__7.get(l_Sand2_dmatterFor_d__closed__7__init)
 }
 
-// Lean: Sand2.matterFor._closed_7
+// Lean: Sand2.matterFor._closed_8
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__7: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__7__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__8: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__8__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(1000000);
     let x_2: Obj = rt::nat::lean_usize_to_nat(20000000);
     let x_3: Obj = rt::nat::lean_usize_to_nat(0);
@@ -2153,15 +2616,15 @@ unsafe fn l_Sand2_dmatterFor_d__closed__7__init() -> Obj {
     return x_4;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__7() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__7.get(l_Sand2_dmatterFor_d__closed__7__init)
+pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__8() -> Obj {
+    C_l_Sand2_dmatterFor_d__closed__8.get(l_Sand2_dmatterFor_d__closed__8__init)
 }
 
-// Lean: Sand2.matterFor._closed_8
+// Lean: Sand2.matterFor._closed_9
 // Compiled from: Sand2.matterFor
 // Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__8: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__8__init() -> Obj {
+static C_l_Sand2_dmatterFor_d__closed__9: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_Sand2_dmatterFor_d__closed__9__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(2000000);
     let x_2: Obj = rt::nat::lean_usize_to_nat(100000);
     let x_3: Obj = rt::nat::lean_usize_to_nat(0);
@@ -2188,46 +2651,12 @@ unsafe fn l_Sand2_dmatterFor_d__closed__8__init() -> Obj {
     return x_4;
 }
 #[inline]
-pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__8() -> Obj {
-    C_l_Sand2_dmatterFor_d__closed__8.get(l_Sand2_dmatterFor_d__closed__8__init)
-}
-
-// Lean: Sand2.matterFor._closed_9
-// Compiled from: Sand2.matterFor
-// Source: lean/Sand2/State.lean:138:1
-static C_l_Sand2_dmatterFor_d__closed__9: rt::LazyObj = rt::LazyObj::new();
-unsafe fn l_Sand2_dmatterFor_d__closed__9__init() -> Obj {
-    let x_1: Obj = rt::nat::lean_usize_to_nat(140357142);
-    let x_2: Obj = rt::nat::lean_usize_to_nat(0);
-    let x_3: Obj = rt::lean_alloc_ctor(0, 19, 0);
-    rt::lean_ctor_set(x_3, 0, x_2);
-    rt::lean_ctor_set(x_3, 1, x_2);
-    rt::lean_ctor_set(x_3, 2, x_2);
-    rt::lean_ctor_set(x_3, 3, x_2);
-    rt::lean_ctor_set(x_3, 4, x_2);
-    rt::lean_ctor_set(x_3, 5, x_2);
-    rt::lean_ctor_set(x_3, 6, x_2);
-    rt::lean_ctor_set(x_3, 7, x_2);
-    rt::lean_ctor_set(x_3, 8, x_2);
-    rt::lean_ctor_set(x_3, 9, x_2);
-    rt::lean_ctor_set(x_3, 10, x_2);
-    rt::lean_ctor_set(x_3, 11, x_2);
-    rt::lean_ctor_set(x_3, 12, x_1);
-    rt::lean_ctor_set(x_3, 13, x_2);
-    rt::lean_ctor_set(x_3, 14, x_2);
-    rt::lean_ctor_set(x_3, 15, x_2);
-    rt::lean_ctor_set(x_3, 16, x_2);
-    rt::lean_ctor_set(x_3, 17, x_2);
-    rt::lean_ctor_set(x_3, 18, x_2);
-    return x_3;
-}
-#[inline]
 pub(crate) unsafe fn l_Sand2_dmatterFor_d__closed__9() -> Obj {
     C_l_Sand2_dmatterFor_d__closed__9.get(l_Sand2_dmatterFor_d__closed__9__init)
 }
 
 // Lean: Sand2.newWorld
-// Source: lean/Sand2/State.lean:191:1
+// Source: lean/Sand2/State.lean:203:1
 pub(crate) unsafe extern "C" fn l_Sand2_dnewWorld(x_1: Obj, x_2: Obj) -> Obj {
     rt::lean_inc(x_2);
     rt::lean_inc(x_1);
@@ -2249,7 +2678,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dnewWorld(x_1: Obj, x_2: Obj) -> Obj {
 
 // Lean: Sand2.newWorld._lam_0
 // Compiled from: Sand2.newWorld
-// Source: lean/Sand2/State.lean:191:1
+// Source: lean/Sand2/State.lean:203:1
 pub(crate) unsafe extern "C" fn l_Sand2_dnewWorld_d__lam__0(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: u8 = l_Sand2_dedge(x_1, x_2, x_3);
     match x_4 {
@@ -2268,7 +2697,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dnewWorld_d__lam__0(x_1: Obj, x_2: Obj, 
 
 // Lean: Sand2.newWorld._lam_0._boxed
 // Compiled from: Sand2.newWorld
-// Source: lean/Sand2/State.lean:191:1
+// Source: lean/Sand2/State.lean:203:1
 pub(crate) unsafe extern "C" fn l_Sand2_dnewWorld_d__lam__0_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Sand2_dnewWorld_d__lam__0(x_1, x_2, x_3);
     rt::lean_dec(x_3);
@@ -2457,7 +2886,7 @@ pub(crate) unsafe fn l_Sand2_dpressure_d__closed__2() -> Obj {
 }
 
 // Lean: Sand2.read
-// Source: lean/Sand2/State.lean:177:1
+// Source: lean/Sand2/State.lean:189:1
 pub(crate) unsafe extern "C" fn l_Sand2_dread(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = rt::lean_ctor_get(x_3, 0);
     let x_6: Obj = l_Array_dsize(rt::lean_box(0), x_5);
@@ -2479,7 +2908,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dread(x_1: Obj, x_2: Obj, x_3: Obj, x_4:
 
 // Lean: Sand2.read._boxed
 // Compiled from: Sand2.read
-// Source: lean/Sand2/State.lean:177:1
+// Source: lean/Sand2/State.lean:189:1
 pub(crate) unsafe extern "C" fn l_Sand2_dread_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dread(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_4);
@@ -3252,7 +3681,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dwaterDiagram_d__boxed(x_1: Obj, x_2: Ob
 }
 
 // Lean: Sand2.write
-// Source: lean/Sand2/State.lean:180:1
+// Source: lean/Sand2/State.lean:192:1
 pub(crate) unsafe extern "C" fn l_Sand2_dwrite(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
     let x_6: Obj = l_Sand2_dwrite_d__redArg(x_3, x_4, x_5);
     return x_6;
@@ -3260,7 +3689,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dwrite(x_1: Obj, x_2: Obj, x_3: Obj, x_4
 
 // Lean: Sand2.write._boxed
 // Compiled from: Sand2.write
-// Source: lean/Sand2/State.lean:180:1
+// Source: lean/Sand2/State.lean:192:1
 pub(crate) unsafe extern "C" fn l_Sand2_dwrite_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj, x_5: Obj) -> Obj {
     let x_6: Obj = l_Sand2_dwrite(x_1, x_2, x_3, x_4, x_5);
     rt::lean_dec(x_4);
@@ -3271,7 +3700,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dwrite_d__boxed(x_1: Obj, x_2: Obj, x_3:
 
 // Lean: Sand2.write._redArg
 // Compiled from: Sand2.write
-// Source: lean/Sand2/State.lean:180:1
+// Source: lean/Sand2/State.lean:192:1
 pub(crate) unsafe extern "C" fn l_Sand2_dwrite_d__redArg(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = rt::lean_ctor_get(x_1, 0);
     let x_5: Obj = rt::lean_ctor_get(x_1, 1);
@@ -3320,7 +3749,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dwrite_d__redArg(x_1: Obj, x_2: Obj, x_3
 
 // Lean: Sand2.write._redArg._boxed
 // Compiled from: Sand2.write
-// Source: lean/Sand2/State.lean:180:1
+// Source: lean/Sand2/State.lean:192:1
 pub(crate) unsafe extern "C" fn l_Sand2_dwrite_d__redArg_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: Obj = l_Sand2_dwrite_d__redArg(x_1, x_2, x_3);
     rt::lean_dec(x_2);

@@ -61,6 +61,18 @@ open Chemistry
     s := fillRect s (w/5) (h/2) (w*4/5) (h-2) .water
     s := fillRect s (w/4) (h/3) (w*3/4) (h/2) .oil
     s := fillRect s (w/3) 3 (w*2/3) (h/4) .sand
+  | 5 => -- Selective acid/carbonate chemistry and gas evolution.
+    s := fillRect s (w/4) (h*2/3) (w*3/4) (h*2/3+4) .limestone
+    s := fillRect s (w/4) (h/2) (w*3/4) (h*2/3) .acid
+  | 6 => -- Equal-pressure gas diffusion and density-driven convection.
+    s := fillRect s 2 (h/2) (w/2) (h-2) .oxygen
+    s := fillRect s (w/2) (h/2) (w-2) (h-2) .hydrogen
+  | 7 => -- Finite, balanced energetic reaction; no prescribed blast radius.
+    s := fillRect s (w/3) (h*2/3) (w*2/3) (h-2) .gunpowder
+    s := fillRect s (w/3-2) (h*2/3-2) (w/3+2) (h*2/3+2) .fire
+  | 8 => -- Iron fusion/solidification and finite hot/cold reservoirs.
+    s := fillRect s (w/4) (h*2/3) (w*3/4) (h-2) .water
+    s := fillRect s (w/3) (h/3) (w*2/3) (h/2) .moltenIron
   | _ => pure ()
   return s
 
@@ -83,7 +95,19 @@ def description : Material → String
   | .saltWater => "Aqueous NaCl mixture. Water and salt are separate molecular inventories."
   | .ember => "A hot biomass and carbon parcel. Remaining fuel is finite."
   | .ash => "Silica and carbon residue. Carbon can oxidize when hot enough."
-  | .metal => "Fixed iron fixture. Conducts heat, rusts and reacts with aqueous HCl."
+  | .metal => "Iron fixture. Conducts heat, rusts and reacts with aqueous HCl."
+  | .limestone => "Fixed calcium carbonate. HCl produces calcium chloride, water and carbon dioxide."
+  | .oxygen => "O2 at room temperature and atmospheric pressure. Supports balanced combustion."
+  | .nitrogen => "N2 at room temperature and atmospheric pressure. Inert within the declared chemistry."
+  | .carbonDioxide => "CO2 at room temperature and atmospheric pressure. Diffuses without disappearing."
+  | .hydrogen => "H2 at room temperature and atmospheric pressure. Combusts with oxygen when ignited."
+  | .charcoal => "Porous carbon grains. Oxidize to CO2 when hot and supplied with oxygen."
+  | .rust => "Fe2O3 grains, also produced by oxidation of iron. All iron and oxygen remain accounted for."
+  | .nitrate => "KNO3 grains. React with sulfur and carbon in the declared gunpowder reaction."
+  | .sulfur => "Elemental sulfur grains. One reactant in the balanced gunpowder mixture."
+  | .calciumChloride => "CaCl2 grains. A non-gaseous product of the limestone and acid reaction."
+  | .ironChloride => "FeCl2 grains. Iron and acid produce this salt and hydrogen."
+  | .moltenIron => "Iron above its fusion plateau. Solidification retains mass and latent heat."
 
 @[noinline] def catalogue : String :=
   "[" ++ String.intercalate "," ((materials.filter (· != .empty)).map fun m =>

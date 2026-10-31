@@ -26,267 +26,537 @@ pub(crate) unsafe extern "C" fn l_Sand2_dconversionPhase_d__boxed(x_1: Obj, x_2:
 // Lean: Sand2.labelAt
 // Source: lean/Sand2/Conversions.lean:42:1
 pub(crate) unsafe extern "C" fn l_Sand2_dlabelAt(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> u8 {
-    let x_5: Obj = rt::lean_ctor_get(x_4, 0);
-    let x_6: Obj = rt::lean_ctor_get(x_4, 1);
-    let x_7: u8 = rt::lean_ctor_get_uint8(x_4, 11 * ::core::mem::size_of::<usize>());
-    let x_8: u8 = rt::lean_ctor_get_uint8(x_4, 11 * ::core::mem::size_of::<usize>() + 2);
-    let x_9: Obj = rt::lean_ctor_get(x_4, 9);
-    let x_10: Obj = rt::nat::lean_usize_to_nat(0);
-    let x_11: u8 = l_Nat_ddecLt(x_10, x_9);
-    match x_11 {
-        0 => {
-            let x_12: Obj = rt::lean_ctor_get(x_5, 0);
-            let x_13: Obj = rt::lean_ctor_get(x_5, 3);
-            let x_14: Obj = rt::lean_ctor_get(x_5, 4);
-            let x_15: Obj = rt::lean_ctor_get(x_5, 5);
-            let x_16: Obj = rt::lean_ctor_get(x_5, 6);
-            let x_17: Obj = rt::lean_ctor_get(x_5, 7);
-            let x_18: Obj = rt::lean_ctor_get(x_5, 8);
-            let x_19: Obj = rt::lean_ctor_get(x_5, 9);
-            let x_20: Obj = rt::lean_ctor_get(x_5, 12);
-            let x_21: Obj = rt::lean_ctor_get(x_5, 16);
-            let x_22: Obj = rt::nat::lean_usize_to_nat(1);
-            let x_23: Obj = l_Nat_dshiftRight(x_6, x_22);
-            let x_24: Obj = rt::nat::lean_usize_to_nat(18);
-            let x_25: Obj = l_Nat_dmul(x_12, x_24);
-            let x_26: u8 = l_Nat_ddecLt(x_23, x_25);
-            rt::lean_dec(x_25);
-            match x_26 {
-                0 => {
-                    let x_27: Obj = rt::nat::lean_usize_to_nat(56);
-                    let x_28: Obj = l_Nat_dmul(x_20, x_27);
-                    let x_29: u8 = l_Nat_ddecLt(x_23, x_28);
-                    rt::lean_dec(x_28);
-                    match x_29 {
-                        0 => {
-                            let x_30: Obj = rt::nat::lean_usize_to_nat(60);
-                            let x_31: Obj = l_Nat_dmul(x_17, x_30);
-                            let x_32: u8 = l_Nat_ddecLt(x_23, x_31);
-                            rt::lean_dec(x_31);
-                            match x_32 {
-                                0 => {
-                                    rt::lean_inc(x_21);
-                                    rt::lean_inc(x_18);
-                                    rt::lean_inc(x_16);
-                                    rt::lean_inc(x_15);
-                                    rt::lean_inc(x_14);
-                                    rt::lean_inc(x_13);
-                                    rt::lean_inc(x_6);
-                                    rt::lean_dec_ref(x_4);
-                                    let x_33: Obj = rt::nat::lean_usize_to_nat(30);
-                                    let x_34: Obj = l_Nat_dmul(x_14, x_33);
-                                    rt::lean_dec(x_14);
-                                    let x_35: u8 = l_Nat_ddecLt(x_23, x_34);
-                                    rt::lean_dec(x_34);
-                                    match x_35 {
-                                        0 => {
-                                            let x_36: Obj = rt::nat::lean_usize_to_nat(14);
-                                            let x_37: Obj = l_Nat_dmul(x_15, x_36);
-                                            rt::lean_dec(x_15);
-                                            let x_38: u8 = l_Nat_ddecLt(x_23, x_37);
-                                            rt::lean_dec(x_37);
-                                            match x_38 {
-                                                0 => {
-                                                    let x_39: Obj = rt::nat::lean_usize_to_nat(3);
-                                                    let x_40: Obj = l_Nat_ddiv(x_6, x_39);
-                                                    rt::lean_dec(x_6);
-                                                    let x_41: Obj = rt::nat::lean_usize_to_nat(101);
-                                                    let x_42: Obj = l_Nat_dmul(x_21, x_41);
-                                                    rt::lean_dec(x_21);
-                                                    let x_43: u8 = l_Nat_ddecLt(x_40, x_42);
-                                                    rt::lean_dec(x_42);
-                                                    rt::lean_dec(x_40);
-                                                    match x_43 {
-                                                        0 => {
-                                                            let x_44: Obj = rt::nat::lean_usize_to_nat(58);
-                                                            let x_45: Obj = l_Nat_dmul(x_18, x_44);
-                                                            rt::lean_dec(x_18);
-                                                            let x_46: u8 = l_Nat_ddecLt(x_23, x_45);
-                                                            rt::lean_dec(x_45);
-                                                            match x_46 {
-                                                                0 => {
-                                                                    let x_47: Obj = rt::nat::lean_usize_to_nat(12);
-                                                                    let x_48: Obj = l_Nat_dmul(x_16, x_47);
-                                                                    rt::lean_dec(x_16);
-                                                                    let x_49: u8 = l_Nat_ddecLt(x_23, x_48);
-                                                                    rt::lean_dec(x_48);
-                                                                    rt::lean_dec(x_23);
-                                                                    match x_49 {
-                                                                        0 => {
-                                                                            let x_50: Obj = rt::nat::lean_usize_to_nat(4000);
-                                                                            let x_51: u8 = l_Nat_ddecLt(x_50, x_13);
-                                                                            rt::lean_dec(x_13);
-                                                                            match x_51 {
-                                                                                0 => {
-                                                                                    let x_52: u8 = 0u8;
-                                                                                    return x_52;
-                                                                                }
-                                                                                _ => {
-                                                                                    let x_53: u8 = 12u8;
-                                                                                    return x_53;
+    let mut x_6: u8;
+    'b5: {
+        let x_9: Obj = rt::lean_ctor_get(x_4, 0);
+        let x_10: Obj = rt::lean_ctor_get(x_4, 1);
+        let x_11: u8 = rt::lean_ctor_get_uint8(x_4, 11 * ::core::mem::size_of::<usize>());
+        let x_12: u8 = rt::lean_ctor_get_uint8(x_4, 11 * ::core::mem::size_of::<usize>() + 2);
+        let x_13: Obj = rt::lean_ctor_get(x_4, 9);
+        let x_14: Obj = rt::nat::lean_usize_to_nat(0);
+        let x_15: u8 = l_Nat_ddecLt(x_14, x_13);
+        match x_15 {
+            0 => {
+                let x_16: Obj = rt::lean_ctor_get(x_9, 0);
+                let x_17: Obj = rt::lean_ctor_get(x_9, 1);
+                let x_18: Obj = rt::lean_ctor_get(x_9, 2);
+                let x_19: Obj = rt::lean_ctor_get(x_9, 3);
+                let x_20: Obj = rt::lean_ctor_get(x_9, 4);
+                let x_21: Obj = rt::lean_ctor_get(x_9, 5);
+                let x_22: Obj = rt::lean_ctor_get(x_9, 6);
+                let x_23: Obj = rt::lean_ctor_get(x_9, 7);
+                let x_24: Obj = rt::lean_ctor_get(x_9, 8);
+                let x_25: Obj = rt::lean_ctor_get(x_9, 9);
+                let x_26: Obj = rt::lean_ctor_get(x_9, 10);
+                let x_27: Obj = rt::lean_ctor_get(x_9, 11);
+                let x_28: Obj = rt::lean_ctor_get(x_9, 12);
+                let x_29: Obj = rt::lean_ctor_get(x_9, 13);
+                let x_30: Obj = rt::lean_ctor_get(x_9, 14);
+                let x_31: Obj = rt::lean_ctor_get(x_9, 15);
+                let x_32: Obj = rt::lean_ctor_get(x_9, 16);
+                let x_33: Obj = rt::lean_ctor_get(x_9, 17);
+                let x_34: Obj = rt::nat::lean_usize_to_nat(1);
+                let x_35: Obj = l_Nat_dshiftRight(x_10, x_34);
+                let x_36: Obj = rt::nat::lean_usize_to_nat(18);
+                let x_37: Obj = l_Nat_dmul(x_16, x_36);
+                let x_38: u8 = l_Nat_ddecLt(x_35, x_37);
+                rt::lean_dec(x_37);
+                match x_38 {
+                    0 => {
+                        let x_39: Obj = rt::nat::lean_usize_to_nat(56);
+                        let x_40: Obj = l_Nat_dmul(x_28, x_39);
+                        let x_41: u8 = l_Nat_ddecLt(x_35, x_40);
+                        rt::lean_dec(x_40);
+                        match x_41 {
+                            0 => {
+                                let x_42: Obj = rt::nat::lean_usize_to_nat(60);
+                                let x_43: Obj = l_Nat_dmul(x_23, x_42);
+                                let x_44: u8 = l_Nat_ddecLt(x_35, x_43);
+                                rt::lean_dec(x_43);
+                                match x_44 {
+                                    0 => {
+                                        rt::lean_inc(x_33);
+                                        rt::lean_inc(x_32);
+                                        rt::lean_inc(x_31);
+                                        rt::lean_inc(x_30);
+                                        rt::lean_inc(x_29);
+                                        rt::lean_inc(x_27);
+                                        rt::lean_inc(x_26);
+                                        rt::lean_inc(x_24);
+                                        rt::lean_inc(x_22);
+                                        rt::lean_inc(x_21);
+                                        rt::lean_inc(x_20);
+                                        rt::lean_inc(x_19);
+                                        rt::lean_inc(x_18);
+                                        rt::lean_inc(x_17);
+                                        rt::lean_inc(x_10);
+                                        rt::lean_dec_ref(x_4);
+                                        let x_45: Obj = rt::nat::lean_usize_to_nat(30);
+                                        let x_46: Obj = l_Nat_dmul(x_20, x_45);
+                                        rt::lean_dec(x_20);
+                                        let x_47: u8 = l_Nat_ddecLt(x_35, x_46);
+                                        rt::lean_dec(x_46);
+                                        match x_47 {
+                                            0 => {
+                                                let x_48: Obj = rt::nat::lean_usize_to_nat(14);
+                                                let x_49: Obj = l_Nat_dmul(x_21, x_48);
+                                                rt::lean_dec(x_21);
+                                                let x_50: u8 = l_Nat_ddecLt(x_35, x_49);
+                                                rt::lean_dec(x_49);
+                                                match x_50 {
+                                                    0 => {
+                                                        let x_51: Obj = rt::nat::lean_usize_to_nat(3);
+                                                        let x_52: Obj = l_Nat_ddiv(x_10, x_51);
+                                                        rt::lean_dec(x_10);
+                                                        let x_53: Obj = rt::nat::lean_usize_to_nat(101);
+                                                        let x_54: Obj = l_Nat_dmul(x_32, x_53);
+                                                        rt::lean_dec(x_32);
+                                                        let x_55: u8 = l_Nat_ddecLt(x_52, x_54);
+                                                        rt::lean_dec(x_54);
+                                                        rt::lean_dec(x_52);
+                                                        match x_55 {
+                                                            0 => {
+                                                                let x_56: Obj = rt::nat::lean_usize_to_nat(58);
+                                                                let x_57: Obj = l_Nat_dmul(x_24, x_56);
+                                                                rt::lean_dec(x_24);
+                                                                let x_58: u8 = l_Nat_ddecLt(x_35, x_57);
+                                                                rt::lean_dec(x_57);
+                                                                match x_58 {
+                                                                    0 => {
+                                                                        let x_59: Obj = rt::nat::lean_usize_to_nat(100);
+                                                                        let x_60: Obj = l_Nat_dmul(x_26, x_59);
+                                                                        rt::lean_dec(x_26);
+                                                                        let x_61: u8 = l_Nat_ddecLt(x_35, x_60);
+                                                                        rt::lean_dec(x_60);
+                                                                        match x_61 {
+                                                                            0 => {
+                                                                                let x_62: Obj = rt::nat::lean_usize_to_nat(160);
+                                                                                let x_63: Obj = l_Nat_dmul(x_29, x_62);
+                                                                                rt::lean_dec(x_29);
+                                                                                let x_64: u8 = l_Nat_ddecLt(x_35, x_63);
+                                                                                rt::lean_dec(x_63);
+                                                                                match x_64 {
+                                                                                    0 => {
+                                                                                        let x_65: Obj = rt::nat::lean_usize_to_nat(126);
+                                                                                        let x_66: Obj = l_Nat_dmul(x_30, x_65);
+                                                                                        rt::lean_dec(x_30);
+                                                                                        let x_67: u8 = l_Nat_ddecLt(x_35, x_66);
+                                                                                        rt::lean_dec(x_66);
+                                                                                        match x_67 {
+                                                                                            0 => {
+                                                                                                let x_68: Obj = rt::nat::lean_usize_to_nat(110);
+                                                                                                let x_69: Obj = l_Nat_dmul(x_27, x_68);
+                                                                                                rt::lean_dec(x_27);
+                                                                                                let x_70: u8 = l_Nat_ddecLt(x_35, x_69);
+                                                                                                rt::lean_dec(x_69);
+                                                                                                match x_70 {
+                                                                                                    0 => {
+                                                                                                        let x_71: Obj = rt::nat::lean_usize_to_nat(32);
+                                                                                                        let x_72: Obj = l_Nat_dmul(x_33, x_71);
+                                                                                                        rt::lean_dec(x_33);
+                                                                                                        let x_73: u8 = l_Nat_ddecLt(x_35, x_72);
+                                                                                                        rt::lean_dec(x_72);
+                                                                                                        match x_73 {
+                                                                                                            0 => {
+                                                                                                                let x_74: Obj = rt::nat::lean_usize_to_nat(12);
+                                                                                                                let x_75: Obj = l_Nat_dmul(x_22, x_74);
+                                                                                                                rt::lean_dec(x_22);
+                                                                                                                let x_76: u8 = l_Nat_ddecLt(x_35, x_75);
+                                                                                                                rt::lean_dec(x_75);
+                                                                                                                rt::lean_dec(x_35);
+                                                                                                                match x_76 {
+                                                                                                                    0 => {
+                                                                                                                        let x_77: Obj = l_Nat_dadd(x_17, x_18);
+                                                                                                                        let x_78: Obj = l_Nat_dadd(x_77, x_31);
+                                                                                                                        let x_79: u8 = l_Nat_ddecLt(x_78, x_19);
+                                                                                                                        rt::lean_dec(x_78);
+                                                                                                                        match x_79 {
+                                                                                                                            0 => {
+                                                                                                                                let x_80: u8 = l_Nat_ddecLt(x_77, x_31);
+                                                                                                                                rt::lean_dec(x_31);
+                                                                                                                                rt::lean_dec(x_77);
+                                                                                                                                match x_80 {
+                                                                                                                                    0 => {
+                                                                                                                                        let x_81: u8 = l_Nat_ddecLt(x_18, x_17);
+                                                                                                                                        match x_81 {
+                                                                                                                                            0 => {
+                                                                                                                                                let x_82: u8 = 23u8;
+                                                                                                                                                let mut x_84: u8;
+                                                                                                                                                'b83: {
+                                                                                                                                                    let x_89: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_11, x_82);
+                                                                                                                                                    match x_89 {
+                                                                                                                                                        0 => {
+                                                                                                                                                            rt::lean_dec(x_18);
+                                                                                                                                                            rt::lean_dec(x_17);
+                                                                                                                                                            x_84 = x_89;
+                                                                                                                                                            break 'b83;
+                                                                                                                                                        }
+                                                                                                                                                        _ => {
+                                                                                                                                                            let x_90: u8 = l_Nat_ddecLt(x_17, x_18);
+                                                                                                                                                            rt::lean_dec(x_18);
+                                                                                                                                                            rt::lean_dec(x_17);
+                                                                                                                                                            x_84 = x_90;
+                                                                                                                                                            break 'b83;
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                                match x_84 {
+                                                                                                                                                    0 => {
+                                                                                                                                                        let x_85: Obj = rt::nat::lean_usize_to_nat(4000);
+                                                                                                                                                        let x_86: u8 = l_Nat_ddecLt(x_85, x_19);
+                                                                                                                                                        rt::lean_dec(x_19);
+                                                                                                                                                        match x_86 {
+                                                                                                                                                            0 => {
+                                                                                                                                                                let x_87: u8 = 0u8;
+                                                                                                                                                                return x_87;
+                                                                                                                                                            }
+                                                                                                                                                            _ => {
+                                                                                                                                                                let x_88: u8 = 12u8;
+                                                                                                                                                                return x_88;
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                    _ => {
+                                                                                                                                                        rt::lean_dec(x_19);
+                                                                                                                                                        return x_82;
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                            _ => {
+                                                                                                                                                rt::lean_dec(x_19);
+                                                                                                                                                rt::lean_dec(x_18);
+                                                                                                                                                rt::lean_dec(x_17);
+                                                                                                                                                let x_91: u8 = 22u8;
+                                                                                                                                                return x_91;
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                    _ => {
+                                                                                                                                        rt::lean_dec(x_19);
+                                                                                                                                        rt::lean_dec(x_18);
+                                                                                                                                        rt::lean_dec(x_17);
+                                                                                                                                        let x_92: u8 = 25u8;
+                                                                                                                                        return x_92;
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                rt::lean_dec(x_77);
+                                                                                                                                rt::lean_dec(x_31);
+                                                                                                                                rt::lean_dec(x_19);
+                                                                                                                                rt::lean_dec(x_18);
+                                                                                                                                rt::lean_dec(x_17);
+                                                                                                                                let x_93: u8 = 24u8;
+                                                                                                                                return x_93;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    _ => {
+                                                                                                                        rt::lean_dec(x_31);
+                                                                                                                        rt::lean_dec(x_19);
+                                                                                                                        rt::lean_dec(x_18);
+                                                                                                                        rt::lean_dec(x_17);
+                                                                                                                        let x_94: u8 = 19u8;
+                                                                                                                        let x_95: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_11, x_94);
+                                                                                                                        match x_95 {
+                                                                                                                            0 => {
+                                                                                                                                let x_96: u8 = 26u8;
+                                                                                                                                return x_96;
+                                                                                                                            }
+                                                                                                                            _ => {
+                                                                                                                                return x_94;
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                            _ => {
+                                                                                                                rt::lean_dec(x_35);
+                                                                                                                rt::lean_dec(x_31);
+                                                                                                                rt::lean_dec(x_22);
+                                                                                                                rt::lean_dec(x_19);
+                                                                                                                rt::lean_dec(x_18);
+                                                                                                                rt::lean_dec(x_17);
+                                                                                                                let x_97: u8 = 29u8;
+                                                                                                                return x_97;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    _ => {
+                                                                                                        rt::lean_dec(x_35);
+                                                                                                        rt::lean_dec(x_33);
+                                                                                                        rt::lean_dec(x_31);
+                                                                                                        rt::lean_dec(x_22);
+                                                                                                        rt::lean_dec(x_19);
+                                                                                                        rt::lean_dec(x_18);
+                                                                                                        rt::lean_dec(x_17);
+                                                                                                        let x_98: u8 = 30u8;
+                                                                                                        return x_98;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            _ => {
+                                                                                                rt::lean_dec(x_35);
+                                                                                                rt::lean_dec(x_33);
+                                                                                                rt::lean_dec(x_31);
+                                                                                                rt::lean_dec(x_27);
+                                                                                                rt::lean_dec(x_22);
+                                                                                                rt::lean_dec(x_19);
+                                                                                                rt::lean_dec(x_18);
+                                                                                                rt::lean_dec(x_17);
+                                                                                                let x_99: u8 = 31u8;
+                                                                                                return x_99;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    _ => {
+                                                                                        rt::lean_dec(x_35);
+                                                                                        rt::lean_dec(x_33);
+                                                                                        rt::lean_dec(x_31);
+                                                                                        rt::lean_dec(x_30);
+                                                                                        rt::lean_dec(x_27);
+                                                                                        rt::lean_dec(x_22);
+                                                                                        rt::lean_dec(x_19);
+                                                                                        rt::lean_dec(x_18);
+                                                                                        rt::lean_dec(x_17);
+                                                                                        let x_100: u8 = 27u8;
+                                                                                        return x_100;
+                                                                                    }
                                                                                 }
                                                                             }
-                                                                        }
-                                                                        _ => {
-                                                                            rt::lean_dec(x_13);
-                                                                            let x_54: u8 = 19u8;
-                                                                            return x_54;
+                                                                            _ => {
+                                                                                rt::lean_dec(x_35);
+                                                                                rt::lean_dec(x_33);
+                                                                                rt::lean_dec(x_31);
+                                                                                rt::lean_dec(x_30);
+                                                                                rt::lean_dec(x_29);
+                                                                                rt::lean_dec(x_27);
+                                                                                rt::lean_dec(x_22);
+                                                                                rt::lean_dec(x_19);
+                                                                                rt::lean_dec(x_18);
+                                                                                rt::lean_dec(x_17);
+                                                                                let x_101: u8 = 21u8;
+                                                                                return x_101;
+                                                                            }
                                                                         }
                                                                     }
+                                                                    _ => {
+                                                                        rt::lean_dec(x_35);
+                                                                        rt::lean_dec(x_33);
+                                                                        rt::lean_dec(x_31);
+                                                                        rt::lean_dec(x_30);
+                                                                        rt::lean_dec(x_29);
+                                                                        rt::lean_dec(x_27);
+                                                                        rt::lean_dec(x_26);
+                                                                        rt::lean_dec(x_22);
+                                                                        rt::lean_dec(x_19);
+                                                                        rt::lean_dec(x_18);
+                                                                        rt::lean_dec(x_17);
+                                                                        let x_102: u8 = 16u8;
+                                                                        return x_102;
+                                                                    }
                                                                 }
-                                                                _ => {
-                                                                    rt::lean_dec(x_23);
-                                                                    rt::lean_dec(x_16);
-                                                                    rt::lean_dec(x_13);
-                                                                    let x_55: u8 = 16u8;
-                                                                    return x_55;
+                                                            }
+                                                            _ => {
+                                                                rt::lean_dec(x_35);
+                                                                rt::lean_dec(x_31);
+                                                                rt::lean_dec(x_30);
+                                                                rt::lean_dec(x_29);
+                                                                rt::lean_dec(x_27);
+                                                                rt::lean_dec(x_26);
+                                                                rt::lean_dec(x_24);
+                                                                rt::lean_dec(x_19);
+                                                                rt::lean_dec(x_18);
+                                                                rt::lean_dec(x_17);
+                                                                let x_103: u8 = l_Nat_ddecLt(x_14, x_33);
+                                                                rt::lean_dec(x_33);
+                                                                match x_103 {
+                                                                    0 => {
+                                                                        rt::lean_dec(x_22);
+                                                                        x_6 = x_103;
+                                                                        break 'b5;
+                                                                    }
+                                                                    _ => {
+                                                                        let x_104: u8 = l_Nat_ddecLt(x_14, x_22);
+                                                                        rt::lean_dec(x_22);
+                                                                        x_6 = x_104;
+                                                                        break 'b5;
+                                                                    }
                                                                 }
                                                             }
                                                         }
-                                                        _ => {
-                                                            rt::lean_dec(x_23);
-                                                            rt::lean_dec(x_18);
-                                                            rt::lean_dec(x_16);
-                                                            rt::lean_dec(x_13);
-                                                            let x_56: u8 = 15u8;
-                                                            return x_56;
-                                                        }
+                                                    }
+                                                    _ => {
+                                                        rt::lean_dec(x_35);
+                                                        rt::lean_dec(x_33);
+                                                        rt::lean_dec(x_32);
+                                                        rt::lean_dec(x_31);
+                                                        rt::lean_dec(x_30);
+                                                        rt::lean_dec(x_29);
+                                                        rt::lean_dec(x_27);
+                                                        rt::lean_dec(x_26);
+                                                        rt::lean_dec(x_24);
+                                                        rt::lean_dec(x_22);
+                                                        rt::lean_dec(x_19);
+                                                        rt::lean_dec(x_18);
+                                                        rt::lean_dec(x_17);
+                                                        rt::lean_dec(x_10);
+                                                        let x_105: u8 = 7u8;
+                                                        return x_105;
                                                     }
                                                 }
-                                                _ => {
-                                                    rt::lean_dec(x_23);
-                                                    rt::lean_dec(x_21);
-                                                    rt::lean_dec(x_18);
-                                                    rt::lean_dec(x_16);
-                                                    rt::lean_dec(x_13);
-                                                    rt::lean_dec(x_6);
-                                                    let x_57: u8 = 7u8;
-                                                    return x_57;
-                                                }
                                             }
-                                        }
-                                        _ => {
-                                            rt::lean_dec(x_23);
-                                            rt::lean_dec(x_21);
-                                            rt::lean_dec(x_18);
-                                            rt::lean_dec(x_16);
-                                            rt::lean_dec(x_15);
-                                            rt::lean_dec(x_13);
-                                            rt::lean_dec(x_6);
-                                            let x_58: u8 = 10u8;
-                                            let x_59: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_7, x_58);
-                                            match x_59 {
-                                                0 => {
-                                                    let x_60: u8 = 4u8;
-                                                    return x_60;
-                                                }
-                                                _ => {
-                                                    return x_58;
+                                            _ => {
+                                                rt::lean_dec(x_35);
+                                                rt::lean_dec(x_33);
+                                                rt::lean_dec(x_32);
+                                                rt::lean_dec(x_31);
+                                                rt::lean_dec(x_30);
+                                                rt::lean_dec(x_29);
+                                                rt::lean_dec(x_27);
+                                                rt::lean_dec(x_26);
+                                                rt::lean_dec(x_24);
+                                                rt::lean_dec(x_22);
+                                                rt::lean_dec(x_21);
+                                                rt::lean_dec(x_19);
+                                                rt::lean_dec(x_18);
+                                                rt::lean_dec(x_17);
+                                                rt::lean_dec(x_10);
+                                                let x_106: u8 = 10u8;
+                                                let x_107: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_11, x_106);
+                                                match x_107 {
+                                                    0 => {
+                                                        let x_108: u8 = 4u8;
+                                                        return x_108;
+                                                    }
+                                                    _ => {
+                                                        return x_106;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                _ => {
-                                    rt::lean_dec(x_23);
-                                    let x_61: u8 = l_Sand2_dconversionPhase(x_1, x_2, x_3, x_4);
-                                    let x_62: u8 = 2u8;
-                                    let x_63: u8 = l_Sand2_dinstBEqWaterRegime_dbeq(x_61, x_62);
-                                    match x_63 {
-                                        0 => {
-                                            let x_64: u8 = 9u8;
-                                            let x_65: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_7, x_64);
-                                            match x_65 {
-                                                0 => {
-                                                    match x_8 {
-                                                        0 => {
-                                                            return x_7;
-                                                        }
-                                                        _ => {
-                                                            let x_66: u8 = 1u8;
-                                                            return x_66;
+                                    _ => {
+                                        rt::lean_dec(x_35);
+                                        let x_109: u8 = l_Sand2_dconversionPhase(x_1, x_2, x_3, x_4);
+                                        let x_110: u8 = 2u8;
+                                        let x_111: u8 = l_Sand2_dinstBEqWaterRegime_dbeq(x_109, x_110);
+                                        match x_111 {
+                                            0 => {
+                                                let x_112: u8 = 9u8;
+                                                let x_113: u8 = l_Sand2_dinstBEqMaterial_dbeq(x_11, x_112);
+                                                match x_113 {
+                                                    0 => {
+                                                        match x_12 {
+                                                            0 => {
+                                                                return x_11;
+                                                            }
+                                                            _ => {
+                                                                let x_114: u8 = 1u8;
+                                                                return x_114;
+                                                            }
                                                         }
                                                     }
-                                                }
-                                                _ => {
-                                                    let x_67: u8 = 13u8;
-                                                    return x_67;
+                                                    _ => {
+                                                        let x_115: u8 = 13u8;
+                                                        return x_115;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        _ => {
-                                            let x_68: u8 = 9u8;
-                                            return x_68;
+                                            _ => {
+                                                let x_116: u8 = 9u8;
+                                                return x_116;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        _ => {
-                            rt::lean_dec(x_23);
-                            rt::lean_dec_ref(x_4);
-                            let x_69: u8 = 20u8;
-                            return x_69;
-                        }
-                    }
-                }
-                _ => {
-                    rt::lean_inc(x_19);
-                    rt::lean_inc(x_18);
-                    rt::lean_dec(x_23);
-                    let x_70: u8 = l_Sand2_dconversionPhase(x_1, x_2, x_3, x_4);
-                    match x_70 {
-                        0 => {
-                            rt::lean_dec(x_19);
-                            rt::lean_dec(x_18);
-                            let x_71: u8 = 11u8;
-                            return x_71;
-                        }
-                        1 => {
-                            rt::lean_dec(x_19);
-                            rt::lean_dec(x_18);
-                            let x_72: u8 = 11u8;
-                            return x_72;
-                        }
-                        4 => {
-                            rt::lean_dec(x_19);
-                            rt::lean_dec(x_18);
-                            let x_73: u8 = 6u8;
-                            return x_73;
-                        }
-                        _ => {
-                            let x_74: u8 = l_Nat_ddecLt(x_10, x_19);
-                            rt::lean_dec(x_19);
-                            match x_74 {
-                                0 => {
-                                    let x_75: u8 = l_Nat_ddecLt(x_10, x_18);
-                                    rt::lean_dec(x_18);
-                                    match x_75 {
-                                        0 => {
-                                            let x_76: u8 = 2u8;
-                                            return x_76;
-                                        }
-                                        _ => {
-                                            let x_77: u8 = 17u8;
-                                            return x_77;
-                                        }
+                            _ => {
+                                rt::lean_dec(x_35);
+                                let x_117: u8 = l_Sand2_dconversionPhase(x_1, x_2, x_3, x_4);
+                                let x_118: u8 = 2u8;
+                                let x_119: u8 = l_Sand2_dinstBEqWaterRegime_dbeq(x_117, x_118);
+                                match x_119 {
+                                    0 => {
+                                        let x_120: u8 = 20u8;
+                                        return x_120;
+                                    }
+                                    _ => {
+                                        let x_121: u8 = 32u8;
+                                        return x_121;
                                     }
                                 }
-                                _ => {
-                                    rt::lean_dec(x_18);
-                                    let x_78: u8 = 8u8;
-                                    return x_78;
+                            }
+                        }
+                    }
+                    _ => {
+                        rt::lean_inc(x_25);
+                        rt::lean_inc(x_24);
+                        rt::lean_dec(x_35);
+                        let x_122: u8 = l_Sand2_dconversionPhase(x_1, x_2, x_3, x_4);
+                        match x_122 {
+                            0 => {
+                                rt::lean_dec(x_25);
+                                rt::lean_dec(x_24);
+                                let x_123: u8 = 11u8;
+                                return x_123;
+                            }
+                            1 => {
+                                rt::lean_dec(x_25);
+                                rt::lean_dec(x_24);
+                                let x_124: u8 = 11u8;
+                                return x_124;
+                            }
+                            4 => {
+                                rt::lean_dec(x_25);
+                                rt::lean_dec(x_24);
+                                let x_125: u8 = 6u8;
+                                return x_125;
+                            }
+                            _ => {
+                                let x_126: u8 = l_Nat_ddecLt(x_14, x_25);
+                                rt::lean_dec(x_25);
+                                match x_126 {
+                                    0 => {
+                                        let x_127: u8 = l_Nat_ddecLt(x_14, x_24);
+                                        rt::lean_dec(x_24);
+                                        match x_127 {
+                                            0 => {
+                                                let x_128: u8 = 2u8;
+                                                return x_128;
+                                            }
+                                            _ => {
+                                                let x_129: u8 = 17u8;
+                                                return x_129;
+                                            }
+                                        }
+                                    }
+                                    _ => {
+                                        rt::lean_dec(x_24);
+                                        let x_130: u8 = 8u8;
+                                        return x_130;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            _ => {
+                rt::lean_dec_ref(x_4);
+                let x_131: u8 = 5u8;
+                return x_131;
+            }
+        }
+    }
+    match x_6 {
+        0 => {
+            let x_7: u8 = 28u8;
+            return x_7;
         }
         _ => {
-            rt::lean_dec_ref(x_4);
-            let x_79: u8 = 5u8;
-            return x_79;
+            let x_8: u8 = 15u8;
+            return x_8;
         }
     }
 }
@@ -304,7 +574,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dlabelAt_d__boxed(x_1: Obj, x_2: Obj, x_
 }
 
 // Lean: Sand2.normalizeEdit
-// Source: lean/Sand2/Conversions.lean:63:1
+// Source: lean/Sand2/Conversions.lean:74:1
 pub(crate) unsafe extern "C" fn l_Sand2_dnormalizeEdit(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = rt::lean_ctor_get(x_4, 0);
     rt::lean_inc_ref(x_5);
@@ -354,7 +624,7 @@ pub(crate) unsafe extern "C" fn l_Sand2_dnormalizeEdit(x_1: Obj, x_2: Obj, x_3: 
 
 // Lean: Sand2.normalizeEdit._boxed
 // Compiled from: Sand2.normalizeEdit
-// Source: lean/Sand2/Conversions.lean:63:1
+// Source: lean/Sand2/Conversions.lean:74:1
 pub(crate) unsafe extern "C" fn l_Sand2_dnormalizeEdit_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_Sand2_dnormalizeEdit(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_3);

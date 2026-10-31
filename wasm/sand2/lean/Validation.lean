@@ -70,3 +70,34 @@ def main : IO Unit := do
   check "dam break moves water into the initially dry side" (waterX spread > waterX dam)
   check "dam break conserves all eleven elements and total energy exactly"
     (auditSimulation spread == auditSimulation dam)
+
+  let oxygen := makeAt h w i .oxygen
+  let nitrogen := makeAt h w (i+1) .nitrogen
+  check "different gases begin at the same ideal-gas pressure"
+    (pressure h w i oxygen == pressure h w (i+1) nitrogen)
+  let mixed := gasDiffusionEdit h w i (i+1) oxygen nitrogen 300
+  check "equal-pressure gases mix without waiting for a pressure gradient"
+    (mixed.first.matter.nitrogen > 0 && mixed.second.matter.oxygen > 0)
+  check "gas diffusion preserves complete energy exactly"
+    (mixed.first.energy+mixed.second.energy == oxygen.energy+nitrogen.energy)
+  let room2 := makeAt h w (i+w) .empty
+  let uniform := gasDiffusionEdit h w i (i+w) room room2 300
+  check "equal counterflows do not invent heat in uniform air"
+    (uniform.first.energy == room.energy && uniform.second.energy == room2.energy)
+  let heavy := makeAt h w i .oxygen
+  let light := makeAt h w (i+w) .hydrogen
+  let layers := write (write (newWorld w h) i heavy) (i+w) light
+  let convected := (buoyancy i (i+w)).run layers |>.2
+  check "lighter gas below heavier gas rises through the buoyancy operator"
+    ((read convected i).matter.hydrogen > 0 && (read convected (i+w)).matter.oxygen > 0)
+  let ironAcid := sceneSimulation (newSimulation 24 20) 5
+  let changed := tickSimulation ironAcid
+  let mut productGas := 0
+  let mut productSalt := 0
+  for k in [:changed.width*changed.height] do
+    productGas := productGas+(read changed.world k).matter.carbonDioxide
+    productSalt := productSalt+(read changed.world k).matter.calciumChloride
+  check "acid on limestone produces actual CO2 and CaCl2 inventories"
+    (productGas > 0 && productSalt > 0)
+  check "trace reactants are not permanently stalled by integer division"
+    (reactionExtent .burnBiomass {biomass := 1,oxygen := 1} 50000 == 1)

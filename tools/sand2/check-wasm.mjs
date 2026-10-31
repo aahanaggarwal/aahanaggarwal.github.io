@@ -10,14 +10,14 @@ const api = await loadEngine();
 const decoder = new TextDecoder();
 const text = pointer => decoder.decode(new Uint8Array(api.memory.buffer, pointer, api.world_text_length()));
 const reference = (await readFile(process.argv[2], 'utf8')).trim().split('\n');
-assert.equal(reference.length, 25);
+assert.equal(reference.length, 45);
 api.world_new(24, 20);
 for (const line of reference) {
   const [scene, ticks, ...expected] = line.split(';');
   assert.equal(text(api.world_oracle(Number(scene), Number(ticks))), expected.join(';'), `Lean/Wasm mismatch: ${line}`);
 }
 const catalogue = JSON.parse(text(api.world_catalogue()));
-assert.ok(catalogue.length >= 20);
+assert.ok(catalogue.length >= 32);
 for (const {id} of catalogue) {
   api.world_scene(0); api.world_paint(12, 6, 2, id);
   const before = text(api.world_audit());

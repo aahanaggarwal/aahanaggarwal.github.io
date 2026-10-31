@@ -186,9 +186,12 @@ def contactEdit (a b : Particle) (r : Chemistry.Reaction) (amount : Nat) : PairE
   let result := Chemistry.reactPair r a.matter b.matter amount
   let pa := replaceMatter a result.1
   let pb := replaceMatter b result.2
-  let chemicalTransfer := pa.chemical-a.chemical
-  ⟨{pa with energy := a.energy+chemicalTransfer},
-   {pb with energy := b.energy-chemicalTransfer},
+  let retainedEnergy := pa.chemical+(a.energy-a.chemical)*(pa.mass : Int)/max 1 a.mass
+  let transferredEnergy := a.energy-retainedEnergy
+  let retainedX := a.px*(pa.mass : Int)/max 1 a.mass
+  let retainedY := a.py*(pa.mass : Int)/max 1 a.mass
+  ⟨{pa with energy := retainedEnergy,px := retainedX,py := retainedY},
+   {pb with energy := b.energy+transferredEnergy,px := b.px+a.px-retainedX,py := b.py+a.py-retainedY},
    Chemistry.pair_reaction_atoms_certificate r a.matter b.matter amount,by dsimp; omega⟩
 
 def heatEdit (a b : Particle) (flux : Int) : PairEdit a b :=

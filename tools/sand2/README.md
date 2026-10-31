@@ -35,7 +35,9 @@ boiling, radiative transfer and high-temperature vaporization of metals/minerals
 are not yet represented. The water phase diagram currently uses the reference
 100 °C boiling point even when the gas pressure changes.
 
-Gas moves by bounded finite-volume pressure relaxation, conserving each molecular
+Gas moves by bounded finite-volume pressure relaxation, symmetric molecular
+diffusion (including at equal pressure), and density-driven convective
+relaxation of unstable gas layers. These operations conserve each molecular
 species and transferring its energy and momentum. This is an overdamped model,
 not a resolved compressible Navier–Stokes solver. Dense parcels use gravity,
 fractional position, swept face crossings, density displacement and dissipative
@@ -161,3 +163,35 @@ checked in isolated Chromium.
 
 Next work targets faster updates and richer liquid/pressure interactions, then
 additional reactive materials with the same proof and validation requirements.
+
+## Material and gas-transport expansion (2026-10-31 UTC)
+
+The palette now exposes 32 materials, including the reactive gases, limestone,
+charcoal, nitrate, sulfur, reaction-product salts and molten iron. Nine Lean
+experiments include selective carbonate dissolution, equal-pressure gas mixing,
+buoyancy, energetic reaction and molten-metal cooling. Reagent powders currently
+use fixed condensed constitutive states except the water/quartz/iron families;
+thermal decomposition and phase data for every added reagent remain future work.
+
+`Portion` requires a per-species partition certificate. Its simultaneous opposing
+exchanges preserve every molecule, all eleven elements, mass, momentum and total
+energy. Both gas packets use the same face height for gravitational energy, so
+equal counterflows in uniform air do not manufacture heat. The diffusion step
+uses a rounded 0.2 cm²/s ordinary-gas coefficient (0.6 cm²/s when hydrogen is
+present), without temperature/pressure dependence yet. Density-driven gas
+buoyancy is an overdamped relaxation law.
+
+Contact reactions transfer the consumed fraction's nonchemical energy and
+momentum into the product side; complete consumption does not strand heat in an
+empty cell. Trace reactants can advance instead of stalling at integer division.
+The vessel boundary is chemically inert.
+
+86 handwritten theorems are covered by the 578-theorem namespace axiom audit.
+All 45 complete-world Lean/native/browser comparisons, 21 physical checks and
+32-material browser conservation checks pass. Optimized Chromium touch checks
+cover all new experiments with no horizontal overflow or page errors. The
+96×64 dam-break Wasm benchmark is approximately 80 ms/tick on this host.
+
+[NIST gas diffusion reference compilation](https://doi.org/10.6028/NIST.TN.2279)
+informs the scale of the rounded diffusion parameters; the solver does not use
+its full gas-pair and temperature-dependent correlations.

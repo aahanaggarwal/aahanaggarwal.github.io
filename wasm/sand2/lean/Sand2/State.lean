@@ -146,6 +146,18 @@ def matterFor : Material → Mixture
   | .salt => {salt := 37310344}
   | .saltWater => {water := 53000000, salt := 700000}
   | .metal => {iron := 140357142}
+  | .limestone => {carbonate := 27000000}
+  | .oxygen => {oxygen := 41575}
+  | .nitrogen => {nitrogen := 41575}
+  | .carbonDioxide => {carbonDioxide := 41575}
+  | .hydrogen => {hydrogen := 41575}
+  | .charcoal => {carbon := 25000000}
+  | .rust => {rust := 32750000}
+  | .nitrate => {nitrate := 20881188}
+  | .sulfur => {sulfur := 64687500}
+  | .calciumChloride => {calciumChloride := 19545454}
+  | .ironChloride => {ironChloride := 25079365}
+  | .moltenIron => {iron := 140357142}
   | .gunpowder => {nitrate := 12592592, sulfur := 6296296, carbon := 18888888}
   | .fire => {air with oil := 10000, oxygen := 30000}
   | .smoke => {air with carbonDioxide := 20000, water := 20000}
@@ -155,7 +167,7 @@ def matterFor : Material → Mixture
 def makeAt (height width i : Nat) (m : Material) (anchored : Bool := false) : Particle :=
   let matter := matterFor m
   let t := match m with
-    | .lava => 180000 | .fire => 90000 | .ember => 65000 | .ice => -1000
+    | .lava => 180000 | .moltenIron => 170000 | .fire => 90000 | .ember => 65000 | .ice => -1000
     | .steam => 13000 | .smoke => 14000 | _ => 2000
   let p := makeParticle matter 0 m anchored
   {p with

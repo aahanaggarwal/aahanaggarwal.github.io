@@ -8,12 +8,13 @@ inductive Material where
   | empty | sand | water | stone | wood | fire | steam | oil | acid | lava
   | plant | ice | smoke | glass | obsidian | gunpowder | salt | saltWater
   | ember | ash | metal
+  | limestone | oxygen | nitrogen | carbonDioxide | hydrogen | charcoal | rust | nitrate | sulfur | calciumChloride | ironChloride | moltenIron
   deriving DecidableEq, BEq, ReflBEq, LawfulBEq, Repr, Inhabited
 open Material
 
 def materials : List Material := [.empty,.sand,.water,.stone,.wood,.fire,.steam,
   .oil,.acid,.lava,.plant,.ice,.smoke,.glass,.obsidian,.gunpowder,.salt,.saltWater,
-  .ember,.ash,.metal]
+  .ember,.ash,.metal,.limestone,.oxygen,.nitrogen,.carbonDioxide,.hydrogen,.charcoal,.rust,.nitrate,.sulfur,.calciumChloride,.ironChloride,.moltenIron]
 
 def materialCode : Material → UInt32
   | .empty => 0 | .sand => 1 | .water => 2 | .stone => 3 | .wood => 4
@@ -21,12 +22,36 @@ def materialCode : Material → UInt32
   | .plant => 10 | .ice => 11 | .smoke => 12 | .glass => 13 | .obsidian => 14
   | .gunpowder => 15 | .salt => 16 | .saltWater => 17 | .ember => 18
   | .ash => 19 | .metal => 20
+  | .limestone => 21
+  | .oxygen => 22
+  | .nitrogen => 23
+  | .carbonDioxide => 24
+  | .hydrogen => 25
+  | .charcoal => 26
+  | .rust => 27
+  | .nitrate => 28
+  | .sulfur => 29
+  | .calciumChloride => 30
+  | .ironChloride => 31
+  | .moltenIron => 32
 
 def decodeMaterial (n : UInt32) : Material := match n.toNat with
   | 1 => .sand | 2 => .water | 3 => .stone | 4 => .wood | 5 => .fire
   | 6 => .steam | 7 => .oil | 8 => .acid | 9 => .lava | 10 => .plant
   | 11 => .ice | 12 => .smoke | 13 => .glass | 14 => .obsidian | 15 => .gunpowder
   | 16 => .salt | 17 => .saltWater | 18 => .ember | 19 => .ash | 20 => .metal
+  | 21 => .limestone
+  | 22 => .oxygen
+  | 23 => .nitrogen
+  | 24 => .carbonDioxide
+  | 25 => .hydrogen
+  | 26 => .charcoal
+  | 27 => .rust
+  | 28 => .nitrate
+  | 29 => .sulfur
+  | 30 => .calciumChloride
+  | 31 => .ironChloride
+  | 32 => .moltenIron
   | _ => .empty
 
 def materialName : Material → String
@@ -35,19 +60,31 @@ def materialName : Material → String
   | .acid => "Acid" | .lava => "Molten silica" | .plant => "Plant fibre" | .ice => "Ice"
   | .smoke => "Smoke" | .glass => "Glass" | .obsidian => "Obsidian"
   | .gunpowder => "Gunpowder" | .salt => "Salt" | .saltWater => "Salt water"
-  | .ember => "Ember" | .ash => "Ash" | .metal => "Metal"
+  | .ember => "Ember" | .ash => "Ash" | .metal => "Iron"
+  | .limestone => "Limestone"
+  | .oxygen => "Oxygen"
+  | .nitrogen => "Nitrogen"
+  | .carbonDioxide => "Carbon dioxide"
+  | .hydrogen => "Hydrogen"
+  | .charcoal => "Charcoal"
+  | .rust => "Rust"
+  | .nitrate => "Potassium nitrate"
+  | .sulfur => "Sulfur"
+  | .calciumChloride => "Calcium chloride"
+  | .ironChloride => "Iron chloride"
+  | .moltenIron => "Molten iron"
 
 def isPowder : Material → Bool
-  | .sand | .gunpowder | .salt | .ash => true | _ => false
+  | .sand | .gunpowder | .salt | .ash | .charcoal | .rust | .nitrate | .sulfur | .calciumChloride | .ironChloride => true | _ => false
 
 def isLiquid : Material → Bool
-  | .water | .oil | .acid | .lava | .saltWater => true | _ => false
+  | .water | .oil | .acid | .lava | .saltWater | .moltenIron => true | _ => false
 
 def isGas : Material → Bool
-  | .fire | .steam | .smoke => true | _ => false
+  | .fire | .steam | .smoke | .oxygen | .nitrogen | .carbonDioxide | .hydrogen => true | _ => false
 
 def isFixed : Material → Bool
-  | .stone | .wood | .plant | .ice | .glass | .obsidian | .ember | .metal => true
+  | .stone | .wood | .plant | .ice | .glass | .obsidian | .ember | .metal | .limestone => true
   | _ => false
 
 def isHot : Material → Bool
@@ -64,6 +101,18 @@ def materialColor : Material → UInt32
   | .smoke => 0x3a3a3a | .glass => 0xafcdd7 | .obsidian => 0x301648
   | .gunpowder => 0x4e4e58 | .salt => 0xe8e8e6 | .saltWater => 0x26739b
   | .ember => 0xb94616 | .ash => 0x6c6862 | .metal => 0x8a909b
+  | .limestone => 0xc1bca9
+  | .oxygen => 0x889ec4
+  | .nitrogen => 0x777e96
+  | .carbonDioxide => 0x79766b
+  | .hydrogen => 0xb294ac
+  | .charcoal => 0x333330
+  | .rust => 0x9a4a24
+  | .nitrate => 0xe4dac7
+  | .sulfur => 0xe0d648
+  | .calciumChloride => 0xc8d2be
+  | .ironChloride => 0xa5b275
+  | .moltenIron => 0xf1b45a
 
 def materialKind (m : Material) : String :=
   if m == .plant then "BIOMASS" else if isPowder m then "POWDER"
@@ -72,7 +121,7 @@ def materialKind (m : Material) : String :=
 theorem decode_encode (m : Material) : decodeMaterial (materialCode m) = m := by
   cases m <;> decide
 
-theorem material_codes_bounded (m : Material) : (materialCode m).toNat < 21 := by
+theorem material_codes_bounded (m : Material) : (materialCode m).toNat < 33 := by
   cases m <;> decide
 
 theorem nonempty_materials_complete (m : Material) : m ∈ materials := by

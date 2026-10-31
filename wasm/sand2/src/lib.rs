@@ -93,7 +93,7 @@ mod tests {
     use super::*;
     #[test]
     fn complete_timesteps_conserve_all_elements_and_total_energy() {
-        for scene in 1..=4 {
+        for scene in 1..=8 {
             let mut w = Universe::new(24, 20); w.scene(scene);
             let before = w.audit();
             for tick in 0..12 { w.tick(); assert_eq!(w.audit(), before, "scene {scene}, tick {tick}"); }
@@ -121,6 +121,6 @@ mod tests {
         let mut w = Universe::new(24, 20);
         w.paint(i32::MIN, i32::MAX, u32::MAX, u32::MAX);
         w.paint(0, 0, 16, 0);
-        for x in 0..24 { assert!(physics::inspect_simulation(w.state(), x, 0).starts_with("Metal")); }
+        for x in 0..24 { assert!(physics::inspect_simulation(w.state(), x, 0).starts_with("Iron")); }
     }
 }

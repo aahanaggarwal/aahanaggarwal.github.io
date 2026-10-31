@@ -46,16 +46,27 @@ def labelAt (height width i : Nat) (p : Particle) : Material :=
     | .ice | .melting => .ice
     | .vapor => .steam
     | _ => if p.matter.acid > 0 then .acid else if p.matter.salt > 0 then .saltWater else .water
-  else if p.matter.iron*56 > p.mass/2 then .metal
+  else if p.matter.iron*56 > p.mass/2 then
+    if conversionPhase height width i p == .liquid then .moltenIron else .metal
   else if p.matter.silica*60 > p.mass/2 then
     if conversionPhase height width i p == .liquid then .lava
     else if p.label == .lava then .glass else if p.fractured then .sand else p.label
   else if p.matter.biomass*30 > p.mass/2 then
     if p.label == .plant then .plant else .wood
   else if p.matter.oil*14 > p.mass/2 then .oil
-  else if p.matter.nitrate*101 > p.mass/3 then .gunpowder
+  else if p.matter.nitrate*101 > p.mass/3 then
+    if p.matter.sulfur > 0 && p.matter.carbon > 0 then .gunpowder else .nitrate
   else if p.matter.salt*58 > p.mass/2 then .salt
-  else if p.matter.carbon*12 > p.mass/2 then .ash
+  else if p.matter.carbonate*100 > p.mass/2 then .limestone
+  else if p.matter.rust*160 > p.mass/2 then .rust
+  else if p.matter.ironChloride*126 > p.mass/2 then .ironChloride
+  else if p.matter.calciumChloride*110 > p.mass/2 then .calciumChloride
+  else if p.matter.sulfur*32 > p.mass/2 then .sulfur
+  else if p.matter.carbon*12 > p.mass/2 then if p.label == .ash then .ash else .charcoal
+  else if p.matter.carbonDioxide > p.matter.oxygen+p.matter.nitrogen+p.matter.hydrogen then .carbonDioxide
+  else if p.matter.hydrogen > p.matter.oxygen+p.matter.nitrogen then .hydrogen
+  else if p.matter.oxygen > p.matter.nitrogen then .oxygen
+  else if p.label == .nitrogen && p.matter.nitrogen > p.matter.oxygen then .nitrogen
   else if p.matter.carbonDioxide > 4000 then .smoke
   else .empty
 
